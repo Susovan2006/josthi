@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="includes">
+	<!-- Required Meta Tags Always Come First -->
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	  <!-- Favicon -->
+	  <link rel="shortcut icon" href="/images/josthi/icon/IE_icon.png">
+	
+	  <!-- Font -->
+	  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+	
+	  <!-- CSS Implementing Plugins -->
+	  <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/all.min.css}">
+	  <link rel="stylesheet" th:href="@{/vendor/hs-mega-menu/dist/hs-mega-menu.min.css}">
+	  <link rel="stylesheet" th:href="@{/vendor/jquery-ui/themes/base/jquery-ui.min.css}">
+	  <link rel="stylesheet" th:href="@{/vendor/prism/prism.css}">
+	  <link rel="stylesheet" th:href="@{/vendor/aos/dist/aos.css}">
+		
+	  <link rel="stylesheet" th:href="@{/vendor/select2/dist/css/select2.min.css}">	
+	  <link rel="stylesheet" th:href="@{/vendor/quill/dist/quill.snow.css}">
+	  
+	  <!-- CSS Front Template -->
+	  <link rel="stylesheet" th:href="@{/css/theme2.css}">
+	
+	  <!-- CSS Front Doc -->
+	  <link rel="stylesheet" th:href="@{/css/snippets.css}">
+	  
+ 
+  
+	</div>
+	
+	
+	<div th:fragment="js-includes">
+		<!-- JS Global Compulsory -->
+	  <script th:src="@{/vendor/jquery/dist/jquery.min.js}"></script>
+	  <script th:src="@{/vendor/jquery-validation/dist/jquery.validate.min.js}"></script>
+	  <script th:src="@{/vendor/jquery-migrate/dist/jquery-migrate.min.js}"></script>
+	  <script th:src="@{/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+	
+	  <!-- JS Implementing Plugins -->
+	  <script th:src="@{/vendor/hs-header/dist/hs-header.min.js}"></script>
+	  <script th:src="@{/vendor/hs-go-to/dist/hs-go-to.min.js}"></script>
+	  <script th:src="@{/vendor/hs-unfold/dist/hs-unfold.min.js}"></script>
+	  <script th:src="@{/vendor/hs-mega-menu/dist/hs-mega-menu.min.js}"></script>
+	  <script th:src="@{/vendor/jquery-ui/jquery-ui.core.min.js}"></script>
+	  <script th:src="@{/vendor/jquery-ui/ui/widgets/menu.js}"></script>
+	  <script th:src="@{/vendor/jquery-ui/ui/widgets/mouse.js}"></script>
+	  <script th:src="@{/vendor/jquery-ui/ui/widgets/autocomplete.js}"></script>
+	  <script th:src="@{/vendor/prism/prism.js}"></script>
+	  <script th:src="@{/vendor/typed.js/lib/typed.min.js}"></script>
+  	  <script th:src="@{/vendor/aos/dist/aos.js}"></script>
+  	  <script th:src="@{/vendor/select2/dist/js/select2.full.min.js}"></script>
+  	  
+  	  <script th:src="@{/vendor/hs-counter/dist/hs-counter.min.js}"></script>
+  	  <script th:src="@{/vendor/hs-toggle-switch/dist/hs-toggle-switch.min.js}"></script>
+  	  <script th:src="@{/vendor/quill/dist/quill.min.js}"></script>
+	
+	  <!-- JS Front -->
+	  <script th:src="@{/js/hs.core.js}"></script>
+	  <script th:src="@{/js/hs.validation.js}"></script>
+	  <script th:src="@{/js/hs.select2.js}"></script>
+	  <script th:src="@{/js/cities.js}"></script>
+	  <script th:src="@{/js/appear.js}"></script>
+  	  <script th:src="@{/js/hs.quill.js}"></script>
+      <script th:src="@{/js/hs.mask.js}"></script>
+	  	
+	</div>
+	
+	
+	
+	
+	
+	<!-- ========================= U S E R    N A V I G A T I O N ===================================== -->
+	<div th:fragment = "user-navigation">
+		<h6 class="text-cap small">Account</h6>
+                  <!-- List -->
+                  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
+                    
+					<li class="nav-item">
+                      <a class="nav-link" href="/userHomePage" id="user_home">
+                        <i class="fas fa-home nav-icon"></i>
+                        Home
+                      </a>
+                    </li>
+					
+					<li class="nav-item">
+                      <a class="nav-link" href="/userPersonalDetails" id="user_personal_details">
+                        <i class="fas fa-id-card nav-icon"></i>
+                        Personal info
+                      </a>
+                    </li>
+					
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="login-and-security.html">
+                        <i class="fas fa-shield-alt nav-icon"></i>
+                        Login &amp; security
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="notifications.html">
+                        <i class="fas fa-bell nav-icon"></i>
+                        Notifications
+                        <span class="badge badge-soft-navy badge-pill nav-link-badge">1</span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="preferences.html">
+                        <i class="fas fa-sliders-h nav-icon"></i>
+                        Preferences
+                      </a>
+                    </li>
+                  </ul>
+                  <!-- End List -->
+
+				  <h6 class="text-cap small">Blog</h6>
+				  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2">
+                    <li class="nav-item">
+                      <a class="nav-link" href="billing.html">
+                        <i class="fas fa-paper-plane nav-icon"></i>
+                        Post a Blog
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="address.html">
+                        <i class="fas fa-book nav-icon"></i>
+                        View Blogs.
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="teams.html">
+                        <i class="fas fa-users nav-icon"></i>
+                        Teams
+                        <span class="badge badge-soft-navy badge-pill nav-link-badge">+2 new users</span>
+                      </a>
+                    </li>
+                  </ul>
+
+
+                  <div class="d-lg-none">
+                    <div class="dropdown-divider"></div>
+
+                    <!-- List -->
+					<ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2">
+                      <li class="nav-item">
+                        <a class="nav-link text-primary" href="/">
+                          <i class="fas fa-sign-out-alt nav-icon"></i>
+                          Log out
+                        </a>
+                      </li>
+                    </ul>
+                    <!-- End List -->
+                  </div>
+		</div>
+	
+		<!-- ========================= U S E R    N A V I G A T I O N ===================================== -->
+	<div th:fragment = "user-logout">
+	          <div class="col-auto">
+            <div class="d-none d-lg-block">
+              <a class="btn btn-sm btn-soft-light" href="/">Log out</a>
+            </div>
+
+            <!-- Responsive Toggle Button -->
+            <button type="button" class="navbar-toggler btn btn-icon btn-sm rounde-circle d-lg-none"
+                    aria-label="Toggle navigation"
+                    aria-expanded="false"
+                    aria-controls="sidebarNav"
+                    data-toggle="collapse"
+                    data-target="#sidebarNav">
+              <span class="navbar-toggler-default">
+                <svg width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M17.4,6.2H0.6C0.3,6.2,0,5.9,0,5.5V4.1c0-0.4,0.3-0.7,0.6-0.7h16.9c0.3,0,0.6,0.3,0.6,0.7v1.4C18,5.9,17.7,6.2,17.4,6.2z M17.4,14.1H0.6c-0.3,0-0.6-0.3-0.6-0.7V12c0-0.4,0.3-0.7,0.6-0.7h16.9c0.3,0,0.6,0.3,0.6,0.7v1.4C18,13.7,17.7,14.1,17.4,14.1z"/>
+                </svg>
+              </span>
+              <span class="navbar-toggler-toggled">
+                <svg width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                  <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+                </svg>
+              </span>
+            </button>
+            <!-- End Responsive Toggle Button -->
+          </div>
+	</div>
+	
+	
+	
+	
+	
+	
+	<div th:fragment = "site-footer">
+		<!-- ========== FOOTER ========== -->
+		<footer class="bg-navy">
+		  <div class="container space-2">
+		    <div class="row mb-9">
+		      <div class="col-lg-3 mb-5 mb-lg-0">
+		        <!-- Logo -->
+		        <a href="#" aria-label="Front">
+		          <img class="brand" src="images/josthi/logo/logo_250x80.svg" alt="Logo">
+		        </a>
+		        <!-- End Logo -->
+		      </div>
+		
+		      <div class="col-6 col-md-3 col-lg-2 mb-5 mb-lg-0">
+		        <h5 class="text-white font-weight-bold">Help and advice</h5>
+		        <!-- Nav Links -->
+		        <ul class="nav nav-sm nav-x-0 nav-white flex-column">
+		          <li class="nav-item"><a class="nav-link" href="/contactUs">Contact us</a></li>
+		          <li class="nav-item"><a class="nav-link" href="/faq">FAQ</a></li>
+		          <li class="nav-item"><a class="nav-link" href="/privacy">Legal & Privacy</a></li>
+		        </ul>
+		        <!-- End Nav Links -->
+		      </div>
+		
+		      <div class="col-6 col-md-3 col-lg-2 mb-5 mb-lg-0">
+		        <h5 class="text-white font-weight-bold">About us</h5>
+		        <!-- Nav Links -->
+		        <ul class="nav nav-sm nav-x-0 nav-white flex-column">
+		          <li class="nav-item"><a class="nav-link" href="#">About Spec</a></li>
+		          <li class="nav-item"><a class="nav-link" href="#">Careers</a></li>
+		        </ul>
+		        <!-- End Nav Links -->
+		      </div>
+		
+		      <div class="col-md-6 col-lg-5">
+		        <!-- Form -->
+		        <form class="js-validate mb-2">
+		          <h5 class="text-white font-weight-bold mb-3">Stay up to date</h5>
+		          <div class="form-row">
+		            <div class="col">
+		              <div class="js-form-message">
+		                <label class="sr-only" for="subscribeSrEmail">Email address</label>
+		                <div class="input-group">
+		                  <input type="email" class="form-control" name="email" id="subscribeSrEmail" placeholder="Email address" aria-label="Email address" required
+		                         data-msg="Please enter a valid email address.">
+		                </div>
+		              </div>
+		            </div>
+		
+		            <div class="col-auto">
+		              <button type="submit" class="btn btn-primary">
+		                <i class="fas fa-arrow-right"></i>
+		              </button>
+		            </div>
+		          </div>
+		        </form>
+		        <!-- End Form -->
+		
+		        <p class="text-white-70 small mb-0">We will keep you posted. Never spam.</p>
+		      </div>
+		    </div>
+		
+		    <!-- Copyright -->
+		    <div class="row align-items-md-center">
+		      <div class="col-md-6 mb-4 mb-md-0">
+		        <p class="small text-white-70 mb-0">© josthi.com 2020. All rights reserved.</p>
+		      </div>
+		
+		      <div class="col-md-6 text-md-right">
+		        <!-- Social Networks -->
+		        <ul class="list-inline mb-0">
+		          <li class="list-inline-item mb-2 mb-sm-0">
+		            <a class="btn btn-xs btn-icon btn-ghost-light" href="#">
+		              <i class="fab fa-facebook-f"></i>
+		            </a>
+		          </li>
+		          <li class="list-inline-item mb-2 mb-sm-0">
+		            <a class="btn btn-xs btn-icon btn-ghost-light" href="#">
+		              <i class="fab fa-google"></i>
+		            </a>
+		          </li>
+		          <li class="list-inline-item mb-2 mb-sm-0">
+		            <a class="btn btn-xs btn-icon btn-ghost-light" href="#">
+		              <i class="fab fa-twitter"></i>
+		            </a>
+		          </li>
+		          <li class="list-inline-item mb-2 mb-sm-0">
+		            <a class="btn btn-xs btn-icon btn-ghost-light" href="#">
+		              <i class="fab fa-github"></i>
+		            </a>
+		          </li>
+		          <li class="list-inline-item mb-2 mb-sm-0">
+		            <a class="btn btn-xs btn-icon btn-ghost-light" href="#">
+		              <i class="fab fa-linkedin"></i>
+		            </a>
+		          </li>
+		        </ul>
+		        <!-- End Social Networks -->
+		      </div>
+		    </div>
+		    <!-- End Copyright -->
+		  </div>
+		</footer>
+		<!-- ========== END FOOTER ========== -->
+	
+		<script>
+		  // initialization of form validation
+		  $('.js-validate').each(function () {
+		    var validation = $.HSCore.components.HSValidation.init($(this));
+		  });
+		  
+		</script>
+	</div>
+	
+	
+	
+	<!-- ========== HEADER START ========== -->
+	
+	<div th:fragment="nav-menu">	
+		<header id="header" class="header header-sticky-top-lg">
+	    <div class="header-section">
+	      <div id="logoAndNav" class="container">
+	        <!-- Nav -->
+	        <nav class="js-mega-menu navbar navbar-expand-lg">
+	          <!-- Logo -->
+	          <a class="navbar-brand" href="/" aria-label="Front">
+	            <img src="images/josthi/logo/logo_250x80.svg" alt="Logo">
+	          </a>
+	          <!-- End Logo -->
+	
+	          <!-- Responsive Toggle Button -->
+	          <button type="button" class="navbar-toggler btn btn-icon btn-sm rounded-circle"
+	                  aria-label="Toggle navigation"
+	                  aria-expanded="false"
+	                  aria-controls="navBar"
+	                  data-toggle="collapse"
+	                  data-target="#navBar">
+	            <span class="navbar-toggler-default">
+	              <svg width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+	                <path fill="currentColor" d="M17.4,6.2H0.6C0.3,6.2,0,5.9,0,5.5V4.1c0-0.4,0.3-0.7,0.6-0.7h16.9c0.3,0,0.6,0.3,0.6,0.7v1.4C18,5.9,17.7,6.2,17.4,6.2z M17.4,14.1H0.6c-0.3,0-0.6-0.3-0.6-0.7V12c0-0.4,0.3-0.7,0.6-0.7h16.9c0.3,0,0.6,0.3,0.6,0.7v1.4C18,13.7,17.7,14.1,17.4,14.1z"/>
+	              </svg>
+	            </span>
+	            <span class="navbar-toggler-toggled">
+	              <svg width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+	                <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+	              </svg>
+	            </span>
+	          </button>
+	          <!-- End Responsive Toggle Button -->
+	
+	          <!-- Navigation -->
+	          <div id="navBar" class="collapse navbar-collapse">
+	            <div class="navbar-body header-sticky-top-inner">
+	              <ul class="navbar-nav">
+	                <!-- Home -->
+					<li class="navbar-nav-item">
+						<a class="nav-link" href="/">Home</a>
+					</li>
+					<li class="navbar-nav-item">
+					  <a class="nav-link" href="/searchLawyers">Find a Service<span class="badge badge-primary badge-pill ml-2">New</span></a>
+					</li>
+					<li class="navbar-nav-item">
+					  <a class="nav-link" href="/forAgents">For Agents</a>
+					</li>
+
+					<li class="navbar-nav-item">
+					  <a class="nav-link" href="/login">login</a>
+					</li>
+					
+					<!--  <li class="navbar-nav-item">
+					  <a class="nav-link" href="/pricing">Plan & Price</a>
+					</li> -->
+					<!-- ================== Pricing and Plan START ==================== -->
+			            <li class="hs-has-sub-menu navbar-nav-item"
+			                data-hs-mega-menu-item-options='{
+			                  "desktop": {
+			                    "position": "left"
+			                  }
+			                }'>
+			              <a id="pagesMegaMenu" class="hs-mega-menu-invoker nav-link nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Plan & Pricing</a>
+			
+			              <div id="pagesSubMenu" class="hs-sub-menu dropdown-menu" aria-labelledby="pagesMegaMenu" style="min-width: 230px;">
+			                <a class="dropdown-item" href="/pricing">Price</a>
+			                <a class="dropdown-item" href="/planDetails">Plan Details</a>
+			                <!-- <a class="dropdown-item" href="#contacts-section"></a> -->
+			              </div>
+			            </li>
+					
+					<!-- ================== Pricing and Plan END ==================== -->
+	                <!-- Pages -->
+	                <li class="hs-has-sub-menu navbar-nav-item">
+	                  <a id="pagesMegaMenu" class="hs-mega-menu-invoker nav-link nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">About Us</a>
+	
+	                  <!-- Pages - Submenu -->
+	                  <div id="pagesSubMenu" class="hs-sub-menu dropdown-menu" aria-labelledby="pagesMegaMenu" style="min-width: 230px;">
+	                    <!-- Company -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkPagesCompany" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesCompany">Company</a>
+	
+	                      <div id="navSubmenuPagesCompany" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesCompany" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="#">History</a>
+	                      </div>
+	                    </div>
+	                    <!-- Company -->
+	
+	                    <!-- Portfolio -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkPagesPortfolio" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesPortfolio">Register</a>
+	
+	                      <div id="navSubmenuPagesPortfolio" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesPortfolio" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="#">Register as user</a>
+	                        <!--<a class="dropdown-item" href="#">Masonry</a>
+	                        <a class="dropdown-item" href="#">Modern</a> -->
+	                        <div class="dropdown-divider"></div>
+	                        <a class="dropdown-item" href="#">Register as Lawyer</a>
+	                        <div class="dropdown-divider"></div>
+	                        <a class="dropdown-item" href="#">How to Register</a>
+	                      </div>
+	                    </div>
+	                    <!-- End Portfolio -->
+	
+	                    <!-- Login -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkPagesLogin" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesLogin">Login &amp; Signup</a>
+	
+	                      <div id="navSubmenuPagesLogin" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesLogin" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="/login">Login</a>
+	                        <a class="dropdown-item" href="/userSignup">Signup</a>
+	                        <a class="dropdown-item" href="/accountRecovery">Recover Account</a>
+	                      </div>
+	                    </div>
+	                    <!-- Signup -->
+	
+	                    <!-- Contacts -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkContactsServices" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuContactsServices">Contacts</a>
+	
+	                      <div id="navSubmenuContactsServices" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkContactsServices" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="/contactUs">Contacts us</a>
+	                      </div>
+	                    </div>
+	                    <!-- Contacts -->
+	
+	                    <!-- Utilities -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkPagesUtilities" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesUtilities">Know Us</a>
+	
+	                      <div id="navSubmenuPagesUtilities" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesUtilities" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="#">Pricing</a>
+	                        <a class="dropdown-item" href="/faq" target="_blank">FAQ</a>
+	                        <a class="dropdown-item" href="/terms">Terms &amp; Conditions</a>
+	                        <a class="dropdown-item" href="/privacy">Privacy &amp; Policy</a>
+	                        <a class="dropdown-item" href="/test">Test</a>
+	                      </div>
+	                    </div>
+	                    <!-- Utilities -->
+	
+	                    <!-- Specialty -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkPagesSpecialty" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesSpecialty">News</a>
+	
+	                      <div id="navSubmenuPagesSpecialty" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesSpecialty" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="#">Coming Soon</a>
+	                        <a class="dropdown-item" href="#">Maintenance Mode</a>
+	                      </div>
+	                    </div>
+	                    <!-- Specialty -->
+	                  </div>
+	                  <!-- End Pages - Submenu -->
+	                </li>
+	                <!-- End Pages -->
+	
+	
+	                <!-- Button -->
+	                <li class="navbar-nav-last-item">
+	                  <a class="btn btn-sm btn-primary transition-3d-hover" href="/userSignup" target="_blank">
+	                    Sign In
+	                  </a>
+	                </li>
+	                <!-- End Button -->
+	              </ul>
+	            </div>
+	          </div>
+	          <!-- End Navigation -->
+	        </nav>
+	        <!-- End Nav -->
+	      </div>
+	    </div>
+	  </header>
+	  <!-- ========== END HEADER ========== -->
+	
+	 
+	  <!-- Go to Top -->
+	  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+	     data-hs-go-to-options='{
+	       "offsetTop": 700,
+	       "position": {
+	         "init": {
+	           "right": 15
+	         },
+	         "show": {
+	           "bottom": 15
+	         },
+	         "hide": {
+	           "bottom": -15
+	         }
+	       }
+	     }'>
+	    <i class="fas fa-angle-up"></i>
+	  </a>
+	  <!-- End Go to Top -->
+	
+	  <!-- JS Plugins Init. -->
+	  <script>
+	    $(document).on('ready', function () {
+	      // initialization of header
+	      var header = new HSHeader($('#header')).init();
+	
+	      // initialization of mega menu
+	      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+	        desktop: {
+	          position: 'left'
+	        }
+	      }).init();
+	
+	      // initialization of go to
+	      $('.js-go-to').each(function () {
+	        var goTo = new HSGoTo($(this)).init();
+	      });
+	      
+	      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+	    });
+	  </script>
+	
+	</div>
+	
+</body>
+</html>

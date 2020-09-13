@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Welcome to josthi.com</title>
+	<div th:replace="Common :: includes"></div> 
+</head>
+<body>
+
+
+  <!-- ========== Navigation Menu ===== -->
+  <div th:insert="Common :: nav-menu"></div>	
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main">
+    <!-- Hero Section -->
+    <div class="d-lg-flex position-relative">
+      <div class="container d-lg-flex align-items-lg-center space-top-2 space-lg-0 min-vh-lg-100">
+        <!-- Content -->
+        <div class="w-md-100">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="mb-5 mt-11">
+                <h2 class="display-5 mb-3">Worried about your parents in Kolkata!! <br>
+                	<span class="text-indigo font-weight-bold">
+					<span class="js-text-animation"></span>
+					</span>
+				<br> </h2>
+                <p class="lead">Welcome to josthi.com. A complete solution for remote caring for your parents. In today's world everyone is busy, but can't forget our parents. jasthi.com are here to take care of them.</p>
+              </div>
+
+              <a class="btn btn-primary btn-wide transition-3d-hover" href="/pricing">Buy a Plan Today</a>
+              <a class="btn btn-link btn-wide" href="/planDetails">Learn More <i class="fas fa-angle-right fa-sm ml-1"></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Content -->
+
+        <!-- SVG Shape -->
+        <figure class="col-lg-7 col-xl-6 d-none d-lg-block position-absolute top-0 right-0 pr-0 ie-main-hero" style="margin-top: 3.75rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1137.5 979.2">
+            <path fill="#F9FBFF" d="M565.5,957.4c81.1-7.4,155.5-49.3,202.4-115.7C840,739.8,857,570,510.7,348.3C-35.5-1.5-4.2,340.3,2.7,389
+              c0.7,4.7,1.2,9.5,1.7,14.2l29.3,321c14,154.2,150.6,267.8,304.9,253.8L565.5,957.4z"/>
+            <defs>
+              <path id="mainHeroSVG1" d="M1137.5,0H450.4l-278,279.7C22.4,430.6,24.3,675,176.8,823.5l0,0C316.9,960,537.7,968.7,688.2,843.6l449.3-373.4V0z"/>
+            </defs>
+            <clipPath id="mainHeroSVG2">
+              <use xlink:href="#mainHeroSVG1"/>
+            </clipPath>
+            <g transform="matrix(1 0 0 1 0 0)" clip-path="url(#mainHeroSVG2)">
+              <image width="750" height="750" href="images/josthi/josthi-landing_1.jpg" transform="matrix(1.4462 0 0 1.4448 52.8755 0)"></image>
+            </g>
+          </svg>
+        </figure>
+        <!-- End SVG Shape th:attr="'xlink:href'=@{/images/josthi/josthi-landing_1.jpg}-->
+      </div>
+    </div>
+    <!-- End Hero Section -->
+	
+	
+	<!-- Second Component -->
+	<!-- Features Section -->
+	<div class="container space-2">
+	  <div class="row justify-content-lg-between">
+		<div class="col-lg-5 order-lg-2 pl-lg-0">
+		  <div class="bg-img-hero h-100 min-h-450rem rounded" style="background-image: url(images/josthi/landing/landing_parents_guide.jpg);"></div>
+		</div>
+
+		<div class="col-lg-6 order-lg-1">
+		  <div class="pt-8 pb-lg-8">
+			<!-- Title -->
+			<div class="mb-5 mb-md-7">
+			  <h2 class="mb-3">Why Senior care service is essential in today's world?</h2>
+			  <p>Life is so busy, and complex. every one is focused towards career. It might be for job or higher studies. But we can't forget our family values. Even if you are far away from your parents, using josthi.com you will be able to take care of them remotely. Let's give a try. let's see if we can bring back the same smile.</p>
+			</div>
+			<!-- End Title -->
+
+			<div class="row">
+			  <div class="col-6 mb-3 mb-md-5">
+				<div class="pr-lg-4">
+				  <span class="js-counter h2 text-primary">300</span>
+				  <span class="h2 text-primary">+</span>
+				  <p>Service providers are working together to restore your parents smile.</p>
+				</div>
+			  </div>
+
+			  <div class="col-6 mb-3 mb-md-5">
+				<div class="pr-lg-4">
+				  <span class="js-counter h2 text-primary">70</span>
+				  <span class="h2 text-primary">+</span>
+				  <p>Agents are working together to keep your peace of mind.</p>
+				</div>
+			  </div>
+
+			  <div class="col-6">
+				<div class="pr-lg-4">
+				  <span class="js-counter h2 text-primary">95</span>
+				  <span class="h2 text-primary">+</span>
+				  <p>Hospitals will be keeping and eye on your health.</p>
+				</div>
+			  </div>
+
+			  <div class="col-6">
+				<div class="pr-lg-4">
+				  <span class="js-counter h2 text-primary">20</span>
+				  <span class="h2 text-primary">+</span>
+				  <p>Satisfied customers are enjoying the best facility online.</p>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- End Features Section -->
+	<!-- Second Component end -->
+	
+	<!-- First Component-->
+<!-- Cards Section -->
+<div class="container space-2 space-lg-3">
+      <!-- Title -->
+      <div class="w-md-80 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+        <h2>Here are the Key features we are offering</h2>
+      </div>
+      <!-- End Title -->
+      <div class="row">
+        <div class="col-sm-6 col-md-4 mb-5">
+          <!-- Card Info -->
+          <div class="card h-100">
+            <img class="card-img-top" src="images/josthi/landing/basic-medical.jpg" alt="Image Description">
+            <div class="card-body">
+              <div class="max-w-33rem w-100 mb-3">
+                <h4>Basic Medical Service</h4>
+              </div>
+              <p class="mb-0">Amazon launched their enterprise platform and built a powerful user experience.</p>
+            </div>
+            <div class="card-footer">
+              <a class="font-weight-bold" href="/planDetails#basicService">Read More <i class="fas fa-angle-right fa-sm ml-1"></i></a>
+            </div>
+          </div>
+          <!-- End Card Info -->
+        </div>
+
+        <div class="col-sm-6 col-md-4 mb-5">
+          <!-- Card Info -->
+          <div class="card h-100">
+            <img class="card-img-top" src="images/josthi/landing/emergency.jpg" alt="Image Description">
+            <div class="card-body">
+              <div class="max-w-33rem w-100 mb-3">
+                 <h4>Emergency Service</h4>
+              </div>
+              <p class="mb-0">Mapbox empowers marketers to create digital marketing dashboards easily and share them with their team.</p>
+            </div>
+            <div class="card-footer">
+              <a class="font-weight-bold" href="/planDetails#emergencyService">Read More <i class="fas fa-angle-right fa-sm ml-1"></i></a>
+            </div>
+          </div>
+          <!-- End Card Info -->
+        </div>
+
+        <div class="col-sm-6 col-md-4 mb-5">
+          <!-- Card Info -->
+          <div class="card h-100">
+            <img class="card-img-top" src="images/josthi/landing/regular-service.jpg" alt="Image Description">
+            <div class="card-body">
+              <div class="max-w-33rem w-100 mb-3">
+                <h4>General Service</h4>
+              </div>
+              <p class="mb-0">Netflix's mission is to create a planet run by the sun. In order to achieve this goal, they needed to find a way to make solar simple.</p>
+            </div>
+            <div class="card-footer">
+              <a class="font-weight-bold" href="/planDetails#generalService">Read More <i class="fas fa-angle-right fa-sm ml-1"></i></a>
+            </div>
+          </div>
+          <!-- End Card Info -->
+        </div>
+
+      </div>
+
+      <div class="text-center mt-5">
+        <a class="btn btn-primary" href="#">Show More Services </a>
+      </div>
+    </div>
+<!-- End Cards Section -->
+	<!-- First Component End-->
+	
+	
+	<!-- Second Component -->
+	
+	<!-- Second Component end -->
+	
+	
+	<!-- Third Component -->
+	
+	<!-- Third Component end -->
+	
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+  <!-- =============== FOOTER ================= -->
+  <div th:insert="Common :: site-footer"></div>
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- JS Global Compulsory -->
+  <div th:insert="Common :: js-includes"></div>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+  <script>
+  // initialization of text animation (typing)
+  var typed = new Typed(".js-text-animation", {
+    strings: ["Relax, We are here.","We will take care of them", "Register a Plan Today.."],
+    typeSpeed: 100,
+    loop: true,
+    backSpeed: 50,
+    backDelay: 3500
+  });
+
+  // initialization of aos
+  AOS.init({
+    duration: 650,
+    once: true
+  });
+</script>
+
+	<script>
+	  $(document).on('ready', function () {
+		// initialization of counter
+		$('.js-counter').each(function() {
+		  var counter = new HSCounter($(this)).init();
+		});
+	  });
+	</script>
+</body>
+</html>

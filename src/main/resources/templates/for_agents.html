@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>josthi.com | Start your service today</title>
+  <div th:replace="Common :: includes"></div> 
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <div th:insert="Common :: nav-menu"></div>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main">
+    <!-- Hero Section -->
+    <div class="position-relative bg-img-hero" style="background-image: url(images/josthi/agents/agent8.jpg);">
+      <div class="container space-2 space-md-3 space-bottom-lg-4 min-h-300rem">
+        <div class="d-none d-md-block w-lg-50">
+			<h1 class="text-dark">Time to give back.</h1>
+          	<h2 class="h2 text-navy">Here is a change to help your Community and do some business.</h2>
+        </div>
+      </div>
+
+      <!-- SVG Background -->
+      <figure class="position-absolute right-0 bottom-0 left-0">
+        <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+          <path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"/>
+        </svg>
+      </figure>
+      <!-- End SVG Background -->
+    </div>
+    <!-- End Hero Section -->
+
+    <!-- Clients Section -->
+    <div class="container position-relative z-index-2">
+      <div class="row justify-content-center mt-n5">
+        <div class="col-3 col-lg-2 d-none d-sm-inline-block mt-n11">
+          <!-- Logo -->
+          <!--<div class="avatar avatar-xl avatar-circle bg-white shadow-soft p-4 mx-auto">
+            <img class="avatar-img" src="images/landing/for_lawyer/1.jpg" alt="Image Description">
+          </div>-->
+          <!-- End Logo -->
+        </div>
+
+        <div class="col-lg-2 d-none d-lg-inline-block mt-lg-n8">
+          <!-- Logo 
+          <div class="bg-white shadow-soft rounded-circle p-6 mx-auto">
+            <img class="avatar-img" src="images/landing/for_lawyer/img17.png" alt="Image Description" width="160" height="160">
+          </div>
+           End Logo -->
+        </div>
+
+        <div class="col-3 col-lg-2 d-none d-sm-inline-block mt-n4">
+          <!-- Logo 
+          <div class="avatar avatar-xl avatar-circle bg-white shadow-soft p-4 mx-auto">
+            <img class="avatar-img" src="images/landing/for_lawyer/img13.png" alt="Image Description">
+          </div>
+           End Logo -->
+        </div>
+
+        <div class="col-3 col-lg-2 d-none d-sm-inline-block mt-n7">
+          <!-- Logo 
+          <div class="avatar avatar-xl avatar-circle bg-white shadow-soft p-4 mx-auto">
+            <img class="avatar-img" src="images/landing/for_lawyer/img14.png" alt="Image Description">
+          </div>
+          End Logo -->
+        </div>
+
+        <div class="col-lg-2 d-none d-lg-inline-block mt-lg-n11">
+          <!-- Logo 
+          <div class="bg-white shadow-soft rounded-circle p-6 mx-auto">
+            <img class="avatar-img" src="images/landing/for_lawyer/img16.png" alt="Image Description" width="160" height="160">
+          </div>
+           End Logo -->
+        </div>
+
+        <div class="col-3 col-lg-2 d-none d-sm-inline-block">
+          <!-- Logo 
+          <div class="avatar avatar-xl avatar-circle bg-white shadow-soft p-4 mx-auto">
+            <img class="avatar-img" src="images/landing/for_lawyer/img15.png" alt="Image Description">
+          </div>
+           End Logo -->
+        </div>
+      </div>
+    </div>
+    <!-- End Clients Section -->
+
+
+
+	  <!-- =================== REGISTRATION PORTION ============ -->
+	  
+	  <!-- Signup Form Section -->
+    <div class="bg-white rounded mx-3 mx-xl-10" style="background-image: url(vendor/svg/components/abstract-shapes-20.svg);">
+      <div class="container-xl container-fluid space-1 space-md-2 px-4 px-md-8 px-lg-10">
+        <div class="row justify-content-lg-between align-items-lg-center">
+          <div class="col-md-10 col-lg-5 mb-9 mb-lg-0">
+            <h1 class="text-navy">Register here for free!!</h1>
+            <p class="text-navy-70">Just few steps ahead to start using the app. Once the registration 
+			process is done, login to the app and complete the complete process. To activate your business, someone will call you as soon as possible</p>
+
+            <div class="w-50">
+              <hr class="opacity-xs my-50">
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <!-- Form -->
+            <form class="js-validate card shadow-lg">
+              <div class="card-body p-4 p-md-7">
+                <div class="mb-4">
+                  <h3>Fill out the form and login to the App.</h3>
+                </div>
+
+                <div class="row mx-n2">
+                  <div class="col-sm-6 px-2">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label class="sr-only" for="firstName">First name</label>
+                      <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First name" aria-label="First name" required
+                             data-msg="Please enter first your name">
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+				  
+
+                  <div class="col-sm-6 px-2">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label class="sr-only" for="lastName">Last name</label>
+                      <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last name" aria-label="Last name" required
+                             data-msg="Please enter last your name">
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col-sm-6 px-2">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label class="sr-only" for="workEmailAddress">Work email</label>
+                      <input type="email" class="form-control" name="workEmailAddress" id="workEmailAddress" placeholder="Work email" aria-label="Work email" required
+                             data-msg="Please enter a valid email address">
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col-sm-6 px-2">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label class="sr-only" for="contactNumber">Contact Number <span class="text-muted font-weight-normal ml-1">(optional)</span></label>
+                      <input type="text" class="form-control" name="contactNumber" id="contactNumber" placeholder="Contact Number" aria-label="Contact Number"
+                             data-msg="Please enter you mob number for validation.">
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  <!-- Input Group -->
+                  <div class="col-sm-6 px-2">
+                    <div class="js-form-message form-group">
+                      <input type="password" class="form-control" name="password" id="signupPassword" placeholder="Password" aria-label="Password" required
+                             data-msg="Your password is invalid. Please try again.">
+                    </div>
+                  </div>
+                  <!-- End Input Group -->
+
+                  <!-- Input Group -->
+                  <div class="col-sm-6 px-2">
+                    <div class="js-form-message form-group">
+                      <input type="password" class="form-control" name="confirmPassword" id="signupConfirmPassword" placeholder="Confirm Password" aria-label="Confirm Password" required
+                             data-msg="Password does not match the confirm password.">
+                    </div>
+                  </div>
+                  <!-- End Input Group -->
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+
+                  <div class="col-sm-6 px-2">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label class="sr-only" for="userType">User Type</label>
+                      <select class="form-control custom-select" name="userType" id="userType" required
+                              data-msg="Please select user type.">
+                        <option value="AGENT" selected >I want to be an agent</option>
+                        <option value="TEST">I am just checking</option>
+                      </select>
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col-sm-6 px-2">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label class="sr-only" for="Area">Area Code</label>
+                      <select class="form-control custom-select" name="area" id="area" required
+                              data-msg="Please select your Area.">
+                        <option value="" selected disabled>Area Code</option>                       
+                        <option value="700001">700001</option>
+						<option value="700002">700002</option>
+						<option value="700003">700003</option>
+						<option value="700004">700004</option>
+						<option value="700005">700005</option>
+						<option value="700006">700006</option>
+						<option value="700007">700007</option>
+						<option value="700008">700008</option>
+						<option value="700009">700009</option>
+						<option value="700010">700010</option>
+						<option value="700011">700011</option>
+						<option value="700012">700012</option>
+						<option value="700013">700013</option>
+						<option value="700014">700014</option>
+						<option value="700015">700015</option>
+						<option value="700016">700016</option>
+						<option value="700017">700017</option>
+						<option value="700018">700018</option>
+						<option value="700019">700019</option>
+						<option value="700020">700020</option>
+						<option value="700021">700021</option>
+						<option value="700022">700022</option>
+						<option value="700023">700023</option>
+						<option value="700024">700024</option>
+						<option value="700025">700025</option>
+						<option value="700026">700026</option>
+						<option value="700027">700027</option>
+						<option value="700028">700028</option>
+						<option value="700029">700029</option>
+						<option value="700030">700030</option>
+						<option value="700031">700031</option>
+						<option value="700032">700032</option>
+						<option value="700033">700033</option>
+						<option value="700034">700034</option>
+						<option value="700035">700035</option>
+						<option value="700036">700036</option>
+						<option value="700037">700037</option>
+						<option value="700038">700038</option>
+						<option value="700040">700040</option>
+						<option value="700041">700041</option>
+						<option value="700042">700042</option>
+						<option value="700043">700043</option>
+						<option value="700044">700044</option>
+						<option value="700045">700045</option>
+						<option value="700046">700046</option>
+						<option value="700047">700047</option>
+						<option value="700050">700050</option>
+						<option value="700052">700052</option>
+						<option value="700053">700053</option>
+						<option value="700054">700054</option>
+						<option value="700060">700060</option>
+						<option value="700061">700061</option>
+						<option value="700062">700062</option>
+						<option value="700063">700063</option>
+						<option value="700065">700065</option>
+						<option value="700066">700066</option>
+						<option value="700067">700067</option>
+						<option value="700068">700068</option>
+						<option value="700069">700069</option>
+						<option value="700071">700071</option>
+						<option value="700072">700072</option>
+						<option value="700073">700073</option>
+						<option value="700074">700074</option>
+						<option value="700075">700075</option>
+						<option value="700077">700077</option>
+						<option value="700078">700078</option>
+						<option value="700080">700080</option>
+						<option value="700082">700082</option>
+						<option value="700085">700085</option>
+						<option value="700086">700086</option>
+						<option value="700087">700087</option>
+						<option value="700088">700088</option>
+						<option value="700089">700089</option>
+						<option value="700090">700090</option>
+						<option value="700092">700092</option>
+						<option value="700094">700094</option>
+						<option value="700095">700095</option>
+						<option value="700099">700099</option>
+						<option value="700107">700107</option>
+						<option value="700108">700108</option>
+						<option value="700139">700139</option>
+                      </select>
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col-sm-12 px-2">
+                    <!-- Input -->
+                    <div class="js-form-message form-group">
+                      <label class="sr-only" for="clinetComments">Tell us about your Requirements, how can we help to expand your business.</label>
+                      <textarea class="form-control" rows="3" name="clinetComments" id="clinetComments" placeholder="Tell us about your Requirements, how can we help to expand your business." aria-label="Tell us about your Requirements, how can we help to expand your business."
+                                data-msg="Please enter your requirements."></textarea>
+                    </div>
+                    <!-- End Input -->
+                  </div>
+                </div>
+
+                <!-- Checkbox -->
+                <div class="js-form-message mb-5">
+                  <div class="custom-control custom-checkbox d-flex align-items-center text-muted">
+                    <input type="checkbox" class="custom-control-input" id="termsCheckbox" name="termsCheckbox" checked>
+                    <label class="custom-control-label small" for="termsCheckbox">
+                      Yes, I'd like to receive occasional marketing emails from Front. I have the right to opt out at any time. <a class="link-underline" href="../pages/privacy.html">View privacy policy.</a>
+                    </label>
+                  </div>
+                </div>
+                <!-- End Checkbox -->
+
+                <button type="submit" class="btn btn-block btn-primary">Get Started</button>
+              </div>
+            </form>
+            <!-- End Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Signup Form Section -->
+	  
+	  
+	  <!-- =============== REGISTRATION END ==================== -->
+
+
+	  <!-- ==================== CARD INFO ====================== -->
+	      <!-- Stories Section -->
+    <div class="container space-2 space-lg-3">
+      <!-- Title -->
+      <div class="w-md-80 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+        <span class="d-block small font-weight-bold text-cap mb-2">Success stories</span>
+        <h2>See how jasthi.com is helping people and working smarter</h2>
+      </div>
+      <!-- End Title -->
+      <div class="row">
+        <div class="col-sm-6 col-md-4 mb-5">
+          <!-- Card Info -->
+          <div class="card h-100">
+            <img class="card-img-top" src="images/josthi/agents/agent_feedback2.jpg" alt="Image Description">
+            <div class="card-body">
+              <div class="max-w-13rem w-100 mb-3">
+                <img class="img-fluid" src="images/josthi/logo/josthi_main_logo_1.svg" alt="Logo">
+              </div>
+              <p class="mb-0">Amazon launched their enterprise platform and built a powerful user experience.</p>
+            </div>
+            <div class="card-footer">
+              <a class="font-weight-bold" href="customer-story.html">Read story <i class="fas fa-angle-right fa-sm ml-1"></i></a>
+            </div>
+          </div>
+          <!-- End Card Info -->
+        </div>
+
+        <div class="col-sm-6 col-md-4 mb-5">
+          <!-- Card Info -->
+          <div class="card h-100">
+            <img class="card-img-top" src="images/josthi/agents/agent_feedback1.jpg" alt="Image Description">
+            <div class="card-body">
+              <div class="max-w-13rem w-100 mb-3">
+                <img class="img-fluid" src="images/josthi/logo/josthi_main_logo_1.svg" alt="Logo">
+              </div>
+              <p class="mb-0">Mapbox empowers marketers to create digital marketing dashboards easily and share them with their team.</p>
+            </div>
+            <div class="card-footer">
+              <a class="font-weight-bold" href="customer-story.html">Read story <i class="fas fa-angle-right fa-sm ml-1"></i></a>
+            </div>
+          </div>
+          <!-- End Card Info -->
+        </div>
+
+        <div class="col-sm-6 col-md-4 mb-5">
+          <!-- Card Info -->
+          <div class="card h-100">
+            <img class="card-img-top" src="images/josthi/agents/agent_feedback3.jpg" alt="Image Description">
+            <div class="card-body">
+              <div class="max-w-13rem w-100 mb-3">
+                <img class="img-fluid" src="images/josthi/logo/josthi_main_logo_1.svg" alt="Logo">
+              </div>
+              <p class="mb-0">Netflix's mission is to create a planet run by the sun. In order to achieve this goal, they needed to find a way to make solar simple.</p>
+            </div>
+            <div class="card-footer">
+              <a class="font-weight-bold" href="customer-story.html">Read story <i class="fas fa-angle-right fa-sm ml-1"></i></a>
+            </div>
+          </div>
+          <!-- End Card Info -->
+        </div>
+
+      </div>
+
+      <div class="text-center mt-5">
+        <a class="btn btn-primary" href="#">View all Stories</a>
+      </div>
+    </div>
+    <!-- End Stories Section -->
+
+    <!-- CTA Section -->
+    <div class="bg-primary text-center bg-img-hero" style="background-image: url(vendor/svg/components/abstract-shapes-5.svg);">
+      <div class="container space-2">
+        <div class="mb-5">
+          <h2 class="text-white">Start your demo with josthi today</h2>
+        </div>
+        <a class="btn btn-light transition-3d-hover" href="#">Schedule a Demo</a>
+      </div>
+    </div>
+    <!-- End CTA Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="Common :: site-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+<!-- JS Global Compulsory -->
+  <div th:insert="Common :: js-includes"></div>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmPassword: {
+              equalTo: '#signupPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

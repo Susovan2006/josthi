@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Title -->
+  <title>Search Lawyer | mockell</title>
+	<div th:replace="Common :: includes"></div>
+</head>
+<body>
+
+
+  <!-- ========== HEADER ========== -->
+  <div th:insert="Common :: nav-menu"></div>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content">
+      <!-- Sidebar -->
+      <!-- End Sidebar -->
+
+      <div class="col-lg-11 mt-11 mb-6">
+        <div class="pl-lg-9 pl-xl-8">
+
+          <!-- Component Block -->
+          <div id="component-1" class="hs-docs-content-divider">
+            <h2 class="hs-docs-heading">Check who can help you </h2>
+
+            <!-- Tab Wrapper -->
+            <div class="tab-wrapper">
+              <!-- Nav Classic -->
+              <!-- End Nav Classic -->
+
+              <!-- Tab Content -->
+              <div class="tab-content" id="pills-tabContent-1">
+                <div class="tab-pane fade p-4 show active" id="pills-result-1" role="tabpanel" aria-labelledby="pills-result-tab-1">
+                  <!-- Filter -->
+                  <div class="container">
+                    <div class="row justify-content-md-start align-items-md-center">
+                      <div class="col-md-4 mb-3 mb-md-0">
+                        <p class="font-size-1 mr-md-auto mb-0"><span class="text-dark font-weight-bold"></span> Select the filter Conditions</p>
+                      </div>
+
+                      <div class="col-md-8 text-md-right">
+                       
+					   <!-- State Select -->
+                        <select class="js-custom-select form-control"
+                              data-hs-select2-options='{
+                                "minimumResultsForSearch": "Infinity",
+                                "customClass": "btn btn-sm btn-white dropdown-toggle mb-1",
+                                "dropdownAutoWidth": true,
+                                "width": "auto"
+                              }' onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" required>
+                          <!--<option value="sort1">Highest rated</option>
+                          <option value="sort2">Newest</option>
+                          <option value="sort3">Lowest price</option>
+                          <option value="sort4">Highest price</option>-->
+                        </select>
+                        <!-- End Select -->
+
+                        <!-- Select -->
+                        <select class="js-custom-select form-control"
+                              data-hs-select2-options='{
+                                "minimumResultsForSearch": "Infinity",
+                                "customClass": "btn btn-sm btn-white dropdown-toggle mb-1",
+                                "placeholder": "City/Town",
+                                "dropdownAutoWidth": true,
+                                "width": "auto"
+                              }' id ="state" required>
+                          <option label="all">all</option>
+                          <!--<option value="price1" selected>Paid</option>
+                          <option value="price2">Free</option>-->
+                        </select>
+                        <!-- End Select -->
+
+                        <!-- Select -->
+                        <select class="js-custom-select form-control"
+                              data-hs-select2-options='{
+                                "minimumResultsForSearch": "Infinity",
+                                "customClass": "btn btn-sm btn-white dropdown-toggle mb-1",
+                                "placeholder": "Practice Area",
+                                "dropdownAutoWidth": true,
+                                "width": "auto"
+                              }'>
+						  <option label="empty"></option>
+						  <option label="0" selected>Practice Area</option>
+                          <option label="1" >All</option>
+                          <option value="2">General</option>
+                          <option value="3">Adopt a child</option>
+                          <option value="4">Marriage registration</option>
+                          <option value="5" >Land Dispute</option>
+                        </select>
+                        <!-- End Select -->
+
+                        <!-- Select -->
+                        <select class="js-custom-select form-control"
+                              data-hs-select2-options='{
+                                "minimumResultsForSearch": "Infinity",
+                                "customClass": "btn btn-sm btn-white dropdown-toggle mb-1",
+                                "placeholder": "Sort By",
+                                "dropdownAutoWidth": true,
+                                "width": "auto"
+                              }'>
+                          <option label="empty"></option>
+                          <option value="AZ" selected>Name A-->Z</option>
+                          <option value="ZA">Name Z-->A</option>
+                          <option value="Active">Most Active</option>
+                        </select>
+						
+						
+                        <!-- End Select -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Filter -->
+                </div>
+              </div>
+              <!-- End Tab Content -->
+            </div>
+            <!-- End Tab Wrapper -->
+          </div>
+          <!-- End Component Block -->
+        </div>
+      </div>
+	  
+	  
+	  
+	  
+	  
+	  <div class="container">
+		  <!-- Lawyer 1 -->
+		  <div class="media align-items-center border-top border-bottom py-3">		
+			<div class=" col-lg-2 avatar avatar-xxl avatar-circle mb-3 ml-1">
+			  <img class="avatar-img" src="images/Susovan_PP.jpg" alt="Image Description">
+			</div>
+			<div class="media-body ml-2">
+                <div class="mb-2">
+                    <h3 class="mb-0"><a href="#">Susovan Gumtya</a></h3>
+                        <span class="d-block font-size-1 font-weight-bold">Head of Data Science, XXXX Data Inc.</span>
+                </div>
+                <p>Nataly Gaga has a BS and MS in Mechanical Engineering from Santa Clara University and years of experience as a professional instructor and trainer</p>
+				<p><a class="font-size-1 font-weight-bold">Practice Areas :</a> land and Property</p>
+			</div>
+		  </div>
+		  <!-- End Lawyer 1 -->
+		</div>
+		
+		<div class="container">
+		  <!-- Lawyer 1 -->
+		  <div class="media align-items-center border-top border-bottom py-3">		
+			<div class=" col-lg-2 avatar avatar-xxl avatar-circle mb-3 ml-1">
+			  <img class="avatar-img" src="images/Susovan_PP.jpg" alt="Image Description">
+			</div>
+			<div class="media-body ml-2">
+                <div class="mb-2">
+                    <h3 class="mb-0"><a href="#">Susovan Gumtya</a></h3>
+                        <span class="d-block font-size-1 font-weight-bold">Head of Data Science, XXXX Data Inc.</span>
+                </div>
+                <p>Nataly Gaga has a BS and MS in Mechanical Engineering from Santa Clara University and years of experience as a professional instructor and trainer</p>
+				<p><a class="font-size-1 font-weight-bold">Practice Areas :</a> land and Property</p>
+			</div>
+		  </div>
+		  <!-- End Lawyer 1 -->
+		</div>
+		
+		<div class="container">
+		  <!-- Lawyer 1 -->
+		  <div class="media align-items-center border-top border-bottom py-3">		
+			<div class=" col-lg-2 avatar avatar-xxl avatar-circle mb-3 ml-1">
+			  <img class="avatar-img" src="images/Susovan_PP.jpg" alt="Image Description">
+			</div>
+			<div class="media-body ml-2">
+                <div class="mb-2">
+                    <h3 class="mb-0"><a href="#">Susovan Gumtya</a></h3>
+                        <span class="d-block font-size-1 font-weight-bold">Head of Data Science, XXXX Data Inc.</span>
+                </div>
+                <p>Nataly Gaga has a BS and MS in Mechanical Engineering from Santa Clara University and years of experience as a professional instructor and trainer</p>
+				<p><a class="font-size-1 font-weight-bold">Practice Areas :</a> land and Property</p>
+			</div>
+		  </div>
+		  <!-- End Lawyer 1 -->
+		</div>
+		
+		<div class="container">
+		  <!-- Lawyer 1 -->
+		  <div class="media align-items-center border-top border-bottom py-3">		
+			<div class=" col-lg-2 avatar avatar-xxl avatar-circle mb-3 ml-1">
+			  <img class="avatar-img" src="images/Susovan_PP.jpg" alt="Image Description">
+			</div>
+			<div class="media-body ml-2">
+                <div class="mb-2">
+                    <h3 class="mb-0"><a href="#">Susovan Gumtya</a></h3>
+                        <span class="d-block font-size-1 font-weight-bold">Head of Data Science, XXXX Data Inc.</span>
+                </div>
+                <p>Nataly Gaga has a BS and MS in Mechanical Engineering from Santa Clara University and years of experience as a professional instructor and trainer</p>
+				<p><a class="font-size-1 font-weight-bold">Practice Areas :</a> land and Property</p>
+			</div>
+		  </div>
+		  <!-- End Lawyer 1 -->
+		</div>
+	  
+	  
+	  
+  </main>
+
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="Common :: site-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+
+  <div th:insert="Common :: js-includes"></div>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of select2
+      $('.js-custom-select').each(function () {
+        var select2 = $.HSCore.components.HSSelect2.init($(this));
+      });
+
+      // initialization scroll to in overflowed container
+      var scrollToInOverflowedContainerNav = new HSScrollToInOverflowedContainer($('.hs-sidebar-sticky'), {
+        targetEl: "#snippetsSidebarNav .hs-sidebar-item.active"
+      }).init();
+    });
+
+    $(window).on('load', function () {
+      // initialization of autocomplet
+      $.HSCore.components.HSLocalSearchAutocomplete.init('.js-hs-docs-search');
+    });
+  </script>
+  
+  <script language="javascript">print_state("sts");</script>
+</body>
+</html>

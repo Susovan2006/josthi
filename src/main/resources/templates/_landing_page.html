@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Title -->
+  <title>Welcome to josthi.com</title>
+	<div th:replace="Common :: includes"></div>
+</head>
+<body>
+	
+	
+  <!-- ========== Navigation Menu ===== -->
+  <div th:insert="Common :: nav-menu"></div>	
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main">
+    <!-- Hero Section -->
+    <div class="d-lg-flex position-relative">
+      <div class="container d-lg-flex align-items-lg-center space-top-2 space-lg-0 min-vh-lg-100">
+        <!-- Content -->
+        <div class="w-md-100">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="mb-5 mt-11">
+                <h2 class="display-5 mb-3">Turn your 
+                	<span class="text-indigo font-weight-bold">
+					<span class="js-text-animation"></span>
+					</span>
+				<br> to a quick Solution.</h2>
+                <p class="lead">Here we are to help your with your day to day legal issue and problem. This is the perfect place to find expert legal advicers. Welcome to mockell.com</p>
+              </div>
+
+              <a class="btn btn-primary btn-wide transition-3d-hover" href="#">Search Lawyer</a>
+              <a class="btn btn-link btn-wide" href="#">Learn More <i class="fas fa-angle-right fa-sm ml-1"></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- End Content -->
+
+        <!-- SVG Shape -->
+        <figure class="col-lg-7 col-xl-6 d-none d-lg-block position-absolute top-0 right-0 pr-0 ie-main-hero" style="margin-top: 3.75rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1137.5 979.2">
+            <path fill="#F9FBFF" d="M565.5,957.4c81.1-7.4,155.5-49.3,202.4-115.7C840,739.8,857,570,510.7,348.3C-35.5-1.5-4.2,340.3,2.7,389
+              c0.7,4.7,1.2,9.5,1.7,14.2l29.3,321c14,154.2,150.6,267.8,304.9,253.8L565.5,957.4z"/>
+            <defs>
+              <path id="mainHeroSVG1" d="M1137.5,0H450.4l-278,279.7C22.4,430.6,24.3,675,176.8,823.5l0,0C316.9,960,537.7,968.7,688.2,843.6l449.3-373.4V0z"/>
+            </defs>
+            <clipPath id="mainHeroSVG2">
+              <use xlink:href="#mainHeroSVG1"/>
+            </clipPath>
+            <g transform="matrix(1 0 0 1 0 0)" clip-path="url(#mainHeroSVG2)">
+              <image width="750" height="750" th:attr="'xlink:href'=@{/images/josthi/josthi-landing_1.jpg}" transform="matrix(1.4462 0 0 1.4448 52.8755 0)"></image>
+            </g>
+          </svg>
+        </figure>
+        <!-- End SVG Shape -->
+      </div>
+    </div>
+    <!-- End Hero Section -->
+	
+	
+	<!-- First Component-->
+			<!-- Features Section -->
+		<div class="container space-2">
+		  <div class="row justify-content-lg-between align-items-lg-center">
+			<div class="col-lg-5 mb-9 mb-lg-0">
+			  <div class="mb-3">
+				<h2 class="h1">Consult with with Professionals </h2>
+			  </div>
+
+			  <p>mockell.com is a please where you can find many experienced lawyer with whom you can discuss your issue for Free or at minimal consulting fees.</p>
+
+			  <p>Here you will get the details of all the experienced lawyer for free. Check the availability and book an appointment. We are also working on online video chat.</p>
+
+			  <div class="mt-4">
+				<a class="btn btn-primary btn-wide transition-3d-hover" href="#">Let's see who's online.</a>
+			  </div>
+			</div>
+
+			<div class="col-lg-6 col-xl-5">
+			  <!-- SVG Element -->
+			  <div class="position-relative min-h-500rem mx-auto" style="max-width: 28rem;">
+				<figure class="position-absolute top-0 right-0 z-index-2 mr-11">
+				  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 450 450" width="165" height="165">
+					<g>
+					  <defs>
+						<path id="circleImgID2" d="M225,448.7L225,448.7C101.4,448.7,1.3,348.5,1.3,225l0,0C1.2,101.4,101.4,1.3,225,1.3l0,0
+						  c123.6,0,223.7,100.2,223.7,223.7l0,0C448.7,348.6,348.5,448.7,225,448.7z"/>
+					  </defs>
+					  <clipPath id="circleImgID1">
+						<use xlink:href="#circleImgID2"/>
+					  </clipPath>
+					  <g clip-path="url(#circleImgID1)">
+						<image width="450" height="450" xlink:href="images/landing/judge.jpg" ></image>
+					  </g>
+					</g>
+				  </svg>
+				</figure>
+
+				<figure class="position-absolute top-0 left-0">
+				  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 335.2 335.2" width="120" height="120">
+					<circle fill="none" stroke="#377DFF" stroke-width="75" cx="167.6" cy="167.6" r="130.1"/>
+				  </svg>
+				</figure>
+
+				<figure class="d-none d-sm-block position-absolute top-0 left-0 mt-11">
+				  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 515 515" width="200" height="200">
+					<g>
+					  <defs>
+						<path id="circleImgID4" d="M260,515h-5C114.2,515,0,400.8,0,260v-5C0,114.2,114.2,0,255,0h5c140.8,0,255,114.2,255,255v5
+						  C515,400.9,400.8,515,260,515z"/>
+					  </defs>
+					  <clipPath id="circleImgID3">
+						<use xlink:href="#circleImgID4"/>
+					  </clipPath>
+					  <g clip-path="url(#circleImgID3)">
+						<image width="515" height="515" xlink:href="images/landing/lawyer.jpg" transform="matrix(1 0 0 1 1.639390e-02 2.880859e-02)"></image>
+					  </g>
+					</g>
+				  </svg>
+				</figure>
+
+				<figure class="position-absolute top-0 right-0" style="margin-top: 11rem; margin-right: 13rem;">
+				  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 67 67" width="25" height="25">
+					<circle fill="#00C9A7" cx="33.5" cy="33.5" r="33.5"/>
+				  </svg>
+				</figure>
+
+				<figure class="position-absolute top-0 right-0 mr-3" style="margin-top: 8rem;">
+				  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 141 141" width="50" height="50">
+					<circle fill="#FFC107" cx="70.5" cy="70.5" r="70.5"/>
+				  </svg>
+				</figure>
+
+				<figure class="position-absolute bottom-0 right-0">
+				  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 770.4 770.4" width="280" height="280">
+					<g>
+					  <defs>
+						<path id="circleImgID6" d="M385.2,770.4L385.2,770.4c212.7,0,385.2-172.5,385.2-385.2l0,0C770.4,172.5,597.9,0,385.2,0l0,0
+						  C172.5,0,0,172.5,0,385.2l0,0C0,597.9,172.4,770.4,385.2,770.4z"/>
+					  </defs>
+					  <clipPath id="circleImgID5">
+						<use xlink:href="#circleImgID6"/>
+					  </clipPath>
+					  <g clip-path="url(#circleImgID5)">
+						<image width="900" height="900" xlink:href="images/landing/consulting1.jpg" transform="matrix(1 0 0 1 -64.8123 -64.8055)"></image>
+					  </g>
+					</g>
+				  </svg>
+				</figure>
+			  </div>
+			  <!-- End SVG Element -->
+			</div>
+		  </div>
+		</div>
+		<!-- End Features Section -->
+	
+	<!-- First Component End-->
+	
+	<!-- Second Component -->
+		<!-- Features Section -->
+		<div class="container space-2">
+		  <div class="row">
+			<div class="col-lg-4 mb-7 mb-lg-0">
+			  <div class="mb-4">
+				<h2 class="h1">Post your problem in a Blog from Anywhere!</h2>
+			  </div>
+
+			  <p>Proble in life... No worries, post your problem in the blog, someone might respond to you with some solutions.</p>
+			  <div class="mt-4">
+				   <a class="btn btn-primary btn-wide transition-3d-hover" href="#">Let's Post a Blog.</a>
+			  </div>
+			</div>
+		  </div>
+
+		  <div class="mt-lg-n11 mb-7 mb-lg-0">
+			<!-- SVG Illustration -->
+			<figure class="ie-device-and-mobile">
+			  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2058.5 1182.2" xml:space="preserve">
+				<path fill="none" stroke="#bdc5d1" stroke-width="5.4276" stroke-miterlimit="10" stroke-dasharray="8.5629" d="M212.3,502.7c0.9-1.6,1.8-3.2,2.7-4.7"/>
+				<path fill="none" stroke="#bdc5d1" stroke-width="5.4276" stroke-miterlimit="10" stroke-dasharray="8.5629" d="M220.8,488.8c1.9-2.8,3.8-5.5,5.7-8.3c13-18.3,27.7-35,43.4-49.8c22.5-21.3,47.4-38.9,73.8-52.2
+				  c33.5-16.8,69.3-26.4,105.4-29.2c46.6-3.6,93.4,4.1,138.3,19c44.5,14.8,84.6,43.6,128.8,59C767,445,821,448.1,872.8,434.9
+				  c6.4-1.6,12.8-3.5,19.1-5.6"/>
+				<path fill="none" stroke="#bdc5d1" stroke-width="5.4276" stroke-miterlimit="10" stroke-dasharray="8.5629" d="M897.1,427.4c1.7-0.6,3.4-1.2,5.1-1.9"/>
+				<polyline fill="none" stroke="#bdc5d1" stroke-width="4.5" stroke-miterlimit="10" stroke-dasharray="7" points="885.9,410.4 918.5,419.1 896.8,440.8 "/>
+				<g>
+				  <path fill="#fff" d="M1916.1,696.8H992.9c-17.4,0-31.7-14.3-31.7-31.7V31.7c0-17.4,14.3-31.7,31.7-31.7h923.3
+					c17.4,0,31.7,14.3,31.7,31.7v633.6C1947.8,682.6,1933.5,696.8,1916.1,696.8z"/>
+				  <circle fill="#F7F7F7" cx="1452.8" cy="28.2" r="3.6"/>
+				  <path fill="#fff" d="M2055.1,677.7H854.4c-1.8,0-3.4-1.6-3.4-3.4l0,0c0-1.8,1.6-3.4,3.4-3.4h1200.7c1.8,0,3.4,1.6,3.4,3.4l0,0
+					C2058.5,676.2,2057.1,677.7,2055.1,677.7z"/>
+				  <path fill="#EFEFEF" d="M1454.8,679.9l-603.9-2.2c0,0,29.1,13.7,142.4,19.1h459.5h3.7h459.6c113.3-5.4,142.4-19.1,142.4-19.1
+					L1454.8,679.9z"/>
+
+					<linearGradient id="devices1ID_1" gradientUnits="userSpaceOnUse" x1="1339.1" y1="546.1826" x2="1570.1" y2="546.1826" gradientTransform="matrix(1 0 0 1 0 129.1174)">
+					<stop  offset="5.908129e-07" style="stop-color:#F0F1F2"/>
+					<stop  offset="5.235744e-02" style="stop-color:#F6F7F8"/>
+					<stop  offset="0.1708" style="stop-color:#FDFDFD"/>
+					<stop  offset="0.5" style="stop-color:#FFFFFF"/>
+					<stop  offset="0.8292" style="stop-color:#FDFDFD"/>
+					<stop  offset="0.9476" style="stop-color:#F6F7F8"/>
+					<stop  offset="1" style="stop-color:#F0F1F2"/>
+				  </linearGradient>
+				  <path fill="url(#devices1ID_1)" d="M1565.7,679.5h-222.4c-2.3,0-4.2-1.9-4.2-4.2v-4.2h231v4.2C1570.1,677.6,1568.1,679.5,1565.7,679.5z"/>
+				  <g>
+					<defs>
+					  <rect id="devices1ID_2" x="998" y="45.3" width="909.6" height="567.7"/>
+					</defs>
+					<clipPath id="devices1ID_3">
+					  <use xlink:href="#devices1ID_2"/>
+					</clipPath>
+					<g clip-path="url(#devices1ID_3)">
+					  <image id="SVGDevices1LaptopImg" width="1618" height="1010" xlink:href="images/landing/wallpaper.jpg"  transform="matrix(0.5622 0 0 0.5622 998.0432 45.2877)"></image>
+					</g>
+					<g>
+					  <rect id="laptopID2" x="998" y="45.3" fill="none" stroke="#e7eaf3" stroke-width="1.2" stroke-miterlimit="10" width="909.6" height="567.7"/>
+					</g>
+				  </g>
+				</g>
+				<path fill="#e7eaf3" d="M303.1,849.1c-4,2.2-38.9,60.2-36.8,107.7c5.4-1.5,18.3-8.3,18.3-8.3l5.9-3.5l3.7-20.3l4.8-23l9-28.8l10.8-21
+				  l8.4-12l-7.8,2.4L303.1,849.1z"/>
+				<path fill="#e7eaf3" d="M402.5,938.6c0,0.3,0,0.7,0,1.3c0.4,13.4,4.4,92.4-50.4,124.7c24.6,27.6,64.8,3,64.8,3l5.4-6v-94.2l-1.2-2.4
+				  l-6.6-24l-8.4,0.6L402.5,938.6z"/>
+				<path fill="#377dff" d="M373.2,1150.2l-44.1-61c0,0-28.8-26.1-40.5-34.9c-0.1,9,0.5,73.5,3.2,95.9H373.2z"/>
+				<path fill="#377dff" d="M414.1,1140.4h8.2V1060c-20.7,6.6-120.8,7.2-133.6-5.8c0,1,19.2,53.2,53.8,93.5h71.6V1140.4z"/>
+				<path fill="none" stroke="#1e2022" opacity=".1" d="M414.1,1140.4h8.2V1060c-20.7,6.6-120.8,7.2-133.6-5.8c0,1,19.2,53.2,53.8,93.5h71.6V1140.4z"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M266.1,898.1c-2.2,2.4-2.2,7-2.2,7c-2.7-8.1-61.6-154.6-61.6-154.6s-12.2,5.2,1.9,32.9
+				  c-4.5,2.7-17.2,12.8-12,29.1c3.9,12.3,12.6,16.5,18,16.5c-0.9,9.2,18.7,103,21.3,107.5c6,10.6,17.6,22.2,24.4,22.5
+				  c7.8,0.4,23.7-6.8,34.6-13.7"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M326.7,840c-29.6,5.5-67.2,40.4-66.3,47.9c0.9,7.1,19.4,27.6,33.4,37.3"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M345.3,823.5c-63.6,35.9-64.8,219.5-56.6,230.8c8,11,103.1,13.9,133.6,6.3"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M419.9,845.3c-8.7-12.7-20.2-21.9-35.1-25.8"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M414.7,940.7c1.6,6.9,4.9,19.8,8.2,32"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M395.6,925.2c3.1,8.9,6.5,15.1,8.9,15.9c3,1,9.8,0,17.8-2.1"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M422.3,846.9c-5.3-3.9-10.6-5.8-15.6-4.6"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M345.3,823.5v-10.3"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M384.8,794.3v42.8c0,3.5-9.3,5.6-18.9,5.9"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M384.7,794.3c3.6,2,9-0.1,12.5-5c3.7-5.1,3.7-11.3,0.2-13.9c-0.9-0.7-2-1-3.2-1.1"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M327.8,750.7c-0.6,1.3-1.2,2.6-1.7,3.9c-9.7,24.5-2.8,50.1,15.4,57.3c1.2,0.5,2.5,0.9,3.7,1.2"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M407.3,779.8c7.4-2.2,16.6-7.5,16.6-18c0-6.6-6.2-13.9-7.3-22.2c-0.6-4.2,0.7-21.7-4.2-27.6
+				  c-10.2-12.3-16.2-9.7-24-12.6c-13.6-5-18.8-13.2-30-13.2c-12.7,0-17.9,6.6-27,6.6c-10.4,0-19-4.8-33.6-4.8c-7.8,0-18,10.2-18,19.2
+				  c0,21.3,19.8,18.2,19.8,23.4c0,3.6-1.2,6.5-1.2,11.4c0,2.6,1.4,4.8,3.4,6.5"/>
+				<path fill="#e7eaf3" d="M187.1,682.6H217c8.9,0,16.1,7.2,16.1,16.1v29.9c0,8.9-7.2,16.1-16.1,16.1h-29.9c-8.9,0-16.1-7.2-16.1-16.1
+				  v-29.9C171.1,689.8,178.3,682.6,187.1,682.6z"/>
+				<circle fill="#377dff" cx="225.7" cy="687.6" r="12.7"/>
+				<path fill="#fff" stroke="#1e2022" stroke-width="1.5" stroke-miterlimit="10" d="M389.4,544.2H187.9c-27.1,0-49.1,22-49.1,49.1v515.2c0,27.1,22,49.1,49.1,49.1l0,0h201.5
+				  c27.1,0,49.1-22,49.1-49.1V593.3C438.5,566.2,416.5,544.2,389.4,544.2z M422.3,848.9v256.5c0,18.7-15.2,33.9-33.9,33.9H188.9
+				  c-18.7,0-33.9-15.2-33.9-33.9l0,0v-509c0-18.7,15.2-33.9,33.9-33.9h33V573c0,5.2,4.2,9.4,9.4,9.4h114.4c5.2,0,9.4-4.2,9.4-9.4v-10.5
+				  h33c18.7,0,33.9,15.2,33.9,33.9l0,0L422.3,848.9z"/>
+				<path fill="#00c9a7" d="M493.4,620.4h-72.8c-13.1,0-23.8,10.7-23.8,23.8c0,6.9,2.9,13.1,7.7,17.5v15.9l10.3-10.3
+				  c1.9,0.5,3.8,0.7,5.8,0.7h72.8c13.1,0,23.8-10.7,23.8-23.8S506.5,620.4,493.4,620.4z"/>
+				<circle fill="#fff" cx="432.4" cy="645" r="6"/>
+				<circle fill="#fff" cx="457" cy="645" r="6"/>
+				<circle fill="#fff" cx="481.5" cy="645" r="6"/>
+				<path fill="none" stroke="#1e2022" stroke-width="5" stroke-linecap="round" stroke-miterlimit="10" d="M109.2,1090.2c1.2-3.4,1.9-7.7,1.9-13c0-80.1-94.8-58.5-94.8-125"/>
+				<path fill="#1e2022" d="M33,951.7c5.1,6.7-12.1,14.4-14.5,11.1S27.5,944.6,33,951.7z"/>
+				<path fill="#1e2022" d="M116.9,834c6.3,8.1-12.2,15.6-15.2,11.7C98.7,841.8,110.2,825.3,116.9,834z"/>
+				<path fill="#1e2022" d="M111.9,867.7c5,9-19.2,16.2-21.6,11.9C87.9,875.3,106.6,858.1,111.9,867.7z"/>
+				<path fill="#1e2022" d="M113.4,893.3c6.5,7.9-15.9,19.4-19.1,15.6S106.4,884.8,113.4,893.3z"/>
+				<path fill="#1e2022" d="M121,922.1c6.5,7.9-15.9,19.4-19.1,15.6C98.8,934,114,913.6,121,922.1z"/>
+				<path fill="#1e2022" d="M127.7,948.9c5.9,7.2-13.7,17-16.5,13.6C108.3,959,121.4,941.2,127.7,948.9z"/>
+				<path fill="#1e2022" d="M136.7,978.2c5.9,7.2-13.7,17-16.5,13.6C117.3,988.3,130.4,970.5,136.7,978.2z"/>
+				<path fill="#1e2022" d="M0.3,946.4c2.1-8.2,18.8,0.7,17.7,4.7S-2,955.2,0.3,946.4z"/>
+				<path fill="#1e2022" d="M0,975.2c-1-8.4,17.7-6.3,18.2-2.3S1.2,984.2,0,975.2z"/>
+				<path fill="#1e2022" d="M16.6,1001.3c-5.5-6.4,11.3-15,14-11.9C33.2,992.4,22.4,1008.1,16.6,1001.3z"/>
+				<path fill="#1e2022" d="M37.4,1015.3c-3.3-7.8,15.3-10.9,16.9-7.2C55.8,1011.9,40.9,1023.6,37.4,1015.3z"/>
+				<path fill="#1e2022" d="M65.3,1030c-3.3-7.8,15.3-10.9,16.9-7.2S68.8,1038.3,65.3,1030z"/>
+				<path fill="#1e2022" d="M86.2,1051.2c-0.7-8.4,17.9-5.6,18.3-1.6S87,1060.2,86.2,1051.2z"/>
+				<path fill="#1e2022" d="M42,969.7c6.6,5.3-8.3,16.8-11.4,14.3C27.4,981.5,35,964.1,42,969.7z"/>
+				<path fill="#1e2022" d="M57,984.8c7.3,4.3-5.8,17.8-9.3,15.8S49.2,980.2,57,984.8z"/>
+				<path fill="#1e2022" d="M84.4,999.5c6.8,4.9-7.5,17.2-10.8,14.8S77.1,994.2,84.4,999.5z"/>
+				<path fill="none" stroke="#1e2022" stroke-width="5" stroke-linecap="round" stroke-miterlimit="10" d="M107.4,1090c8.3-13.7,18.5-34.5,18.5-57.9c0-64.7-36.1-97.1-36.1-143.2c0-8.7,0.8-36.2,14.7-47.4"/>
+				<path fill="#fff" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M136.3,1181.5h-53c-2.5,0-4.7-1.6-5.4-3.9l-26.4-80c-1-3,0.7-6.3,3.7-7.2c0.6-0.2,1.2-0.3,1.8-0.3h106
+				  c3.2,0,5.7,2.6,5.7,5.7c0,0.6-0.1,1.2-0.3,1.8l-26.6,80C141,1179.9,138.8,1181.5,136.3,1181.5z"/>
+				<path fill="#e7eaf3" d="M132,1090.2c1.5,2.2,12.7,65.1-44.8,91.3c15.8-0.5,19.9,0.3,19.9,0.3h30l4.8-3l11.4-34.2l8.1-25.2l7.5-23.4
+				  l-1.8-4.3l-3.6-2.3L132,1090.2z"/>
+				<path fill="#1e2022" d="M145.3,1011.8c3.1,8.8-18.7,11.3-20.2,7.1C123.6,1014.7,141.9,1002.4,145.3,1011.8z"/>
+				<path fill="#1e2022" d="M109.6,1024.9c6.9-6.3,17.7,12.9,14.3,15.9S102.2,1031.6,109.6,1024.9z"/>
+				<path fill="#1e2022" d="M104,1001c4.6-8.1,20.8,6.6,18.6,10.5S99.1,1009.7,104,1001z"/>
+				<path fill="#1e2022" d="M98.8,972.6c4.6-8.1,20.8,6.6,18.6,10.5S93.9,981.3,98.8,972.6z"/>
+				<path fill="#1e2022" d="M89.5,950.1c3-8.8,21.7,2.6,20.3,6.8C108.4,961.2,86.3,959.6,89.5,950.1z"/>
+				<path fill="#1e2022" d="M76.3,919.1c4.4-8.3,21,6.1,18.9,10S71.7,927.9,76.3,919.1z"/>
+				<path fill="#1e2022" d="M70.1,884.5c5.1-7.8,20.4,8,17.9,11.7S64.7,892.9,70.1,884.5z"/>
+				<path fill="#1e2022" d="M73.2,854.8c5.1-7.8,20.4,8,17.9,11.7C88.7,870.3,67.7,863.2,73.2,854.8z"/>
+				<path fill="#1e2022" d="M145.3,1042.5c3.1,8.8-18.7,11.3-20.2,7.1C123.6,1045.4,141.9,1033.1,145.3,1042.5z"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M338.6,757.7c0,3-0.6,12.6-4.2,15"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M336.5,788.6c6,0,11.4-3.6,11.4-6"/>
+				<ellipse fill="none" stroke="#1e2022" cx="351.8" cy="759.2" rx="2.1" ry="3.6"/>
+				<path fill="none" stroke="#1e2022" stroke-width="1.5" stroke-linecap="round" stroke-miterlimit="10" d="M136.3,1181.5h-53c-2.5,0-4.7-1.6-5.4-3.9l-26.4-80c-1-3,0.7-6.3,3.7-7.2c0.6-0.2,1.2-0.3,1.8-0.3h106
+				  c3.2,0,5.7,2.6,5.7,5.7c0,0.6-0.1,1.2-0.3,1.8l-26.6,80C141,1179.9,138.8,1181.5,136.3,1181.5z"/>
+			  </svg>
+			</figure>
+			<!-- End SVG Illustration -->
+		  </div>
+
+		  <div class="row justify-content-lg-end">
+			<div class="col-lg-7 mt-lg-n11">
+			  <h2 class="h1 mb-4">Access the site from Android / iOS Mobile as well as from your Laptop</h2>
+			  <p>Solutions at your fingertips, access mockell.com from any device. you will have the same experience. </p>
+			</div>
+		  </div>
+		</div>
+		<!-- End Features Section -->
+	
+	<!-- Second Component end -->
+	
+	<!-- Component 1-->
+	<div class="tab-content" id="pills-tabContent-10">
+                <div class="tab-pane fade p-4 show active" id="pills-result-10" role="tabpanel" aria-labelledby="pills-result-tab-10">
+                  <!-- Features Section -->
+                  <div class="container space-2">
+                    <!-- Title -->
+                    <div class="w-md-80 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+                      <span class="d-block small font-weight-bold text-cap mb-2">Company values</span>
+                      <h2>Our culture</h2>
+                    </div>
+                    <!-- End Title -->
+
+                    <div class="row">
+                      <div class="col-sm-6 col-md-4 mb-3 mb-sm-7">
+                        <!-- Icon Blocks -->
+                        <div class="media">
+                          <span class="mr-3">&mdash;</span>
+                          <div class="media-body">
+                            <h2 class="h4">Hit heavy, stay small</h2>
+                            <p>Tight-knit, dynamic teams work with more agility, communication, and freedom than large-scale companies.</p>
+                          </div>
+                        </div>
+                        <!-- End Icon Blocks -->
+                      </div>
+
+                      <div class="col-sm-6 col-md-4 mb-3 mb-sm-7">
+                        <!-- Icon Blocks -->
+                        <div class="media">
+                          <span class="mr-3">&mdash;</span>
+                          <div class="media-body">
+                            <h3 class="h4">Ambition by the boatload</h3>
+                            <p>We love people who aim for greatness. They inspire and excite their teammates, raising the bar for all of us.</p>
+                          </div>
+                        </div>
+                        <!-- End Icon Blocks -->
+                      </div>
+
+                      <div class="col-sm-6 col-md-4 mb-3 mb-sm-7">
+                        <!-- Icon Blocks -->
+                        <div class="media">
+                          <span class="mr-3">&mdash;</span>
+                          <div class="media-body">
+                            <h4>Open communication</h4>
+                            <p>We're big fans of transparency for many reasons, but the abridged version is: it makes easier.</p>
+                          </div>
+                        </div>
+                        <!-- End Icon Blocks -->
+                      </div>
+
+                      <!-- <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+                        Icon Blocks
+                        <div class="media">
+                          <span class="mr-3">&mdash;</span>
+                          <div class="media-body">
+                            <h4>Autonomy and attitude</h4>
+                            <p>We're a team of self-starters who take serious pride in our work – and it shows.</p>
+                          </div>
+                        </div>
+                        End Icon Blocks
+                      </div>
+
+                      <div class="col-sm-6 col-md-4 mb-3 mb-sm-0">
+                        Icon Blocks
+                        <div class="media">
+                          <span class="mr-3">&mdash;</span>
+                          <div class="media-body">
+                            <h4>Support and win</h4>
+                            <p>When we empower others to succeed, we all win. (And we're not talking about participation trophies.)</p>
+                          </div>
+                        </div>
+                        End Icon Blocks
+                      </div>
+
+                      <div class="col-sm-6 col-md-4">
+                        Icon Blocks
+                        <div class="media">
+                          <span class="mr-3">&mdash;</span>
+                          <div class="media-body">
+                            <h4>Teamwork makes the dream work</h4>
+                            <p>We work together to bring our passions and expertise to make Teachable the best it can be.</p>
+                          </div>
+                        </div> -->
+                        <!-- End Icon Blocks -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Features Section -->
+                </div>              
+              </div>
+    <!-- Component Block END -->
+    
+    <!-- End Component Block -->
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+  
+  <!-- =============== FOOTER ================= -->
+  <div th:insert="Common :: site-footer"></div>
+
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <div th:insert="Common :: js-includes"></div>
+  
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+    <script>
+  // initialization of text animation (typing)
+  var typed = new Typed(".js-text-animation", {
+    strings: ["Problems", "Worries", "Hurdles"],
+    typeSpeed: 100,
+    loop: true,
+    backSpeed: 50,
+    backDelay: 3500
+  });
+
+  // initialization of aos
+  AOS.init({
+    duration: 650,
+    once: true
+  });
+</script>
+</body>
+</html>

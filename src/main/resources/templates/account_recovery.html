@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Account Recovery | mockell</title>
+  <div th:replace="Common :: includes"></div>
+
+  
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <div th:insert="Common :: nav-menu"></div>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main">
+    <!-- Login Form -->
+    <div class="container space-2 space-lg-3">
+      <form class="js-validate w-md-75 w-lg-50 mx-md-auto card shadow-lg">
+        <!-- Title -->
+        <div class="mb-2 mt-7 mb-md-2 px-5">
+          <h1 class="h2 mb-0 " >Forgot your password?</h1>
+          <p>Enter your email address below and we'll get you back on track..</p>
+        </div>
+        <!-- End Title -->
+
+        <!-- Form Group -->
+        <div class="js-form-message form-group px-7">
+          <label class="input-label " for="signinSrEmail">Email address</label>
+          <input type="email" class="form-control" name="email" id="signinSrEmail" placeholder="Email address" aria-label="Email address" required
+                 data-msg="Please enter a valid email address.">
+        </div>
+        <!-- End Form Group -->
+
+
+        <!-- Button -->
+        <div class="row align-items-center mb-5 px-7">
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <a class="font-size-1 font-weight-bold" href="/login">< Back to sign in</a>
+          </div>
+
+          <div class="col-sm-6 text-sm-right">
+            <button type="submit" class="btn btn-primary transition-3d-hover">Request Reset Link</button>
+          </div>
+        </div>
+        <!-- End Button -->
+      </form>
+    </div>
+    <!-- End Login Form -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="Common :: site-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <div th:insert="Common :: js-includes"></div>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmPassword: {
+              equalTo: '#signupPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

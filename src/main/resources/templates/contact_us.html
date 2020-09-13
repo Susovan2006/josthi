@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Title -->
+  <title>Contact Us | mockell</title>
+	<div th:replace="Common :: includes"></div>
+
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <div th:insert="Common :: nav-menu"></div>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main">
+    <!-- Contact Form Section -->
+    <div class="container space-top-3 space-top-lg-4 space-bottom-2">
+      <div class="row">
+        <div class="col-lg-6 mb-9 mb-lg-0">
+          <div class="mb-5">
+            <h1>Get in touch</h1>
+            <p>We'd love to talk about how we can help you.</p>
+          </div>
+
+          <!-- Leaflet -->
+
+          <!-- End Leaflet -->
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <span class="d-block h5 mb-1">Call us:</span>
+                <span class="d-block text-body font-size-1">+1 (062) 109-9222</span>
+              </div>
+
+              <div class="mb-3">
+                <span class="d-block h5 mb-1">Email us:</span>
+                <span class="d-block text-body font-size-1">hello@example.com</span>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <span class="d-block h5 mb-1">Address:</span>
+                <span class="d-block text-body font-size-1">153 Williamson Plaza, XXXXXXX</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="ml-lg-5">
+            <!-- Form -->
+            <form class="js-validate card shadow-lg mb-4">
+              <div class="card-header border-0 bg-light text-center py-4 px-4 px-md-6">
+                <h2 class="h4 mb-0">General Enquiries</h2>
+              </div>
+
+              <div class="card-body p-4 p-md-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label for="firstName" class="input-label">First name</label>
+                      <input type="text" class="form-control" name="firstName" id="firstName" placeholder="XXXXX" aria-label="XXXXX" required
+                             data-msg="Please enter first your name">
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col-sm-6">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label for="lastName" class="input-label">Last name</label>
+                      <input type="text" class="form-control" name="lastName" id="lastName" placeholder="XXXXX" aria-label="XXXXX" required
+                             data-msg="Please enter last your name">
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col-sm-12">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label for="emailAddress" class="input-label">Email address</label>
+                      <input type="email" class="form-control" name="emailAddress" id="emailAddress" placeholder="XXXXX@XXXXX.com" aria-label="alex@pixeel.com" required
+                             data-msg="Please enter a valid email address">
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col-sm-12">
+                    <!-- Form Group -->
+                    <div class="js-form-message form-group">
+                      <label for="message" class="input-label">Message</label>
+                      <div class="input-group">
+                        <textarea class="form-control" rows="4" name="message" id="message" placeholder="Hi there, I would like to ..." aria-label="Hi there, I would like to ..." required
+                                  data-msg="Please enter a reason."></textarea>
+                      </div>
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-block btn-primary transition-3d-hover">Submit</button>
+              </div>
+            </form>
+            <!-- End Form -->
+
+            <div class="text-center">
+              <p class="small">We'll get back to you in 1-2 business days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Contact Form Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="Common :: site-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+<div th:insert="Common :: js-includes"></div>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmPassword: {
+              equalTo: '#signupPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of leaflet
+      $('#map').each(function () {
+        var leaflet = $.HSCore.components.HSLeaflet.init($(this)[0]);
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+          id: 'mapbox/light-v9'
+        }).addTo(leaflet);
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

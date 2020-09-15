@@ -21,19 +21,19 @@ public class MainController {
 	}
 	
 	//login_simple
-	@GetMapping("/login")
+	/*@GetMapping("/login")
 	public String login(Model model) {
 		model.addAttribute("message","HelloWorld");
 		return "login_simple";
-	}
+	}*/
 	
 	
 	//josthi_signup.html
-	@GetMapping("/userSignup")
-	public String userSignup(Model model) {
-		model.addAttribute("message","HelloWorld");
-		return "josthi_signup";
-	}
+	//@GetMapping("/userSignup")
+	//public String userSignup(Model model) {
+	//	model.addAttribute("message","HelloWorld");
+	//	return "josthi_signup";
+	//}
 	
 	//account_recovery
 	@GetMapping("/accountRecovery")

@@ -7,6 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+
+import com.josthi.web.daoimpl.UserAuthDaoImpl;
+
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 
 @Configuration
@@ -29,23 +36,23 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
  
  
  /*===========================================================================
-  * ======================  DATABASE CONFIG  =================================
+  * ====================  DATASOURCE CONFIG  =================================
   * ==========================================================================
   */
  
- @Bean("mockellDataSource")
+ @Bean("josthiDataSource")
  public BasicDataSource mockellDataSource(
-		 	@Value("${mockell.db.driver}") String driver,
-		 	@Value("${mockell.db.url}") String url,
-		 	@Value("${mockell.db.username}") String userName,
-		 	@Value("${mockell.db.password}") String password,
-		 	@Value("${mockell.db.initialSize}") int initialSize,
-		 	@Value("${mockell.db.maxActive}") int maxActive,
-		 	@Value("${mockell.db.maxIdle}") int maxIdle,
-		 	@Value("${mockell.db.commandtimeout}") long commandtimeout,
-		 	@Value("${mockell.db.queryTimeout}") Integer queryTimeout,
-		 	@Value("${mockell.db.testOnBorrow}") boolean testOnBorrow,
-		 	@Value("${mockell.db.validationQueryTimeout}") int validationQueryTimeout) throws Exception {
+		 	@Value("${josthi.db.driver}") String driver,
+		 	@Value("${josthi.db.url}") String url,
+		 	@Value("${josthi.db.username}") String userName,
+		 	@Value("${josthi.db.password}") String password,
+		 	@Value("${josthi.db.initialSize}") int initialSize,
+		 	@Value("${josthi.db.maxActive}") int maxActive,
+		 	@Value("${josthi.db.maxIdle}") int maxIdle,
+		 	@Value("${josthi.db.commandtimeout}") long commandtimeout,
+		 	@Value("${josthi.db.queryTimeout}") Integer queryTimeout,
+		 	@Value("${josthi.db.testOnBorrow}") boolean testOnBorrow,
+		 	@Value("${josthi.db.validationQueryTimeout}") int validationQueryTimeout) throws Exception {
 	 
 			 BasicDataSource datasource = new BasicDataSource();
 			 datasource.setDriverClassName(driver);
@@ -65,6 +72,35 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	return datasource;
  }
  
+ 
+ /*===========================================================================
+  * ====================  DAO & DAOIMPL CONFIG  ==============================
+  * ==========================================================================
+  */
+ 
+ @Bean("userAuthDao")
+ public UserAuthDaoImpl userAuthDao(DataSource josthiDataSource) {
+	 UserAuthDaoImpl userAuthDaoImpl = new UserAuthDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 userAuthDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return userAuthDaoImpl;
+ }
+ 
 	
+ 
+ 
+ 
+ /*===========================================================================
+  * ================  TRANSACTION MANAGER CONFIG  ============================
+  * ==========================================================================
+  */
+ 
+ @Bean("txnManager")
+ public DataSourceTransactionManager txnManager(DataSource josthiDataSource) {
+	 DataSourceTransactionManager txnManager =  new DataSourceTransactionManager();
+	 txnManager.setDataSource(josthiDataSource);
+	 return txnManager;
+ }
+
 
 }

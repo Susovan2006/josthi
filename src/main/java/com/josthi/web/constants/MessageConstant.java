@@ -2,7 +2,7 @@ package com.josthi.web.constants;
 
 public interface MessageConstant {
 	
-	
+	String LOGIN_ERROR_VALIDATION = "UserD/emailID or Password can't be blank";
 	String LOGIN_ERROR_ON_DATABASE_UPDATE_FAILURE = "LOGIN Valid, but Update error Occured, Please try again after some time.";
 	String LOGIN_ERROR_ON_ACCOUNT_DEACTIVATED = "Account is deactivated, Please contact the Customer Service Executive.";
 	String LOGIN_ERROR_ACCOUNT_TEMP_LOCKED = "Looks like the the account is temporarily deactivated due to multiple incorrect retries. Try after 1 Hours.";
@@ -12,5 +12,8 @@ public interface MessageConstant {
 	String LOGIN_ERROR_MAX_TRY_EXCEEDED = "Max attempt exceed, the account is temporary locked, Please wait for an hour to relogin.";
 	String LOGIN_ERROR_GENERAL = "Invalid User ID and Password, please try again, you will get max 3 attempts, then the password will be locked.";
 
+	
+	String ACCOUNT_RECOVERY_SUCCESS = "Please check your email, password reset email sent Succesfully";
+	String ACCOUNT_RECOVERY_ERROR = "Looks like the userID/email is not registered in this app, please try with a correct email ID that was used during the registration";
 
 }

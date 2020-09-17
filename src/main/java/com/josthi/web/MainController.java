@@ -1,8 +1,20 @@
 package com.josthi.web;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -36,11 +48,10 @@ public class MainController {
 	//}
 	
 	//account_recovery
-	@GetMapping("/accountRecovery")
-	public String accountRecovery(Model model) {
-		model.addAttribute("message","HelloWorld");
-		return "account_recovery";
-	}
+	/*
+	 * @GetMapping("/accountRecovery") public String accountRecovery(Model model) {
+	 * model.addAttribute("message","HelloWorld"); return "account_recovery"; }
+	 */
 	
 	
 	//account_recovery
@@ -115,4 +126,18 @@ public class MainController {
 			model.addAttribute("message","HelloWorld");
 			return "user_personal_details";
 	}
+	
+	/*
+	 * @GetMapping(value = "/image") public @ResponseBody byte[] getImage() throws
+	 * IOException { InputStream in = getClass()
+	 * .getResourceAsStream("/com/josthi/web/IE_icon.png"); return
+	 * IOUtils.toByteArray(in); }
+	 */
+	
+	
+	
+	
+	
+	
+
 }

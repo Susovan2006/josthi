@@ -12,10 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.josthi.web.bo.UserAuthBo;
+import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.MessageConstant;
+import com.josthi.web.mail.EmailController;
+//import com.josthi.web.mail.SendMailApplication;
+//import com.josthi.web.mail.SendEmailTrigger;
 import com.josthi.web.service.UserAuthService;
 import com.josthi.web.springconfig.SpringConfig;
 
@@ -27,6 +32,9 @@ public class UserAuthController {
 	
 	@Autowired
 	UserAuthService userAuthService;
+	
+	@Autowired
+	EmailController emailController;
 	
 	/**
 	 * This is the basic method where the user will put the
@@ -54,6 +62,12 @@ public class UserAuthController {
 	public String validateAuthenticity(UserAuthBo userAuthBo, HttpSession session, Model model) {
 		try {
 			logger.info("validateAuthenticity Service Called.");
+			
+			if(userAuthBo.getUseridEmail().trim().length()==0 || userAuthBo.getWordapp().trim().length()==0) {
+				model.addAttribute("errorMessage", MessageConstant.LOGIN_ERROR_VALIDATION);
+				return "login_simple";
+			}
+			
 			UserAuthBo userDetails = userAuthService.getValidUser(userAuthBo.getUseridEmail().trim(), 
 										 						  userAuthBo.getWordapp().trim());
 			logger.info(userDetails.toString());
@@ -63,13 +77,13 @@ public class UserAuthController {
 					(userDetails.getStatus()!=null && userDetails.getStatus().length() > 0 && userDetails.getStatus().equalsIgnoreCase(Constant.USER_STATUS_ACTIVE)) &&
 					(userDetails.getTemporaryLockEnabled()!=null && userDetails.getTemporaryLockEnabled().equalsIgnoreCase("NO"))) {
 				
-				userDetails.setLoginStatus("ONLINE");
-				userDetails.setLoginTime(new Timestamp(System.currentTimeMillis()));
-				userDetails.setLoginRetryCount(0);
-				userDetails.setTemporaryLockEnabled("NO");
+					userDetails.setLoginStatus("ONLINE");
+					userDetails.setLoginTime(new Timestamp(System.currentTimeMillis()));
+					userDetails.setLoginRetryCount(0);
+					userDetails.setTemporaryLockEnabled("NO");
 				
 				if(userAuthService.updateLoginStatusOnSuccess(userDetails)) {
-					//Set Environment Variable.
+					//TODO: Set Session Variable.
 					logger.info("LOGIN Successful");
 					return "user_personal_details";
 
@@ -152,8 +166,65 @@ public class UserAuthController {
 		 if (count > 0) { result = true; }
 		 return result;
 	}
-}
 
+
+
+//=============================== Forget Password ===========================
+//===========================================================================
+	@GetMapping("/accountRecovery")
+	public String accountRecovery(Model model) {
+		//model.addAttribute("message","HelloWorld");
+		return "account_recovery";
+	}
+
+
+	@GetMapping("/accountRecoveryController")
+	public String accountRecovery(@RequestParam(value = "signinSrEmail", required = true) String signinSrEmail,
+												Model model) throws Exception {
+		System.out.println("Email:"+signinSrEmail);
+		if(isValidUserIDOnly(signinSrEmail.trim())) {
+			model.addAttribute("errorMessage", MessageConstant.ACCOUNT_RECOVERY_SUCCESS);
+			//TODO: Trigger email.
+			//SendMailApplication.sendEmail();
+			emailController.sendEmail();
+			
+		}else {
+			model.addAttribute("errorMessage", MessageConstant.ACCOUNT_RECOVERY_ERROR);
+		}
+		return "account_recovery";
+	}
+	
+	
+//=========================== User Login Module ===============================
+//=============================================================================
+	//user_personal_details
+	@GetMapping("/userSignup")
+	public String userSignup(UserRegistrationBean userRegistrationBean) {
+				return "josthi_signup";
+	}
+	
+	
+	
+	@RequestMapping(path ="/registerGeneralUser", method = RequestMethod.POST)
+	public String registerGeneralUser(UserRegistrationBean userRegistrationBean,HttpSession session, Model model) throws Exception {
+		
+		System.out.println(userRegistrationBean.toString());
+		//SendEmailTrigger sendEmailTrigger = new SendEmailTrigger();
+		//sendEmailTrigger.sendEmail();
+		
+		return "josthi_signup";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+} //END OF Main method.
 
 /* TODO :1 Need to implement the Max Retry Count.
  * if Max retry count is 3, the account will be locked.

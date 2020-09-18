@@ -44,7 +44,7 @@ public class SpringBootEmailTemplateApplication implements ApplicationRunner{
         model.put("sign", "Java Developer");
         mail.setProps(model);
 
-        emailService.sendEmail(mail);
+        emailService.sendEmail(mail,"");
         log.info("END... Email sent success");
 		
 	}

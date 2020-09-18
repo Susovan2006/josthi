@@ -26,7 +26,7 @@ public class EmailSenderService {
     private SpringTemplateEngine templateEngine;
 
 
-    public void sendEmail(Mail mail) throws MessagingException, IOException {
+    public void sendEmail(Mail mail, String emailTemplate) throws MessagingException, IOException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
@@ -37,7 +37,7 @@ public class EmailSenderService {
         Context context = new Context();
         context.setVariables(mail.getProps());
     
-        String html = templateEngine.process("email_Account_Recovery", context);
+        String html = templateEngine.process(emailTemplate, context);
 
         helper.setTo(mail.getMailTo());
         helper.setText(html, true);

@@ -28,7 +28,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public static final String SELECT_VALIDATE_LOGIN_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED FROM josthi_db.user_auth_table where USERID_EMAIL = ? and WORDAPP = ?;";
+	public static final String SELECT_VALIDATE_LOGIN_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED FROM user_auth_table where USERID_EMAIL = ? and WORDAPP = ?;";
 	@Override
 	public UserAuthBo getValidUser(String uid, String password) {
 		try{
@@ -45,7 +45,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 	}
 	
 	
-	public static final String SELECT_COUNT_LOGIN_ON_UID_SQL = "SELECT COUNT(*) FROM josthi_db.user_auth_table where USERID_EMAIL = ?;";
+	public static final String SELECT_COUNT_LOGIN_ON_UID_SQL = "SELECT COUNT(*) FROM user_auth_table where USERID_EMAIL = ?;";
 	@Override
 	public int getValidUserCount(String emailID) {
 		int count = getJdbcTemplate().queryForObject(SELECT_COUNT_LOGIN_ON_UID_SQL, new Object[] { emailID }, Integer.class);
@@ -56,7 +56,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 	/**
 	 * Here we are checking if the User gave a proper UserID or not. The Password might be incorrect.
 	 */
-	public static final String SELECT_VALIDATE_LOGIN_ON_UID_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED FROM josthi_db.user_auth_table where USERID_EMAIL = ?;";
+	public static final String SELECT_VALIDATE_LOGIN_ON_UID_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED FROM user_auth_table where USERID_EMAIL = ?;";
 	@Override
 	public UserAuthBo getValidUser(String emailID) {
 		try{
@@ -75,7 +75,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 
 	
 
-	public static final String UPDATE_LOGIN_DATA_ON_INVALID_PASSWORD = "UPDATE josthi_db.user_auth_table set LOGIN_RETRY_COUNT = ?, TEMPORARY_LOCK_ENABLED = ? where USERID_EMAIL = ?  ";
+	public static final String UPDATE_LOGIN_DATA_ON_INVALID_PASSWORD = "UPDATE user_auth_table set LOGIN_RETRY_COUNT = ?, TEMPORARY_LOCK_ENABLED = ? where USERID_EMAIL = ?  ";
 	@Override
 	public boolean updateLoginStatus(UserAuthBo userDetailsOnUid) {
 		try {
@@ -91,7 +91,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 	}
 	
 	
-	public static final String UPDATE_LOGIN_DATA_ON_SUCCESSFUL_LOGIN = "UPDATE josthi_db.user_auth_table set LOGIN_TIME = ?, LOGIN_STATUS = ?, LOGIN_RETRY_COUNT = ?, TEMPORARY_LOCK_ENABLED = ? where USERID_EMAIL = ?"; 
+	public static final String UPDATE_LOGIN_DATA_ON_SUCCESSFUL_LOGIN = "UPDATE user_auth_table set LOGIN_TIME = ?, LOGIN_STATUS = ?, LOGIN_RETRY_COUNT = ?, TEMPORARY_LOCK_ENABLED = ? where USERID_EMAIL = ?"; 
 	@Override
 	public boolean updateLoginStatusOnSuccess(UserAuthBo userDetails) {
 		try {

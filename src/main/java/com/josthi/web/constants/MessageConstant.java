@@ -13,7 +13,8 @@ public interface MessageConstant {
 	String LOGIN_ERROR_GENERAL = "Invalid User ID and Password, please try again, you will get max 3 attempts, then the password will be locked.";
 
 	
-	String ACCOUNT_RECOVERY_SUCCESS = "Please check your email, password reset email sent Succesfully";
+	String ACCOUNT_RECOVERY_SUCCESS = "Please check your email, password reset email will be sent in few min.";
 	String ACCOUNT_RECOVERY_ERROR = "Looks like the userID/email is not registered in this app, please try with a correct email ID that was used during the registration";
+	String ACCOUNT_RECOVERY_EXCEPTION = "Error occured while recovering the password, please try again later or open a Ticket.";
 
 }

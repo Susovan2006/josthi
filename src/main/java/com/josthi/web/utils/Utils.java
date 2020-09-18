@@ -1,7 +1,13 @@
 package com.josthi.web.utils;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.josthi.web.constants.EmailConstant;
+import com.josthi.web.po.EmailDbBean;
 
 public class Utils {
 	
@@ -32,6 +38,29 @@ public class Utils {
 		
 		return custId.toString();
 		
+	}
+
+	public static EmailDbBean getEmailBeanForPasswordRecovery(String emailTo, String jsonValue) {
+		
+		EmailDbBean emailDbBean =  new EmailDbBean();
+		emailDbBean.setSentTo(emailTo);
+		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_PASSWORD_RECOVERY);
+		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_PASSWORD_RECOVERY);
+		emailDbBean.setJsonString(jsonValue);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FROM_FOR_PASSWORD_RECOVERY);
+		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS_FROM_FOR_PASSWORD_RECOVERY);
+		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
+		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS_FROM_FOR_PASSWORD_RECOVERY);		
+		return emailDbBean;
+	}
+	
+	public static String mapToString(Map<String, String> map ) throws Exception {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			return mapper.writeValueAsString(map);
+		}catch (Exception ex) {
+			throw ex;
+		}
 	}
 
 }

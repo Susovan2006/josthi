@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.stereotype.Controller;
 
+import com.josthi.web.po.EmailDbBean;
+
 @Controller
 public class EmailController {
 
@@ -29,8 +31,31 @@ public class EmailController {
         model.put("sign", "Java Developer");
         mail.setProps(model);
 
-        emailService.sendEmail(mail);
+        emailService.sendEmail(mail,"email_Account_Recovery");
         System.out.println("END... Email sent success");
 		
 	}
+	
+	
+public void sendEmailForPasswordRecovery(EmailDbBean emailDbBean, Map<String, String> emailDetailsModel) throws Exception {
+		
+		System.out.println("START... Sending email");
+
+        Mail mail = new Mail();
+        mail.setFrom(emailDbBean.getSentFrom());//replace with your desired email
+        mail.setMailTo(emailDbBean.getSentTo());//replace with your desired email
+        mail.setSubject(emailDbBean.getSubject());
+
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("name", emailDetailsModel.get("name"));
+        model.put("password", emailDetailsModel.get("password"));
+        mail.setProps(model);
+
+        emailService.sendEmail(mail, emailDbBean.getEmailTemplate());
+        System.out.println("END... Email sent success");
+		
+	}
+
+
+
 }

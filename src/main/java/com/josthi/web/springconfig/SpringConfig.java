@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
+import com.josthi.web.daoimpl.BaseDaoImpl;
+import com.josthi.web.daoimpl.EmailDaoImpl;
 import com.josthi.web.daoimpl.UserAuthDaoImpl;
 
 import javax.sql.DataSource;
@@ -86,7 +88,26 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	 return userAuthDaoImpl;
  }
  
-	
+ 
+ @Bean("baseDao")
+ public BaseDaoImpl baseDao(DataSource josthiDataSource) {
+	 
+	 BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 System.out.println("Base Dao Initialised :"+jdbcTemplate);
+	 baseDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return baseDaoImpl;
+ }
+ 
+ @Bean("emailDao")
+ public EmailDaoImpl emailDaoImpl(DataSource josthiDataSource) {
+	 
+	 EmailDaoImpl emailDaoImpl = new EmailDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 System.out.println("Base Dao Initialised :"+jdbcTemplate);
+	 emailDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return emailDaoImpl;
+ }	
  
  
  

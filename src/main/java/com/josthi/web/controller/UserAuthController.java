@@ -1,6 +1,8 @@
 package com.josthi.web.controller;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,12 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.constants.Constant;
+import com.josthi.web.constants.EmailConstant;
 import com.josthi.web.constants.MessageConstant;
 import com.josthi.web.mail.EmailController;
+import com.josthi.web.po.EmailDbBean;
+import com.josthi.web.service.EmailService;
 //import com.josthi.web.mail.SendMailApplication;
 //import com.josthi.web.mail.SendEmailTrigger;
 import com.josthi.web.service.UserAuthService;
 import com.josthi.web.springconfig.SpringConfig;
+import com.josthi.web.utils.Utils;
 
 @Controller
 public class UserAuthController {
@@ -34,7 +40,11 @@ public class UserAuthController {
 	UserAuthService userAuthService;
 	
 	@Autowired
-	EmailController emailController;
+	EmailService emailService;
+	
+	@Autowired 
+	EmailDbBean emailDbBean;
+
 	
 	/**
 	 * This is the basic method where the user will put the
@@ -183,10 +193,20 @@ public class UserAuthController {
 												Model model) throws Exception {
 		System.out.println("Email:"+signinSrEmail);
 		if(isValidUserIDOnly(signinSrEmail.trim())) {
-			model.addAttribute("errorMessage", MessageConstant.ACCOUNT_RECOVERY_SUCCESS);
-			//TODO: Trigger email.
-			//SendMailApplication.sendEmail();
-			emailController.sendEmail();
+			
+			UserAuthBo userDetailsOnUid = userAuthService.getValidUser(signinSrEmail.trim());
+			Map<String, String> map = new HashMap<String, String>();
+	        map.put("name", "User :"+userDetailsOnUid.getCustomerId());
+	        map.put("password", userDetailsOnUid.getWordapp());
+	        
+	        EmailDbBean emailDbBean = Utils.getEmailBeanForPasswordRecovery(signinSrEmail.trim(), Utils.mapToString(map));
+	        System.out.println(emailDbBean);
+			boolean status = emailService.queuePasswordRecoveryEmail(emailDbBean);
+			if(status) {
+				model.addAttribute("errorMessage", MessageConstant.ACCOUNT_RECOVERY_SUCCESS);
+			}else{
+				model.addAttribute("errorMessage", MessageConstant.ACCOUNT_RECOVERY_ERROR);
+			}
 			
 		}else {
 			model.addAttribute("errorMessage", MessageConstant.ACCOUNT_RECOVERY_ERROR);

@@ -23,6 +23,7 @@ import com.josthi.web.constants.EmailConstant;
 import com.josthi.web.constants.MessageConstant;
 import com.josthi.web.mail.EmailController;
 import com.josthi.web.po.EmailDbBean;
+import com.josthi.web.scheduler.EmailScheduler;
 import com.josthi.web.service.EmailService;
 //import com.josthi.web.mail.SendMailApplication;
 //import com.josthi.web.mail.SendEmailTrigger;
@@ -204,6 +205,7 @@ public class UserAuthController {
 			boolean status = emailService.queuePasswordRecoveryEmail(emailDbBean);
 			if(status) {
 				model.addAttribute("errorMessage", MessageConstant.ACCOUNT_RECOVERY_SUCCESS);
+				EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
 			}else{
 				model.addAttribute("errorMessage", MessageConstant.ACCOUNT_RECOVERY_ERROR);
 			}
@@ -217,23 +219,7 @@ public class UserAuthController {
 	
 //=========================== User Login Module ===============================
 //=============================================================================
-	//user_personal_details
-	@GetMapping("/userSignup")
-	public String userSignup(UserRegistrationBean userRegistrationBean) {
-				return "josthi_signup";
-	}
 	
-	
-	
-	@RequestMapping(path ="/registerGeneralUser", method = RequestMethod.POST)
-	public String registerGeneralUser(UserRegistrationBean userRegistrationBean,HttpSession session, Model model) throws Exception {
-		
-		System.out.println(userRegistrationBean.toString());
-		//SendEmailTrigger sendEmailTrigger = new SendEmailTrigger();
-		//sendEmailTrigger.sendEmail();
-		
-		return "josthi_signup";
-	}
 	
 	
 	

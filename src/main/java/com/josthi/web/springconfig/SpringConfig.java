@@ -9,10 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.josthi.web.daoimpl.BaseDaoImpl;
 import com.josthi.web.daoimpl.EmailDaoImpl;
 import com.josthi.web.daoimpl.UserAuthDaoImpl;
+import com.josthi.web.daoimpl.UserRegistrationDaoImpl;
+import com.josthi.web.serviceimpl.UserRegistrationServiceImpl;
 
 import javax.sql.DataSource;
 
@@ -100,8 +103,7 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
  }
  
  @Bean("emailDao")
- public EmailDaoImpl emailDaoImpl(DataSource josthiDataSource) {
-	 
+ public EmailDaoImpl emailDaoImpl(DataSource josthiDataSource) {	 
 	 EmailDaoImpl emailDaoImpl = new EmailDaoImpl();
 	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
 	 System.out.println("Base Dao Initialised :"+jdbcTemplate);
@@ -109,6 +111,23 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	 return emailDaoImpl;
  }	
  
+ 
+ @Bean("userRegistrationDao")
+ public UserRegistrationDaoImpl userRegistrationDaoImpl(DataSource josthiDataSource) {	 
+	 UserRegistrationDaoImpl userRegistrationDaoImpl = new UserRegistrationDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 userRegistrationDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return userRegistrationDaoImpl;
+ }	
+ 
+ 
+ 
+ @Bean("userRegistrationService")
+ public UserRegistrationServiceImpl userRegistrationServiceImpl(PlatformTransactionManager txnManager) {
+	 UserRegistrationServiceImpl userRegistrationServiceImpl = new UserRegistrationServiceImpl();
+	 userRegistrationServiceImpl.setPlatformTransactionManager(txnManager);
+	 return userRegistrationServiceImpl;
+ }
  
  
  /*===========================================================================

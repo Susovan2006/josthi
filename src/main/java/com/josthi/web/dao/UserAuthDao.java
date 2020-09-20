@@ -14,4 +14,6 @@ public interface UserAuthDao {
 
 	boolean updateLoginStatusOnSuccess(UserAuthBo userDetails);
 
+	int getNectID();
+
 }

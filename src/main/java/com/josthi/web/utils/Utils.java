@@ -40,6 +40,13 @@ public class Utils {
 		
 	}
 
+	
+	/**
+	 * 
+	 * @param emailTo
+	 * @param jsonValue
+	 * @return
+	 */
 	public static EmailDbBean getEmailBeanForPasswordRecovery(String emailTo, String jsonValue) {
 		
 		EmailDbBean emailDbBean =  new EmailDbBean();
@@ -54,6 +61,13 @@ public class Utils {
 		return emailDbBean;
 	}
 	
+	
+	/**
+	 * 
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
 	public static String mapToString(Map<String, String> map ) throws Exception {
 		try {
 			ObjectMapper mapper = new ObjectMapper();

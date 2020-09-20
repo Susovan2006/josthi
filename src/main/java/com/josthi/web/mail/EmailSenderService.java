@@ -32,11 +32,12 @@ public class EmailSenderService {
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                 StandardCharsets.UTF_8.name());
 
-        //helper.addAttachment("template-cover.png", new ClassPathResource("javabydeveloper-email.PNG"));
+       // helper.addAttachment("logo.png", new ClassPathResource("emailImages/logo_240X70.png"));
+        
 
         Context context = new Context();
         context.setVariables(mail.getProps());
-    
+        
         String html = templateEngine.process(emailTemplate, context);
 
         helper.setTo(mail.getMailTo());

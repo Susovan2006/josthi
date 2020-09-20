@@ -2,6 +2,7 @@ package com.josthi.web.bo;
 
 public class UserRegistrationBean {
 	
+	private String customerID;
 	private String firstName;
 	private String lastName;
 	private String validEmailId;
@@ -12,6 +13,12 @@ public class UserRegistrationBean {
 	
 	
 	
+	public String getCustomerID() {
+		return customerID;
+	}
+	public void setCustomerID(String customerID) {
+		this.customerID = customerID;
+	}
 	public String getConfirmWordApp() {
 		return confirmWordApp;
 	}

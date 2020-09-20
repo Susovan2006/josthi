@@ -69,7 +69,7 @@ public class EmailDaoImpl implements EmailDao{
 	public boolean updateEmailSentStatus(EmailDbBean emailBean) {
 		try {
 			
-			//System.out.println("jdbcTemplate:"+jdbcTemplate);
+			System.out.println("emailBean.getEmailUid():"+emailBean.getEmailUid());
 			int result = jdbcTemplate.update(UPDATE_EMAIL_STATUS_ON_EMAIL_TRIGGER, new Object[]{emailBean.getEmailStatus(),
 															   									emailBean.getEmailSentAt(), 
 															   									emailBean.getEmailDelivaryStatus(),

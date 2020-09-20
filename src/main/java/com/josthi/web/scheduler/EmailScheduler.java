@@ -18,6 +18,9 @@ import com.josthi.web.daoimpl.EmailDaoImpl;
 import com.josthi.web.mail.EmailController;
 import com.josthi.web.po.EmailDbBean;
 
+
+
+//https://memorynotfound.com/spring-mail-sending-email-inline-attachment-example/
 @Controller
 public class EmailScheduler {
 	
@@ -28,41 +31,52 @@ public class EmailScheduler {
 	@Autowired
 	EmailController emailController;
 
+	//This flag is set to true when the user request for password reset.
+	//Once the email is sent, it will be disabled.
+	public static boolean ENAMBLE_TIMER = true;
 	
-	@Scheduled(cron="0/10 * * * * ?") 
+	@Scheduled(cron="0/45 * * * * ?") 
 	public void sendEmailFromQueue() throws Exception {
-		
-		List <EmailDbBean> listOfEmails = new ArrayList<EmailDbBean>();
-		listOfEmails = emailDao.getEmailsListToTrigger();
-		//System.out.println(listOfEmails);
-		
-		try {
-			for(EmailDbBean emailBean : listOfEmails) {
-				try {
-					ObjectMapper mapper = new ObjectMapper();
-					@SuppressWarnings("unchecked")
-					Map<String, String> emailDetailsModel = mapper.readValue(emailBean.getJsonString(), Map.class);
-					//System.out.println("emailDetailsModel"+emailDetailsModel);
-					emailController.sendEmailForPasswordRecovery(emailBean, emailDetailsModel);
-					
-					emailBean.setEmailStatus(EmailConstant.SUCCESS_STATUS_FROM_FOR_PASSWORD_RECOVERY);
-					emailBean.setEmailDelivaryStatus(EmailConstant.DELEVERED_EMAIL_DELIVARY_STATUS_FROM_FOR_PASSWORD_RECOVERY);
-					emailBean.setEmailSentAt(new Timestamp(System.currentTimeMillis()));
-					boolean emailSentStatus = emailDao.updateEmailSentStatus(emailBean);
-					
-					System.out.println("Email Delivered Successfully");
-				}catch(Exception ex) {
-					ex.printStackTrace();
-					emailBean.setEmailStatus(EmailConstant.RETRY_STATUS_FROM_FOR_PASSWORD_RECOVERY);
-					emailBean.setEmailDelivaryStatus(EmailConstant.FAILED_EMAIL_DELIVARY_STATUS_FROM_FOR_PASSWORD_RECOVERY);
-					emailBean.setEmailSentAt(new Timestamp(System.currentTimeMillis()));
-					boolean emailSentStatus = emailDao.updateEmailSentStatus(emailBean);
-				}
+		System.out.println("----- Timer Called -------");
+		if(ENAMBLE_TIMER) {
+			List <EmailDbBean> listOfEmails = new ArrayList<EmailDbBean>();
+			listOfEmails = emailDao.getEmailsListToTrigger();		
+			try {
+				for(EmailDbBean emailBean : listOfEmails) {
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						@SuppressWarnings("unchecked")
+						Map<String, String> emailDetailsModel = mapper.readValue(emailBean.getJsonString(), Map.class);
+						//System.out.println("emailDetailsModel"+emailDetailsModel);
+						emailController.sendEmailForPasswordRecovery(emailBean, emailDetailsModel);
+						
+						emailBean.setEmailStatus(EmailConstant.SUCCESS_STATUS_FROM_FOR_PASSWORD_RECOVERY);
+						emailBean.setEmailDelivaryStatus(EmailConstant.DELEVERED_EMAIL_DELIVARY_STATUS_FROM_FOR_PASSWORD_RECOVERY);
+						emailBean.setEmailSentAt(new Timestamp(System.currentTimeMillis()));
+						boolean emailSentStatus = emailDao.updateEmailSentStatus(emailBean);
+						if(emailSentStatus) {
+							ENAMBLE_TIMER = false;
+							System.out.println("Timer on Hold");
+						}
+						System.out.println("Email Delivered Successfully");
+					}catch(Exception ex) {
+						ex.printStackTrace();
+						emailBean.setEmailStatus(EmailConstant.RETRY_STATUS_FROM_FOR_PASSWORD_RECOVERY);
+						emailBean.setEmailDelivaryStatus(EmailConstant.FAILED_EMAIL_DELIVARY_STATUS_FROM_FOR_PASSWORD_RECOVERY);
+						emailBean.setEmailSentAt(new Timestamp(System.currentTimeMillis()));
+						boolean emailSentStatus = emailDao.updateEmailSentStatus(emailBean);
+						if(emailSentStatus) {
+							ENAMBLE_TIMER = true;
+							System.out.println("Timer still enabled for next retry");
+						}
+					}
+				}//end for
+			}catch(Exception ex) {
+				ex.printStackTrace();
 			}
-		}catch(Exception ex) {
-			ex.printStackTrace();
+		}else {
+			System.out.println("Timer Skipped");
 		}
-		
 	}
 
 }

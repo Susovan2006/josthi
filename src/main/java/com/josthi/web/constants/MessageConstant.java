@@ -17,4 +17,6 @@ public interface MessageConstant {
 	String ACCOUNT_RECOVERY_ERROR = "Looks like the userID/email is not registered in this app, please try with a correct email ID that was used during the registration";
 	String ACCOUNT_RECOVERY_EXCEPTION = "Error occured while recovering the password, please try again later or open a Ticket.";
 
+	String NEW_REGISTRATION_DUPLICATE_USER_ID = "Looks like you are already registered, you can directly login, if you forgot the password, click on the forget password link and reveive it over email.";
+	
 }

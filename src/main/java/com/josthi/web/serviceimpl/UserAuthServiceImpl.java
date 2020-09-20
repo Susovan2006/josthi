@@ -38,6 +38,11 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public boolean updateLoginStatusOnSuccess(UserAuthBo userDetails) {
 		return userAuthDao.updateLoginStatusOnSuccess(userDetails);
 	}
+
+	@Override
+	public int getNextID() {
+		return userAuthDao.getNectID();
+	}
 	
 	
 	/*

@@ -7,6 +7,6 @@ import com.josthi.web.po.EmailDbBean;
 
 public interface EmailService {
 
-	boolean queuePasswordRecoveryEmail(EmailDbBean emailDbBean);
+	boolean queueEmail(EmailDbBean emailDbBean);
 
 }

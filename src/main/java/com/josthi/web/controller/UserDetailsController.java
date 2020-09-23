@@ -8,6 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.BindingResult;
 import com.josthi.web.service.UserDetailService ;
 import com.josthi.web.bo.UserDetailsBean ;
+
+
+
 //@Controller
 public class UserDetailsController{
 	//@Autowired

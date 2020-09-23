@@ -34,7 +34,7 @@ public class EmailDaoImpl implements EmailDao{
 			+ "values (?,?,?,?,?,?,?,?) ";
 
 	
-	public boolean queuePasswordRecoveryEmail(EmailDbBean emailDbBean) {
+	public boolean queueEmail(EmailDbBean emailDbBean) {
 		try {
 				
 			System.out.println("jdbcTemplate:"+jdbcTemplate);

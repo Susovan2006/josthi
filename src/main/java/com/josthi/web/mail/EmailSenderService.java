@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-//import com.javabydeveloper.model.Mail;
 
 @Service
 public class EmailSenderService {
@@ -22,11 +21,12 @@ public class EmailSenderService {
     @Autowired
     private JavaMailSender emailSender;
 
-    @Autowired
+
+	@Autowired
     private SpringTemplateEngine templateEngine;
 
 
-    public void sendEmail(Mail mail, String emailTemplate) throws MessagingException, IOException {
+	public void sendEmail(Mail mail, String emailTemplate) throws MessagingException, IOException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message,
                 MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
@@ -47,5 +47,14 @@ public class EmailSenderService {
 
         emailSender.send(message);
     }
+    
+    //Added by Susovan
+    //public void setEmailSender(JavaMailSender emailSender) {
+	//	this.emailSender = emailSender;
+	//}
+    
+    //public void setTemplateEngine(SpringTemplateEngine templateEngine) {
+	//	this.templateEngine = templateEngine;
+	//}
 
 }

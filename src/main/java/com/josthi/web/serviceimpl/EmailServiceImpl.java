@@ -14,8 +14,8 @@ public class EmailServiceImpl implements EmailService{
 	EmailDao emailDao;
 	
 	@Override
-	public boolean queuePasswordRecoveryEmail(EmailDbBean emailDbBean) {
-		return emailDao.queuePasswordRecoveryEmail(emailDbBean);
+	public boolean queueEmail(EmailDbBean emailDbBean) {
+		return emailDao.queueEmail(emailDbBean);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.josthi.web.service;
 
+import com.josthi.web.bo.SchedulerTimerBean;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserRegistrationBean;
 
@@ -17,6 +18,12 @@ public interface UserAuthService {
 	public boolean updateLoginStatusOnSuccess(UserAuthBo userDetails);
 
 	public int getNextID();
+
+	public String getUserDetails(String customerId);
+
+	public boolean resetUserIdGenTable();
+
+	//public void updateSchedulerDetails(SchedulerTimerBean schedulerTimerBean);
 
 	//public boolean registerNewUser(UserRegistrationBean userRegistrationBean);
 

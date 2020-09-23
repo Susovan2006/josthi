@@ -12,6 +12,8 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.dao.UserRegistrationDao;
 import com.josthi.web.service.UserRegistrationService;
+import com.josthi.web.utils.Security;
+import com.josthi.web.utils.Utils;
 
 //@Service("userRegistrationService")
 public class UserRegistrationServiceImpl implements UserRegistrationService{
@@ -31,6 +33,11 @@ public class UserRegistrationServiceImpl implements UserRegistrationService{
 		DefaultTransactionDefinition def = null;
 		try {
 			logger.info("Within transaction Block");
+			//Here we are encrypting the Password.
+			userRegistrationBean.setConfirmWordApp(Security.encrypt(userRegistrationBean.getConfirmWordApp().trim()));
+			userRegistrationBean.setFirstName(Utils.convertToCamelCase(userRegistrationBean.getFirstName().trim()));
+			userRegistrationBean.setLastName(Utils.convertToCamelCase(userRegistrationBean.getLastName().trim()));
+			
 			def = new DefaultTransactionDefinition();
 			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 			def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);

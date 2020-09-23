@@ -118,5 +118,33 @@ public class UserAuthDaoImpl implements UserAuthDao{
 		 return result;
 	}
 	
+	public static final String SELECT_FIRST_LAST_NAME =  "SELECT CONCAT(FIRST_NAME, ' ', LAST_NAME) FROM user_detail where UID=?";
+	@Override
+	public String getUserFirstAndLastName(String customerId) {
+		
+		try {
+			String name = jdbcTemplate.queryForObject(SELECT_FIRST_LAST_NAME, new Object[]{customerId}, String.class);
+			return name;
+		}catch(Exception ex) {
+			logger.error("Couldn't find a name for :"+customerId);
+			return customerId;
+		}
+		
+		
+	}
+	
+	public static final String UPDATE_USER_ID_GEN = "UPDATE userid_generation_table SET NEXTUSERID = 1";
+	@Override
+	public boolean resetUserIdGenTable() {
+		try {
+			
+			int result = jdbcTemplate.update(UPDATE_USER_ID_GEN);	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
 
 }

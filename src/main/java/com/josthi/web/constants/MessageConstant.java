@@ -18,5 +18,10 @@ public interface MessageConstant {
 	String ACCOUNT_RECOVERY_EXCEPTION = "Error occured while recovering the password, please try again later or open a Ticket.";
 
 	String NEW_REGISTRATION_DUPLICATE_USER_ID = "Looks like you are already registered, you can directly login, if you forgot the password, click on the forget password link and reveive it over email.";
-	
+	String NEW_REGISTRATION_FAILED = "User Registration failed, Please try after sometime or contact the Customer Service";
+	String NEW_REGISTRATION_SUCCESSFUL = "Registration Process successful, please login and complete the details to start the service. Please check your email for more details.";
+	String NEW_REGISTRATION_SUCCESSFUL_CONDITIONAL = "Your account got created, but the welcome email delivery failed, Check if you are able to login, else contact contact customer service";
+	String NEW_REGISTRATION_FAILED_UNMATCH_PASSWORD = "Looks like the password and the confirm password field has different value. Please retry with same value";
+	String NEW_REGISTRATION_FAILED_REQUIRED_FIELDS = "All the Fields are required fields, Please fill with proper values.";
+
 }

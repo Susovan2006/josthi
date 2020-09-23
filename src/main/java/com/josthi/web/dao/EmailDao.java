@@ -8,7 +8,7 @@ public interface EmailDao {
 
 	List<EmailDbBean> getEmailsListToTrigger();
 
-	boolean queuePasswordRecoveryEmail(EmailDbBean emailDbBean);
+	boolean queueEmail(EmailDbBean emailDbBean);
 
 	boolean updateEmailSentStatus(EmailDbBean emailBean);
 

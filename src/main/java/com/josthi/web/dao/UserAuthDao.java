@@ -16,4 +16,8 @@ public interface UserAuthDao {
 
 	int getNectID();
 
+	String getUserFirstAndLastName(String customerId);
+
+	boolean resetUserIdGenTable();
+
 }

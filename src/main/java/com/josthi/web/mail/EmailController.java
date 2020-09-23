@@ -47,8 +47,8 @@ public void sendEmailForPasswordRecovery(EmailDbBean emailDbBean, Map<String, St
         mail.setSubject(emailDbBean.getSubject());
 
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("name", emailDetailsModel.get("name"));
-        model.put("password", emailDetailsModel.get("password"));
+        //Type casting to Map<String, Object> from Map<String, String>
+        model = (Map) emailDetailsModel;
         mail.setProps(model);
 
         emailService.sendEmail(mail, emailDbBean.getEmailTemplate());

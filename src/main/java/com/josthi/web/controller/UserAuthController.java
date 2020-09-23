@@ -29,6 +29,7 @@ import com.josthi.web.service.EmailService;
 //import com.josthi.web.mail.SendEmailTrigger;
 import com.josthi.web.service.UserAuthService;
 import com.josthi.web.springconfig.SpringConfig;
+import com.josthi.web.utils.Security;
 import com.josthi.web.utils.Utils;
 
 @Controller
@@ -80,7 +81,7 @@ public class UserAuthController {
 			}
 			
 			UserAuthBo userDetails = userAuthService.getValidUser(userAuthBo.getUseridEmail().trim(), 
-										 						  userAuthBo.getWordapp().trim());
+										 						  Security.encrypt(userAuthBo.getWordapp().trim()));
 			logger.info(userDetails.toString());
 			//A Valid user should have the CustomerID + Role + Status
 			if((userDetails.getCustomerId()!=null && userDetails.getCustomerId().length() > 0) &&
@@ -196,13 +197,16 @@ public class UserAuthController {
 		if(isValidUserIDOnly(signinSrEmail.trim())) {
 			
 			UserAuthBo userDetailsOnUid = userAuthService.getValidUser(signinSrEmail.trim());
+			
+			String userFirstAndLastName = userAuthService.getUserDetails(userDetailsOnUid.getCustomerId());
+			
 			Map<String, String> map = new HashMap<String, String>();
-	        map.put("name", "User :"+userDetailsOnUid.getCustomerId());
-	        map.put("password", userDetailsOnUid.getWordapp());
+	        map.put("name", userFirstAndLastName);
+	        map.put("password", Security.decrypt(userDetailsOnUid.getWordapp()));
 	        
 	        EmailDbBean emailDbBean = Utils.getEmailBeanForPasswordRecovery(signinSrEmail.trim(), Utils.mapToString(map));
 	        System.out.println(emailDbBean);
-			boolean status = emailService.queuePasswordRecoveryEmail(emailDbBean);
+			boolean status = emailService.queueEmail(emailDbBean);
 			if(status) {
 				model.addAttribute("errorMessage", MessageConstant.ACCOUNT_RECOVERY_SUCCESS);
 				EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all

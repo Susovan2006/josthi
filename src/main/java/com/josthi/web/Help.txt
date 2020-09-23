@@ -1,0 +1,1 @@
+schedulerTimerBean.setLastRunTime(new Timestamp(System.currentTimeMillis()));

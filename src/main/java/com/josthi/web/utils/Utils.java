@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.josthi.web.constants.EmailConstant;
 import com.josthi.web.po.EmailDbBean;
@@ -55,9 +57,23 @@ public class Utils {
 		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_PASSWORD_RECOVERY);
 		emailDbBean.setJsonString(jsonValue);
 		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FROM_FOR_PASSWORD_RECOVERY);
-		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS_FROM_FOR_PASSWORD_RECOVERY);
+		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
 		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
-		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS_FROM_FOR_PASSWORD_RECOVERY);		
+		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
+		return emailDbBean;
+	}
+	
+	public static EmailDbBean getEmailBeanForWelcome(String emailTo, String jsonValue) {
+		
+		EmailDbBean emailDbBean =  new EmailDbBean();
+		emailDbBean.setSentTo(emailTo);
+		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_WELCOME);
+		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_WELCOME);
+		emailDbBean.setJsonString(jsonValue);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FROM_FOR_WELCOME);
+		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
+		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
+		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
 		return emailDbBean;
 	}
 	
@@ -75,6 +91,39 @@ public class Utils {
 		}catch (Exception ex) {
 			throw ex;
 		}
+	}
+	
+	public static String toCamelCase(String val) {
+		if(!StringUtils.isEmpty(val)) {
+			return StringUtils.capitalize(val.toLowerCase());
+		}else {
+			return val;
+		}
+	}
+	
+	public static String convertToCamelCase(final String init) {
+	    if (init == null)
+	        return null;
+
+	    final StringBuilder ret = new StringBuilder(init.length());
+
+	    for (final String word : init.split(" ")) {
+	        if (!word.isEmpty()) {
+	            ret.append(Character.toUpperCase(word.charAt(0)));
+	            ret.append(word.substring(1).toLowerCase());
+	        }
+	        if (!(ret.length() == init.length()))
+	            ret.append(" ");
+	    }
+
+	    return ret.toString();
+	}
+	
+	
+	// Get Query time.
+	public static String getQueryTime(String message, long startTime) {
+		double queryTime = (System.currentTimeMillis()-startTime);
+		return "Execution time for :"+message+ " is "+ queryTime + "mili sec. i.e.  " + queryTime/1000+" sec";
 	}
 
 }

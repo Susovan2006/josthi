@@ -43,6 +43,16 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public int getNextID() {
 		return userAuthDao.getNectID();
 	}
+
+	@Override
+	public String getUserDetails(String customerId) {
+		return userAuthDao.getUserFirstAndLastName(customerId);
+	}
+
+	@Override
+	public boolean resetUserIdGenTable() {
+		return userAuthDao.resetUserIdGenTable();
+	}
 	
 	
 	/*

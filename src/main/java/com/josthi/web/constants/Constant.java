@@ -12,5 +12,10 @@ public interface Constant {
 	String USER_TEMPORARY_LOCK_YES = "YES";
 	String USER_TEMPORARY_LOCK_NO = "NO";
 	
+	String STATUS_ACTIVE = "ACTIVE";
+	String STATUS_DEACTIVE = "DEACTIVE";
+	
+	
+	
 
 }

@@ -14,6 +14,8 @@ public interface Constant {
 	
 	String STATUS_ACTIVE = "ACTIVE";
 	String STATUS_DEACTIVE = "DEACTIVE";
+	//The User Can try max 3 times with incorrect Password.
+	int LOGIN_RETRY_COUNT = 3;
 	
 	
 	

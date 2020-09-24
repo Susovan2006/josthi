@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.dao.UserAuthDao;
 import com.josthi.web.service.UserAuthService;
+import com.josthi.web.utils.Utils;
 
 @Service("userAuthService")
 public class UserAuthServiceImpl implements UserAuthService{
@@ -46,12 +47,18 @@ public class UserAuthServiceImpl implements UserAuthService{
 
 	@Override
 	public String getUserDetails(String customerId) {
-		return userAuthDao.getUserFirstAndLastName(customerId);
+		return Utils.convertToCamelCase(userAuthDao.getUserFirstAndLastName(customerId));
 	}
 
 	@Override
 	public boolean resetUserIdGenTable() {
 		return userAuthDao.resetUserIdGenTable();
+	}
+
+	@Override
+	public boolean removeTempLockFromUserAccount() {
+		// TODO Auto-generated method stub
+		return userAuthDao.removeTempLockFromUserAccount();
 	}
 	
 	

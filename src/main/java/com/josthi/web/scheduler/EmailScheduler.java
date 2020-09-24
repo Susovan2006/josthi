@@ -78,9 +78,10 @@ public class EmailScheduler {
 				}//end for
 			}catch(Exception ex) {
 				ex.printStackTrace();
+				logger.error(ex.getMessage());
 			}
 		}else {
-			System.out.println("Timer Skipped");
+			System.out.println("----Timer Skipped-----");
 		}
 	}
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,6 +97,12 @@ public class UserAuthController {
 				
 				if(userAuthService.updateLoginStatusOnSuccess(userDetails)) {
 					//TODO: Set Session Variable.
+					String userFirstAndLastName = userAuthService.getUserDetails(userDetails.getCustomerId());
+					session.setAttribute("USER", userFirstAndLastName);
+					session.setAttribute("ROLE", userDetails.getRole());
+					session.setAttribute("ISVALIDSESSION", "Y");
+					
+					
 					logger.info("LOGIN Successful");
 					return "user_personal_details";
 
@@ -135,7 +142,7 @@ public class UserAuthController {
 				int retryCount = userDetailsOnUid.getLoginRetryCount();
 				
 				    //re-try is allowed till 3 times, then the account will be temporarily disabled.
-					if(retryCount < 4) {
+					if(retryCount < Constant.LOGIN_RETRY_COUNT) {
 						userDetailsOnUid.setLoginRetryCount(retryCount+1);
 						boolean updateStatus = userAuthService.updateLoginStatus(userDetailsOnUid);
 						if(updateStatus) {
@@ -153,7 +160,22 @@ public class UserAuthController {
 						userDetailsOnUid.setTemporaryLockEnabled("YES");
 						if(userAuthService.updateLoginStatus(userDetailsOnUid)) {
 							logger.info("Max attempt exceed, the account is temporary locked, Please wait for an hour to relogin.");
-							model.addAttribute("errorMessage", MessageConstant.LOGIN_ERROR_MAX_TRY_EXCEEDED);
+							
+							//Send Email, Your ID locked. Click here to Unlock.
+							String userFirstAndLastName = userAuthService.getUserDetails(userDetailsOnUid.getCustomerId());
+							Map<String, String> map = new HashMap<String, String>();
+					        map.put("name", userFirstAndLastName);
+					        map.put("message", EmailConstant.ACCOUNT_UNLOCK_MESSAGE);
+					        map.put("unlockLink", Utils.generateAccountUnlockUrl(userAuthBo.getUseridEmail().trim()));
+					        
+					        EmailDbBean emailDbBean = Utils.getEmailBeanForAccountLock(userAuthBo.getUseridEmail().trim(), Utils.mapToString(map));
+					        if(emailService.queueEmail(emailDbBean)) {
+					        	model.addAttribute("errorMessage", MessageConstant.LOGIN_ERROR_MAX_TRY_EXCEEDED);
+					        }else {
+					        	model.addAttribute("errorMessage", MessageConstant.LOGIN_ERROR_MAX_TRY_EXCEEDED_NO_EMAIL);
+					        }
+							
+							
 						}	
 					}
 					return "login_simple";
@@ -169,7 +191,34 @@ public class UserAuthController {
 		
 	}
 
+	/**
+	 * Account Unlock
+	 * @param emailID
+	 * @return
+	 */
 
+	
+	@GetMapping("/unlock/{emailID}")
+	public String hello0(@PathVariable("emailID") String encryptedEmailID, UserAuthBo userAuthBo, Model model)
+	{
+		try {
+			String decryptedEmailID = Security.decrypt(encryptedEmailID);
+			UserAuthBo userDetailsOnUid = userAuthService.getValidUser(decryptedEmailID);
+			userDetailsOnUid.setTemporaryLockEnabled("NO");
+			userDetailsOnUid.setLoginRetryCount(0);
+			if(userAuthService.updateLoginStatus(userDetailsOnUid)) {
+				model.addAttribute("errorMessage", MessageConstant.ACCOUNT_UNLOCK_SUCCESS);
+				EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
+			}else {
+				model.addAttribute("errorMessage", MessageConstant.ACCOUNT_UNLOCK_FAILED);
+			}
+		}catch( Exception ex) {
+			model.addAttribute("errorMessage", MessageConstant.ACCOUNT_UNLOCK_FAILED);
+		}
+		
+	    return "login_simple";
+	}
+	
 
 	private boolean isValidUserIDOnly(String emailID) {
 		

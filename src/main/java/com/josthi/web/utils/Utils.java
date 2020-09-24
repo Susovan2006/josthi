@@ -63,6 +63,22 @@ public class Utils {
 		return emailDbBean;
 	}
 	
+	
+	
+    public static EmailDbBean getEmailBeanForAccountLock(String emailTo, String jsonValue) {
+		
+		EmailDbBean emailDbBean =  new EmailDbBean();
+		emailDbBean.setSentTo(emailTo);
+		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_ACCOUNT_UN_LOCK);
+		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_ACCOUNT_UN_LOCK);
+		emailDbBean.setJsonString(jsonValue);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FROM_FOR_ACCOUNT_UNLOCK);
+		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
+		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
+		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
+		return emailDbBean;
+	}
+	
 	public static EmailDbBean getEmailBeanForWelcome(String emailTo, String jsonValue) {
 		
 		EmailDbBean emailDbBean =  new EmailDbBean();
@@ -124,6 +140,12 @@ public class Utils {
 	public static String getQueryTime(String message, long startTime) {
 		double queryTime = (System.currentTimeMillis()-startTime);
 		return "Execution time for :"+message+ " is "+ queryTime + "mili sec. i.e.  " + queryTime/1000+" sec";
+	}
+
+
+	public static String generateAccountUnlockUrl(String emailID) throws Exception {	
+		//return "https://josthi.com/unlock/"+Security.encrypt(emailID);
+		return "https://josthi.com";
 	}
 
 }

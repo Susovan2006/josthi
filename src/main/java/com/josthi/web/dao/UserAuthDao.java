@@ -20,4 +20,6 @@ public interface UserAuthDao {
 
 	boolean resetUserIdGenTable();
 
+	boolean removeTempLockFromUserAccount();
+
 }

@@ -146,5 +146,19 @@ public class UserAuthDaoImpl implements UserAuthDao{
 		}
 	}
 	
+	
+	public static final String UPDATE_USER_TEMP_LOCK_ACCOUNT = "UPDATE user_auth_table set LOGIN_RETRY_COUNT = 0 , TEMPORARY_LOCK_ENABLED = 'NO' where TEMPORARY_LOCK_ENABLED = 'YES'";
+	@Override
+	public boolean removeTempLockFromUserAccount() {
+		try {
+			
+			int result = jdbcTemplate.update(UPDATE_USER_TEMP_LOCK_ACCOUNT);	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
 
 }

@@ -9,11 +9,12 @@ public interface MessageConstant {
 	String LOGIN_ERROR_INCORECT_USER_ID_PASSWORD = "Looks like the user ID and the password is incorrect, retry with valid user ID and password. or click Forget password.";
 	String LOGIN_ERROR_INCORRECT_PASSWORD_WITH_ATEMPT = "Looks like you entered an invalid password, please try again. you will get to try 3 attempts, then your ID will be locked. This is your attemp no : ";
 	String LOGIN_ERROR_INVALID_PASSWORD ="Try again, Invalid Password. You can try max 3 times.";
-	String LOGIN_ERROR_MAX_TRY_EXCEEDED = "Max attempt exceed, the account is temporary locked, Please wait for an hour to relogin.";
+	String LOGIN_ERROR_MAX_TRY_EXCEEDED = "Max login attempt exceed, the account is temporary locked, Please wait for 24 hour to relogin or check your email for unlock instructions.";
 	String LOGIN_ERROR_GENERAL = "Invalid User ID and Password, please try again, you will get max 3 attempts, then the password will be locked.";
+	String LOGIN_ERROR_MAX_TRY_EXCEEDED_NO_EMAIL = "Max login attempt exceed, the account is temporary locked, Please wait for 24 hour to relogin or contact customer Service.";
 
 	
-	String ACCOUNT_RECOVERY_SUCCESS = "Please check your email, password reset email will be sent in few min.";
+	String ACCOUNT_RECOVERY_SUCCESS = "Please check your email. Password reset email will be sent in few min.";
 	String ACCOUNT_RECOVERY_ERROR = "Looks like the userID/email is not registered in this app, please try with a correct email ID that was used during the registration";
 	String ACCOUNT_RECOVERY_EXCEPTION = "Error occured while recovering the password, please try again later or open a Ticket.";
 
@@ -23,5 +24,8 @@ public interface MessageConstant {
 	String NEW_REGISTRATION_SUCCESSFUL_CONDITIONAL = "Your account got created, but the welcome email delivery failed, Check if you are able to login, else contact contact customer service";
 	String NEW_REGISTRATION_FAILED_UNMATCH_PASSWORD = "Looks like the password and the confirm password field has different value. Please retry with same value";
 	String NEW_REGISTRATION_FAILED_REQUIRED_FIELDS = "All the Fields are required fields, Please fill with proper values.";
+	
+	String ACCOUNT_UNLOCK_SUCCESS = "Your Account is unlocked successfully, now you can try to login";
+	String ACCOUNT_UNLOCK_FAILED = "System failed to unlock your account. Please wait for 24 hours or contact the Customer Service.";
 
 }

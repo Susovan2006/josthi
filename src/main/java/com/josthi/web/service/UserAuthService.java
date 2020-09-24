@@ -23,6 +23,8 @@ public interface UserAuthService {
 
 	public boolean resetUserIdGenTable();
 
+	public boolean removeTempLockFromUserAccount();
+
 	//public void updateSchedulerDetails(SchedulerTimerBean schedulerTimerBean);
 
 	//public boolean registerNewUser(UserRegistrationBean userRegistrationBean);

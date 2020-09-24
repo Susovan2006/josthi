@@ -8,4 +8,6 @@ public interface SchedulerService {
 
 	void runIDRollOverTask(String cronExpression);
 
+	void midNightAccountUnlock(String cronExpression);
+
 }

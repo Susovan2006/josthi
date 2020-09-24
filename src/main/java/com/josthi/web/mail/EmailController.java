@@ -36,8 +36,11 @@ public class EmailController {
 		
 	}
 	
+
 	
-public void sendEmailForPasswordRecovery(EmailDbBean emailDbBean, Map<String, String> emailDetailsModel) throws Exception {
+	//This method is called from the Cron Job.
+   
+	public void sendEmailForPasswordRecovery(EmailDbBean emailDbBean, Map<String, String> emailDetailsModel) throws Exception {
 		
 		System.out.println("START... Sending email");
 

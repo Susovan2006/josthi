@@ -82,4 +82,55 @@ public class SchedulerServiceImpl implements SchedulerService{
 		return schedulerTimerBean;
 	}
 
+
+     
+     
+     
+    //**************************************************************************************************/
+    //******************** A C C O U N T   U N L O C K   ***********************************************/
+    //**************************************************************************************************/
+     @Override
+	public void midNightAccountUnlock(String cronExpression) {
+		SchedulerTimerBean schedulerTimerBean = new SchedulerTimerBean();
+		schedulerTimerBean = populateSchedulerBeanForA(schedulerTimerBean, cronExpression);
+		try {
+			boolean status = userAuthService.removeTempLockFromUserAccount();
+			if(status) {				
+				logger.info(" USER ACCOUNT UNLOCKED SUCCESSFULLY");
+				schedulerTimerBean.setStatus(SchedulerConstant.SCHEDULER_SUCCESS_STATUS);
+			}else {
+				logger.error("NO DATA TO UPDATE");
+				schedulerTimerBean.setStatus(SchedulerConstant.SCHEDULER_SUCCESS_STATUS);
+				schedulerTimerBean.setErrorMessage(SchedulerConstant.SCHEDULER_NO_DATA_UPDATE_STATUS);
+			}
+		}catch(Exception ex) {
+			
+			logger.error(ex.getMessage(), ex);
+			schedulerTimerBean.setStatus(SchedulerConstant.SCHEDULER_FAILURE_STATUS);
+			schedulerTimerBean.setErrorMessage(ex.getMessage());
+		}finally {
+			try {
+				updateSchedulerDetails(schedulerTimerBean);
+				
+			}catch(Exception ex) {
+				ex.printStackTrace();
+				//Suppress the exception
+			}
+		}
+		
+	}
+
+
+	private SchedulerTimerBean populateSchedulerBeanForA(SchedulerTimerBean schedulerTimerBean, String cronExpression) {
+		schedulerTimerBean.setTaskId(SchedulerConstant.ACCOUNT_UNLOCK_TASK_ID);
+		schedulerTimerBean.setTaskName(SchedulerConstant.ACCOUNT_UNLOCK_TASK_NAME);
+		schedulerTimerBean.setCronExpresion(cronExpression);
+		schedulerTimerBean.setLastRunTime(new Timestamp(System.currentTimeMillis()));
+		
+		CronSequenceGenerator cronTrigger = new CronSequenceGenerator(cronExpression);
+        Date next = cronTrigger.next(new Date());
+		schedulerTimerBean.setNextRunTime(new Timestamp(next.getTime()));
+		return schedulerTimerBean;
+	}
+
 }

@@ -122,8 +122,17 @@ CREATE TABLE `userid_generation_table` (
   PRIMARY KEY (`NextUserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
+INSERT INTO josthi_db.userid_generation_table (NextUserID) VALUES 
+(1)
+;
 
-
+INSERT INTO josthi_db.scheduled_task_dashboard (TASK_ID,TASK_NAME,TASK_DESC,CRON_EXPRESSION,LAST_RUN_TIME,NEXT_RUN_TIME,TASK_STATUS,COMMENTS) VALUES 
+('TSK_001','Daily UID Rollover','This Task will set the default id to 1 every midnight','0 0 0 * * ?','2020-09-25 14:59:50','2020-09-26 00:00:00','COMPLETED',NULL)
+,('TSK_002','Daily Account unlock','This Task will remove all the temporary locks on the Account','0 0 0 * * ?','2020-09-25 14:59:51','2020-09-26 00:00:00','COMPLETED',NULL)
+,('TSK_003',NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+,('TSK_004',NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+,('TSK_005',NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+;
 
 INSERT INTO josthi_db.ui_verbiage (SCREEN_NAME,SCREEN_SECTION,SCREEN_KEY,VERBIAGE_SHORT_DESC,VERBIAGE_DETAIL_DESC,LAST_UPDATE_TIME_STAMP,LAST_UPDATE_USER,COMMENTS,STATUS) VALUES 
 ('service_details.html','BasicService','BasicPlan1','Doctor Appointments','It''s a pain to schedule a Dr appointment, we will arrange it for you and send reminder.',NULL,'Susovan',NULL,'ACTIVE')

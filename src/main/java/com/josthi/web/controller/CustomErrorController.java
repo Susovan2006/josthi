@@ -10,6 +10,10 @@ public class CustomErrorController implements ErrorController {
 
  private static final String PATH = "/error";
 
+ //Tips : need to make the below settings in Application.properties
+ //server.error.whitelabel.enabled=false
+ 
+ 
  @RequestMapping(value = PATH)
  public String error() {
   return "customError";

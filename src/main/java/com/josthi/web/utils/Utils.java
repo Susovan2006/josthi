@@ -1,11 +1,13 @@
 package com.josthi.web.utils;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.josthi.web.constants.EmailConstant;
@@ -146,6 +148,22 @@ public class Utils {
 	public static String generateAccountUnlockUrl(String emailID) throws Exception {	
 		//return "https://josthi.com/unlock/"+Security.encrypt(emailID);
 		return "https://josthi.com";
+	}
+	
+	
+	public static String readableFileSize(long size) {
+	    if(size <= 0) return "0";
+	    final String[] units = new String[] { "B", "kB", "MB", "GB", "TB" };
+	    int digitGroups = (int) (Math.log10(size)/Math.log10(1024));
+	    return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+	}
+
+
+	public static String setDownLoadPath(String downloadPath) {
+		
+		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path(downloadPath).toUriString();
+		return "<a class='nav-link' href='"+fileDownloadUri+"'><i class='fas fa-cloud-download nav-icon'></i></a>";
+		//return null;
 	}
 
 }

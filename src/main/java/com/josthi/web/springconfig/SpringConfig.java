@@ -23,6 +23,7 @@ import com.josthi.web.controller.CacheConfigDataController;
 import com.josthi.web.daoimpl.BaseDaoImpl;
 import com.josthi.web.daoimpl.CacheConfigDaoImpl;
 import com.josthi.web.daoimpl.EmailDaoImpl;
+import com.josthi.web.daoimpl.FileWikiDaoImpl;
 import com.josthi.web.daoimpl.SchedulerDaoImpl;
 import com.josthi.web.daoimpl.UserAuthDaoImpl;
 import com.josthi.web.daoimpl.UserRegistrationDaoImpl;
@@ -179,6 +180,14 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	 return cacheConfigDaoImpl;
  }
  
+ 
+ @Bean("fileWikiDao")
+ public FileWikiDaoImpl fileWikiDaoImpl(DataSource josthiDataSource) {
+	 FileWikiDaoImpl fileWikiDaoImpl = new FileWikiDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 fileWikiDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return fileWikiDaoImpl;
+ }
  
  /* ==========================================================================
   * ==================== S E R V I C E   T R I G G E R   =====================

@@ -32,6 +32,8 @@ public class MainController {
 		return "Landing_page_josthi";
 	}
 	
+	
+	
 	@GetMapping("/forAgents")
 	public String forAgents(Model model) {
 		model.addAttribute("message","HelloWorld");

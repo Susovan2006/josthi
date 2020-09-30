@@ -28,6 +28,7 @@ import com.josthi.web.daoimpl.SchedulerDaoImpl;
 import com.josthi.web.daoimpl.UserAuthDaoImpl;
 import com.josthi.web.daoimpl.UserRegistrationDaoImpl;
 import com.josthi.web.mail.EmailSenderService;
+import com.josthi.web.security.SecurityConfig;
 import com.josthi.web.serviceimpl.CacheConfigServiceImpl;
 import com.josthi.web.serviceimpl.UserRegistrationServiceImpl;
 import com.josthi.web.utils.HostNamePropertyPlaceHolderConfig;
@@ -125,6 +126,15 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
   * ====================  DAO & DAOIMPL CONFIG  ==============================
   * ==========================================================================
   */
+ 
+	/*
+	 * @Bean public SecurityConfig securityConfig(DataSource josthiDataSource) {
+	 * SecurityConfig securityConfig = new SecurityConfig();
+	 * securityConfig.setDataSource(josthiDataSource); return securityConfig; }
+	 */
+ 
+ 
+ 
  
  @Bean("userAuthDao")
  public UserAuthDaoImpl userAuthDao(DataSource josthiDataSource) {

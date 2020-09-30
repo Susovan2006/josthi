@@ -39,7 +39,7 @@ public class FileWikiController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(FileWikiController.class);
 	
-	@GetMapping("/wiki")
+	@GetMapping("/admin/wiki")
 	public String wiki(FileWikiPO fileWikiPO,  Model model) {
 
 		model.addAttribute("fileWikiList",fileWikiService.getWikiFileDetails());

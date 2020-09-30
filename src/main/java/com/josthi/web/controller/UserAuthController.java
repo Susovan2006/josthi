@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserRegistrationBean;
+import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.EmailConstant;
 import com.josthi.web.constants.MessageConstant;
@@ -84,25 +85,33 @@ public class UserAuthController {
 			UserAuthBo userDetails = userAuthService.getValidUser(userAuthBo.getUseridEmail().trim(), 
 										 						  Security.encrypt(userAuthBo.getWordapp().trim()));
 			logger.info(userDetails.toString());
+			
 			//A Valid user should have the CustomerID + Role + Status
 			if((userDetails.getCustomerId()!=null && userDetails.getCustomerId().length() > 0) &&
 					(userDetails.getRole()!=null && userDetails.getRole().length() > 0) &&
-					(userDetails.getStatus()!=null && userDetails.getStatus().length() > 0 && userDetails.getStatus().equalsIgnoreCase(Constant.USER_STATUS_ACTIVE)) &&
-					(userDetails.getTemporaryLockEnabled()!=null && userDetails.getTemporaryLockEnabled().equalsIgnoreCase("NO"))) {
+					(userDetails.getStatus()!=null && userDetails.getStatus().length() > 0 && 
+					 	userDetails.getStatus().equalsIgnoreCase(Constant.USER_STATUS_ACTIVE)) &&
+					(userDetails.getTemporaryLockEnabled()!=null && 
+						userDetails.getTemporaryLockEnabled().equalsIgnoreCase("NO"))) {
 				
-					userDetails.setLoginStatus("ONLINE");
+					userDetails.setLoginStatus(Constant.USER_ONLINE_STATUS);
 					userDetails.setLoginTime(new Timestamp(System.currentTimeMillis()));
 					userDetails.setLoginRetryCount(0);
-					userDetails.setTemporaryLockEnabled("NO");
+					userDetails.setTemporaryLockEnabled(Constant.USER_TEMPORARY_LOCK_NO);
 				
 				if(userAuthService.updateLoginStatusOnSuccess(userDetails)) {
 					//TODO: Set Session Variable.
 					String userFirstAndLastName = userAuthService.getUserDetails(userDetails.getCustomerId());
-					session.setAttribute("USER", userFirstAndLastName);
-					session.setAttribute("ROLE", userDetails.getRole());
-					session.setAttribute("ISVALIDSESSION", "Y");
 					
-					
+					UserSessionBean userSessionBean = new UserSessionBean (userFirstAndLastName,              	//First Name & Last Name 
+																		   userDetails.getRole(),			  	// Role
+																		   userAuthBo.getUseridEmail().trim(), 	// email ID
+																		   "",									//Image Path
+																		   Constant.USER_ONLINE_STATUS,			// ONLINE/OFFLINE
+																		   Constant.USER_TYPE_REG_USER,			//Same as Role.
+																		   true);								// Session Active = true.
+					session.setAttribute("USER_SESSION_OBJ", userSessionBean);
+								
 					logger.info("LOGIN Successful");
 					return "user_personal_details";
 

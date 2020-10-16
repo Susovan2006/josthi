@@ -5570,6 +5570,12 @@ a.badge-navy:focus, a.badge-navy.focus {
   border-color: #fcf0e2;
 }
 
+.alert-success-susovan {
+  color: #059a11;
+  background-color: #ecfdc6;
+  border-color: #059a11;
+}
+
 .alert-warning hr {
   border-top-color: #fae4cb;
 }

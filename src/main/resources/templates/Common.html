@@ -39,6 +39,7 @@
 	  <script th:src="@{/vendor/jquery-validation/dist/jquery.validate.min.js}"></script>
 	  <script th:src="@{/vendor/jquery-migrate/dist/jquery-migrate.min.js}"></script>
 	  <script th:src="@{/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+	  
 	
 	  <!-- JS Implementing Plugins -->
 	  <script th:src="@{/vendor/hs-header/dist/hs-header.min.js}"></script>
@@ -305,6 +306,66 @@
 	</div>
 	
 	
+	<div th:fragment = "user-footer">
+		<!-- ========== FOOTER ========== -->
+		<footer class="bg-navy">
+		<div class="container space-1">
+		  <div class="row align-items-md-center text-center">
+		    <div class="col-md-3 mb-4 mb-md-0">
+		      <a href="#" aria-label="Front">
+		        <img class="brand" src="images/josthi/logo/logo_250x80.svg" alt="Logo">
+		      </a>
+		    </div>
+		
+		    <div class="col-sm-7 col-md-6 mb-4 mb-sm-0">
+		      <!-- Nav List -->
+		      <ul class="nav nav-sm nav-x-0 justify-content-center text-md-center">
+		        <li class="nav-item px-3">
+		          <a class="nav-link" href="#">About</a>
+		        </li>
+		        <li class="nav-item px-3">
+		          <a class="nav-link" href="#">Services</a>
+		        </li>
+		        <li class="nav-item px-3">
+		          <a class="nav-link" href="#">Our work</a>
+		        </li>
+		      </ul>
+		      <!-- End Nav List -->
+		    </div>
+		
+		    <div class="col-sm-5 col-md-3 text-sm-right">
+		      <!-- Social Networks -->
+		      <ul class="list-inline mb-0">
+		        <li class="list-inline-item">
+		          <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle" href="#">
+		            <i class="fab fa-facebook-f"></i>
+		          </a>
+		        </li>
+		        <li class="list-inline-item">
+		          <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle" href="#">
+		            <i class="fab fa-google"></i>
+		          </a>
+		        </li>
+		        <li class="list-inline-item">
+		          <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle" href="#">
+		            <i class="fab fa-twitter"></i>
+		          </a>
+		        </li>
+		        <li class="list-inline-item">
+		          <a class="btn btn-xs btn-icon btn-soft-secondary rounded-circle" href="#">
+		            <i class="fab fa-github"></i>
+		          </a>
+		        </li>
+		      </ul>
+		      <!-- End Social Networks -->
+		    </div>
+		  </div>
+		  </div>
+		</footer>
+		<!-- ========== END FOOTER ========== -->
+	
+	</div>
+	
 	
 	<!-- ========== HEADER START ========== -->
 	
@@ -385,6 +446,18 @@
 	
 	                  <!-- Pages - Submenu -->
 	                  <div id="pagesSubMenu" class="hs-sub-menu dropdown-menu" aria-labelledby="pagesMegaMenu" style="min-width: 230px;">
+	                    
+	                    <!-- Development -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkPagesCompany" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesCompany">Code Dev</a>
+	
+	                      <div id="navSubmenuPagesCompany" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesCompany" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="/admin/wiki">Wiki</a>
+	                      </div>
+	                    </div>
+	                    <!-- Development -->
+	                    
+	                    
 	                    <!-- Company -->
 	                    <div class="hs-has-sub-menu">
 	                      <a id="navLinkPagesCompany" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesCompany">Company</a>

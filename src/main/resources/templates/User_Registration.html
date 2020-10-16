@@ -15,7 +15,25 @@
   <main id="content" role="main">
     <!-- Login Form -->
     <div class="container space-2 space-lg-3 ">
-      <form class="js-validate w-md-75 w-lg-50 mx-md-auto card shadow-lg">
+      <form class="js-validate w-md-75 w-lg-50 mx-md-auto card shadow-lg"
+      		action="#" th:action="@{/registerGeneralUser}" th:object="${userRegistrationBean}"  method="post">
+       
+          <!-- ============== ERROR MESSAGE START ======================== --> 
+      	    <div th:if="${errorMessage ne null}">
+				 <div class="alert alert-warning alert-dismissible fade show" role="alert">
+				  <strong>Alert!!</strong> <span th:text="${errorMessage}"></span>
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+					  <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+					</svg>
+				  </button>
+				</div>
+			</div>
+		    
+		 <!--============== ERROR MESSAGE END ========================== -->
+       
+       
+       
         <!-- Title -->
         <div class="mb-2 mt-7 mb-md-2 px-5">
           <h1 class="h2 mb-0 " >Welcome to josthi app</h1>
@@ -23,18 +41,34 @@
         </div>
         <!-- End Title -->
 
+		<!-- Form Group -->
+        <div class="js-form-message form-group px-7">
+          <label class="input-label" for="firstName">User First Name</label>
+          <input type="text" class="form-control" th:field="*{firstName}" name="firstName" id="firstName" placeholder="First Name" aria-label="First Name" required
+                 data-msg="Please enter your first name.">
+        </div>
+        <!-- End Form Group -->
+        
         <!-- Form Group -->
         <div class="js-form-message form-group px-7">
-          <label class="input-label" for="signinSrEmail">Email address</label>
-          <input type="email" class="form-control" name="email" id="signinSrEmail" placeholder="Email address" aria-label="Email address" required
+          <label class="input-label" for="lastName">User Last Name</label>
+          <input type="text" class="form-control" th:field="*{lastName}" name="lastName" id="lastName" placeholder="Last Name" aria-label="Last Name" required
+                 data-msg="Please enter your last name.">
+        </div>
+        <!-- End Form Group -->
+		
+        <!-- Form Group -->
+        <div class="js-form-message form-group px-7">
+          <label class="input-label" for="validEmailId">Email address</label>
+          <input type="email" class="form-control" th:field="*{validEmailId}" name="email" id="validEmailId" placeholder="Email address" aria-label="Email address" required
                  data-msg="Please enter a valid email address.">
         </div>
         <!-- End Form Group -->
 
         <!-- Form Group -->
         <div class="js-form-message form-group px-7">
-          <label class="input-label" for="signinSrPassword">Password</label>
-          <input type="password" class="form-control" name="password" id="signinSrPassword" placeholder="********" aria-label="********" required
+          <label class="input-label" for="wordApp">Password</label>
+          <input type="password" class="form-control" th:field="*{wordApp}"  name="wordApp" id="wordApp" placeholder="********" aria-label="********" required
                  data-msg="Your password is invalid. Please try again.">
         </div>
         <!-- End Form Group -->
@@ -42,7 +76,7 @@
         <!-- Form Group -->
         <div class="js-form-message form-group px-7">
           <label class="input-label" for="signinSrConfirmPassword">Confirm password</label>
-          <input type="password" class="form-control" name="confirmPassword" id="signinSrConfirmPassword" placeholder="********" aria-label="********" required
+          <input type="password" class="form-control" th:field="*{confirmWordApp}" name="confirmWordApp" id="confirmWordApp" placeholder="********" aria-label="********" required
                  data-msg="Password does not match the confirm password.">
         </div>
         <!-- End Form Group -->
@@ -135,8 +169,8 @@
       $('.js-validate').each(function() {
         $.HSCore.components.HSValidation.init($(this), {
           rules: {
-            confirmPassword: {
-              equalTo: '#signupPassword'
+        	  confirmWordApp: {
+              equalTo: '#wordApp'
             }
           }
         });

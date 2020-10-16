@@ -1,8 +1,26 @@
 package com.josthi.web;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.josthi.web.constants.MappingConstant;
+import com.josthi.web.controller.CacheConfigDataController;
+import com.josthi.web.po.CacheConfigPO;
 
 
 @Controller
@@ -14,6 +32,8 @@ public class MainController {
 		return "Landing_page_josthi";
 	}
 	
+	
+	
 	@GetMapping("/forAgents")
 	public String forAgents(Model model) {
 		model.addAttribute("message","HelloWorld");
@@ -21,26 +41,25 @@ public class MainController {
 	}
 	
 	//login_simple
-	@GetMapping("/login")
+	/*@GetMapping("/login")
 	public String login(Model model) {
 		model.addAttribute("message","HelloWorld");
 		return "login_simple";
-	}
+	}*/
 	
 	
 	//josthi_signup.html
-	@GetMapping("/userSignup")
-	public String userSignup(Model model) {
-		model.addAttribute("message","HelloWorld");
-		return "josthi_signup";
-	}
+	//@GetMapping("/userSignup")
+	//public String userSignup(Model model) {
+	//	model.addAttribute("message","HelloWorld");
+	//	return "josthi_signup";
+	//}
 	
 	//account_recovery
-	@GetMapping("/accountRecovery")
-	public String accountRecovery(Model model) {
-		model.addAttribute("message","HelloWorld");
-		return "account_recovery";
-	}
+	/*
+	 * @GetMapping("/accountRecovery") public String accountRecovery(Model model) {
+	 * model.addAttribute("message","HelloWorld"); return "account_recovery"; }
+	 */
 	
 	
 	//account_recovery
@@ -73,10 +92,35 @@ public class MainController {
 			return "josthi_pricing";
 	}
 	
+	
+	
+	
 	//service_details.html
 	@GetMapping("/planDetails")
 	public String planDetails(Model model) {
-			model.addAttribute("message","HelloWorld");
+			
+		//Here we are getting the section to be displayed on html Screen.
+	    //The Value is coming from the Static Variable that we fetch from the database.
+		List<CacheConfigPO> planDetailList = CacheConfigDataController.configMap.get(MappingConstant.VERBIAGE_HTML_PLAN_DETAILS);
+		//System.out.println("@@@@@@@@@@@@"+planDetailList.toString());	
+		
+		
+		List<CacheConfigPO> basicServiceList = new ArrayList<CacheConfigPO>();
+		List<CacheConfigPO> emergencyServiceList = new ArrayList<CacheConfigPO>();
+		List<CacheConfigPO> generalServiceList = new ArrayList<CacheConfigPO>();
+		
+		for( CacheConfigPO serviceDetails : planDetailList) {
+			if(serviceDetails.getScreenSection().equalsIgnoreCase(MappingConstant.VERBIAGE_HTML_PLAN_DETAILS_SECTION_BASIC)) {
+				basicServiceList.add(serviceDetails);
+			}else if(serviceDetails.getScreenSection().equalsIgnoreCase(MappingConstant.VERBIAGE_HTML_PLAN_DETAILS_SECTION_EMERGENCY)) {
+				emergencyServiceList.add(serviceDetails);
+			}else if(serviceDetails.getScreenSection().equalsIgnoreCase(MappingConstant.VERBIAGE_HTML_PLAN_DETAILS_SECTION_GENERAL)) {
+				generalServiceList.add(serviceDetails);
+			}
+		}
+		model.addAttribute("basicServiceList", basicServiceList);
+		model.addAttribute("emergencyServiceList", emergencyServiceList);
+		model.addAttribute("generalServiceList", generalServiceList);
 			return "service_details";
 	}
 	
@@ -115,4 +159,18 @@ public class MainController {
 			model.addAttribute("message","HelloWorld");
 			return "user_personal_details";
 	}
+	
+	/*
+	 * @GetMapping(value = "/image") public @ResponseBody byte[] getImage() throws
+	 * IOException { InputStream in = getClass()
+	 * .getResourceAsStream("/com/josthi/web/IE_icon.png"); return
+	 * IOUtils.toByteArray(in); }
+	 */
+	
+	
+	
+	
+	
+	
+
 }

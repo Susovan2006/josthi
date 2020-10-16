@@ -47,9 +47,9 @@
 	<!-- ======================================= D E T A I L ===================================== -->
 	<!-- Details Plan Section -->
 	<!-- Features Section -->
-		<div class="container space-2" id="basicService">
+		<div class="container space-2">
 		  <!-- Title -->
-		  <div class="w-md-80 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+		  <div class="w-md-80 w-lg-50 text-center mx-md-auto mb-5 mb-md-9" id="basicService">
 			<span class="d-block small font-weight-bold text-cap mb-2"></span>
 			<h2>Basic Medical Service</h2>
 		  </div>
@@ -57,89 +57,21 @@
 
 		  <!-- Icon Blocks -->
 		  <div class="row mb-5 mb-md-9">
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7">
+			
+			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7" th:each="basicPlan : ${basicServiceList}">
 			  <!-- Icon Block -->
 			  <div class="media align-items-center mb-2">
 				<figure class="w-100 max-w-6rem mr-3">
 				   <img class="img-fluid" src="images/josthi/pricing/pin.svg" alt="SVG">
 				</figure>
 				<div class="media-body">
-				  <h4 class="mb-0">Doctor Appointments</h4>
+				  <h4 class="mb-0" th:text="${basicPlan.verbiageShortDesc}">Basic Service Header</h4>
 				</div>
 			  </div>
-			  <p>It's a pain to schedule a Dr appointment, we will arrange it for you and send reminder.</p>
+			  <p th:text="${basicPlan.verbiageDetailDesc}">Basic Service Details.</p>
 			  <!-- End Icon Block -->
 			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin.svg" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Medical Diagnostics</h4>
-				</div>
-			  </div>
-			  <p>We will arrange a prefered lab or nearby lab who can conduct the Medical Diagnostic. Also we will deliver the results at your door step</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7 mb-md-0">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin.svg" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Arranging Nursing Services</h4>
-				</div>
-			  </div>
-			  <p>In case of illness nursing service is very essential, we can contact the nearest nursing center and arrange a nursing facility.</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7 mb-md-0">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin.svg" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">24X7 Oncall</h4>
-				</div>
-			  </div>
-			  <p>Health Emergency don't have any time, it's required any time. We are always there to help. just a single call and we will help you out.</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7 mb-md-0">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin.svg" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Arranging Physiotherapy</h4>
-				</div>
-			  </div>
-			  <p>Sometimes Physiotherapy is needed for speedy recovery. we can arrange one for you.</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin.svg" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Medicines Delivary</h4>
-				</div>
-			  </div>
-			  <p>We can order the Medicines for you, and it will be delivered at your door step.</p>
-			  <!-- End Icon Block -->
-			</div>
+			
 		  </div>
 		  <!-- End Icon Blocks -->
 		  
@@ -154,91 +86,22 @@
 		  
 		  <!-- Icon Blocks -->
 	      <div class="row mb-5 mb-md-9">
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7">
+			
+			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7" th:each="emergencyServices : ${emergencyServiceList}">
 			  <!-- Icon Block -->
 			  <div class="media align-items-center mb-2">
 				<figure class="w-100 max-w-6rem mr-3">
 				   <img class="img-fluid" src="images/josthi/pricing/pin_2.png" alt="SVG">
 				</figure>
 				<div class="media-body">
-				  <h4 class="mb-0">Doctor Appointments</h4>
+				  <h4 class="mb-0" th:text="${emergencyServices.verbiageShortDesc}">Emergency Service Header</h4>
 				</div>
-			  </div>
-			  <p>It's a pain to schedule a Dr appointment, we will arrange it for you and send reminder.</p>
+			 </div>
+			  <p th:text="${emergencyServices.verbiageDetailDesc}">Emergency Service Details.</p>
 			  <!-- End Icon Block -->
-			</div>
+		 	</div>
+		 </div>
 
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_2.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Medical Diagnostics</h4>
-				</div>
-			  </div>
-			  <p>We will arrange a prefered lab or nearby lab who can conduct the Medical Diagnostic. Also we will deliver the results at your door step</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7 mb-md-0">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_2.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Arranging Nursing Services</h4>
-				</div>
-			  </div>
-			  <p>In case of illness nursing service is very essential, we can contact the nearest nursing center and arrange a nursing facility.</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7 mb-md-0">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_2.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">24X7 Oncall</h4>
-				</div>
-			  </div>
-			  <p>Health Emergency don't have any time, it's required any time. We are always there to help. just a single call and we will help you out.</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7 mb-md-0">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_2.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Arranging Physiotherapy</h4>
-				</div>
-			  </div>
-			  <p>Sometimes Physiotherapy is needed for speedy recovery. we can arrange one for you.</p>
-			  <!-- End Icon Block -->
-			</div>
-			
-			<div class="col-sm-6 col-md-4">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_2.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Medicines Delivary</h4>
-				</div>
-			  </div>
-			  <p>We can order the Medicines for you, and it will be delivered at your door step.</p>
-			  <!-- End Icon Block -->
-			</div>
-		  </div>
-		  <!-- End Icon Blocks -->
 
 		  <!-- ===========================================================================================-->
 		  <!-- ================================General Service  ========================================-->
@@ -251,91 +114,18 @@
 		  
 		  <!-- Icon Blocks -->
 	      <div class="row mb-5 mb-md-9">
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7">
+	      
+			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7" th:each="generalService : ${generalServiceList}">
 			  <!-- Icon Block -->
 			  <div class="media align-items-center mb-2">
 				<figure class="w-100 max-w-6rem mr-3">
 				   <img class="img-fluid" src="images/josthi/pricing/pin_1.png" alt="SVG">
 				</figure>
 				<div class="media-body">
-				  <h4 class="mb-0">Doctor Appointments</h4>
+				  <h4 class="mb-0" th:text="${generalService.verbiageShortDesc}">General Service Header</h4>
 				</div>
 			  </div>
-			  <p>It's a pain to schedule a Dr appointment, we will arrange it for you and send reminder.</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_1.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Medical Diagnostics</h4>
-				</div>
-			  </div>
-			  <p>We will arrange a prefered lab or nearby lab who can conduct the Medical Diagnostic. Also we will deliver the results at your door step</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7 mb-md-0">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_1.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Arranging Nursing Services</h4>
-				</div>
-			  </div>
-			  <p>In case of illness nursing service is very essential, we can contact the nearest nursing center and arrange a nursing facility.</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7 mb-md-0">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_1.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">24X7 Oncall</h4>
-				</div>
-			  </div>
-			  <p>Health Emergency don't have any time, it's required any time. We are always there to help. just a single call and we will help you out.</p>
-			  <!-- End Icon Block -->
-			</div>
-
-			<div class="col-sm-6 col-md-4 mb-3 mb-sm-7 mb-md-0">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_1.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Arranging Physiotherapy</h4>
-				</div>
-			  </div>
-			  <p>Sometimes Physiotherapy is needed for speedy recovery. we can arrange one for you.</p>
-			  <!-- End Icon Block -->
-			</div>
-
-
-
-
-
-			<div class="col-sm-6 col-md-4">
-			  <!-- Icon Block -->
-			  <div class="media align-items-center mb-2">
-				<figure class="w-100 max-w-6rem mr-3">
-				  <img class="img-fluid" src="images/josthi/pricing/pin_1.png" alt="SVG">
-				</figure>
-				<div class="media-body">
-				  <h4 class="mb-0">Medicines Delivary</h4>
-				</div>
-			  </div>
-			  <p>We can order the Medicines for you, and it will be delivered at your door step.</p>
+			  <p th:text="${generalService.verbiageDetailDesc}">General Service Details.. Page not loaded properly</p>
 			  <!-- End Icon Block -->
 			</div>
 		  </div>

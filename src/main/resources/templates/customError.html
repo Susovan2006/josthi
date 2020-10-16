@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Title -->
+  <title>Error | josthi.com</title>
+
+  <!-- Required Meta Tags Always Come First -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="/images/josthi/icon/IE_icon.png">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+
+  <!-- CSS Implementing Plugins -->
+  <link rel="stylesheet" href="vendor/font-awesome/css/all.min.css" th:href="@{/vendor/font-awesome/css/all.min.css}">
+
+  <!-- CSS Front Template -->
+  <link rel="stylesheet" href="css/theme2.css" th:href="@{/css/theme2.css}">
+</head>
+<body class="bg-img-hero-fixed" style="background-image: url(/vendor/svg/illustrations/error-404.svg);">
+  <!-- ========== HEADER ========== -->
+  <header id="header" class="header header-bg-transparent header-abs-top py-3">
+    <div class="header-section">
+      <div id="logoAndNav" class="container">
+        <nav class="navbar">
+          <a class="navbar-brand" href="https://josthi.com" aria-label="Front">
+            <img src="/images/josthi/logo/logo_250x80.svg" alt="Logo">
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main">
+    <!-- Hero Section -->
+    <div class="d-lg-flex">
+      <div class="container d-lg-flex align-items-lg-center min-vh-lg-100 space-4">
+        <div class="w-lg-60 w-xl-50">
+          <!-- Title -->
+          <div class="mb-4">
+            <img class="max-w-23rem mb-3" src="/vendor/svg/illustrations/error-number-404.svg" alt="SVG Illustration">
+            <p class="lead">Oops! Looks like you followed a bad link. <br> If you think this is a problem with us, please <a href="#">tell us.</a></p>
+          </div>
+          <!-- End Title -->
+
+          <a class="btn btn-wide btn-primary transition-3d-hover" href="https://josthi.com">Back Home</a>
+        </div>
+      </div>
+    </div>
+    <!-- End Hero Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="position-absolute right-0 bottom-0 left-0">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center space-1">
+        <!-- Copyright -->
+        <p class="small text-muted mb-0">&copy; josthi.com.</p>
+        <!-- End Copyright -->
+
+        <!-- Social Networks -->
+
+        <!-- End Social Networks -->
+      </div>
+    </div>
+  </footer>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- JS Global Compulsory -->
+  <script src="vendor/jquery/dist/jquery.min.js"  th:src="@{/vendor/jquery/dist/jquery.min.js}"></script>
+  <script src="vendor/jquery-migrate/dist/jquery-migrate.min.js" th:src="@{/vendor/jquery-migrate/dist/jquery-migrate.min.js}"></script>
+  <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js" th:src="@{/vendor/vendor/jquery-migrate/dist/jquery-migrate.min.js}"></script>
+
+  <!-- JS Implementing Plugins -->
+
+  <!-- JS Front -->
+  <script src="js/hs.core.js" th:src="@{/js/hs.core.js}"></script>
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

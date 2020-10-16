@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<property name="HOME_LOG" value="/josthi/logs/josthi.log"/>
-	<property name="ERROR_LOG" value="/josthi/logs/josthi_error.log"/>
+	<property name="HOME_LOG" value="/home/mockellc/josthi/logs/josthi.log"/>
+	<property name="ERROR_LOG" value="/home/mockellc/josthi/logs/josthi_error.log"/>
 	
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <springProfile name="default">
@@ -13,14 +13,14 @@
         </root>
     </springProfile>
 
-    <springProfile name="prod">
+    <springProfile name="prod | dev | qa">
     
     	<!-- GENERAL LOG -->
         <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <file>${HOME_LOG}</file>
 
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-                <fileNamePattern>c:/mockell/logs/mockell.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <fileNamePattern>/home/mockellc/josthi/logs/josthi.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
                 <!-- each archived file, size max 10MB -->
                 <maxFileSize>10MB</maxFileSize>
                 <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
@@ -40,7 +40,7 @@
             <file>${ERROR_LOG}</file>
 
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-                <fileNamePattern>c:/mockell/logs/mockell_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <fileNamePattern>/home/mockellc/josthi/logs/josthi_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
                 <!-- each archived file, size max 10MB -->
                 <maxFileSize>10MB</maxFileSize>
                 <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->

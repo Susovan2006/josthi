@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Documents | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  
+  
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Documents</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Others</li>
+              <li class="breadcrumb-item active" aria-current="page">Documents</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Documents</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              <p class="card-text">View Documents uploaded by the Agents.</p>
+
+              <BR>
+			  <BR>
+			  
+			  <table class="table table-thead-bordered">
+			  <thead class="thead-light">
+				<tr>
+				  <th scope="col">#</th>
+				  <th scope="col">Document Name</th>
+				  <th scope="col">Size</th>
+				  <th scope="col">Upload Date</th>
+				  <th scope="col">Action</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <th scope="row">1</th>
+				  <td>Blood Test Report</td>
+				  <td>30 KB</td>
+				  <td>10/10/2020</td>
+				  <td><a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+				  </td>
+				</tr>
+				<tr>
+				  <th scope="row">2</th>
+				  <td>Eye Checkup Report</td>
+				  <td>100 KB</td>
+				  <td>10/10/2020</td>
+				  <td><a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+				  </td>
+				</tr>
+				<tr>
+				  <th scope="row">3</th>
+				  <td>Dr appointment Note</td>
+				  <td>3 MB</td>
+				  <td>10/10/2020</td>
+				  <td><a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+
+        </div>
+        <!--end Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="Common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  <div th:insert="user_common :: js-includes"></div>
+  <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+  
+  <script>
+    $(document).on('ready', function () {
+    	
+      var element = document.getElementById("userDocumentsLink");
+      element.classList.add("active");
+    	
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

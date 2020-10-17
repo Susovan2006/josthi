@@ -9,20 +9,29 @@ public class UserDetailsBean {
 	private String firstName ;
 	private String middleName ;
 	private String lastName ;
+	
+	//Address
 	private String userAddressFirstLine ;
 	private String userAddressSecondLine ;
 	private String cityTown ;
 	private String state ;
 	private String countyDistrict ;
 	private String country ;
+	private String zipPin; //Added New. Oct 2020.
+	//Contact
 	private String mobileNo1 ;
 	private String mobileNo2 ;
 	private String whatsappNo ;
+	private String landLineNo ; //Added New. Oct 2020.
+	private String faxNo ; //Added New. Oct 2020.
+	private String officePhNo; //Added New. Oct 2020.
+	//emails and Social Media links
 	private String secondaryEmail ;
-	private String emergencyContact ;
 	private String website ;
 	private String facebookLink ;
 	private String instagramLink ;
+	
+	private String emergencyContact ;
 	private Integer beneficiaryCount ;
 	private String photoId ;
 	private  String photoPassportSize ;

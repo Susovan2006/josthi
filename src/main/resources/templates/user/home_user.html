@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>User Home | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-1 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Home</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Welcome</li>
+              <li class="breadcrumb-item active" aria-current="page">Home</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+		  <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+          
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+		
+		<!-- ===================================================================================================-->
+		<!-- ======================= C A R D  0 ================================================================-->
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <h5 class="card-title">Setup Completion</h5>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+			<!-- Step -->
+				<ul class="step step-md">
+				  <li class="step-item">
+					<div class="step-content-wrapper">
+					  <span class="step-icon step-icon-success">1</span>
+					  <div class="step-content">
+						<h4>First step</h4>
+						<p class="text-body">User Id Creation.</p>
+					  </div>
+					</div>
+				  </li>
+
+				  <li class="step-item">
+					<div class="step-content-wrapper">
+					  <span class="step-icon step-icon-soft-primary">2</span>
+					  <div class="step-content">
+						<h4>Second step</h4>
+						<p class="text-body">Email Validation.</p>
+					  </div>
+					</div>
+				  </li>
+
+				  <li class="step-item">
+					<div class="step-content-wrapper">
+					  <span class="step-icon step-icon-soft-primary">3</span>
+					  <div class="step-content">
+						<h4>Third step</h4>
+						<p class="text-body">Fillout the User and Beneficiary Details.</p>
+					  </div>
+					</div>
+				  </li>
+				  
+				  <li class="step-item">
+					<div class="step-content-wrapper">
+					  <span class="step-icon step-icon-soft-primary">3</span>
+					  <div class="step-content">
+						<h4>Forth step</h4>
+						<p class="text-body">Buy a Suitable Plan.</p>
+					  </div>
+					</div>
+				  </li>
+				  
+				</ul>
+				<!-- End Step -->
+              
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+		
+		
+		<!-- ===================================================================================================-->
+		<!-- ======================= C A R D  1 ================================================================-->
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <h5 class="card-title">Recent Updated</h5>
+            </div>
+
+            <!-- Body -->
+			<div class="table-responsive">
+			<table class="table table-borderless table-thead-bordered table-nowrap table-align-middle">
+			  <thead class="thead-light">
+				<tr>
+				  <th>Request ID</th>
+				  <th>Request Status</th>
+				  <th>Amount</th>
+				  <th>Updated</th>
+				  <th>Details</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <td><a href="#">#3682303</a></td>
+				  <td><span class="badge badge-soft-warning">Pending</span></td>
+				  <td>264&#8377</td>
+				  <td>22/04/2020</td>
+				  <td><a class="btn btn-xs btn-white" href="javascript:;" data-toggle="modal" data-target="#invoiceReceiptModal"><i class="fas fa-eye mr-1"></i> Quick view</a></td>
+				</tr>
+				<tr>
+				  <td><a href="#">#2333234</a></td>
+				  <td><span class="badge badge-soft-success">Successful</span></td>
+				  <td>264&#8377</td>
+				  <td>22/04/2019</td>
+				  <td><a class="btn btn-xs btn-white" href="javascript:;" data-toggle="modal" data-target="#invoiceReceiptModal"><i class="fas fa-eye mr-1"></i> Quick view</a></td>
+				</tr>
+				<tr>
+				  <td><a href="#">#9834283</a></td>
+				  <td><span class="badge badge-soft-success">Successful</span></td>
+				  <td>264&#8377</td>
+				  <td>22/04/2018</td>
+				  <td><a class="btn btn-xs btn-white" href="javascript:;" data-toggle="modal" data-target="#invoiceReceiptModal"><i class="fas fa-eye mr-1"></i> Quick view</a></td>
+				</tr>
+			  </tbody>
+			</table>
+			</div>
+			<!-- End Table -->
+            <!-- End Body -->
+			<!-- ===================================== MODAL POPUP for REQUEST DETAILS -- Susovan ================== -->
+			
+			<!-- Invoice Modal -->
+				<div class="modal fade" id="invoiceReceiptModal" tabindex="-1" role="dialog" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+					  <!-- Header -->
+					  <div class="modal-top-cover bg-secondary text-center">
+						<figure class="position-absolute right-0 bottom-0 left-0">
+						  <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+							<path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"/>
+						  </svg>
+						</figure>
+
+						<div class="modal-close">
+						  <button type="button" class="btn btn-icon btn-sm btn-ghost-light" data-dismiss="modal" aria-label="Close">
+							<svg width="16" height="16" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+							  <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+							</svg>
+						  </button>
+						</div>
+					  </div>
+					  <!-- End Header -->
+
+					  <div class="modal-top-cover-avatar">
+						<img class="avatar avatar-lg avatar-circle avatar-border-lg avatar-centered shadow-soft" src="images/josthi/icon/josthi_icon.svg" alt="Logo">
+					  </div>
+
+					  <!-- Body -->
+					  <div class="modal-body pt-3 pb-sm-5 px-sm-5">
+						<div class="text-center mb-5">
+						  <h3 class="mb-1">Request Details from josthi.com</h3>
+						  <span class="d-block">Req #3682303</span>
+						</div>
+
+						<div class="row mb-6">
+						  <div class="col-md-4 mb-3 mb-md-0">
+							<small class="text-cap">Amount paid:</small>
+							<span class="text-dark">316.8&#8377</span>
+						  </div>
+
+						  <div class="col-md-4 mb-3 mb-md-0">
+							<small class="text-cap">Date paid:</small>
+							<span class="text-dark">April 22, 2020</span>
+						  </div>
+
+						  <div class="col-md-4">
+							<small class="text-cap">Payment method:</small>
+							<div class="d-flex align-items-center">
+							  <img class="avatar avatar-xss mr-2" src="../vendor/svg/brands/mastercard.svg" alt="Image Description">
+							  <span class="text-dark">•••• 4242</span>
+							</div>
+						  </div>
+						</div>
+
+						<small class="text-cap mb-2">Request Summary</small>
+
+						<ul class="list-group mb-4">
+						  <li class="list-group-item text-dark">
+							<div class="d-flex justify-content-between align-items-center">
+							  <span>Request Details:</span>
+							  <span>Request for Dr appointment</span>
+							</div>
+						  </li>
+						  <li class="list-group-item text-dark">
+							<div class="d-flex justify-content-between align-items-center">
+							  <span>Status:</span>
+							  <span>Completed</span>
+							</div>
+						  </li>
+						  <li class="list-group-item text-dark">
+							<div class="d-flex justify-content-between align-items-center">
+							  <span></span>
+							  <span>Appointment Scheduled on 1st Jan 2021. At 6:00 PM. Doc Address is 15C/1 Anupama Housing Complex, VIP Road</span>
+							</div>
+						  </li>
+						</ul>
+
+						<div class="d-flex justify-content-end">
+						  <a class="btn btn-xs btn-white" href="#"><i class="fas fa-file-download mr-1"></i> PDF</a>
+						  <span class="mx-1"></span>
+						  <a class="btn btn-xs btn-white" href="#"><i class="fas fa-print mr-1"></i> Print Details</a>
+						</div>
+
+						<hr class="my-5">
+
+						<p class="modal-footer-text">If you have any questions, please contact us at <a href="mailto:example@gmail.com">example@gmail.com</a> or call at <a class="text-nowrap" href="#">+1 898 34-5492</a></p>
+					  </div>
+					  <!-- End Body -->
+					</div>
+				  </div>
+				</div>
+				<!-- End Invoice Modal -->
+			
+			
+			
+            <!-- Footer -->
+            <div class="card-footer d-flex justify-content-end">
+              <a class="btn btn-white" href="javascript:;">Cancel</a>
+              <span class="mx-2"></span>
+              <a class="btn btn-primary" href="javascript:;">Refresh</a>
+            </div>
+            <!-- End Footer -->
+          </div>
+          <!-- End Card -->
+		
+		
+			<!-- ===================================================================================================-->
+			<!-- ======================= C A R D  2 ================================================================-->
+          <!-- Card -->
+          <div id="editAddressCard" class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <h5 class="card-title">Agent Details</h5>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+
+            </div>
+            <!-- End Body -->
+
+            <!-- Footer -->
+            <div class="card-footer d-flex justify-content-end">
+              <a class="btn btn-white" href="javascript:;">Cancel</a>
+              <span class="mx-2"></span>
+              <a class="btn btn-primary" href="javascript:;">Save Changes</a>
+            </div>
+            <!-- End Footer -->
+          </div>
+          <!-- End Card -->
+
+
+		<!-- ===================================================================================================-->
+		<!-- ======================= C A R D  3 ================================================================-->
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <h5 class="card-title">Privacy</h5>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+
+			<!-- ===================================================================================================-->
+			<!-- ======================= C A R D  4 ================================================================-->
+          <!-- Card -->
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Delete your account</h5>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+
+
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-danger transition-3d-hover">Delete</button>
+              </div>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+		  
+		  
+		  <!-- ============================ All Card Ends Here ======================================================-->
+		  
+        </div>
+        <!--end Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+      
+      
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="Common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- ========== JAVA SCRIPT INCLUDE START ======== -->
+  <div th:insert="user_common :: js-includes"></div>
+  <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+	
+	
+  <script>
+    $(document).on('ready', function () {
+    	
+    	
+    	  var element = document.getElementById("userHomeLink");
+    	  element.classList.add("active");
+	
+	  //Susovan Making the link Active
+	  var element = document.getElementById("user_home");
+	  element.classList.add("active");
+	
+	
+	
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmPassword: {
+              equalTo: '#signupPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of masked input
+      $('.js-masked-input').each(function () {
+        var mask = $.HSCore.components.HSMask.init($(this));
+      });
+
+      // initialization of file attach
+      $('.js-file-attach').each(function () {
+        var customFile = new HSFileAttach($(this)).init();
+      });
+
+      // initialization of add input filed
+      $('.js-add-field').each(function () {
+        new HSAddField($(this), {
+          addedField: () => {
+            $('.js-add-field .js-custom-select-dynamic').each(function () {
+              var select2dynamic = $.HSCore.components.HSSelect2.init($(this));
+            });
+          }
+        }).init();
+      });
+
+      // initialization of select2
+      $('.js-custom-select').each(function () {
+        var select2 = $.HSCore.components.HSSelect2.init($(this));
+      });
+
+      // initialization of quilljs editor
+      var quill = $.HSCore.components.HSQuill.init('.js-quill');
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/../vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

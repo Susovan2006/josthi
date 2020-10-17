@@ -28,7 +28,7 @@ public class MainController {
 	
 	@GetMapping("/")
 	public String hello(Model model) {
-		model.addAttribute("message","HelloWorld");
+		//model.addAttribute("message","HelloWorld");
 		return "Landing_page_josthi";
 	}
 	
@@ -168,7 +168,82 @@ public class MainController {
 	 */
 	
 	
+	/**
+	 * ============================================================================================
+	 * ==================== U S E R    D E T A I L S ==============================================
+	 * ============================================================================================
+	 */
 	
+	@GetMapping("/user/home")
+	public String userHome(Model model) {
+			return "user/home_user";
+	}
+	
+	@GetMapping("/user/profile")
+	public String userProfile(Model model) {
+			return "user/profile_user";
+	}
+	
+	//Beneficiary Details
+	@GetMapping("/user/beneficiaryDetails")
+	public String userBeneficiaryDetails(Model model) {
+			return "user/beneficiary_details_users";
+	}
+	
+	//Emergency Contacts
+	@GetMapping("/user/emergencyContacts")
+	public String userEmergencyContacts(Model model) {
+			return "user/emergency_contact_user";
+	}
+	
+	//Login &amp; security
+	@GetMapping("/user/loginAndsecurity")
+	public String userLoginAndsecurity(Model model) {
+			return "user/login_and_security_user";
+	}
+	
+	
+	//Preferences
+	@GetMapping("/user/preferences")
+	public String userPreferences(Model model) {
+			return "user/preferences_user";
+	}
+	
+	//Subscribe a Plan
+	@GetMapping("/user/subscribePlan")
+	public String userSubscribePlan(Model model) {
+			return "user/subscribe_a_plan_user";
+	}
+	
+	//Purchase History
+	@GetMapping("/user/purchaseHistory")
+	public String userPurchaseHistory(Model model) {
+			return "user/purchase_history_user";
+	}
+	
+	//RequestService
+	@GetMapping("/user/requestService")
+	public String userRequestService(Model model) {
+			return "user/request_service_user";
+	}
+	
+	//Reports
+	@GetMapping("/user/reports")
+	public String userReports(Model model) {
+			return "user/report_user";
+	}
+	
+	//Documents
+	@GetMapping("/user/documents")
+	public String userDocuments(Model model) {
+			return "user/documents_users";
+	}
+	
+	//Feedback
+	@GetMapping("/user/feedback")
+	public String userFeedback(Model model) {
+			return "user/feedback_from_user";
+	}
 	
 	
 	

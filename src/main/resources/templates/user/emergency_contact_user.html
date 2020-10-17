@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Title -->
+  <title>Emergency Contact | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->
+    
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Emergrncy Contact</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Account</li>
+              <li class="breadcrumb-item active" aria-current="page">Emergrncy Contact</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+		  
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Emergrncy Contact info.</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              <p class="card-text">This is the most important portion of the service, list as much relative as you can. This is required during Emergency. Emergency service is void unless some nearest relative respond.</p>
+				<BR>
+				<BR>
+              <form class="js-validate">
+                <!-- Form Group -->
+                <div class="row">                				  
+				  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Will be used in case of Emergrncy."></i>Name of Contact Person<span class="text-danger">*</span></label>
+					  
+								<input type="text" class="js-masked-input form-control" id="emergencyPoc" name="emergencyPoc" placeholder="Mr/Mrs First & Last Name" 
+								aria-label="mobileNo1" value="" required data-msg="Please enter the Person Name, so that we can contact in emergrncy." >
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">Contact No<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control"   
+								id="emergrncyContactNo" name="emergrncyContactNo" placeholder="+00 (000) 000-00-00" value="" required data-msg="Please enter cell no, so that we can contact in emergrncy.">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Need the relation for Emergrncy communication."></i>Relation with Beneficiary<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control" required data-msg="Need the relation for Communication." 
+								id="emergencyPocRelation" name="emergencyPocRelation" placeholder="" value="">
+							 
+					</div>
+                  </div>
+				  
+				  
+                </div>
+				<!-- Row 2 -->
+				<div class="row">                				  
+				  <div class="col-sm-12">
+                    <div class="form-group">
+					  <label class="input-label">Special notes before contacting</label>
+					  
+					  <textarea cols="30" rows="3" class="form-control no-resize" id="emergencyNotes" name="emergencyNotes" placeholder="" 
+								maxlength="200"></textarea>
+					</div>
+                  </div>
+				 </div>
+				<H5 style="color: #ed4c78; font-size: 80%;" >N.B : Please mention if we need to know anything before contacting the Emergency Point of Contact in India. Yon can mention how far they stay from the Beneficiary.</H5>
+                <!-- End Form Group -->
+
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+			  
+			  <BR>
+			  <BR>
+			  
+			  <table class="table table-thead-bordered">
+			  <thead class="thead-light">
+				<tr>
+				  <th scope="col">#</th>
+				  <th scope="col">POC Name</th>
+				  <th scope="col">Contact</th>
+				  <th scope="col">Relation</th>
+				  <th scope="col">Action</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <th scope="row">1</th>
+				  <td>MR XXX YYY</td>
+				  <td>+ 91 0000-000-000</td>
+				  <td>Grand son</td>
+				  <td><a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-edit"></i></a> 
+				  </td>
+				</tr>
+				<tr>
+				  <th scope="row">2</th>
+				  <td>MR AAA BBBB</td>
+				  <td>+ 91 0000-000-000</td>
+				  <td>Grand son</td>
+				  <td>
+					  <a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-edit"></i></a>
+				  </td>
+				</tr>
+				<tr>
+				  <th scope="row">3</th>
+				  <td>MR AAA BBBB</td>
+				  <td>+ 91 0000-000-000</td>
+				  <td>Grand son</td>
+				  <td>
+					<a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+					<a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+					<a href="#"><i class="fa fa-edit"></i></a>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+			  
+			  
+			  
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+          
+        </div><!--END Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="Common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+    
+  <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  <div th:insert="user_common :: js-includes"></div>
+  <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+  
+  <script>
+    $(document).on('ready', function () {
+    	
+     var element = document.getElementById("userEmergencyContactsLink");
+     element.classList.add("active");
+	
+	  $(emergrncyContactNo).inputmask('+99 (999) 999-9999');  //static mask
+	  
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

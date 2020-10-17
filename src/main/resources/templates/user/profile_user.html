@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>User Profile | Josthi.com</title>
+
+    <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Personal Info</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Account</li>
+              <li class="breadcrumb-item active" aria-current="page">Personal Info</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+          <!-- Card 1 ==== IMAGE UPLOAD ==== -->
+		   <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Profile photo</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              
+
+              <!-- Form Group -->
+                <div class="row form-group">
+                  <label class="col-sm-3 col-form-label input-label">Update/Add Profile photo</label>
+
+                  <div class="col-sm-9">
+                    <div class="media align-items-center">
+                      <label class="avatar avatar-xl avatar-circle mr-4" for="avatarUploader">
+                        <img id="avatarImg" class="avatar-img" src="../images/Susovan_PP.jpg" alt="Image Description">
+                      </label>
+
+                      <div class="media-body">
+                        <div class="btn btn-sm btn-primary file-attachment-btn mb-2 mb-sm-0 mr-2">Upload Photo
+                          <input type="file" class="js-file-attach file-attachment-btn-label" id="avatarUploader"
+                                 data-hs-file-attach-options='{
+                                    "textTarget": "#avatarImg",
+                                    "mode": "image",
+                                    "targetAttr": "src"
+                                 }'>
+                        </div>
+
+                        <a class="btn btn-sm btn-white mb-2 mb-sm-0" href="javascript:;">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Start Form Group -->
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+		  
+		  
+		  
+		  <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">User Profile.</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              <p class="card-text">Please update the detalis, these are necessary during emergency.</p>
+
+			  <form  id="user_insert_update_details" class="js-validate">
+				<!-- ROW 1 --> 
+				<div class="row form-group">
+                  <label for="firstNameLabel" class="col-sm-2 col-form-label input-label">Full name <i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Displayed on public forums."></i><span class="text-danger">*</span></label>
+
+                  <div class="col-sm-5">
+                    <div class="input-group js-form-message">						
+						<input type="text" class="form-control" name="firstName" id="firstNameLabel" placeholder="First Name" aria-label="First Name" value="" required data-msg="First name is mandatory.">
+					    <input type="text" class="form-control " name="lastName" id="lastNameLabel" placeholder="Last Name" aria-label="Last Name" value="" required data-msg="Last name is mandatory.">
+                    </div>
+                  </div>
+				  
+				  <label for="genderLabel" class="col-sm-2 col-form-label input-label">Gender</label>
+				  <div class="col-sm-3">
+                    <div class="input-group">
+                      <select class="form-control show-tick">
+                                <option>NA</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                        </select>
+                    </div>
+                  </div>
+				  
+                </div>
+				<BR>
+
+				<h5 class="card-title">User Contact Info</h5>
+				<BR>
+                <!-- Row 2 -->
+				<div class="row">                				  
+				  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Will be used in case of Emergrncy."></i>Primary Cell No<span class="text-danger">*</span></label>
+					  
+								<input type="text" class="js-masked-input form-control" id="mobileNo1" name="mobileNo1" placeholder="+00 (000) 000-00-00" 
+								aria-label="mobileNo1" value="" required data-msg="Please enter your primary cell no, so that we can contact in emergrncy." >
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">Secondary Cell No<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control"   
+								id="mobileNo2" name="mobileNo2" placeholder="+00 (000) 000-00-00" value="" required data-msg="Please enter your Secondary cell no, so that we can contact in emergrncy.">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Will be used for general communication."></i>WhatsApp<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control" required data-msg="Need a Whatapp number for Communication." 
+								id="whatsappNo" name="whatsappNo" placeholder="+00 (000) 000-00-00" value="">
+							 
+					</div>
+                  </div>
+				  
+				  
+                </div>
+				
+				
+				<!-- Row 3 -->
+				<div class="row"> 
+				<div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="secondaryCellNo" class="input-label">Land Line no.</label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="landLineNo" name="landLineNo" placeholder="+00 (000) 000-00-00" onkeypress="return isNumber(event)" maxlength="20" data-msg="Better to have a land line no.">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label class="input-label">Fax No</label>
+					  <input type="text" class="js-masked-input form-control" 
+								id="faxNo" name="faxNo" placeholder="+00 (000) 000-00-00" onkeypress="return isNumber(event)" maxlength="20">
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="secondaryCellNo" class="input-label">Office Ph no.</label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="officePhNo" name="officePhNo" placeholder="+00 (000) 000-00-00" onkeypress="return isNumber(event)" maxlength="20">
+					</div>
+                  </div>
+                </div>
+				
+				<BR>
+				<h5 class="card-title">Emails And Social Media Links</h5>
+				<BR>
+                <div class="row"> 
+				<div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="secondaryCellNo" class="input-label">Secondary email ID.</label>
+					  <input type="email" class="form-control"  
+								id="secondaryEmail" name="secondaryEmail" placeholder="__@__.__" maxlength="50">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label class="input-label">WebSite</label>
+					  <input type="text" class="form-control" 
+								id="website" name="website" placeholder="wwww/https://____" maxlength="150">
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="secondaryCellNo" class="input-label">Facebook link.</label>
+					  <input type="text" class="form-control"  
+								id="facebookLink" name="facebookLink" placeholder="facebook.com/_____" maxlength="150">
+					</div>
+                  </div>
+                </div>
+				<BR>
+				<BR>
+				<BR>
+				<h5 class="card-title">Address Details</h5>
+				<BR>
+				
+				<div class="row"> 
+				<div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="secondaryCellNo" class="input-label">Address Line 1.</label>
+					  <input type="text" class="form-control"  
+								id="userAddressFirstLine" name="userAddressFirstLine" placeholder="Street/Rd/ Block" maxlength="100">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label class="input-label">Address Line 2</label>
+					  <input type="text" class="form-control" 
+								id="userAddressSecondLine" name="userAddressSecondLine" placeholder="Build no/Apt no etc " maxlength="150">
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">City/Town.<span class="text-danger">*</span></label>
+					  <input type="text" class=" js-masked-input form-control"  
+								id="cityTown" name="cityTown" placeholder="town/city" 
+								required value="" data-msg="City/Town is mandatory." maxlength="150">
+					</div>
+                  </div>
+                </div>
+				
+				
+				<div class="row"> 
+				<div class="col-sm-3">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">State<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="state" name="state" placeholder="State" 
+								required value="" data-msg="State is mandatory." maxlength="100">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-3">
+                    <div class="form-group">
+					  <label class="input-label">District/County </label>
+					  <input type="text" class="form-control" 
+								id="countyDistrict" name="countyDistrict" placeholder="District/County" maxlength="50">
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-3">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">Country.<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="country" name="country" placeholder="Country" maxlength="50" 
+								required value="" data-msg="Country is mandatory.">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-3">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">Zip/Pin Code.<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="zipPin" name="zipPin" placeholder="Zip" maxlength="20" 
+								onkeypress="return isNumber(event)" required value="" data-msg="Country is mandatory.">
+					</div>
+                  </div>
+				  
+				  
+                </div>
+                <!-- End Form Group -->
+				<!-- Footer -->
+				<div class="card-footer d-flex justify-content-end">
+				  <a class="btn btn-white" >Cancel</a>
+				  <span class="mx-2"></span>
+				  
+				  <button class="btn btn-primary" type="submit">Save Change</button>
+				</div>
+				<!-- End Footer -->
+              </form>
+			  
+			  
+			  
+			  
+			  
+			  
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+
+        </div>
+        <!--end Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="Common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+    <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  	<div th:insert="user_common :: js-includes"></div>
+  	<!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+	
+	
+	
+	<!-- FOR MASKING the fields Susovan-->
+  <script>
+  	$(document).ready(function(){
+      
+	  $(mobileNo1).inputmask('+99 (999) 999-9999');  //static mask
+      $(mobileNo2).inputmask('+99 (999) 999-9999');
+      $(whatsappNo).inputmask('+99 (999) 999-9999');
+      $(emailSecondary).inputmask({ alias: "email" });
+      $(emailPrimary).inputmask({ alias: "email" });
+  
+	});
+	
+	function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if(charCode == 32 || charCode == 43 || charCode == 40 || charCode == 41){	//for Space and +,(,)
+		return true
+	}else if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+	}
+  </script>
+  
+  <script>
+    $(document).on('ready', function () {
+    	
+    var element = document.getElementById("userProfileLink");
+    element.classList.add("active");
+    	
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+	  
+    });
+  </script>
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

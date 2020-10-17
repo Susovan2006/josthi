@@ -3,3 +3,7 @@ schedulerTimerBean.setLastRunTime(new Timestamp(System.currentTimeMillis()));
 
 
 https://www.javainuse.com/spring/springboot_session
+
+Numeric field in HTML : pattern="^[0-9]*$"
+
+for a line in HTML --> <hr class="my-3">

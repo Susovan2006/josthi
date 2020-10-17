@@ -113,7 +113,8 @@ public class UserAuthController {
 					session.setAttribute("USER_SESSION_OBJ", userSessionBean);
 								
 					logger.info("LOGIN Successful");
-					return "user_personal_details";
+					//return "user/user_personal_details";
+					return "user/beneficiary_details_users";
 
 				}else {
 					//Message, error occurred, please try again.

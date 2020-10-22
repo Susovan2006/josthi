@@ -23,4 +23,6 @@ public interface FileWikiService {
 
 	File getProfileImageFile(String customerId) throws FileNotFoundException;
 
+	String deleteProfilePicture(String customerID);
+
 }

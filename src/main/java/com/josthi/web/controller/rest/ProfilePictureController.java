@@ -18,6 +18,7 @@ import com.josthi.web.service.FileStorageService;
 import com.josthi.web.service.FileWikiService;
 import com.josthi.web.serviceimpl.FileStorageServiceImpl;
 import com.josthi.web.serviceimpl.UploadFileResponse;
+import com.josthi.web.utils.ResizeImage;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,9 +60,11 @@ public class ProfilePictureController {
         		return new ResponseEntity<String>("please select a file!", HttpStatus.OK);
         	}
         	
-        	String result = fileWikiService.updateProfilePicture(file, customerID, emailID);
+        	String profileImageLocation = fileWikiService.updateProfilePicture(file, customerID, emailID);
+        	
+        	String result = ResizeImage.resizeProfileImage(profileImageLocation);
       	 
-        	return new ResponseEntity<String>("Successfully uploaded" +
+        	return new ResponseEntity<String>("Successfully uploaded the profile pic, please do a refresh." +
         			file.getOriginalFilename(), HttpStatus.OK);
         	
         }catch(Exception ex) {
@@ -70,6 +73,25 @@ public class ProfilePictureController {
         }
     
     }
+    
+    
+    @CrossOrigin("*") //TODO : need to remove before prod deployment.
+    @SuppressWarnings("unchecked")
+	@RequestMapping(value = "/deleteProfilePic", method = RequestMethod.POST)
+    public ResponseEntity<String> deleteProfilePic(
+    		@RequestParam("customerID") String customerID) {
+    		
+    	logger.info("Profile Pic Delete request for :"+customerID);
+        try {    	
+        	String status = fileWikiService.deleteProfilePicture(customerID);        	    	 
+        	return new ResponseEntity<String>(status , HttpStatus.OK);        	
+        }catch(Exception ex) {
+        	logger.error(ex.getMessage(), ex);
+        	return new ResponseEntity<String>("Exception Occured while deleting the image, Try again later",HttpStatus.BAD_REQUEST);
+        }
+    
+    }
+    
     
     
     

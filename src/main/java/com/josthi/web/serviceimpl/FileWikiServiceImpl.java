@@ -172,7 +172,7 @@ public class FileWikiServiceImpl implements FileWikiService{
  	            fileWikiDao.updateUserProfilePicDetails(targetLocation, customerID, emailID);
              }
              
-             return "Successfully Uploaded.";
+             return targetLocation.toString();
              //return fileName;
          } catch (IOException ex) {
              throw new FileStorageException("Could not store file " + profilePicFileName + ". Please try again!", ex);
@@ -182,7 +182,10 @@ public class FileWikiServiceImpl implements FileWikiService{
 
 
 
-
+	/*
+	 * This method is used to get the Profile Image, In case there is no profile Image,
+	 * It will show the Default Profile Image.
+	 */
 	@Override
 	public File getProfileImageFile(String customerId) throws FileNotFoundException {
 		 String imagePath = fileWikiDao.getProfileImagePath(customerId);
@@ -199,6 +202,32 @@ public class FileWikiServiceImpl implements FileWikiService{
 	    	}
 	    	
 	    	return serverFile;
+	}
+
+
+
+
+
+	@Override
+	public String deleteProfilePicture(String customerID) {
+		
+		try {
+				String imagePath = fileWikiDao.getProfileImagePath(customerID);
+				if(imagePath!=null && imagePath.length()>0 && new File(imagePath).exists()) {
+					if(fileWikiDao.deleteProfileImage(customerID)) {
+						new File(imagePath).delete();
+					}else {
+						return "Unable to delete the File from Server, Try later.";
+					}
+				}else {
+					return "There is no customed profile Image to delete.";
+				}
+				
+				return "Successfully Deleted the Profile Image.";
+		}catch (Exception ex) {
+			throw ex;
+		}
+	
 	}
 
 }

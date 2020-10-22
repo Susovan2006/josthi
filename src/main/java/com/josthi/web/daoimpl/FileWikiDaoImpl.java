@@ -63,4 +63,13 @@ private static final Logger logger = LoggerFactory.getLogger(FileWikiDaoImpl.cla
 	}
 	
 	
+	
+	@Override
+	public boolean deleteProfileImage(String customerID) {
+		int result = jdbcTemplate.update(UPDATE_USER_PROFILE_IMAGE, new Object[]{null,customerID});
+	
+		return (result > 0 ? true : false);
+	}
+	
+	
 }

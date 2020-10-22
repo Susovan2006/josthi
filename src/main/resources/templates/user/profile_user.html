@@ -100,12 +100,11 @@
                                  data-hs-file-attach-options='{
                                     "textTarget": "#avatarImg",
                                     "mode": "image",
-                                    "targetAttr": "src",
-                                    "maxFileSize" : "1024"
+                                    "targetAttr": "src"
                                  }'>
                         </div>
 
-                        <a class="btn btn-sm btn-white mb-2 mb-sm-0" href="javascript:;">Delete</a>
+                        <a class="btn btn-sm btn-white mb-2 mb-sm-0" href="javascript:deleteProfileImage();">Delete</a>
                       </div>
                     </div>
                   </div>
@@ -367,7 +366,7 @@
 
 
   <!-- ========== FOOTER ========== -->
-  <div th:insert="Common :: user-footer"></div>
+  <div th:replace="user_common :: user-footer"></div>
   <!-- ========== END FOOTER ========== -->
 
   <!-- Go to Top -->
@@ -488,41 +487,84 @@
   <!-- ============================ AJAX CALL to UPLOAD PROFILE PICTURE ======================= -->
   
   <script>
-	function fire_ajax_submit(file) {
+		function fire_ajax_submit(file) {
+			
+		var emailId = $('#hiddenEmailID').val();
+		var custId = $('#hiddenCustomerID').val();
 		
-	var emailId = $('#hiddenEmailID').val();
-	var custId = $('#hiddenCustomerID').val();
+		var formData = new FormData();
+		formData.append('file',file);
+		formData.append('customerID',custId);
+		formData.append('emailID',emailId);
 	
-	var formData = new FormData();
-	formData.append('file',file);
-	formData.append('customerID',custId);
-	formData.append('emailID',emailId);
+		    $.ajax({
+		        type: "POST",
+				enctype: 'multipart/form-data',
+		        url: "/userProfilePic",
+		        data: formData,
+		        dataType: 'html', //Important , it has to be HTML
+		        cache: false,
+		        timeout: 600000,
+				contentType: false,
+		        processData: false, //it prevent jQuery form transforming the data into a query string
+		        success: function (data, status) {
+		            console.log("SUCCESS : ", data);
+		            showSuccessMsg(data);
+		            getProfileImage();
 
-	    $.ajax({
-	        type: "POST",
-			enctype: 'multipart/form-data',
-	        url: "/userProfilePic",
-	        data: formData,
-	        dataType: 'html', //Important , it has to be HTML
-	        cache: false,
-	        timeout: 600000,
-			contentType: false,
-	        processData: false, //it prevent jQuery form transforming the data into a query string
-	        success: function (data, status) {
-	            console.log("SUCCESS : ", data);
-	            showSuccessMsg(data);
+		
+		        },
+		        error: function (xhr, status, error) {
+		            console.log("ERROR : ", xhr.status);
+					console.log("ERROR status: ", status);
+					console.log("ERROR error: ", error);
+					showError("Error Occured while Uploading the image, Please try again with a valid jpg/gif/png image, with in 1 MB.");
+		
+		        }
+		    });
 	
-	        },
-	        error: function (xhr, status, error) {
-	            console.log("ERROR : ", xhr.status);
-				console.log("ERROR status: ", status);
-				console.log("ERROR error: ", error);
-				showError("Error Occured while Uploading the image, Please try again with a valid jpg/gif/png image, with in 1 MB.");
+		}
 	
-	        }
-	    });
+		
+		
+		function deleteProfileImage(){
+			var custId = $('#hiddenCustomerID').val();
+			
+			var formData = new FormData();
+			formData.append('customerID',custId);
+			
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "/deleteProfilePic",
+				data: formData,
+				dataType: 'html', //Important , it has to be HTML to get HTML String Back
+				cache: false,
+				timeout: 600000,
+				contentType: false,
+				processData: false, //it prevent jQuery form transforming the data into a query string
+				success: function (data, status) {
+					console.log("SUCCESS : ", data);
+					showSuccessMsg(data);
+					getProfileImage();				
 
-	}
+				},
+				error: function (xhr, status, error) {
+					console.log("ERROR : ", xhr.status);
+					console.log("ERROR status: ", status);
+					console.log("ERROR error: ", error);
+					showError("Error Occured while deleting the image, Please try again later.");
+
+				}
+	    	});
+		}
+		
+		function getProfileImage(){
+			var custId = $('#hiddenCustomerID').val();			
+			var newSrc = "/getProfileImage/"+custId;;
+			 $('#avatarImg').attr('src', newSrc);
+			 $('#profilePicture').attr('src', newSrc);
+		}
 	
 	
 		function showError(msg) {
@@ -541,6 +583,12 @@
 	
 	
   </script>
+  
+  <script th:inline="javascript">
+	
+  </script>
+  
+
   
   
 

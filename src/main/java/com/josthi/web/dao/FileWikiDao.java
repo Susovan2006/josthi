@@ -15,4 +15,6 @@ public interface FileWikiDao {
 
 	String getProfileImagePath(String customerId);
 
+	boolean deleteProfileImage(String customerID);
+
 }

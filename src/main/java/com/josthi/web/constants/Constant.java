@@ -19,5 +19,13 @@ public interface Constant {
 	
 	
 	
+	
+	//Session Objects
+	String USER_SESSION_OBJ_KEY = "USER_SESSION_OBJ_KEY";
+	String USER_SESSION_PROFILE_PICTURE_KEY = "USER_SESSION_PROFILE_PICTURE_KEY";
+	String DEFAULT_PROFILE_PICTURE = "/images/default_user.png";
+	
+	
+	
 
 }

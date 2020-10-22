@@ -1,5 +1,6 @@
 package com.josthi.web.daoimpl;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -40,6 +41,25 @@ private static final Logger logger = LoggerFactory.getLogger(FileWikiDaoImpl.cla
 	public void insertFileWikiDetails(FileWikiPO fileWikiPO) {
 		jdbcTemplate.update(INSERT_WIKI_FILE_DETAILS, new Object[]{fileWikiPO.getFileName(), fileWikiPO.getFilePath(), fileWikiPO.getDownloadPath(), fileWikiPO.getFileSize()});
 		
+	}
+	
+	
+	
+	private static final String UPDATE_USER_PROFILE_IMAGE = "UPDATE user_detail SET PROFILE_PIC_PATH = ? WHERE UID = ? ";
+	@Override
+	public void updateUserProfilePicDetails(Path targetLocation, String customerID, String emailID) {
+		jdbcTemplate.update(UPDATE_USER_PROFILE_IMAGE, new Object[]{targetLocation.toString(),customerID});
+		
+	}
+	
+	
+	private static final String SELECT_PROFILE_IMAGE_PATH_FOR_CUSTOMER_ID = "SELECT PROFILE_PIC_PATH FROM user_detail where UID = ?;";
+	@Override
+	public String getProfileImagePath(String customerId) {
+		String imagePath = (String) jdbcTemplate.queryForObject(
+				SELECT_PROFILE_IMAGE_PATH_FOR_CUSTOMER_ID, new Object[] { customerId }, String.class);
+
+	    return imagePath;
 	}
 	
 	

@@ -8,9 +8,27 @@
   <div th:replace="user_common :: includes"></div>
   <!--  ======================== CSS INCLUDES ===================== -->
   
+  <style type="text/css">
+  	#uploadStatus {
+		  display: none;
+		  color: #555;
+		  border-radius: 5px;
+		  font-family: Tahoma, Geneva, Arial, sans-serif;
+		  font-size: .8em;
+		  padding: 5px 5px 5px 30px;
+		  margin: 5px 5px 5px 5px;
+		  width:125px;
+		  background: #ffecec;
+		  border: 2px solid #f5aca6;
+		}
+  </style>
+  
 </head>
 <body>
-  
+  <!--  ============= HIDDEN FIELDS ============= -->
+  <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.customerId}" id="hiddenCustomerID" />
+  <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.userEmailId}" id="hiddenEmailID" />
+
 
   <!-- ========== MAIN ========== -->
   <main id="content" role="main" class="bg-light">
@@ -66,12 +84,14 @@
 
               <!-- Form Group -->
                 <div class="row form-group">
+                
                   <label class="col-sm-3 col-form-label input-label">Update/Add Profile photo</label>
-
                   <div class="col-sm-9">
                     <div class="media align-items-center">
                       <label class="avatar avatar-xl avatar-circle mr-4" for="avatarUploader">
-                        <img id="avatarImg" class="avatar-img" src="../images/Susovan_PP.jpg" alt="Image Description">
+                        <!--  <img id="avatarImg" class="avatar-img" src="../images/Susovan_PP.jpg" alt="Image Description">-->
+                        <img id="avatarImg" th:src="@{/getProfileImage/}+ ${session.USER_SESSION_OBJ_KEY.customerId}" 
+                        	class="avatar-img" src="../images/default_user.png" alt="Profile Image">
                       </label>
 
                       <div class="media-body">
@@ -80,7 +100,8 @@
                                  data-hs-file-attach-options='{
                                     "textTarget": "#avatarImg",
                                     "mode": "image",
-                                    "targetAttr": "src"
+                                    "targetAttr": "src",
+                                    "maxFileSize" : "1024"
                                  }'>
                         </div>
 
@@ -88,7 +109,13 @@
                       </div>
                     </div>
                   </div>
+                  
+                  
                 </div>
+                
+                <div class="row">
+					<label class="col-sm-12" id="uploadStatus"></label>
+				</div>
                 <!-- Start Form Group -->
             </div>
             <!-- End Body -->
@@ -207,9 +234,9 @@
                 <div class="row"> 
 				<div class="col-sm-4">
                     <div class="form-group">
-					  <label id="secondaryCellNo" class="input-label">Secondary email ID.</label>
+					  <label id="emailSecondarylbl" class="input-label">Secondary email ID.</label>
 					  <input type="email" class="form-control"  
-								id="secondaryEmail" name="secondaryEmail" placeholder="__@__.__" maxlength="50">
+								id="emailSecondary" name="emailSecondary" placeholder="__@__.__" maxlength="50">
 					</div>
                   </div>
 				  
@@ -365,6 +392,7 @@
 
     <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
   	<div th:insert="user_common :: js-includes"></div>
+  	  <script th:src="@{/vendor/hs-file-attach/dist/hs-file-attach.min.js}"></script>
   	<!-- ========== END JAVA SCRIPT INCLUDE ========== -->
 	
 	
@@ -401,6 +429,27 @@
     	
       // initialization of header
       var header = new HSHeader($('#header')).init();
+      
+      //Profile Picture Upload - Susovan
+      $('.js-file-attach').each(function () {
+          var customFile = new HSFileAttach($(this)).init();
+      });
+      
+       //Check When the user Uploads new Images.
+		$(".js-file-attach").on('change', function(){
+			var singleFileUploadInput = document.querySelector('#avatarUploader');
+			    //alert(singleFileUploadInput);
+			    var files = singleFileUploadInput.files;
+				if(files.length === 0) {
+					singleFileUploadError.innerHTML = "Please select a file";
+					singleFileUploadError.style.display = "block";
+				}
+				
+				event.preventDefault();
+				fire_ajax_submit(files[0]);
+		});
+      
+
 
       // initialization of mega menu
       var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
@@ -434,6 +483,63 @@
       });
 	  
     });
+  </script>
+  
+  <!-- ============================ AJAX CALL to UPLOAD PROFILE PICTURE ======================= -->
+  
+  <script>
+	function fire_ajax_submit(file) {
+		
+	var emailId = $('#hiddenEmailID').val();
+	var custId = $('#hiddenCustomerID').val();
+	
+	var formData = new FormData();
+	formData.append('file',file);
+	formData.append('customerID',custId);
+	formData.append('emailID',emailId);
+
+	    $.ajax({
+	        type: "POST",
+			enctype: 'multipart/form-data',
+	        url: "/userProfilePic",
+	        data: formData,
+	        dataType: 'html', //Important , it has to be HTML
+	        cache: false,
+	        timeout: 600000,
+			contentType: false,
+	        processData: false, //it prevent jQuery form transforming the data into a query string
+	        success: function (data, status) {
+	            console.log("SUCCESS : ", data);
+	            showSuccessMsg(data);
+	
+	        },
+	        error: function (xhr, status, error) {
+	            console.log("ERROR : ", xhr.status);
+				console.log("ERROR status: ", status);
+				console.log("ERROR error: ", error);
+				showError("Error Occured while Uploading the image, Please try again with a valid jpg/gif/png image, with in 1 MB.");
+	
+	        }
+	    });
+
+	}
+	
+	
+		function showError(msg) {
+		  var e1 = document.getElementById("uploadStatus");
+		  e1.setAttribute("style", "display:block;background:#ffecec;border: 2px solid #f5aca6");
+		  e1.innerHTML = "&nbsp;"+msg;
+
+		}
+		
+		function showSuccessMsg(msg) {
+		  var e1 = document.getElementById("uploadStatus");
+		  e1.setAttribute("style", "display:block;background:#c3f3cd;border: 2px solid #50ef72");
+		  e1.innerHTML = "&nbsp;"+msg;
+
+		}
+	
+	
   </script>
   
   

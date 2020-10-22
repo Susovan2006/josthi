@@ -112,12 +112,14 @@
                   <!-- Avatar -->
                   <div class="d-none d-lg-block text-center mb-5">
                     <div class="avatar avatar-xxl avatar-circle mb-3">
-                      <img class="avatar-img" src="../images/default_user.png" alt="Image Description">
+                    
+                     	<img class="avatar-img" th:src="@{/getProfileImage/}+ ${session.USER_SESSION_OBJ_KEY.customerId}" src="../images/default_user.png" alt="Image Description">
+                      <!--  <img class="avatar-img" th:src="${session.USER_SESSION_PROFILE_PICTURE_KEY}" src="../images/default_user.png****" alt="Image Description">-->
                       <img class="avatar-status avatar-lg-status" src="../vendor/svg/illustrations/top-vendor.svg" alt="Image Description" data-toggle="tooltip" data-placement="top" title="Verified user">
                     </div>
 
-					<h4 class="card-title" th:text="${session.USER_SESSION_OBJ.userName}">UserName</h4>
-                    <p class="card-text font-size-1" th:text="${session.USER_SESSION_OBJ.userEmailId}">UserEmailID</p>
+					<h4 class="card-title" th:text="${session.USER_SESSION_OBJ_KEY.userName}">UserName</h4>
+                    <p class="card-text font-size-1" th:text="${session.USER_SESSION_OBJ_KEY.userEmailId}">UserEmailID</p>
                   </div>
                   <!-- End Avatar -->
 
@@ -391,7 +393,7 @@
 		  <div class="row align-items-md-center text-center">
 		    <div class="col-md-3 mb-4 mb-md-0">
 		      <a href="#" aria-label="Front">
-		        <img class="brand" src="images/josthi/logo/logo_250x80.svg" alt="Logo">
+		        <img class="brand" th:src="@{/images/josthi/logo/logo_250x80.svg}" src="../images/josthi/logo/logo_250x80.svg" alt="Logo">
 		      </a>
 		    </div>
 		

@@ -1,5 +1,7 @@
 package com.josthi.web.service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.springframework.core.io.Resource;
@@ -16,5 +18,9 @@ public interface FileWikiService {
 	List<FileWikiPO> saveFileInServer(MultipartFile file, FileWikiPO fileWikiPO);
 
 	Resource loadFileAsResource(String fileName);
+
+	String updateProfilePicture(MultipartFile file, String customerID, String emailID);
+
+	File getProfileImageFile(String customerId) throws FileNotFoundException;
 
 }

@@ -109,12 +109,14 @@ public class UserAuthController {
 																		   "",									//Image Path
 																		   Constant.USER_ONLINE_STATUS,			// ONLINE/OFFLINE
 																		   Constant.USER_TYPE_REG_USER,			//Same as Role.
-																		   true);								// Session Active = true.
-					session.setAttribute("USER_SESSION_OBJ", userSessionBean);
+																		   true,								// Session Active = true.
+																		   userDetails.getCustomerId());		// Customer ID						
+					session.setAttribute(Constant.USER_SESSION_OBJ_KEY, userSessionBean);
+					session.setAttribute(Constant.USER_SESSION_PROFILE_PICTURE_KEY, Constant.DEFAULT_PROFILE_PICTURE);
 								
 					logger.info("LOGIN Successful");
 					//return "user/user_personal_details";
-					return "user/beneficiary_details_users";
+					return "user/home_user";
 
 				}else {
 					//Message, error occurred, please try again.

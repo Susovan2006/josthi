@@ -1,5 +1,7 @@
 package com.josthi.web.utils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -7,6 +9,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -165,5 +168,12 @@ public class Utils {
 		return "<a class='nav-link' href='"+fileDownloadUri+"'><i class='fas fa-cloud-download nav-icon'></i></a>";
 		//return null;
 	}
+	
+	
+	public static File getDefaultProfileImages() 
+			  throws FileNotFoundException {
+			    return ResourceUtils.getFile(
+			      "classpath:static/images/default_user.png");
+			}
 
 }

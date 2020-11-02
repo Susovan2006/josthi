@@ -105,7 +105,23 @@
 
           <div class="col-lg-6">
             <!-- Form -->
-            <form class="js-validate card shadow-lg">
+            <form class="js-validate card shadow-lg" 
+            			action="#" th:action="@{/registerAgent}" th:object="${agentRegistrationBean}"  method="post">
+            			
+            <!-- ============== ERROR MESSAGE START ======================== --> 
+      	    <div th:if="${errorMessage ne null}">
+				 <div class="alert alert-warning alert-dismissible fade show" role="alert">
+				  <strong>Alert!!</strong> <span th:text="${errorMessage}"></span>
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+					  <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+					</svg>
+				  </button>
+				</div>
+			</div>
+		 	<!--============== ERROR MESSAGE END ========================== -->			
+            
+            
               <div class="card-body p-4 p-md-7">
                 <div class="mb-4">
                   <h3>Fill out the form and login to the App.</h3>
@@ -116,8 +132,8 @@
                     <!-- Form Group -->
                     <div class="js-form-message form-group">
                       <label class="sr-only" for="firstName">First name</label>
-                      <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First name" aria-label="First name" required
-                             data-msg="Please enter first your name">
+                      <input type="text" class="form-control" th:field="*{firstName}" name="firstName" id="firstName" placeholder="First name" aria-label="First name" required
+                             data-msg="Please enter first your name" maxlength="50">
                     </div>
                     <!-- End Form Group -->
                   </div>
@@ -127,8 +143,8 @@
                     <!-- Form Group -->
                     <div class="js-form-message form-group">
                       <label class="sr-only" for="lastName">Last name</label>
-                      <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last name" aria-label="Last name" required
-                             data-msg="Please enter last your name">
+                      <input type="text" class="form-control" th:field="*{lastName}" name="lastName" id="lastName" placeholder="Last name" aria-label="Last name" required
+                             data-msg="Please enter last your name" maxlength="50">
                     </div>
                     <!-- End Form Group -->
                   </div>
@@ -137,8 +153,8 @@
                     <!-- Form Group -->
                     <div class="js-form-message form-group">
                       <label class="sr-only" for="workEmailAddress">Work email</label>
-                      <input type="email" class="form-control" name="workEmailAddress" id="workEmailAddress" placeholder="Work email" aria-label="Work email" required
-                             data-msg="Please enter a valid email address">
+                      <input type="email" class="form-control" th:field="*{emailID}" name="workEmailAddress" id="workEmailAddress" placeholder="Work email" aria-label="Work email" required
+                             data-msg="Please enter a valid email address" maxlength="60">
                     </div>
                     <!-- End Form Group -->
                   </div>
@@ -147,8 +163,8 @@
                     <!-- Form Group -->
                     <div class="js-form-message form-group">
                       <label class="sr-only" for="contactNumber">Contact Number <span class="text-muted font-weight-normal ml-1">(optional)</span></label>
-                      <input type="text" class="form-control" name="contactNumber" id="contactNumber" placeholder="Contact Number" aria-label="Contact Number"
-                             data-msg="Please enter you mob number for validation.">
+                      <input type="text" class="form-control" th:field="*{contactNo}" name="contactNumber" id="contactNumber" placeholder="Contact Number" aria-label="Contact Number"
+                             data-msg="Please enter you mob number for validation." maxlength="20">
                     </div>
                     <!-- End Form Group -->
                   </div>
@@ -163,8 +179,8 @@
 				  <!-- Input Group -->
                   <div class="col-sm-6 px-2">
                     <div class="js-form-message form-group">
-                      <input type="password" class="form-control" name="password" id="signupPassword" placeholder="Password" aria-label="Password" required
-                             data-msg="Your password is invalid. Please try again.">
+                      <input type="password" class="form-control" th:field="*{password}" name="password" id="signupPassword" placeholder="Password" aria-label="Password" required
+                             data-msg="Your password is invalid. Please try again." maxlength="20">
                     </div>
                   </div>
                   <!-- End Input Group -->
@@ -172,27 +188,20 @@
                   <!-- Input Group -->
                   <div class="col-sm-6 px-2">
                     <div class="js-form-message form-group">
-                      <input type="password" class="form-control" name="confirmPassword" id="signupConfirmPassword" placeholder="Confirm Password" aria-label="Confirm Password" required
-                             data-msg="Password does not match the confirm password.">
+                      <input type="password" class="form-control" th:field="*{confirmPassword}" name="confirmPassword" id="signupConfirmPassword" placeholder="Confirm Password" aria-label="Confirm Password" required
+                             data-msg="Password does not match the confirm password." maxlength="20">
                     </div>
                   </div>
                   <!-- End Input Group -->
 				  
-				  
-				  
-				  
-				  
-				  
-				  
-
                   <div class="col-sm-6 px-2">
                     <!-- Form Group -->
                     <div class="js-form-message form-group">
                       <label class="sr-only" for="userType">User Type</label>
-                      <select class="form-control custom-select" name="userType" id="userType" required
-                              data-msg="Please select user type.">
-                        <option value="AGENT" selected >I want to be an agent</option>
-                        <option value="TEST">I am just checking</option>
+                      <select class="form-control custom-select" th:field="*{agentRequest}" name="userType" id="userType" required
+                              data-msg="Please select an option.">
+                        <option th:value="BECOME_AGENT" th:text="AGENT"></option>
+    					<option th:value="QUERY" th:text="ENQUERY"></option>
                       </select>
                     </div>
                     <!-- End Form Group -->
@@ -202,90 +211,90 @@
                     <!-- Form Group -->
                     <div class="js-form-message form-group">
                       <label class="sr-only" for="Area">Area Code</label>
-                      <select class="form-control custom-select" name="area" id="area" required
+                      <select class="form-control custom-select" th:field="*{coverageArea}" name="area" id="area" required
                               data-msg="Please select your Area.">
-                        <option value="" selected disabled>Area Code</option>                       
-                        <option value="700001">700001</option>
-						<option value="700002">700002</option>
-						<option value="700003">700003</option>
-						<option value="700004">700004</option>
-						<option value="700005">700005</option>
-						<option value="700006">700006</option>
-						<option value="700007">700007</option>
-						<option value="700008">700008</option>
-						<option value="700009">700009</option>
-						<option value="700010">700010</option>
-						<option value="700011">700011</option>
-						<option value="700012">700012</option>
-						<option value="700013">700013</option>
-						<option value="700014">700014</option>
-						<option value="700015">700015</option>
-						<option value="700016">700016</option>
-						<option value="700017">700017</option>
-						<option value="700018">700018</option>
-						<option value="700019">700019</option>
-						<option value="700020">700020</option>
-						<option value="700021">700021</option>
-						<option value="700022">700022</option>
-						<option value="700023">700023</option>
-						<option value="700024">700024</option>
-						<option value="700025">700025</option>
-						<option value="700026">700026</option>
-						<option value="700027">700027</option>
-						<option value="700028">700028</option>
-						<option value="700029">700029</option>
-						<option value="700030">700030</option>
-						<option value="700031">700031</option>
-						<option value="700032">700032</option>
-						<option value="700033">700033</option>
-						<option value="700034">700034</option>
-						<option value="700035">700035</option>
-						<option value="700036">700036</option>
-						<option value="700037">700037</option>
-						<option value="700038">700038</option>
-						<option value="700040">700040</option>
-						<option value="700041">700041</option>
-						<option value="700042">700042</option>
-						<option value="700043">700043</option>
-						<option value="700044">700044</option>
-						<option value="700045">700045</option>
-						<option value="700046">700046</option>
-						<option value="700047">700047</option>
-						<option value="700050">700050</option>
-						<option value="700052">700052</option>
-						<option value="700053">700053</option>
-						<option value="700054">700054</option>
-						<option value="700060">700060</option>
-						<option value="700061">700061</option>
-						<option value="700062">700062</option>
-						<option value="700063">700063</option>
-						<option value="700065">700065</option>
-						<option value="700066">700066</option>
-						<option value="700067">700067</option>
-						<option value="700068">700068</option>
-						<option value="700069">700069</option>
-						<option value="700071">700071</option>
-						<option value="700072">700072</option>
-						<option value="700073">700073</option>
-						<option value="700074">700074</option>
-						<option value="700075">700075</option>
-						<option value="700077">700077</option>
-						<option value="700078">700078</option>
-						<option value="700080">700080</option>
-						<option value="700082">700082</option>
-						<option value="700085">700085</option>
-						<option value="700086">700086</option>
-						<option value="700087">700087</option>
-						<option value="700088">700088</option>
-						<option value="700089">700089</option>
-						<option value="700090">700090</option>
-						<option value="700092">700092</option>
-						<option value="700094">700094</option>
-						<option value="700095">700095</option>
-						<option value="700099">700099</option>
-						<option value="700107">700107</option>
-						<option value="700108">700108</option>
-						<option value="700139">700139</option>
+                        <option value="" selected disabled>Area Code</option>                     
+                        <option th:value="700001" th:text="700001"></option>
+						<option th:value="700002" th:text="700002"></option>
+						<option th:value="700003" th:text="700003"></option>
+						<option th:value="700004" th:text="700004"></option>
+						<option th:value="700005" th:text="700005"></option>
+						<option th:value="700006" th:text="700006"></option>
+						<option th:value="700007" th:text="700007"></option>
+						<option th:value="700008" th:text="700008"></option>
+						<option th:value="700009" th:text="700009"></option>
+						<option th:value="700010" th:text="700010"></option>
+						<option th:value="700011" th:text="700011"></option>
+						<option th:value="700012" th:text="700012"></option>
+						<option th:value="700013" th:text="700013"></option>
+						<option th:value="700014" th:text="700014"></option>
+						<option th:value="700015" th:text="700015"></option>
+						<option th:value="700016" th:text="700016"></option>
+						<option th:value="700017" th:text="700017"></option>
+						<option th:value="700018" th:text="700018"></option>
+						<option th:value="700019" th:text="700019"></option>
+						<option th:value="700020" th:text="700020"></option>
+						<option th:value="700021" th:text="700021"></option>
+						<option th:value="700022" th:text="700022"></option>
+						<option th:value="700023" th:text="700023"></option>
+						<option th:value="700024" th:text="700024"></option>
+						<option th:value="700025" th:text="700025"></option>
+						<option th:value="700026" th:text="700026"></option>
+						<option th:value="700027" th:text="700027"></option>
+						<option th:value="700028" th:text="700028"></option>
+						<option th:value="700029" th:text="700029"></option>
+						<option th:value="700030" th:text="700030"></option>
+						<option th:value="700031" th:text="700031"></option>
+						<option th:value="700032" th:text="700032"></option>
+						<option th:value="700033" th:text="700033"></option>
+						<option th:value="700034" th:text="700034"></option>
+						<option th:value="700035" th:text="700035"></option>
+						<option th:value="700036" th:text="700036"></option>
+						<option th:value="700037" th:text="700037"></option>
+						<option th:value="700038" th:text="700038"></option>
+						<option th:value="700040" th:text="700040"></option>
+						<option th:value="700041" th:text="700041"></option>
+						<option th:value="700042" th:text="700042"></option>
+						<option th:value="700043" th:text="700043"></option>
+						<option th:value="700044" th:text="700044"></option>
+						<option th:value="700045" th:text="700045"></option>
+						<option th:value="700046" th:text="700046"></option>
+						<option th:value="700047" th:text="700047"></option>
+						<option th:value="700050" th:text="700050"></option>
+						<option th:value="700052" th:text="700052"></option>
+						<option th:value="700053" th:text="700053"></option>
+						<option th:value="700054" th:text="700054"></option>
+						<option th:value="700060" th:text="700060"></option>
+						<option th:value="700061" th:text="700061"></option>
+						<option th:value="700062" th:text="700062"></option>
+						<option th:value="700063" th:text="700063"></option>
+						<option th:value="700065" th:text="700065"></option>
+						<option th:value="700066" th:text="700066"></option>
+						<option th:value="700067" th:text="700067"></option>
+						<option th:value="700068" th:text="700068"></option>
+						<option th:value="700069" th:text="700069"></option>
+						<option th:value="700071" th:text="700071"></option>
+						<option th:value="700072" th:text="700072"></option>
+						<option th:value="700073" th:text="700073"></option>
+						<option th:value="700074" th:text="700074"></option>
+						<option th:value="700075" th:text="700075"></option>
+						<option th:value="700077" th:text="700077"></option>
+						<option th:value="700078" th:text="700078"></option>
+						<option th:value="700080" th:text="700080"></option>
+						<option th:value="700082" th:text="700082"></option>
+						<option th:value="700085" th:text="700085"></option>
+						<option th:value="700086" th:text="700086"></option>
+						<option th:value="700087" th:text="700087"></option>
+						<option th:value="700088" th:text="700088"></option>
+						<option th:value="700089" th:text="700089"></option>
+						<option th:value="700090" th:text="700090"></option>
+						<option th:value="700092" th:text="700092"></option>
+						<option th:value="700094" th:text="700094"></option>
+						<option th:value="700095" th:text="700095"></option>
+						<option th:value="700099" th:text="700099"></option>
+						<option th:value="700107" th:text="700107"></option>
+						<option th:value="700108" th:text="700108"></option>
+						<option th:value="700139" th:text="700139"></option>
                       </select>
                     </div>
                     <!-- End Form Group -->
@@ -295,8 +304,8 @@
                     <!-- Input -->
                     <div class="js-form-message form-group">
                       <label class="sr-only" for="clinetComments">Tell us about your Requirements, how can we help to expand your business.</label>
-                      <textarea class="form-control" rows="3" name="clinetComments" id="clinetComments" placeholder="Tell us about your Requirements, how can we help to expand your business." aria-label="Tell us about your Requirements, how can we help to expand your business."
-                                data-msg="Please enter your requirements."></textarea>
+                      <textarea class="form-control" th:field="*{agentEnqueryDetails}" rows="3" name="clinetComments" id="clinetComments" placeholder="Tell us about your Requirements, how can we help to expand your business." aria-label="Tell us about your Requirements, how can we help to expand your business."
+                                data-msg="Please enter your requirements." maxlength="400" ></textarea>
                     </div>
                     <!-- End Input -->
                   </div>

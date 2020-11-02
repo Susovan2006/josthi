@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>User Profile | Josthi.com</title>
+
+    <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->
+  
+  <style type="text/css">
+  	#uploadStatus {
+		  display: none;
+		  color: #555;
+		  border-radius: 5px;
+		  font-family: Tahoma, Geneva, Arial, sans-serif;
+		  font-size: .8em;
+		  padding: 5px 5px 5px 30px;
+		  margin: 5px 5px 5px 5px;
+		  width:125px;
+		  background: #ffecec;
+		  border: 2px solid #f5aca6;
+		}
+  </style>
+  
+</head>
+<body>
+  <!--  ============= HIDDEN FIELDS ============= -->
+  <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.customerId}" id="hiddenCustomerID" />
+  <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.userEmailId}" id="hiddenEmailID" />
+
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Personal Info</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Account</li>
+              <li class="breadcrumb-item active" aria-current="page">Personal Info</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+          <!-- Card 1 ==== IMAGE UPLOAD ==== -->
+		   <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Profile photo</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              
+
+              <!-- Form Group -->
+                <div class="row form-group">
+                
+                  <label class="col-sm-3 col-form-label input-label">Update/Add Profile photo</label>
+                  <div class="col-sm-9">
+                    <div class="media align-items-center">
+                      <label class="avatar avatar-xl avatar-circle mr-4" for="avatarUploader">
+                        <!--  <img id="avatarImg" class="avatar-img" src="../images/Susovan_PP.jpg" alt="Image Description">-->
+                        <img id="avatarImg" th:src="@{/getProfileImage/}+ ${session.USER_SESSION_OBJ_KEY.customerId}" 
+                        	class="avatar-img" src="../images/default_user.png" alt="Profile Image">
+                      </label>
+
+                      <div class="media-body">
+                        <div class="btn btn-sm btn-primary file-attachment-btn mb-2 mb-sm-0 mr-2">Upload Photo
+                          <input type="file" class="js-file-attach file-attachment-btn-label" id="avatarUploader"
+                                 data-hs-file-attach-options='{
+                                    "textTarget": "#avatarImg",
+                                    "mode": "image",
+                                    "targetAttr": "src"
+                                 }'>
+                        </div>
+
+                        <a class="btn btn-sm btn-white mb-2 mb-sm-0" href="javascript:deleteProfileImage();">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+                
+                <div class="row">
+					<label class="col-sm-12" id="uploadStatus"></label>
+				</div>
+                <!-- Start Form Group -->
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+		  
+		  
+		  
+		  <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">User Profile.</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              <p class="card-text">Please update the detalis, these are necessary during emergency.</p>
+
+			  <form  id="user_insert_update_details" class="js-validate" th:action="@{user/userProfileUpdate}" th:object="${userDetailsBean}"  method="post">
+				<!-- ROW 1 --> 
+				<div class="row form-group">
+                  <label for="firstNameLabel" class="col-sm-2 col-form-label input-label">Full name <i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Displayed on public forums."></i><span class="text-danger">*</span></label>
+
+                  <div class="col-sm-5">
+                    <div class="input-group js-form-message">						
+						<input type="text" th:field="*{firstName}" class="form-control" name="firstName" id="firstNameLabel" placeholder="First Name" aria-label="First Name" value="" required data-msg="First name is mandatory." maxlength="50">
+					    <input type="text" th:field="*{lastName}" class="form-control" name="lastName" id="lastNameLabel" placeholder="Last Name" aria-label="Last Name" value="" required data-msg="Last name is mandatory." maxlength="50">
+                    </div>
+                  </div>
+				  
+				  <label for="genderLabel" class="col-sm-2 col-form-label input-label">Gender</label>
+				  <div class="col-sm-3">
+                    <div class="input-group">
+                      <select class="form-control show-tick">
+                                <option>NA</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                        </select>
+                    </div>
+                  </div>
+				  
+                </div>
+				<BR>
+
+				<h5 class="card-title">User Contact Info</h5>
+				<BR>
+                <!-- Row 2 -->
+				<div class="row">                				  
+				  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Will be used in case of Emergrncy."></i>Primary Cell No<span class="text-danger">*</span></label>
+					  
+								<input type="text" class="js-masked-input form-control" id="mobileNo1" name="mobileNo1" placeholder="+00 (000) 000-00-00" 
+								aria-label="mobileNo1" value="" required data-msg="Please enter your primary cell no, so that we can contact in emergrncy." >
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">Secondary Cell No<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control"   
+								id="mobileNo2" name="mobileNo2" placeholder="+00 (000) 000-00-00" value="" required data-msg="Please enter your Secondary cell no, so that we can contact in emergrncy.">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Will be used for general communication."></i>WhatsApp<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control" required data-msg="Need a Whatapp number for Communication." 
+								id="whatsappNo" name="whatsappNo" placeholder="+00 (000) 000-00-00" value="">
+							 
+					</div>
+                  </div>
+				  
+				  
+                </div>
+				
+				
+				<!-- Row 3 -->
+				<div class="row"> 
+				<div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="secondaryCellNo" class="input-label">Land Line no.</label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="landLineNo" name="landLineNo" placeholder="+00 (000) 000-00-00" onkeypress="return isNumber(event)" maxlength="20" data-msg="Better to have a land line no.">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label class="input-label">Fax No</label>
+					  <input type="text" class="js-masked-input form-control" 
+								id="faxNo" name="faxNo" placeholder="+00 (000) 000-00-00" onkeypress="return isNumber(event)" maxlength="20">
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="secondaryCellNo" class="input-label">Office Ph no.</label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="officePhNo" name="officePhNo" placeholder="+00 (000) 000-00-00" onkeypress="return isNumber(event)" maxlength="20">
+					</div>
+                  </div>
+                </div>
+				
+				<BR>
+				<h5 class="card-title">Emails And Social Media Links</h5>
+				<BR>
+                <div class="row"> 
+				<div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="emailSecondarylbl" class="input-label">Secondary email ID.</label>
+					  <input type="email" class="form-control"  
+								id="emailSecondary" name="emailSecondary" placeholder="__@__.__" maxlength="50">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label class="input-label">WebSite</label>
+					  <input type="text" class="form-control" 
+								id="website" name="website" placeholder="wwww/https://____" maxlength="150">
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="secondaryCellNo" class="input-label">Facebook link.</label>
+					  <input type="text" class="form-control"  
+								id="facebookLink" name="facebookLink" placeholder="facebook.com/_____" maxlength="150">
+					</div>
+                  </div>
+                </div>
+				<BR>
+				<BR>
+				<BR>
+				<h5 class="card-title">Address Details</h5>
+				<BR>
+				
+				<div class="row"> 
+				<div class="col-sm-4">
+                    <div class="form-group">
+					  <label id="secondaryCellNo" class="input-label">Address Line 1.</label>
+					  <input type="text" class="form-control"  
+								id="userAddressFirstLine" name="userAddressFirstLine" placeholder="Street/Rd/ Block" maxlength="100">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-4">
+                    <div class="form-group">
+					  <label class="input-label">Address Line 2</label>
+					  <input type="text" class="form-control" 
+								id="userAddressSecondLine" name="userAddressSecondLine" placeholder="Build no/Apt no etc " maxlength="150">
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-4">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">City/Town.<span class="text-danger">*</span></label>
+					  <input type="text" class=" js-masked-input form-control"  
+								id="cityTown" name="cityTown" placeholder="town/city" 
+								required value="" data-msg="City/Town is mandatory." maxlength="150">
+					</div>
+                  </div>
+                </div>
+				
+				
+				<div class="row"> 
+				<div class="col-sm-3">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">State<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="state" name="state" placeholder="State" 
+								required value="" data-msg="State is mandatory." maxlength="100">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-3">
+                    <div class="form-group">
+					  <label class="input-label">District/County </label>
+					  <input type="text" class="form-control" 
+								id="countyDistrict" name="countyDistrict" placeholder="District/County" maxlength="50">
+							 
+					</div>
+                  </div>
+				 
+
+                  <div class="col-sm-3">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">Country.<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="country" name="country" placeholder="Country" maxlength="50" 
+								required value="" data-msg="Country is mandatory.">
+					</div>
+                  </div>
+				  
+				  <div class="col-sm-3">
+                    <div class="form-group js-form-message">
+					  <label id="secondaryCellNo" class="input-label">Zip/Pin Code.<span class="text-danger">*</span></label>
+					  <input type="text" class="js-masked-input form-control"  
+								id="zipPin" name="zipPin" placeholder="Zip" maxlength="20" 
+								onkeypress="return isNumber(event)" required value="" data-msg="Country is mandatory.">
+					</div>
+                  </div>
+				  
+				  
+                </div>
+                <!-- End Form Group -->
+				<!-- Footer -->
+				<div class="card-footer d-flex justify-content-end">
+				  <a class="btn btn-white" >Cancel</a>
+				  <span class="mx-2"></span>
+				  
+				  <button class="btn btn-primary" type="submit">Save Change</button>
+				</div>
+				<!-- End Footer -->
+              </form>
+			  
+			  
+			  
+			  
+			  
+			  
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+
+        </div>
+        <!--end Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+
+  <!-- ========== FOOTER ========== -->
+  <div th:replace="user_common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+    <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  	<div th:insert="user_common :: js-includes"></div>
+  	  <script th:src="@{/vendor/hs-file-attach/dist/hs-file-attach.min.js}"></script>
+  	<!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+	
+	
+	
+	<!-- FOR MASKING the fields Susovan-->
+  <script>
+  	$(document).ready(function(){
+      
+	  $(mobileNo1).inputmask('+99 (999) 999-9999');  //static mask
+      $(mobileNo2).inputmask('+99 (999) 999-9999');
+      $(whatsappNo).inputmask('+99 (999) 999-9999');
+      $(emailSecondary).inputmask({ alias: "email" });
+      $(emailPrimary).inputmask({ alias: "email" });
+  
+	});
+	
+	function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if(charCode == 32 || charCode == 43 || charCode == 40 || charCode == 41){	//for Space and +,(,)
+		return true
+	}else if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+	}
+  </script>
+  
+  <script>
+    $(document).on('ready', function () {
+    	
+    var element = document.getElementById("userProfileLink");
+    element.classList.add("active");
+    	
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+      
+      //Profile Picture Upload - Susovan
+      $('.js-file-attach').each(function () {
+          var customFile = new HSFileAttach($(this)).init();
+      });
+      
+       //Check When the user Uploads new Images.
+		$(".js-file-attach").on('change', function(){
+			var singleFileUploadInput = document.querySelector('#avatarUploader');
+			    //alert(singleFileUploadInput);
+			    var files = singleFileUploadInput.files;
+				if(files.length === 0) {
+					singleFileUploadError.innerHTML = "Please select a file";
+					singleFileUploadError.style.display = "block";
+				}
+				
+				event.preventDefault();
+				fire_ajax_submit(files[0]);
+		});
+      
+
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+	  
+    });
+  </script>
+  
+  <!-- ============================ AJAX CALL to UPLOAD PROFILE PICTURE ======================= -->
+  
+  <script>
+		function fire_ajax_submit(file) {
+			
+		var emailId = $('#hiddenEmailID').val();
+		var custId = $('#hiddenCustomerID').val();
+		
+		var formData = new FormData();
+		formData.append('file',file);
+		formData.append('customerID',custId);
+		formData.append('emailID',emailId);
+	
+		    $.ajax({
+		        type: "POST",
+				enctype: 'multipart/form-data',
+		        url: "/userProfilePic",
+		        data: formData,
+		        dataType: 'html', //Important , it has to be HTML
+		        cache: false,
+		        timeout: 600000,
+				contentType: false,
+		        processData: false, //it prevent jQuery form transforming the data into a query string
+		        success: function (data, status) {
+		            console.log("SUCCESS : ", data);
+		            showSuccessMsg(data);
+		            getProfileImage();
+
+		
+		        },
+		        error: function (xhr, status, error) {
+		            console.log("ERROR : ", xhr.status);
+					console.log("ERROR status: ", status);
+					console.log("ERROR error: ", error);
+					showError("Error Occured while Uploading the image, Please try again with a valid jpg/gif/png image, with in 1 MB.");
+		
+		        }
+		    });
+	
+		}
+	
+		
+		
+		function deleteProfileImage(){
+			var custId = $('#hiddenCustomerID').val();
+			
+			var formData = new FormData();
+			formData.append('customerID',custId);
+			
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "/deleteProfilePic",
+				data: formData,
+				dataType: 'html', //Important , it has to be HTML to get HTML String Back
+				cache: false,
+				timeout: 600000,
+				contentType: false,
+				processData: false, //it prevent jQuery form transforming the data into a query string
+				success: function (data, status) {
+					console.log("SUCCESS : ", data);
+					showSuccessMsg(data);
+					getProfileImage();				
+
+				},
+				error: function (xhr, status, error) {
+					console.log("ERROR : ", xhr.status);
+					console.log("ERROR status: ", status);
+					console.log("ERROR error: ", error);
+					showError("Error Occured while deleting the image, Please try again later.");
+
+				}
+	    	});
+		}
+		
+		function getProfileImage(){
+			var custId = $('#hiddenCustomerID').val();			
+			var newSrc = "/getProfileImage/"+custId;;
+			 $('#avatarImg').attr('src', newSrc);
+			 $('#profilePicture').attr('src', newSrc);
+		}
+	
+	
+		function showError(msg) {
+		  var e1 = document.getElementById("uploadStatus");
+		  e1.setAttribute("style", "display:block;background:#ffecec;border: 2px solid #f5aca6");
+		  e1.innerHTML = "&nbsp;"+msg;
+
+		}
+		
+		function showSuccessMsg(msg) {
+		  var e1 = document.getElementById("uploadStatus");
+		  e1.setAttribute("style", "display:block;background:#c3f3cd;border: 2px solid #50ef72");
+		  e1.innerHTML = "&nbsp;"+msg;
+
+		}
+	
+	
+  </script>
+  
+  <script th:inline="javascript">
+	
+  </script>
+  
+
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

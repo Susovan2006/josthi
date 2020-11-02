@@ -26,6 +26,7 @@ import com.josthi.web.daoimpl.EmailDaoImpl;
 import com.josthi.web.daoimpl.FileWikiDaoImpl;
 import com.josthi.web.daoimpl.SchedulerDaoImpl;
 import com.josthi.web.daoimpl.UserAuthDaoImpl;
+import com.josthi.web.daoimpl.UserDetailsDaoImpl;
 import com.josthi.web.daoimpl.UserRegistrationDaoImpl;
 import com.josthi.web.mail.EmailSenderService;
 import com.josthi.web.security.SecurityConfig;
@@ -197,6 +198,15 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
 	 fileWikiDaoImpl.setJdbcTemplate(jdbcTemplate);
 	 return fileWikiDaoImpl;
+ }
+ 
+ 
+ @Bean("userDetailsDao")
+ public UserDetailsDaoImpl userDetailsDaoImpl(DataSource josthiDataSource) {
+	 UserDetailsDaoImpl userDetailsDaoImpl = new UserDetailsDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 userDetailsDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return userDetailsDaoImpl;
  }
  
  /* ==========================================================================

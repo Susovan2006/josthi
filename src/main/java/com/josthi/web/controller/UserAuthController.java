@@ -84,52 +84,61 @@ public class UserAuthController {
 			
 			UserAuthBo userDetails = userAuthService.getValidUser(userAuthBo.getUseridEmail().trim(), 
 										 						  Security.encrypt(userAuthBo.getWordapp().trim()));
-			logger.info(userDetails.toString());
+			logger.info("USER DETAILS = "+userDetails.toString());
 			
 			//A Valid user should have the CustomerID + Role + Status
 			if((userDetails.getCustomerId()!=null && userDetails.getCustomerId().length() > 0) &&
 					(userDetails.getRole()!=null && userDetails.getRole().length() > 0) &&
+					
 					(userDetails.getStatus()!=null && userDetails.getStatus().length() > 0 && 
-					 	userDetails.getStatus().equalsIgnoreCase(Constant.USER_STATUS_ACTIVE)) &&
+					 	!(userDetails.getStatus().equalsIgnoreCase(Constant.USER_STATUS_DISABLED))	&&
 					(userDetails.getTemporaryLockEnabled()!=null && 
-						userDetails.getTemporaryLockEnabled().equalsIgnoreCase("NO"))) {
+						userDetails.getTemporaryLockEnabled().equalsIgnoreCase("NO")))) {
 				
 					userDetails.setLoginStatus(Constant.USER_ONLINE_STATUS);
 					userDetails.setLoginTime(new Timestamp(System.currentTimeMillis()));
 					userDetails.setLoginRetryCount(0);
 					userDetails.setTemporaryLockEnabled(Constant.USER_TEMPORARY_LOCK_NO);
 				
-				if(userAuthService.updateLoginStatusOnSuccess(userDetails)) {
-					//TODO: Set Session Variable.
-					String userFirstAndLastName = userAuthService.getUserDetails(userDetails.getCustomerId());
-					
-					UserSessionBean userSessionBean = new UserSessionBean (userFirstAndLastName,              	//First Name & Last Name 
-																		   userDetails.getRole(),			  	// Role
-																		   userAuthBo.getUseridEmail().trim(), 	// email ID
-																		   "",									//Image Path
-																		   Constant.USER_ONLINE_STATUS,			// ONLINE/OFFLINE
-																		   Constant.USER_TYPE_REG_USER,			//Same as Role.
-																		   true,								// Session Active = true.
-																		   userDetails.getCustomerId());		// Customer ID						
-					session.setAttribute(Constant.USER_SESSION_OBJ_KEY, userSessionBean);
-					session.setAttribute(Constant.USER_SESSION_PROFILE_PICTURE_KEY, Constant.DEFAULT_PROFILE_PICTURE);
-								
-					logger.info("LOGIN Successful");
-					//return "user/user_personal_details";
-					return "user/home_user";
-
-				}else {
-					//Message, error occurred, please try again.
-					logger.info("LOGIN Valid, but Update error Occured");
-					model.addAttribute("errorMessage", MessageConstant.LOGIN_ERROR_ON_DATABASE_UPDATE_FAILURE);
-					return "login_simple";
-				}
+					if(userAuthService.updateLoginStatusOnSuccess(userDetails)) {
+						//TODO: Set Session Variable.
+						String userFirstAndLastName = userAuthService.getUserDetails(userDetails.getCustomerId());
+						
+						
+						UserSessionBean userSessionBean = new UserSessionBean (userFirstAndLastName,              	//First Name & Last Name 
+								   userDetails.getRole(),			  	// Role
+								   userAuthBo.getUseridEmail().trim(), 	// email ID
+								   "",									//Image Path
+								   Constant.USER_ONLINE_STATUS,			// ONLINE/OFFLINE
+								   userDetails.getVerifiedUser(),		// VERIFIED USER. (N by default)
+								   true,								// Session Active = true.
+								   userDetails.getCustomerId());		// Customer ID						
+						
+						session.setAttribute(Constant.USER_SESSION_OBJ_KEY, userSessionBean);
+						session.setAttribute(Constant.USER_SESSION_PROFILE_PICTURE_KEY, Constant.DEFAULT_PROFILE_PICTURE);
+						
+						
+						if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {		
+							logger.info("User LOGIN Successful");
+							return "user/home_user";
+						}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
+							logger.info("Agent LOGIN Successful");
+							return "agentAdmin/index";
+						}else {
+							return "login_simple";
+						}
+					}else {
+						//Message, error occurred, please try again.
+						logger.info("LOGIN Valid, but Update error Occured");
+						model.addAttribute("errorMessage", MessageConstant.LOGIN_ERROR_ON_DATABASE_UPDATE_FAILURE);
+						return "login_simple";
+					}
 				
 
 			//Error Condition.
 			//In case The Login is Valid, but the Account is deactivated.	
 			}else if(userDetails.getStatus() !=null && userDetails.getStatus().length() > 0 && 
-					 !(userDetails.getStatus().equalsIgnoreCase(Constant.USER_STATUS_ACTIVE))) {
+					 (userDetails.getStatus().equalsIgnoreCase(Constant.USER_STATUS_DISABLED))) {
 				     logger.info("Account is deactivated, Please contact the Customer Service Executive.");
 				     model.addAttribute("errorMessage", MessageConstant.LOGIN_ERROR_ON_ACCOUNT_DEACTIVATED);
 				     return "login_simple";

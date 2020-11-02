@@ -34,11 +34,11 @@ public class MainController {
 	
 	
 	
-	@GetMapping("/forAgents")
+	/*@GetMapping("/forAgents")
 	public String forAgents(Model model) {
 		model.addAttribute("message","HelloWorld");
 		return "for_agents";
-	}
+	}*/
 	
 	//login_simple
 	/*@GetMapping("/login")
@@ -179,10 +179,10 @@ public class MainController {
 			return "user/home_user";
 	}
 	
-	@GetMapping("/user/profile")
-	public String userProfile(Model model) {
-			return "user/profile_user";
-	}
+	/*
+	 * @GetMapping("/user/profile") public String userProfile(Model model) { return
+	 * "user/profile_user"; }
+	 */
 	
 	//Beneficiary Details
 	@GetMapping("/user/beneficiaryDetails")

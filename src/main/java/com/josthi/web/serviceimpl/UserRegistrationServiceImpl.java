@@ -9,6 +9,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.josthi.web.bo.AgentRegistrationBean;
 import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.dao.UserRegistrationDao;
 import com.josthi.web.service.UserRegistrationService;
@@ -72,6 +73,45 @@ public class UserRegistrationServiceImpl implements UserRegistrationService{
 
 	public void setPlatformTransactionManager(PlatformTransactionManager platformTransactionManager) {
 		this.platformTransactionManager = platformTransactionManager;
+	}
+
+
+	@Override
+	public boolean registerNewAgent(AgentRegistrationBean agentRegistrationBean, int getNextID) {
+		TransactionStatus txnStatus = null;
+		DefaultTransactionDefinition def = null;
+		try {
+			logger.info("Within transaction Block");
+			//Here we are encrypting the Password.
+
+			
+			def = new DefaultTransactionDefinition();
+			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+			def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+			{
+				txnStatus = platformTransactionManager.getTransaction(def);
+				//DB Calls
+				//--> Insert in the userAuth table.
+				boolean status = false;
+				status = userRegistrationDao.insertIntoUserAuthForAgent(agentRegistrationBean);
+				//--> Insert in user_detail Table
+				status = userRegistrationDao.insertIntoUserDetailForAgent(agentRegistrationBean);
+				//--> Insert in Agent_Enquery Table
+				status = userRegistrationDao.insertIntoAgentEnquery(agentRegistrationBean);
+				//--> Increment the next ID +1
+				status = userRegistrationDao.updateNextUid(getNextID+1);
+				
+				
+				platformTransactionManager.commit(txnStatus);
+				return status;
+			}
+			
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(),ex);
+			platformTransactionManager.rollback(txnStatus);
+			logger.info("txn rolled back");
+			return false;
+		}
 	}
 
 }

@@ -28,4 +28,16 @@ public interface MessageConstant {
 	String ACCOUNT_UNLOCK_SUCCESS = "Your Account is unlocked successfully, now you can try to login";
 	String ACCOUNT_UNLOCK_FAILED = "System failed to unlock your account. Please wait for 24 hours or contact the Customer Service.";
 
+	
+	
+	
+	//***************************** User Profile********************************
+	String USER_SUCCESS_STATUS = "Success";
+	String USER_WARNING_STATUS = "Warning";
+	String USER_FAILURE_STATUS = "Failure";
+	String USER_STATUS_NULL_STATUS = null;
+	
+	String USER_PROFILE_UPDATE_SUCCESS_MESSAGE = "User Profile Updated Successfully!!";
+	String USER_PROFILE_UPDATE_ERROR_MESSAGE = "Exception Occured while updating the user Profile. Try again later or Contact the Customer Service.";
+	String USER_PROFILE_UPDATE_VALIDATION_ERROR_MESSAGE = "Looks like there is some issue with the Customer ID, please log out and relogin.";
 }

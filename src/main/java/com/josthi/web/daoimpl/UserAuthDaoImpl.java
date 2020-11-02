@@ -28,7 +28,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public static final String SELECT_VALIDATE_LOGIN_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED FROM user_auth_table where USERID_EMAIL = ? and WORDAPP = ?;";
+	public static final String SELECT_VALIDATE_LOGIN_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED, VERIFIED_USER FROM user_auth_table where USERID_EMAIL = ? and WORDAPP = ?;";
 	@Override
 	public UserAuthBo getValidUser(String uid, String password) {
 		try{
@@ -56,7 +56,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 	/**
 	 * Here we are checking if the User gave a proper UserID or not. The Password might be incorrect.
 	 */
-	public static final String SELECT_VALIDATE_LOGIN_ON_UID_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED FROM user_auth_table where USERID_EMAIL = ?;";
+	public static final String SELECT_VALIDATE_LOGIN_ON_UID_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED, VERIFIED_USER FROM user_auth_table where USERID_EMAIL = ?;";
 	@Override
 	public UserAuthBo getValidUser(String emailID) {
 		try{

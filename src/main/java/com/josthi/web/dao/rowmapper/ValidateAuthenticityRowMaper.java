@@ -20,6 +20,7 @@ public class ValidateAuthenticityRowMaper implements RowMapper{
 			userAuth.setRole(resultSet.getString("ROLE"));
 			userAuth.setLoginRetryCount(resultSet.getInt("LOGIN_RETRY_COUNT"));
 			userAuth.setTemporaryLockEnabled(resultSet.getString("TEMPORARY_LOCK_ENABLED"));
+			userAuth.setVerifiedUser(resultSet.getString("VERIFIED_USER"));
 			return userAuth;
 		}
 }

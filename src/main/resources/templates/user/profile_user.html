@@ -131,30 +131,49 @@
                 <span class="badge badge-soft-danger ml-2"></span>
               </div>
             </div>
-
+            
+            <!-- Alert Section Start-->
+            <div th:if="${status ne null}">
+	            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+				  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+				      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+				    </svg>
+				  </button>
+				</div>
+			</div>
+			<!-- Alert Section End-->
+			
+			
             <!-- Body -->
             <div class="card-body">
               <p class="card-text">Please update the detalis, these are necessary during emergency.</p>
 
-			  <form  id="user_insert_update_details" class="js-validate">
+			  <form  id="user_insert_update_details" class="js-validate" th:action="@{/user/userProfileUpdate/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
+			  											th:object="${userDetailsBean}"  method="post">
+				
+				  <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.customerId}" id="hiddenCustomerIDForBean" th:field="*{uid}"/>
+  				  <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.userEmailId}" id="hiddenEmailIDForBean" />
+				
 				<!-- ROW 1 --> 
 				<div class="row form-group">
                   <label for="firstNameLabel" class="col-sm-2 col-form-label input-label">Full name <i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Displayed on public forums."></i><span class="text-danger">*</span></label>
 
                   <div class="col-sm-5">
                     <div class="input-group js-form-message">						
-						<input type="text" class="form-control" name="firstName" id="firstNameLabel" placeholder="First Name" aria-label="First Name" value="" required data-msg="First name is mandatory.">
-					    <input type="text" class="form-control " name="lastName" id="lastNameLabel" placeholder="Last Name" aria-label="Last Name" value="" required data-msg="Last name is mandatory.">
+						<input type="text" th:field="*{firstName}" class="form-control" name="firstName" id="firstNameLabel" placeholder="First Name" aria-label="First Name" value="" required data-msg="First name is mandatory." maxlength="50">
+					    <input type="text" th:field="*{lastName}" class="form-control" name="lastName" id="lastNameLabel" placeholder="Last Name" aria-label="Last Name" value="" required data-msg="Last name is mandatory." maxlength="50">
                     </div>
                   </div>
 				  
 				  <label for="genderLabel" class="col-sm-2 col-form-label input-label">Gender</label>
 				  <div class="col-sm-3">
                     <div class="input-group">
-                      <select class="form-control show-tick">
-                                <option>NA</option>
-                                <option>Male</option>
-                                <option>Female</option>
+                      <select class="form-control show-tick" th:field="*{gender}">
+                                <option value="0">select gender</option>
+                                <option th:value="M" th:text="Male"></option>
+    							<option th:value="F" th:text="Female"></option>
                         </select>
                     </div>
                   </div>
@@ -170,7 +189,7 @@
                     <div class="form-group js-form-message">
 					  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Will be used in case of Emergrncy."></i>Primary Cell No<span class="text-danger">*</span></label>
 					  
-								<input type="text" class="js-masked-input form-control" id="mobileNo1" name="mobileNo1" placeholder="+00 (000) 000-00-00" 
+								<input type="text" th:field="*{mobileNo1}" class="js-masked-input form-control" id="mobileNo1" name="mobileNo1" placeholder="+00 (000) 000-00-00" 
 								aria-label="mobileNo1" value="" required data-msg="Please enter your primary cell no, so that we can contact in emergrncy." >
 							 
 					</div>
@@ -180,7 +199,7 @@
                   <div class="col-sm-4">
                     <div class="form-group js-form-message">
 					  <label id="secondaryCellNo" class="input-label">Secondary Cell No<span class="text-danger">*</span></label>
-					  <input type="text" class="js-masked-input form-control"   
+					  <input type="text" th:field="*{mobileNo2}" class="js-masked-input form-control"   
 								id="mobileNo2" name="mobileNo2" placeholder="+00 (000) 000-00-00" value="" required data-msg="Please enter your Secondary cell no, so that we can contact in emergrncy.">
 					</div>
                   </div>
@@ -188,7 +207,7 @@
 				  <div class="col-sm-4">
                     <div class="form-group js-form-message">
 					  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Will be used for general communication."></i>WhatsApp<span class="text-danger">*</span></label>
-					  <input type="text" class="js-masked-input form-control" required data-msg="Need a Whatapp number for Communication." 
+					  <input type="text" th:field="*{whatsappNo}" class="js-masked-input form-control" required data-msg="Need a Whatapp number for Communication." 
 								id="whatsappNo" name="whatsappNo" placeholder="+00 (000) 000-00-00" value="">
 							 
 					</div>
@@ -203,7 +222,7 @@
 				<div class="col-sm-4">
                     <div class="form-group">
 					  <label id="secondaryCellNo" class="input-label">Land Line no.</label>
-					  <input type="text" class="js-masked-input form-control"  
+					  <input type="text" th:field="*{landLineNo}" class="js-masked-input form-control"  
 								id="landLineNo" name="landLineNo" placeholder="+00 (000) 000-00-00" onkeypress="return isNumber(event)" maxlength="20" data-msg="Better to have a land line no.">
 					</div>
                   </div>
@@ -211,7 +230,7 @@
 				  <div class="col-sm-4">
                     <div class="form-group">
 					  <label class="input-label">Fax No</label>
-					  <input type="text" class="js-masked-input form-control" 
+					  <input type="text" th:field="*{faxNo}" class="js-masked-input form-control" 
 								id="faxNo" name="faxNo" placeholder="+00 (000) 000-00-00" onkeypress="return isNumber(event)" maxlength="20">
 							 
 					</div>
@@ -221,7 +240,7 @@
                   <div class="col-sm-4">
                     <div class="form-group">
 					  <label id="secondaryCellNo" class="input-label">Office Ph no.</label>
-					  <input type="text" class="js-masked-input form-control"  
+					  <input type="text"  th:field="*{officePhNo}" class="js-masked-input form-control"  
 								id="officePhNo" name="officePhNo" placeholder="+00 (000) 000-00-00" onkeypress="return isNumber(event)" maxlength="20">
 					</div>
                   </div>
@@ -234,16 +253,16 @@
 				<div class="col-sm-4">
                     <div class="form-group">
 					  <label id="emailSecondarylbl" class="input-label">Secondary email ID.</label>
-					  <input type="email" class="form-control"  
-								id="emailSecondary" name="emailSecondary" placeholder="__@__.__" maxlength="50">
+					  <input type="email"  th:field="*{secondaryEmail}" class="form-control"  
+								id="emailSecondary" name="emailSecondary" placeholder="__@__.__" maxlength="45">
 					</div>
                   </div>
 				  
 				  <div class="col-sm-4">
                     <div class="form-group">
 					  <label class="input-label">WebSite</label>
-					  <input type="text" class="form-control" 
-								id="website" name="website" placeholder="wwww/https://____" maxlength="150">
+					  <input type="text" th:field="*{website}" class="form-control" 
+								id="website" name="website" placeholder="wwww/https://____" maxlength="200">
 							 
 					</div>
                   </div>
@@ -252,8 +271,8 @@
                   <div class="col-sm-4">
                     <div class="form-group">
 					  <label id="secondaryCellNo" class="input-label">Facebook link.</label>
-					  <input type="text" class="form-control"  
-								id="facebookLink" name="facebookLink" placeholder="facebook.com/_____" maxlength="150">
+					  <input type="text" th:field="*{facebookLink}" class="form-control"  
+								id="facebookLink" name="facebookLink" placeholder="facebook.com/_____" maxlength="200">
 					</div>
                   </div>
                 </div>
@@ -267,7 +286,7 @@
 				<div class="col-sm-4">
                     <div class="form-group">
 					  <label id="secondaryCellNo" class="input-label">Address Line 1.</label>
-					  <input type="text" class="form-control"  
+					  <input type="text" th:field="*{userAddressFirstLine}" class="form-control"  
 								id="userAddressFirstLine" name="userAddressFirstLine" placeholder="Street/Rd/ Block" maxlength="100">
 					</div>
                   </div>
@@ -275,8 +294,8 @@
 				  <div class="col-sm-4">
                     <div class="form-group">
 					  <label class="input-label">Address Line 2</label>
-					  <input type="text" class="form-control" 
-								id="userAddressSecondLine" name="userAddressSecondLine" placeholder="Build no/Apt no etc " maxlength="150">
+					  <input type="text" th:field="*{userAddressSecondLine}" class="form-control" 
+								id="userAddressSecondLine" name="userAddressSecondLine" placeholder="Build no/Apt no etc " maxlength="100">
 							 
 					</div>
                   </div>
@@ -284,10 +303,10 @@
 
                   <div class="col-sm-4">
                     <div class="form-group js-form-message">
-					  <label id="secondaryCellNo" class="input-label">City/Town.<span class="text-danger">*</span></label>
-					  <input type="text" class=" js-masked-input form-control"  
+					  <label id="cityTownLbl" class="input-label">City/Town.<span class="text-danger">*</span></label>
+					  <input type="text" th:field="*{cityTown}" class=" js-masked-input form-control"  
 								id="cityTown" name="cityTown" placeholder="town/city" 
-								required value="" data-msg="City/Town is mandatory." maxlength="150">
+								required value="" data-msg="City/Town is mandatory." maxlength="45">
 					</div>
                   </div>
                 </div>
@@ -296,18 +315,18 @@
 				<div class="row"> 
 				<div class="col-sm-3">
                     <div class="form-group js-form-message">
-					  <label id="secondaryCellNo" class="input-label">State<span class="text-danger">*</span></label>
-					  <input type="text" class="js-masked-input form-control"  
+					  <label id="stateLbl" class="input-label">State<span class="text-danger">*</span></label>
+					  <input type="text" th:field="*{state}" class="js-masked-input form-control"  
 								id="state" name="state" placeholder="State" 
-								required value="" data-msg="State is mandatory." maxlength="100">
+								required value="" data-msg="State is mandatory." maxlength="45">
 					</div>
                   </div>
 				  
 				  <div class="col-sm-3">
                     <div class="form-group">
 					  <label class="input-label">District/County </label>
-					  <input type="text" class="form-control" 
-								id="countyDistrict" name="countyDistrict" placeholder="District/County" maxlength="50">
+					  <input type="text" th:field="*{countyDistrict}" class="form-control" 
+								id="countyDistrict" name="countyDistrict" placeholder="District/County" maxlength="45">
 							 
 					</div>
                   </div>
@@ -315,17 +334,17 @@
 
                   <div class="col-sm-3">
                     <div class="form-group js-form-message">
-					  <label id="secondaryCellNo" class="input-label">Country.<span class="text-danger">*</span></label>
-					  <input type="text" class="js-masked-input form-control"  
-								id="country" name="country" placeholder="Country" maxlength="50" 
+					  <label id="countryLbl" class="input-label">Country.<span class="text-danger">*</span></label>
+					  <input type="text" th:field="*{country}" class="js-masked-input form-control"  
+								id="country" name="country" placeholder="Country" maxlength="45" 
 								required value="" data-msg="Country is mandatory.">
 					</div>
                   </div>
 				  
 				  <div class="col-sm-3">
                     <div class="form-group js-form-message">
-					  <label id="secondaryCellNo" class="input-label">Zip/Pin Code.<span class="text-danger">*</span></label>
-					  <input type="text" class="js-masked-input form-control"  
+					  <label id="zipPinLbl" class="input-label">Zip/Pin Code.<span class="text-danger">*</span></label>
+					  <input type="text" th:field="*{zipPin}" class="js-masked-input form-control"  
 								id="zipPin" name="zipPin" placeholder="Zip" maxlength="20" 
 								onkeypress="return isNumber(event)" required value="" data-msg="Country is mandatory.">
 					</div>

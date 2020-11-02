@@ -6,7 +6,7 @@ public class UserSessionBean {
       private String userEmailId;
       private String userProfileImagePath;
       private String userStatus;
-      private String userType;
+      private String verifiedUser;
       private boolean userSessionValid;
       private String customerId;
       
@@ -16,22 +16,25 @@ public class UserSessionBean {
       
 
 	public UserSessionBean(String userName, String userRole, String userEmailId, String userProfileImagePath,
-			String userStatus, String userType, boolean userSessionValid, String customerId) {
+			String userStatus, String verifiedUser, boolean userSessionValid, String customerId) {
 		super();
 		this.userName = userName;
 		this.userRole = userRole;
 		this.userEmailId = userEmailId;
 		this.userProfileImagePath = userProfileImagePath;
 		this.userStatus = userStatus;
-		this.userType = userType;
+		this.verifiedUser = verifiedUser;
 		this.userSessionValid = userSessionValid;
 		this.customerId = customerId;
 	}
-	public String getUserType() {
-		return userType;
+	
+	
+	
+	public String getVerifiedUser() {
+		return verifiedUser;
 	}
-	public void setUserType(String userType) {
-		this.userType = userType;
+	public void setVerifiedUser(String verifiedUser) {
+		this.verifiedUser = verifiedUser;
 	}
 	public String getUserName() {
 		return userName;
@@ -75,7 +78,18 @@ public class UserSessionBean {
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "UserSessionBean [userName=" + userName + ", userRole=" + userRole + ", userEmailId=" + userEmailId
+				+ ", userProfileImagePath=" + userProfileImagePath + ", userStatus=" + userStatus + ", verifiedUser="
+				+ verifiedUser + ", userSessionValid=" + userSessionValid + ", customerId=" + customerId + "]";
+	}
       
+	
+	
+	
       
       
 }

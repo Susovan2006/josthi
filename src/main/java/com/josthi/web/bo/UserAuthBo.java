@@ -20,7 +20,7 @@ public class UserAuthBo {
 	private String comments ;
 	private int loginRetryCount;
 	private String temporaryLockEnabled;
-	
+	private String verifiedUser;
 	
 
 	
@@ -114,6 +114,13 @@ public class UserAuthBo {
 	}
 	public void setTemporaryLockEnabled(String temporaryLockEnabled) {
 		this.temporaryLockEnabled = temporaryLockEnabled;
+	}
+	
+	public String getVerifiedUser() {
+		return verifiedUser;
+	}
+	public void setVerifiedUser(String verifiedUser) {
+		this.verifiedUser = verifiedUser;
 	}
 	@Override
 	public String toString() {

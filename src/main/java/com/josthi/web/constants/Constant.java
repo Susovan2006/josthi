@@ -3,11 +3,14 @@ package com.josthi.web.constants;
 public interface Constant {
 	
 	String USER_STATUS_ACTIVE = "A";
+	String USER_STATUS_DISABLED = "D";
+	String USER_STATUS_VALIDATION_PENDING = "P";
 	String USER_ONLINE_STATUS = "ONLINE";
 	String USER_OFFLINE_STATUS = "OFFLINE";
 	String USER_TYPE_REG_USER = "USER";
 	String USER_TYPE_ADMIN = "ADMIN";
 	String USER_TYPE_AGENT = "AGENT";
+	String USER_TYPE_SUB_AGENT = "SUBAGENT";
 	String USER_TYPE_BENEFICIARY ="BENUSER";
 	String USER_TEMPORARY_LOCK_YES = "YES";
 	String USER_TEMPORARY_LOCK_NO = "NO";
@@ -17,6 +20,11 @@ public interface Constant {
 	//The User Can try max 3 times with incorrect Password.
 	int LOGIN_RETRY_COUNT = 3;
 	
+	String ENQUERY_STATUS_INITIATED = "INITIATED";
+	String ENQUERY_STATUS_INPROGRESS = "WIP";
+	String ENQUERY_STATUS_RESOLVED = "RESOLVED";
+	String ENQUERY_STATUS_CLOSED = "CLOSED";
+	String ENQUERY_STATUS_OPEN = "OPEN";
 	
 	
 	

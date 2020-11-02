@@ -9,10 +9,17 @@ public class UserDetailsBean {
 	private String firstName ;
 	private String middleName ;
 	private String lastName ;
+	private String gender ; //Added New. Oct 2020.
 	
 	//Address
-	private String userAddressFirstLine ;
+	private String userAddressFirstLine ;	
 	private String userAddressSecondLine ;
+	private String userAdditionalAddressLine;    //ADDITIONAL_ADDRESS_LINE added Oct 2020
+	private String policeStation;                //POLICE_STATION added on Oct 2020
+	private String postOffice;					 //POST_OFFICE added on Oct 2020.
+	private String nearestLandMark;				 //NEAREST_LAND_MARK Added on Oct 2020
+	private String coverageArea;				 //COVERAGE_AREA added on Oct 2020 - Mainly for Agents.
+	
 	private String cityTown ;
 	private String state ;
 	private String countyDistrict ;
@@ -42,6 +49,10 @@ public class UserDetailsBean {
 	private Timestamp planRenueDate ;
 	private String reminderEnabled ;
 	private String comments ;
+	
+	//Some of the agent details
+	private String agencyName; 					//AGENCY_NAME Added on Oct 2020.
+	private String agencyDescription;			//AGENCY_DESCRIPTION
 	private String userStatus ;
 
 	
@@ -220,4 +231,102 @@ public class UserDetailsBean {
 		this.userStatus = userStatus ;
 	}
 
+	
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getZipPin() {
+		return zipPin;
+	}
+	public void setZipPin(String zipPin) {
+		this.zipPin = zipPin;
+	}
+	public String getLandLineNo() {
+		return landLineNo;
+	}
+	public void setLandLineNo(String landLineNo) {
+		this.landLineNo = landLineNo;
+	}
+	public String getFaxNo() {
+		return faxNo;
+	}
+	public void setFaxNo(String faxNo) {
+		this.faxNo = faxNo;
+	}
+	public String getOfficePhNo() {
+		return officePhNo;
+	}
+	public void setOfficePhNo(String officePhNo) {
+		this.officePhNo = officePhNo;
+	}
+	public String getUserAdditionalAddressLine() {
+		return userAdditionalAddressLine;
+	}
+	public void setUserAdditionalAddressLine(String userAdditionalAddressLine) {
+		this.userAdditionalAddressLine = userAdditionalAddressLine;
+	}
+	public String getPoliceStation() {
+		return policeStation;
+	}
+	public void setPoliceStation(String policeStation) {
+		this.policeStation = policeStation;
+	}
+	public String getPostOffice() {
+		return postOffice;
+	}
+	public void setPostOffice(String postOffice) {
+		this.postOffice = postOffice;
+	}
+	public String getNearestLandMark() {
+		return nearestLandMark;
+	}
+	public void setNearestLandMark(String nearestLandMark) {
+		this.nearestLandMark = nearestLandMark;
+	}
+	public String getCoverageArea() {
+		return coverageArea;
+	}
+	public void setCoverageArea(String coverageArea) {
+		this.coverageArea = coverageArea;
+	}
+	public String getAgencyName() {
+		return agencyName;
+	}
+	public void setAgencyName(String agencyName) {
+		this.agencyName = agencyName;
+	}
+	public String getAgencyDescription() {
+		return agencyDescription;
+	}
+	public void setAgencyDescription(String agencyDescription) {
+		this.agencyDescription = agencyDescription;
+	}
+	@Override
+	public String toString() {
+		return "UserDetailsBean [uid=" + uid + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+				+ lastName + ", gender=" + gender + ", userAddressFirstLine=" + userAddressFirstLine
+				+ ", userAddressSecondLine=" + userAddressSecondLine + ", userAdditionalAddressLine="
+				+ userAdditionalAddressLine + ", policeStation=" + policeStation + ", postOffice=" + postOffice
+				+ ", nearestLandMark=" + nearestLandMark + ", coverageArea=" + coverageArea + ", cityTown=" + cityTown
+				+ ", state=" + state + ", countyDistrict=" + countyDistrict + ", country=" + country + ", zipPin="
+				+ zipPin + ", mobileNo1=" + mobileNo1 + ", mobileNo2=" + mobileNo2 + ", whatsappNo=" + whatsappNo
+				+ ", landLineNo=" + landLineNo + ", faxNo=" + faxNo + ", officePhNo=" + officePhNo + ", secondaryEmail="
+				+ secondaryEmail + ", website=" + website + ", facebookLink=" + facebookLink + ", instagramLink="
+				+ instagramLink + ", emergencyContact=" + emergencyContact + ", beneficiaryCount=" + beneficiaryCount
+				+ ", photoId=" + photoId + ", photoPassportSize=" + photoPassportSize + ", planTypeName=" + planTypeName
+				+ ", planActive=" + planActive + ", planSubscribeDate=" + planSubscribeDate + ", monthlyYearlyPlan="
+				+ monthlyYearlyPlan + ", planRenueDate=" + planRenueDate + ", reminderEnabled=" + reminderEnabled
+				+ ", comments=" + comments + ", agencyName=" + agencyName + ", agencyDescription=" + agencyDescription
+				+ ", userStatus=" + userStatus + "]";
+	}
+	
+	
+	
+	
+	
+	
+	
 	}

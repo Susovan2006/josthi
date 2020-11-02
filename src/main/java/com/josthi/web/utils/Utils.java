@@ -13,6 +13,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.EmailConstant;
 import com.josthi.web.po.EmailDbBean;
 
@@ -29,15 +30,15 @@ public class Utils {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("YYMMdd");
 		StringBuffer custId = new StringBuffer();
-		if(type.equalsIgnoreCase("Admin")) {
+		if(type.equalsIgnoreCase(Constant.USER_TYPE_ADMIN)) {
 			custId.append("AD");
-		}else if(type.equalsIgnoreCase("Agent")) {
+		}else if(type.equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
 			custId.append("AG");
-		}else if(type.equalsIgnoreCase("SubAgent")) {
+		}else if(type.equalsIgnoreCase(Constant.USER_TYPE_SUB_AGENT)) {
 			custId.append("SA");
-		}else if(type.equalsIgnoreCase("RegUser")) {
+		}else if(type.equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {
 			custId.append("RU");
-		}else if(type.equalsIgnoreCase("Beneficiary")) {
+		}else if(type.equalsIgnoreCase(Constant.USER_TYPE_BENEFICIARY)) {
 			custId.append("BE");
 		}	
 		custId.append(formatter.format(new Date()));		

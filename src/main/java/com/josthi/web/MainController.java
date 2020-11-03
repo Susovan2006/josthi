@@ -246,6 +246,40 @@ public class MainController {
 	}
 	
 	
+	/**
+	 * ============================================================================================
+	 * ================== A G E N T    D E T A I L S ==============================================
+	 * ============================================================================================
+	 */
 	
+	@GetMapping("/agentAdmin/home")
+	public String agentAdminHome(Model model) {
+			return "/agentAdmin/index";
+	}
+	
+	@GetMapping("/agentAdmin/profile")
+	public String agentAdminProfile(Model model) {
+			return "/agentAdmin/profile_agent_admin";
+	}
+	
+	@GetMapping("/agentAdmin/settings")
+	public String agentAdminSettings(Model model) {
+			return "/agentAdmin/account_settings_agent_admin";
+	}
+	
+	@GetMapping("/agentAdmin/contactRepo")
+	public String agentAdminContactRepo(Model model) {
+			return "/agentAdmin/build_service_repository";
+	}
+	
+	@GetMapping("/agentAdmin/viewRequest")
+	public String agentAdminViewRequest(Model model) {
+			return "/agentAdmin/view_request_agent";
+	}
+	
+	@GetMapping("/agentAdmin/searchUser")
+	public String agentAdminSearchUser(Model model) {
+			return "/agentAdmin/view_request_agent";
+	}
 
 }

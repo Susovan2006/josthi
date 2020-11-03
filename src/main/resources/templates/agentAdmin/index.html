@@ -318,6 +318,13 @@
     <!--  ======================== JS INCLUDES ===================== -->	
  	 <div th:replace="Common_Agent_Admin :: js-includes"></div>
   	<!--  ======================== JS INCLUDES ===================== --> 
+  	
+  	<script>
+    $(document).on('ready', function () {
+    	  var element = document.getElementById("homeLink");
+    	  element.classList.add("active");
+    });
+    </script>
     
 </body>
 

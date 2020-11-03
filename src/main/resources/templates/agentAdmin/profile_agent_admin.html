@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Profile | Josthi.com</title>
+    <!-- Sweet Alert Css -->
+    <link th:href="@{/agent_admin/vendor/sweetalert/sweetalert.css}" rel="stylesheet" />
+	<!--  ======================== CSS INCLUDES ===================== -->	
+ 	 <div th:replace="Common_Agent_Admin :: includes"></div>
+  	<!--  ======================== CSS INCLUDES ===================== -->
+
+</head>
+
+<body class="theme-indigo">
+    
+    <!-- Page Loader -->	
+	<!--  ======================== PAGE LOAD ICON ===================== -->	
+ 	 <div th:replace="Common_Agent_Admin :: page-load"></div>
+  	<!--  ======================== PAGE LOAD ICON ===================== -->
+	
+	
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+
+    <!-- Top Bar -->
+    <!--  ======================== TOP NAVIGATION BAR ===================== -->	
+ 	 <div th:replace="Common_Agent_Admin :: top-navigation-bar"></div>
+  	<!--  ======================== TOP NAVIGATION BAR ===================== -->   
+    <!-- #Top Bar -->
+
+	<!-- Side Bar -->
+    <!--  ======================== SIDE NAVIGATION BAR ===================== -->	
+ 	 <div th:replace="Common_Agent_Admin :: side-navigation-bar"></div>
+  	<!--  ======================== SIDE NAVIGATION BAR ===================== -->   
+    <!-- Side Bar -->
+
+
+
+	<!--  ***************** BODY ************************ -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+
+                <!-- Basic Validation -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>Agent Details</h2>
+                            </div>
+                            <div class="body">
+                                <!-- SUSOVAN     Form Start -->
+                                <form id="form_validation" method="POST">
+                                  <!-- ROW 1 -->
+                                  <p><b>Agency Info</b></p>
+                                  <div class="row clearfix">
+                                    <div class="col-md-3">
+                                      <div class="form-group form-float">
+                                          <div class="form-line">
+                                              <input type="text" class="form-control" name="agentId" maxlength="10" required>
+                                              <label class="form-label">Agent ID</label>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                      <div class="form-group form-float">
+                                          <div class="form-line">
+                                              <input type="text" class="form-control" name="agencyName" maxlength="50" required>
+                                              <label class="form-label">Agency Name</label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="firstName" maxlength="50" required>
+                                            <label class="form-label">First Name</label>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="lastName" maxlength="50" required>
+                                            <label class="form-label">Last Name</label>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              <!-- ROW 1   END -->
+                              <BR>
+                              <BR>
+
+                              <!-- ROW 2      CONTACT DETAILS  -->
+                              <p><b>Contact Info</b></p>
+                              <BR>
+                              <div class="row clearfix">
+                                <div class="col-md-3">
+                                    <b>Mobile Phone Primary</b>
+                                    <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">phone_iphone</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control mobile-phone-number" name="mobileNumberPrimary"
+                                                      placeholder="Ex: +91 (000) 000-00-00" id="mobileNumberPrimary" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <b>Mobile Phone Secondary</b>
+                                    <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">phone_iphone</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control mobile-phone-number" name="mobileNumberSecondary"
+                                                      placeholder="Ex: +91 (000) 000-00-00" id="mobileNumberSecondary" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <b>Whatapp Number</b>
+                                    <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">phone_iphone</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control mobile-phone-number" name="whatsappNo"
+                                                      placeholder="Ex: +91 (000) 000-00-00" id="whatsappNo" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <b>Landline Number</b>
+                                    <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">phone</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" class="form-control phone-number" name="landLineNo"
+                                                      placeholder="Ex: +91 (000) 000-00-00" id="landLineNo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          <!-- ROW 2  END -->
+
+
+                          <!-- ROW 3      email and webpages DETAILS  -->
+                          <div class="row clearfix">
+                            <div class="col-md-3">
+                                <b>email ID (Primary)</b>
+                                <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">email</i>
+                                    </span>
+                                    <div class="form-line">
+                                        <input type="text" class="form-control email" name="emailPrimary"
+                                                  placeholder="Ex: example@example.com" id="emailPrimary" maxlength="100" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <b>email ID (Secondary)</b>
+                                <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">email</i>
+                                    </span>
+                                    <div class="form-line">
+                                        <input type="text" class="form-control email" name="emailSecondary"
+                                                  placeholder="Ex: example@example.com" id="emailSecondary" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <b>Facebook link</b>
+                                <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">message</i>
+                                    </span>
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="facebookLink"
+                                                  placeholder="Ex: https://www.facebook.com/xxxxxxx/" id="facebookLink" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <b>Web Page</b>
+                                <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">web</i>
+                                    </span>
+                                    <div class="form-line">
+                                        <input type="text" class="form-control" name="webPage"
+                                                  placeholder="Ex: www.xxx.com" id="webPage" maxlength="400">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <!-- ROW 3  END -->
+
+                      <BR>
+                      <BR>
+                      <!-- ROW 4 ADDRESS Details -->
+                      <p><b>Address Details</b></p>
+                      <div class="row clearfix">
+                        <div class="col-md-4">
+                          <div class="form-group form-float">
+                              <div class="form-line">
+                                  <input type="text" class="form-control" name="addressLine1" maxlength="100" id="addressLine1" required>
+                                  <label class="form-label">House/Bld no/Name</label>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="form-group form-float">
+                              <div class="form-line">
+                                  <input type="text" class="form-control" name="addressLine2" maxlength="100" id="addressLine2" required>
+                                  <label class="form-label">Road/Street no</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="addressLine3" maxlength="100" id="addressLine3">
+                                <label class="form-label">Additional info</label>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ROW 4   END -->
+                    <!-- ROW 5 ADDRESS Details -->
+                    <div class="row clearfix">
+                      <div class="col-md-3">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="poPs" maxlength="100" id="poPs" required>
+                                <label class="form-label">Post office/Police Station</label>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="landmark" maxlength="100" id="landmark" required>
+                                <label class="form-label">Nearest landmark</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                              <input type="text" class="form-control" name="area" maxlength="50" id="area" required>
+                              <label class="form-label">Area</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                              <input type="text" class="form-control" name="city" maxlength="50" id="city" required>
+                              <label class="form-label">City / Town</label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ROW 5  END -->
+
+                  <!-- ROW 6 ADDRESS Details -->
+                  <div class="row clearfix">
+                    <div class="col-md-3">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                              <input type="text" class="form-control" name="pinCode" maxlength="100" id="pinCode" required>
+                              <label class="form-label">Pin Code</label>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group form-float">
+                          <div class="form-line">
+                              <input type="text" class="form-control" name="district" maxlength="100" id="district" required>
+                              <label class="form-label">District</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="state" maxlength="50" id="state" value="West Bengal" required>
+                            <label class="form-label">State</label>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="country" maxlength="50" id="country" required value="India">
+                            <label class="form-label">Country</label>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- ROW 5  END -->
+
+                <p><b>Agent Details</b></p>
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <textarea name="description" cols="30" rows="5" class="form-control no-resize" required></textarea>
+                                            <label class="form-label">Description</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="checkbox" id="checkbox" name="checkbox">
+                                        <label for="checkbox">I agree the above info are correct to my knowkedge.</label>
+                                    </div>
+                                    <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Basic Validation -->
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/agent_admin/vendor/jquery/jquery.min.js}"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script th:src="@{/agent_admin/vendor/bootstrap/js/bootstrap.js}"></script>
+
+    <!-- Select Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/bootstrap-select/js/bootstrap-select.js}"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/jquery-slimscroll/jquery.slimscroll.js}"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/node-waves/waves.js}"></script>
+
+    <!-- Input Mask Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/jquery-inputmask/jquery.inputmask.bundle.js}"></script>
+
+    <!-- JQuery Steps Plugin Js
+    <script th:src="@{/agent_admin/vendor/jquery-steps/jquery.steps.js}"></script>-->
+
+    <!-- Jquery Validation Plugin Css -->
+    <script th:src="@{/agent_admin/vendor/jquery-validation/jquery.validate.js}"></script>
+
+    <!-- Sweet Alert Plugin Js
+    <script th:src="@{/agent_admin/vendor/sweetalert/sweetalert.min.js}"></script>-->
+
+    <!-- Custom Js -->
+    <script th:src="@{/agent_admin/js/admin.js}"></script>
+
+    <!-- Demo Js -->
+    <script th:src="@{/agent_admin/js/demo.js}"></script>
+
+    <!-- Validation for mobile no/ email / CHN etc
+    <script src="js/advanced-form-elements.js"></script>-->
+
+
+    <script>
+      $(function () {
+        $('#form_validation').validate({
+            rules: {
+                'checkbox': {
+                    required: true
+                },
+                'gender': {
+                    required: true
+                }
+            },
+            highlight: function (input) {
+                $(input).parents('.form-line').addClass('error');
+            },
+            unhighlight: function (input) {
+                $(input).parents('.form-line').removeClass('error');
+            },
+            errorPlacement: function (error, element) {
+                $(element).parents('.form-group').append(error);
+            }
+        });
+
+        //Advanced Form Validation
+        //$('#form_advanced_validation').validate({
+        //    rules: {
+        //        'date': {
+        //            customdate: true
+        //        },
+        //        'creditcard': {
+        //            creditcard: true
+        //        }
+        //    },
+        //    highlight: function (input) {
+        //        $(input).parents('.form-line').addClass('error');
+        //    },
+        //    unhighlight: function (input) {
+        //        $(input).parents('.form-line').removeClass('error');
+        //    },
+        //    errorPlacement: function (error, element) {
+        //        $(element).parents('.form-group').append(error);
+        //    }
+        //});
+
+        //Custom Validations ===============================================================================
+        //Date
+        $.validator.addMethod('customdate', function (value, element) {
+            return value.match(/^\d\d\d\d?-\d\d?-\d\d$/);
+        },
+            'Please enter a date in the format YYYY-MM-DD.'
+        );
+
+        //Credit card
+        $.validator.addMethod('creditcard', function (value, element) {
+            return value.match(/^\d\d\d\d?-\d\d\d\d?-\d\d\d\d?-\d\d\d\d$/);
+        },
+            'Please enter a credit card in the format XXXX-XXXX-XXXX-XXXX.'
+        );
+        //==================================================================================================
+    });
+
+
+    //=========== SUSOVAN -- CODE for INPUT MASK ===================
+    $(document).ready(function(){
+      $(mobileNumberPrimary).inputmask('+99 (999) 999-9999');  //static mask
+      $(mobileNumberSecondary).inputmask('+99 (999) 999-9999');
+      $(whatsappNo).inputmask('+99 (999) 999-9999');
+      $(emailSecondary).inputmask({ alias: "email" });
+      $(emailPrimary).inputmask({ alias: "email" });
+    });
+    </SCRIPT >
+    
+    
+    <script>
+	    $(document).on('ready', function () {
+	    	  var element = document.getElementById("agentProfileLink");
+	    	  element.classList.add("active");
+	    });
+    </script>
+</body>
+
+</html>

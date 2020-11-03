@@ -296,13 +296,13 @@
 	                    <div class="btn-group user-helper-dropdown">
 	                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
 	                        <ul class="dropdown-menu pull-right">
-	                            <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+	                            <li id="agentProfileLink"><a href="/agentAdmin/profile"><i class="material-icons">person</i>Profile</a></li>
 	                            <li role="separator" class="divider"></li>
-	                            <li><a href="javascript:void(0);"><i class="material-icons">account_balance_wallet</i>Account</a></li>
-	                            <li><a href="javascript:void(0);"><i class="material-icons">build</i>Settings</a></li>
-	                            <li><a href="javascript:void(0);"><i class="material-icons">supervisor_account</i>Add Reps</a></li>
+	                            <li id="agentAccountLink"><a href="javascript:void(0);"><i class="material-icons">account_balance_wallet</i>Account</a></li>
+	                            <li id="agentSettingsLink"><a href="/agentAdmin/settings"><i class="material-icons">build</i>Settings</a></li>
+	                            <li id="agentAddRepsLink"><a href="javascript:void(0);"><i class="material-icons">supervisor_account</i>Add Reps</a></li>
 	                            <li role="separator" class="divider"></li>
-	                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+	                            <li><a href="/destroy"><i class="material-icons">input</i>Sign Out</a></li>
 	                        </ul>
 	                    </div>
 	                </div>
@@ -312,28 +312,28 @@
 	            <div class="menu">
 	                <ul class="list">
 	                    <li class="header">MAIN NAVIGATION</li>
-	                    <li class="active">
-	                        <a href="index.html">
+	                    <li id ="homeLink">
+	                        <a href="/agentAdmin/home">
 	                            <i class="material-icons">home</i>
 	                            <span>Home</span>
 	                        </a>
 	                    </li>
-	                    <li>
-	                        <a href="pages/typography.html">
+	                    <li id ="viewRequestLink">
+	                        <a href="/agentAdmin/viewRequest">
 	                            <i class="material-icons">fact_check</i>
 	                            <span>View Request</span>
 	                        </a>
 	                    </li>
-	                    <li>
-	                        <a href="pages/helper-classes.html">
+	                    <li id ="searchCustomerLink">
+	                        <a href="/agentAdmin/searchUser">
 	                            <i class="material-icons">search</i>
 	                            <span>Search Customer</span>
 	                        </a>
 	                    </li>
-	                    <li>
-	                        <a href="pages/helper-classes.html">
+	                    <li id ="createRepoLink">
+	                        <a href="/agentAdmin/contactRepo">
 	                            <i class="material-icons">done_outline</i>
-	                            <span>Update Status</span>
+	                            <span>Built Contact</span>
 	                        </a>
 	                    </li>
 	                    <li>
@@ -375,13 +375,13 @@
 	                                <a href="#">Birthday Alert</a>
 	                            </li>
 	                            <li>
-	                                <a href="pages/ui/buttons.html">Customer Growth</a>
+	                                <a href="#">Customer Growth</a>
 	                            </li>
 	                            <li>
-	                                <a href="pages/ui/collapse.html">Plan Expiring</a>
+	                                <a href="#">Plan Expiring</a>
 	                            </li>
 	                            <li>
-	                                <a href="pages/ui/colors.html">Alert Notifications</a>
+	                                <a href="#">Alert Notifications</a>
 	                            </li>
 	
 	                        </ul>

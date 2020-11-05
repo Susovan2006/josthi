@@ -1,8 +1,12 @@
 package com.josthi.web.serviceimpl ;
- import org.springframework.beans.factory.annotation.Autowired;
+ import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.josthi.web.service.UserDetailService ;
 import com.josthi.web.dao.UserDetailsDao ;
+import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserDetailsBean ;
 
 @Service("userDetailService")
@@ -55,6 +59,52 @@ public class UserDetailsServiceImpl implements UserDetailService{
 
 		userDetailsBean.setUserStatus(userDetailsfromDb.getUserStatus());
 		
+	}
+
+	@Override
+	public List<EmergencyContactBean> getEmergencyContactForUser(String customerId) {		
+		return userDetailsDao.getEmergencyContactListForUser(customerId);
+	}
+
+	@Override
+	public boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) {
+		return userDetailsDao.saveEmergencyDetails(emergencyContactBean, custId);
+	}
+
+	@Override
+	public void deleteEmergencyContact(int contactId) {
+		userDetailsDao.deleteEmergencyContact(contactId);
+		
+	}
+
+	@Override
+	public void getEmergencyContact(EmergencyContactBean emergencyContactBean, int contactId, String customerId) {
+
+		EmergencyContactBean emergencyContactBeanFromDB = userDetailsDao.getEmergencyContactBean(contactId,customerId);
+				
+		emergencyContactBean.setContactId(emergencyContactBeanFromDB.getContactId());
+		emergencyContactBean.setPrimaryUid(emergencyContactBeanFromDB.getPrimaryUid());
+		emergencyContactBean.setBenId(emergencyContactBeanFromDB.getBenId());
+		emergencyContactBean.setEmergencyContactName(emergencyContactBeanFromDB.getEmergencyContactName());
+		emergencyContactBean.setEmergencyContactNumber(emergencyContactBeanFromDB.getEmergencyContactNumber());
+		emergencyContactBean.setEmergencyContactStayLocation(emergencyContactBeanFromDB.getEmergencyContactStayLocation());
+		emergencyContactBean.setRelation(emergencyContactBeanFromDB.getRelation());
+		emergencyContactBean.setContactNoValidated(emergencyContactBeanFromDB.getContactNoValidated());
+		emergencyContactBean.setNotes(emergencyContactBeanFromDB.getNotes());
+	}
+
+	@Override
+	public boolean isValidContactId(Integer contactId) {
+		boolean result = false; 
+		 int count = userDetailsDao.isValidContactId(contactId);
+		 if (count > 0) { result = true; }
+		 return result;
+	}
+
+	@Override
+	public boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) {
+		// TODO Auto-generated method stub
+		return userDetailsDao.updateEmergencyDetails(emergencyContactBean, custId);
 	}
 
 	

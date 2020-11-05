@@ -8,6 +8,7 @@ public interface MappingConstant {
 	
 	String USER_PROFILE_DETAILS = "user/profile_user";
 	String USER_PROFILE_UPDATE = "user/userProfileUpdate";
+	String USER_EMERGENCY_CONTACT_DETAILS = "user/emergency_contact_user";
 	
 	
 	String VERBIAGE_HTML_PLAN_DETAILS = "service_details.html";

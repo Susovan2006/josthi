@@ -191,10 +191,10 @@ public class MainController {
 	}
 	
 	//Emergency Contacts
-	@GetMapping("/user/emergencyContacts")
+	/*@GetMapping("/user/emergencyContacts")
 	public String userEmergencyContacts(Model model) {
 			return "user/emergency_contact_user";
-	}
+	}*/
 	
 	//Login &amp; security
 	@GetMapping("/user/loginAndsecurity")
@@ -264,7 +264,7 @@ public class MainController {
 	
 	@GetMapping("/agentAdmin/settings")
 	public String agentAdminSettings(Model model) {
-			return "/agentAdmin/account_settings_agent_admin";
+			return "/agentAdmin/account_settings";
 	}
 	
 	@GetMapping("/agentAdmin/contactRepo")
@@ -279,7 +279,7 @@ public class MainController {
 	
 	@GetMapping("/agentAdmin/searchUser")
 	public String agentAdminSearchUser(Model model) {
-			return "/agentAdmin/view_request_agent";
+			return "/agentAdmin/search_user_agent";
 	}
 
 }

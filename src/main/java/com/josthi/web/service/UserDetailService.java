@@ -1,5 +1,9 @@
 package com.josthi.web.service ;
+import java.util.List;
+
+import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserDetailsBean ;
+
 
 public interface UserDetailService {
 
@@ -8,5 +12,17 @@ public interface UserDetailService {
 	String updateUserDetails(UserDetailsBean userDetailsBean, String custId);
 
 	void setDataToDisplay(UserDetailsBean userDetailsfromDb, UserDetailsBean userDetailsBean);
+
+	List<EmergencyContactBean> getEmergencyContactForUser(String customerId);
+
+	boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId);
+
+	void deleteEmergencyContact(int contactId);
+
+	void getEmergencyContact(EmergencyContactBean emergencyContactBean ,int contactId, String customerId);
+
+	boolean isValidContactId(Integer contactId);
+
+	boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId);
 	
 }

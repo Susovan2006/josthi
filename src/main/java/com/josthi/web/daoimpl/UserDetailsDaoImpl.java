@@ -12,8 +12,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import com.josthi.web.po.UserDetailsPO ;
 import com.josthi.web.dao.UserDetailsDao ;
+import com.josthi.web.dao.rowmapper.EmergencyContactDetailsRowMapper;
 import com.josthi.web.dao.rowmapper.UserProfileDetailRowMapperOnCustID;
 import com.josthi.web.dao.rowmapper.ValidateAuthenticityRowMaper;
+import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserDetailsBean ;
 
@@ -48,7 +50,8 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 				return userDetailsBean;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());
-				return null;
+				throw ex;
+				
 			}
 	}
 	
@@ -85,8 +88,122 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 			return (result > 0 ? true : false);
 		}catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
-			return false;
+			throw ex;
 		}
 	}
+	
+	
+	
+	
+	
+	public static final String SELECT_EMERGENCY_CONTACT_DETAILS_ON_CUST_ID = "SELECT CONTACT_ID, PRIMARY_UID, BEN_ID, "
+			+ " EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_NUMBER, EMERGENCY_CONTACT_STAY_LOCATION, RELATION, "
+			+ " CONTACT_NO_VALIDATED, INSERT_DATE, UPDATE_DATE, NOTES "  
+			+ " FROM emergency_contact_details WHERE PRIMARY_UID = ?;";
+	@Override
+	public List<EmergencyContactBean> getEmergencyContactListForUser(String customerId) {
+		try{
+			@SuppressWarnings("unchecked")
+			List<EmergencyContactBean> emergencyContactBeanList = getJdbcTemplate().query(
+												SELECT_EMERGENCY_CONTACT_DETAILS_ON_CUST_ID,
+												 new Object[] {customerId},
+												 new EmergencyContactDetailsRowMapper());
+				return emergencyContactBeanList;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	
+	
+	public static final String INSERT_EMERGENCY_CONTACT_DETAILS_ON_CUST_ID = "INSERT INTO emergency_contact_details (PRIMARY_UID, "
+			+ " EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_NUMBER, RELATION, NOTES) "
+			+ " VALUES (?, ? , ? , ? , ?)";
+	@Override
+	public boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) {
+		
+		try {
+			int result = jdbcTemplate.update(INSERT_EMERGENCY_CONTACT_DETAILS_ON_CUST_ID, new Object[]{
+																						custId,
+																						emergencyContactBean.getEmergencyContactName(),
+																						emergencyContactBean.getEmergencyContactNumber(),
+																						emergencyContactBean.getRelation(),
+																						emergencyContactBean.getNotes()
+																					});	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
+	
+	public static final String DELETE_EMERGENCY_CONTACT_DETAILS_ON_CONTACT_ID = "DELETE FROM emergency_contact_details " + 
+			"WHERE CONTACT_ID=?";
+	@Override
+	public void deleteEmergencyContact(int contactId) {
+		jdbcTemplate.update(DELETE_EMERGENCY_CONTACT_DETAILS_ON_CONTACT_ID, new Object[]{
+				contactId
+			});
+		
+	}
+	
+	
+	
+	public static final String SELECT_EMERGENCY_CONTACT_DETAILS_ON_CUST_ID_CONTACT_ID = "SELECT CONTACT_ID, PRIMARY_UID, BEN_ID, "
+			+ " EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_NUMBER, EMERGENCY_CONTACT_STAY_LOCATION, RELATION, "
+			+ " CONTACT_NO_VALIDATED, INSERT_DATE, UPDATE_DATE, NOTES "  
+			+ " FROM emergency_contact_details WHERE PRIMARY_UID = ? AND CONTACT_ID = ? ;";
+	@Override
+	public EmergencyContactBean getEmergencyContactBean(int contactId, String customerId) {
+		try{
+			@SuppressWarnings("unchecked")
+			EmergencyContactBean emergencyContactBean = (EmergencyContactBean) getJdbcTemplate().queryForObject(
+												 SELECT_EMERGENCY_CONTACT_DETAILS_ON_CUST_ID_CONTACT_ID,
+												 new Object[] {customerId, contactId},
+												 new EmergencyContactDetailsRowMapper());
+				return emergencyContactBean;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+				
+			}
+	}
+	
+	
+	public static final String SELECT_COUNT_CONTACTID = "SELECT COUNT(*) FROM emergency_contact_details where CONTACT_ID = ?;";
+	@Override
+	public int isValidContactId(Integer contactId) {
+		int count = getJdbcTemplate().queryForObject(SELECT_COUNT_CONTACTID, new Object[] { contactId }, Integer.class);
+		return count;
+	}
+	
+	
+	
+	public static final String UPDATE_EMERGENCY_CONTACT_DETAILS = "UPDATE emergency_contact_details SET "
+			+ "EMERGENCY_CONTACT_NAME=? , EMERGENCY_CONTACT_NUMBER=? , RELATION = ? , NOTES = ? "
+			+ " WHERE PRIMARY_UID = ? and CONTACT_ID = ?";
+	@Override
+	public boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) {
+		try {
+			
+			int result = jdbcTemplate.update(UPDATE_EMERGENCY_CONTACT_DETAILS, new Object[]{ 
+																					emergencyContactBean.getEmergencyContactName(),
+																					emergencyContactBean.getEmergencyContactNumber(),
+																					emergencyContactBean.getRelation(),
+																					emergencyContactBean.getNotes(),
+																					custId,
+																					emergencyContactBean.getContactId()});
+			
+			return (result > 0 ? true : false);
+		}catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
 	
 }

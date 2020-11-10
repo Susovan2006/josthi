@@ -2140,7 +2140,9 @@ pre code {
   color: #1e2022;
   background-color: #fff;
   background-clip: padding-box;
-  border: 0.0625rem solid #e7eaf3;
+ /* border: 0.0625rem solid #e7eaf3; Susovan*/
+  border: 0.0625rem solid #a0a0a2; 
+  
   border-radius: 0.3125rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }

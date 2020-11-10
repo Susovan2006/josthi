@@ -6,28 +6,16 @@
 	
   <!--  ======================== CSS INCLUDES ===================== -->	
   <div th:replace="user_common :: includes"></div>
-  <!--  ======================== CSS INCLUDES ===================== -->	
+  <!--  ======================== CSS INCLUDES ===================== -->
+
   
   <Style>
   
-  .disableSecondary {
-    pointer-events: none;
-    opacity: 0.4;
-  }
-  
-  .table_wrapper{
-	display: block;
-	overflow-x: auto;
-    white-space: nowrap;
-  }
-		
-  .wrap-text {
-	word-wrap: break-word;
-	white-space:pre-wrap;
-  }
-  
-  </Style>
-  
+  		.disableSecondary {
+		    pointer-events: none;
+		    opacity: 0.4;
+		  }
+ </style>
   
   
 </head>
@@ -52,7 +40,7 @@
             </ol>
             <!-- End Breadcrumb -->
           </div>
-		  <!-- ===================== Log out ==================== -->
+          <!-- ===================== Log out ==================== -->
 		  <div th:replace="user_common :: user-logout"></div>
 		  <!-- ===================== Log out ==================== -->
 
@@ -86,221 +74,12 @@
 				</div>
 			
 				<div class="card-body">
-					<!-- Form Group -->
-				<div th:if="${not #lists.isEmpty(beneficiaryDetailBeanList)}" class="table_wrapper">
-				  <table class="table table-thead-bordered">
-				  <thead class="thead-light">
-					<tr>
-					  <th scope="col">Beneficiary ID</th>
-					  <th scope="col">First Name</th>
-					  <th scope="col">Last Name</th>
-					  <th scope="col">Relation</th>
-					  <th scope="col">Action</th>
-					</tr>
-				  </thead>				  
-					  <tbody>
-						    <tr th:each="beneficiaryDetailBean : ${beneficiaryDetailBeanList}">
-						      <td th:text="${beneficiaryDetailBean.beneficiaryID}">1</td>
-						      <td th:text="${beneficiaryDetailBean.firstName}">First Name</td>
-						      <td th:text="${beneficiaryDetailBean.lastName}">Last Name</td>
-						      <td th:text="${beneficiaryDetailBean.relationWithCustomer}">relation</td>
-						      <td>
-							      								  
-								  <!-- View Contact -->
-								  <a data-toggle="modal" data-target="#modal-toView"
-                                           th:attr="data-target='#modal-toView'+${beneficiaryDetailBean.beneficiaryID}">
-                                            <span class="fa fa-eye" data-toggle="tooltip"
-                                                  data-placement="top" title="View Contact"></span></a>&nbsp;&nbsp;
-								  
-								  
-								  <!-- Edit Contact -->
-								  <a data-toggle="modal" data-target="#modal-toEdit"
-                                           th:attr="data-target='#modal-toEdit'+${beneficiaryDetailBean.beneficiaryID}">
-                                            <span class="fa fa-edit" data-toggle="tooltip"
-                                                  data-placement="top" title="Want to Edit this Contact?"></span></a>&nbsp;&nbsp;
-								  
-								  <!-- Delete Contact -->
-								  <a data-toggle="modal" data-target="#modal-toTrash"
-                                           th:attr="data-target='#modal-toTrash'+${beneficiaryDetailBean.beneficiaryID}">
-                                            <span class="fa fa-trash" data-toggle="tooltip"
-                                                  data-placement="top" title="Want to delete this Contact?"></span></a>
-                                                  
-                                                  
-                                                  
-                                                  
-                                    <!-- ******************************** VIEW *********************************** -->
-                                    <!-- Invoice Modal -->
-										<div class="modal fade" id="modal-toView" tabindex="-1" role="dialog" aria-hidden="true" 
-																					th:id="modal-toView+${beneficiaryDetailBean.beneficiaryID}">
-										  <div class="modal-dialog modal-dialog-centered" role="document">
-											<div class="modal-content">
-											  <!-- Header -->
-											  <div class="modal-top-cover bg-secondary text-center">
-												<figure class="position-absolute right-0 bottom-0 left-0">
-												  <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
-													<path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"/>
-												  </svg>
-												</figure>
-						
-												<div class="modal-close">
-												  <button type="button" class="btn btn-icon btn-sm btn-ghost-light" data-dismiss="modal" aria-label="Close">
-													<svg width="16" height="16" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-													  <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
-													</svg>
-												  </button>
-												</div>
-											  </div>
-											  <!-- End Header -->
-						
-											  <div class="modal-top-cover-avatar">
-												<img class="avatar avatar-lg avatar-circle avatar-border-lg avatar-centered shadow-soft" th:src="@{/images/josthi/icon/IE_icon.png}" alt="Logo">
-											  </div>
-						
-											  <!-- Body -->
-											  <div class="modal-body pt-3 pb-sm-5 px-sm-5">
-												<div class="text-center mb-5">
-												  <h3 class="mb-1">Beneficiary Details</h3>
-												  <span class="d-block" th:text="${beneficiaryDetailBean.firstName} +' '+${beneficiaryDetailBean.lastName}"></span>
-												</div>
-																							
-						
-												<small class="text-cap mb-2">Details</small>
-						
-												<ul class="list-group mb-4">
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Beneficiary ID:</span>
-													  <span th:text="${beneficiaryDetailBean.beneficiaryID}"></span>
-													</div>
-												  </li>
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Beneficiary of:</span>
-													  <span th:text="${beneficiaryDetailBean.customerID}"></span>
-													</div>
-												  </li>
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Relation to Customer:</span>
-													  <span th:text="${beneficiaryDetailBean.relationWithCustomer}"></span>
-													</div>
-												  </li>
+				<!-- Form Group -->
+					<div class="row form-group">
+					  <label class="col-sm-12 col-form-label input-label">Here are the Registered Beneficiaries</label>
+					  
 
-												</ul>
-												
-												
-												
-												<small class="text-cap mb-2">Contact Details</small>
-						
-												<ul class="list-group mb-4">
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Mobile no:</span>
-													  <span th:text="${beneficiaryDetailBean.mobileNo1}"></span>
-													</div>
-												  </li>
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Whatsapp No:</span>
-													  <span th:text="${beneficiaryDetailBean.whatsappNo}"></span>
-													</div>
-												  </li>
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Email:</span>
-													  <span th:text="${beneficiaryDetailBean.secondaryEmail}"></span>
-													</div>
-												  </li>
-												  												  
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">													  
-													  <span class="wrap-text" th:utext="${beneficiaryDetailBean.userAddressFirstLine} +
-													  					' &#10 '+ ${beneficiaryDetailBean.userAddressSecondLine} +
-													  					' &#10 ' + ${beneficiaryDetailBean.cityTown} + ' , ' +
-													  					${beneficiaryDetailBean.countyDistrict} + ' , ' +
-													  					' &#10 ' + ${beneficiaryDetailBean.state} + ' , ' +
-													  					${beneficiaryDetailBean.zipPin} + ' , ' + ${beneficiaryDetailBean.country} +
-													  					' &#10 ' + ${beneficiaryDetailBean.nearestLandMark}"></span>
-													  
-													</div>
-												  </li>
-												</ul>
-												
-												
-											<small class="text-cap mb-2">Health Details</small>
-						
-												<ul class="list-group mb-4">
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Date of Birth:</span>
-													  <span th:text="${beneficiaryDetailBean.dateOfBirthInTimeStamp}"></span>
-													</div>
-												  </li>
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Gender:</span>
-													  <span th:text="${beneficiaryDetailBean.gender}"></span>
-													</div>
-												  </li>
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Blood Group:</span>
-													  <span th:text="${beneficiaryDetailBean.bloodGroup}"></span>
-													</div>
-												  </li>
-												  
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Height/Weight:</span>
-													  <span th:text="${beneficiaryDetailBean.height} +' / '+ ${beneficiaryDetailBean.weight}"></span>
-													</div>
-												  </li>
-												  
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Preferred Hospital:</span>
-													  <span th:text="${beneficiaryDetailBean.prefferedHospital}"></span>
-													</div>
-												  </li>
-												  
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">
-													  <span>Medi Clame:</span>
-													  <span th:text="${beneficiaryDetailBean.mediclameInsuranceName}"></span>
-													</div>
-												  </li>
-												  												  
-												  <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">													  
-													  <span class="wrap-text" th:text="'Health Condition : ' + ${beneficiaryDetailBean.healthCondition} "></span>
-													  
-													</div>
-												  </li>
-												  
-												 <li class="list-group-item text-dark">
-													<div class="d-flex justify-content-between align-items-center">													  
-													  <span class="wrap-text" th:text="'Medical Challenges : ' + ${beneficiaryDetailBean.medicalChallenges} "></span>
-													  
-													</div>
-												  </li>
-												</ul>
-												
-												
-											  </div>
-											  <!-- End Body -->
-											</div>
-										  </div>
-										</div>
-										<!-- End View Modal -->
-
-								  
-						  	  </td>					
-							</tr>
-						</tbody>
-					</table>
-				</div>
-					
-					<!-- Start Form Group -->
+					</div>
 				</Div>
 			</div>
 		
@@ -311,31 +90,17 @@
 			  
 				<div class="card-header">
 				  <div class="d-flex align-items-center">
-					<h5 class="card-title">Add Beneficiary </h5>
+					<h5 class="card-title">Add Beneficiary Details</h5>
 					<span class="badge badge-soft-danger ml-2"></span>
 				  </div>
 				</div>
-				
-				<!-- Alert Section Start-->
-	            <div th:if="${status ne null}">
-		            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
-					  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
-					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-					      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
-					    </svg>
-					  </button>
-					</div>
-				</div>
-				<!-- Alert Section End-->
-				
 
 				<!-- Body -->
 				<div class="card-body">
 				  <p class="card-text">Update the Beneficiary info who would like to avail the services.</p>
 
 				  <form id="save_primary_beneficiary_details" class="js-validate" th:action="@{/user/savebeneficiaryDetails/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
-			  											              				th:object="${beneficiaryDetailBean}"  method="post">
+			  											              				th:object="${beneficiary}"  method="post">
 					
 					<!-- ROW 1 -->
 					<div class="row">                				  
@@ -343,7 +108,7 @@
 							<div class="form-group js-form-message">
 							  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Atleast 1 Beneficiary is required."></i>First Name<span class="text-danger">*</span></label>
 							  
-										<input type="text" th:field="*{firstName}" class="js-masked-input form-control" id="beneficiary_fname" name="beneficiary_fname" placeholder="first name" 
+										<input type="text" th:field="*{firstName}" class="js-masked-input form-control" id="beneficiary1_fname" name="beneficiary1_fname" placeholder="first name" 
 										aria-label="beneficiary1_fname" value="" required data-msg="This is a mandatory field" maxlength="50">
 									 
 							</div>
@@ -353,27 +118,28 @@
 							<div class="form-group js-form-message">
 							  <label class="input-label">Last Name<span class="text-danger">*</span></label>
 							  
-										<input type="text" th:field="*{lastName}" class="js-masked-input form-control" id="beneficiary1_lname" name="beneficiary_lname" placeholder="last name" 
-										aria-label="beneficiary_lname" value="" required data-msg="This is a mandatory field" maxlength="50">
+										<input type="text" th:field="*{lastName}" class="js-masked-input form-control" id="beneficiary1_lname" name="beneficiary1_lname" placeholder="last name" 
+										aria-label="beneficiary1_lname" value="" required data-msg="This is a mandatory field" maxlength="50">
 									 
 							</div>
 						</div>
 
 						<div class="col-sm-3">
 							<div class="form-group js-form-message">
-							  <label class="input-label">Relation with Customer<span class="text-danger">*</span></label>
-							  							
-							   <select class="form-control show-tick" th:field="*{relationWithCustomer}" id="beneficiaryRelation" required data-msg="Required Field">
-										<option value="0" >select Relation</option>
-										<option th:value="SELF" th:text="Self"></option>
-										<option th:value="FATHER" th:text="Father"></option>
-										<option th:value="MOTHER" th:text="Mother"></option>
-										<option th:value="FATHER_IN_LAW" th:text="Father-in-Law"></option>
-										<option th:value="MOTHER_IN_LAW" th:text="Mother-in-Law"></option>
-										<option th:value="RELATIVES" th:text="Relatives"></option>
-										<option th:value="FRIEND" th:text="Friend"></option>
-										<option th:value="SPOUSE" th:text="Spouse"></option>
-										<option th:value="OTHERS" th:text="Others"></option>
+							  <label class="input-label">Relation to User<span class="text-danger">*</span></label>
+							  <!--  <input type="text" class="js-masked-input form-control"   
+										id="beneficiary1Age" name="beneficiary1Age" placeholder="age in Years" value="" required data-msg="Please ented the Current age." onkeypress="return isNumber(event)" maxlength="2">
+								-->
+							  <select class="form-control show-tick" id="beneficiary1Relation" required data-msg="Required Field">
+										<option value="SELF">Self</option>
+										<option value="FATHER">Father</option>
+										<option value="MOTHER">Mother</option>
+										<option value="FATHER_IN_LAW">Father-in-Law</option>
+										<option value="MOTHER_IN_LAW">Moter-in-Law</option>
+										<option value="RELATIVES">Relatives</option>
+										<option value="FRIEND">Friend</option>
+										<option value="SPOUSE">Spouse</option>
+										<option value="OTHERS">Others</option>
 							   </select>
 							
 							
@@ -384,7 +150,12 @@
 							<div id="beneficiary1GenderDiv" class="form-group js-form-message">
 								<label class="input-label">Gender<span class="text-danger">*</span></label>								
 								 <div class="input-group js-masked-input">
-									<select class="form-control show-tick" th:field="*{gender}" id="beneficiaryGender" required data-msg="Required Field">
+								  <!-- <select class="form-control show-tick" id="beneficiary1Gender" name="beneficiary1Gender" required data-msg="Required Field">
+											<option></option>
+											<option>Male</option>
+											<option>Female</option>
+									</select> -->
+									<select class="form-control show-tick" th:field="*{gender}" id="beneficiary1Gender" required data-msg="Required Field">
 			                                <option value="0">select gender</option>
 			                                <option th:value="M" th:text="Male"></option>
 			    							<option th:value="F" th:text="Female"></option>
@@ -425,7 +196,7 @@
 							<div class="form-group">
 								<label id="beneficiary1EmailLabel" class="input-label">Email.</label>
 								<input type="email" th:field="*{secondaryEmail}" class="js-masked-input form-control"  
-									id="beneficiary1Email" name="beneficiary1Email" placeholder="____@___.__" data-msg="invalid email ID." maxlength="40">
+									id="beneficiary1Email" name="beneficiary1Email" placeholder="____@___.__" data-msg="invalid email ID." maxlength="45">
 							</div>
 						</div>
 					</div>
@@ -441,8 +212,8 @@
 							<div class="form-group js-form-message">
 								<label id="labelbeneficiary1AddressFirstLine" class="input-label">Address Line 1.<span class="text-danger">*</span></label>
 								<input type="text" th:field="*{userAddressFirstLine}" class="js-masked-input form-control"  
-										id="beneficiaryAddressFirstLine" name="beneficiaryAddressFirstLine" placeholder="Apt Name/No , House no etc" 
-										required value="" data-msg="Address is mandatory." maxlength="100">
+										id="beneficiary1AddressFirstLine" name="beneficiary1AddressFirstLine" placeholder="Apt Name/No , House no etc" 
+										required value="" data-msg="Address is mandatory." maxlength="100" onkeyup="sync()">
 							</div>
 						</div>
 					  
@@ -450,8 +221,8 @@
 							<div class="form-group">
 							  <label class="input-label">Address Line 2</label>
 							  <input type="text" th:field="*{userAddressSecondLine}" class="form-control" 
-										id="beneficiaryAddressSecondLine" name="beneficiaryAddressSecondLine" placeholder="St address, PS, PO etc" 
-										maxlength="100">
+										id="beneficiary1AddressSecondLine" name="beneficiary1AddressSecondLine" 
+										placeholder="St address, PS, PO etc" maxlength="100">
 									 
 							</div>
 						</div>
@@ -461,8 +232,8 @@
 							<div class="form-group js-form-message">
 								<label id="labelcityTown" class="input-label">City/Town.<span class="text-danger">*</span></label>
 								<input type="text" th:field="*{cityTown}" class=" js-masked-input form-control"  
-									id="beneficiarycityTown" name="beneficiarycityTown" placeholder="town/city" 
-									required value="" data-msg="City/Town is mandatory." maxlength="45">
+									id="beneficiary1cityTown" name="beneficiary1cityTown" placeholder="town/city" 
+									required value="" data-msg="City/Town is mandatory." maxlength="45" onkeyup="sync()">
 							</div>
 						</div>
 					</div>
@@ -472,9 +243,9 @@
 						<div class="col-sm-3">
 							<div class="form-group js-form-message">
 								<label id="labelstate" class="input-label">State<span class="text-danger">*</span></label>
-								<input type="text" th:field="*{state}" class="js-masked-input form-control"  
+								<input type="text" class="js-masked-input form-control"  
 									id="beneficiary1state" name="beneficiary1state" placeholder="State" 
-									required value="" data-msg="State is mandatory." maxlength="45" readonly>
+									required value="West Bengal" data-msg="State is mandatory." maxlength="100" onkeyup="sync()" readonly>
 							</div>
 						</div>
 					  
@@ -483,7 +254,7 @@
 								<label class="input-label">District </label>
 								<input type="text" th:field="*{countyDistrict}" class="form-control" 
 									id="beneficiary1countyDistrict" name="beneficiary1countyDistrict" 
-									placeholder="District" maxlength="45">
+									placeholder="District" maxlength="45" onkeyup="sync()">
 								 
 							</div>
 						</div>
@@ -493,8 +264,8 @@
 							<div class="form-group js-form-message">
 								<label id="Labellandmark" class="input-label">Land Mark.<span class="text-danger">*</span></label>
 								<input type="text" th:field="*{nearestLandMark}" class="js-masked-input form-control"  
-									id="beneficiary1landmark" name="beneficiarylandmark" placeholder="Land Mark" maxlength="100" 
-									required value="" data-msg="land mark is mandatory.">
+									id="beneficiary1landmark" name="beneficiary1landmark" placeholder="Land Mark" maxlength="100" 
+									required value="" data-msg="land mark is mandatory." onkeyup="sync()">
 							</div>
 						</div>
 					  
@@ -503,7 +274,7 @@
 								<label id="labelzipPin" class="input-label">Pin Code.<span class="text-danger">*</span></label>
 								<input type="text" th:field="*{zipPin}" class="js-masked-input form-control"  
 									id="beneficiary1zipPin" name="beneficiary1zipPin" placeholder="Pin Code" maxlength="20" 
-									onkeypress="return isNumber(event)" required value="" data-msg="Pin code is mandatory.">
+									onkeypress="return isNumber(event)" required value="" data-msg="Pin code is mandatory." onkeyup="sync()">
 							</div>
 						</div> 
 						
@@ -524,7 +295,7 @@
 						<div class="col-sm-3">
 							<div class="form-group js-form-message">
 								<label id="beneficiary1dobLabel" class="input-label">Date of Birth<span class="text-danger">*</span></label>
-								<input type="date" th:field="*{dateOfBirth}" class="js-masked-input form-control"  
+								<input type="date" class="js-masked-input form-control"  
 									id="beneficiary1dob" name="beneficiary1dob" placeholder="dd-mm-yyyy" min="1985-01-01" max="2000-12-31" 
 									data-msg="Date of Birth is mandatory." required>
 									
@@ -534,8 +305,8 @@
 						<div class="col-sm-3">
 							<div class="form-group">
 								<label class="input-label">Height</label>
-								<input type="text" th:field="*{height}" class="form-control" 
-									id="beneficiaryheight" name="beneficiary1height" placeholder="height in ft and Inch" maxlength="20">
+								<input type="text" class="form-control" 
+									id="beneficiary1height" name="beneficiary1height" placeholder="height in ft and Inch" maxlength="150">
 								 
 							</div>
 						</div>
@@ -544,9 +315,9 @@
 						<div class="col-sm-3">
 							<div class="form-group js-form-message">
 								<label class="input-label">Weight</label>
-								<input type="text" th:field="*{weight}" class=" js-masked-input form-control"  
-									id="beneficiaryweight" name="beneficiary1weight" placeholder="Weight in KG" 
-									maxlength="20">
+								<input type="text" class=" js-masked-input form-control"  
+									id="beneficiary1weight" name="beneficiary1weight" placeholder="Weight in KG" 
+									maxlength="7">
 							</div>
 						</div>
 						
@@ -554,18 +325,18 @@
 							<div id="beneficiary1BloodGroupDiv" class="form-group js-form-message">
 								<label class="input-label">Blood Group<span class="text-danger">*</span></label>								
 								 <div class="input-group js-masked-input">
-								  <select th:field="*{bloodGroup}" class="form-control show-tick" id="beneficiaryBloodGroup" name="beneficiaryBloodGroup" required data-msg="Required Field">
-											<option value="0">Select Blood Group</option>
-											<option th:value="O_N" th:text="O_Negative"></option>
-											<option th:value="O_P" th:text="O_Positive"></option>
-											<option th:value="A_N" th:text="A_Negative"></option>
-											<option th:value="A_P" th:text="A_Positive"></option>
-											<option th:value="B_N" th:text="B_Negative"></option>
-											<option th:value="B_P" th:text="B_Positive"></option>
-											<option th:value="AB_N" th:text="AB_Negative"></option>
-											<option th:value="AB_P" th:text="AB_Positive"></option>
-											<option th:value="others" th:text="others">others</option>
-											<option th:value="No_Idea" th:text="No_Idea">No_Idea</option>
+								  <select class="form-control show-tick" id="beneficiary1BloodGroup" name="beneficiary1BloodGroup" required data-msg="Required Field">
+											<option></option>
+											<option>O−</option>
+											<option>O+</option>
+											<option>A−</option>
+											<option>A+</option>
+											<option>B−</option>
+											<option>B+</option>
+											<option>AB−</option>
+											<option>AB+</option>
+											<option>others</option>
+											<option>don't know</option>
 									</select>
 								</div>
 								 
@@ -577,17 +348,17 @@
 						<div class="col-sm-4">
 							<div class="form-group js-form-message">
 								<label id="beneficiarybeneficiary1HospitalPref" class="input-label">Preferred Hospital<span class="text-danger">*</span></label>
-								<input type="text" th:field="*{prefferedHospital}" class="js-masked-input form-control"  
-									id="beneficiaryHospitalPref" name="beneficiaryHospitalPref" placeholder="Prefered Hospital/Nursing Home." 
-									data-msg="Hospital is mandatory. If you are not sure put 'Nearby'" maxlength="200" required>
+								<input type="text" class="js-masked-input form-control"  
+									id="beneficiary1HospitalPref" name="beneficiary1HospitalPref" placeholder="Prefered Hospital/Nursing Home." 
+									data-msg="Hospital is mandatory. If you are not sure put 'Nearby'" maxlength="40" required>
 							</div>
 						</div>
 					  
 						<div class="col-sm-4">
 							<div class="form-group">
 								<label class="input-label">Have Medical Insurance/Medi Clame</label>
-								<input type="text" th:field="*{mediclameInsuranceName}" class="form-control" 
-									id="beneficiary1Mediclame" name="beneficiary1Mediclame" placeholder="Yes/No with Name" maxlength="200">
+								<input type="text" class="form-control" 
+									id="beneficiary1Mediclame" name="beneficiary1Mediclame" placeholder="Yes/No with Name" maxlength="50">
 								 
 							</div>
 						</div>
@@ -596,9 +367,9 @@
 						<div class="col-sm-4">
 							<div class="form-group js-form-message">
 								<label class="input-label">Note If any</label>
-								<input type="text" th:field="*{insuranceRelatedNotes}" class=" js-masked-input form-control"  
+								<input type="text" class=" js-masked-input form-control"  
 									id="beneficiary1InsuranceNote" name="beneficiary1InsuranceNote" placeholder="Insurance details." 
-									maxlength="200">
+									maxlength="100">
 							</div>
 						</div>
 					</div>
@@ -608,7 +379,7 @@
 						<div class="col-sm-6">
 							<div class="form-group js-form-message">
 								<label id="beneficiary1dobLabel" class="input-label">Health Condition<span class="text-danger">*</span></label>								
-								<textarea th:field="*{healthCondition}" cols="30" rows="3" class="js-masked-input form-control no-resize" 
+								<textarea cols="30" rows="3" class="js-masked-input form-control no-resize" 
 								id="beneficiary1HealthCondition" name="beneficiary1HealthCondition" placeholder="e.g Fit and fine/ Have physical issues etc." data-msg="Health Condition is mandatory." maxlength="200" required></textarea>
 							</div>
 						</div>
@@ -616,7 +387,7 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="input-label">Medical Challenges</label>									
-									<textarea th:field="*{medicalChallenges}" cols="30" rows="3" class="form-control no-resize" 
+									<textarea cols="30" rows="3" class="form-control no-resize" 
 									id="beneficiary1MedicalChallenges" name="beneficiary1MedicalChallenges" placeholder="eg. Hearing prob/ Handicapped etc. describe the issues." maxlength="200"></textarea>
 								 
 							</div>
@@ -639,7 +410,6 @@
 			<!-- End Card 2-->
 		  
 		  
-		  
 		</div> <!--END Of class="col-lg-9" -->
 		
       </div>
@@ -650,9 +420,8 @@
   <!-- ========== END MAIN ========== -->
 
 
-
   <!-- ========== FOOTER ========== -->
-  <div th:insert="user_common :: user-footer"></div>
+  <div th:replace="user_common :: user-footer"></div>
   <!-- ========== END FOOTER ========== -->
 
 
@@ -676,13 +445,43 @@
   </a>
   <!-- End Go to Top -->
 
+  <!-- JS Global Compulsory 
+  <script src="../../static/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../../static/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+  <script src="../../static/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
 
+  <!-- JS Implementing Plugins 
+  <script src="../../static/vendor/hs-header/dist/hs-header.min.js"></script>
+  <script src="../../static/vendor/hs-go-to/dist/hs-go-to.min.js"></script>
+  <script src="../../static/vendor/hs-unfold/dist/hs-unfold.min.js"></script>
+  <script src="../../static/vendor/hs-mega-menu/dist/hs-mega-menu.min.js"></script>
+  <script src="../../static/vendor/hs-show-animation/dist/hs-show-animation.min.js"></script>
+  <script src="../../static/vendor/jquery-validation/dist/jquery.validate.min.js"></script>-->
 
+  <!-- JS Front 
+  <script src="../../static/js/hs.core.js"></script>
+  <script src="../../static/js/hs.validation.js"></script>-->
+  
+    <!-- Input Mask Plugin Js Added New By Susovan
+    <script src="../../static/vendor/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+	<script src="../../static/vendor/bootstrap/dist/js/bootstrap-session-timeout.js"></script>-->
+
+  <!-- JS Plugins Init. -->
   <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
   <div th:insert="user_common :: js-includes"></div>
   <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
   
-
+  <!--<script>
+    $.sessionTimeout({
+        keepAliveUrl: 'keep-alive.html',
+        logoutUrl: '/destroy',
+        redirUrl: '/destroy',
+        warnAfter: 900000,
+        redirAfter: 20000,
+        countdownBar: true
+    });
+	
+    </script>-->
 	
 	
 	
@@ -725,7 +524,7 @@
 	//});
 	
 	
-	/* function sync()
+	function sync()
 	{
 	  var n1 = document.getElementById('beneficiary1AddressFirstLine');
 	  var n2 = document.getElementById('beneficiary2AddressFirstLine');
@@ -755,9 +554,9 @@
 	  var pinBen2 = document.getElementById('beneficiary2zipPin');
 	  pinBen2.value = pinBen1.value;
 	  
-	} */
+	}
 	
-	/* $(document).on('change','#beneficiaryCount',function(){
+	/*$(document).on('change','#beneficiaryCount',function(){
 				var count = $('#beneficiaryCount').find(":selected").val();
                			   
 			   
@@ -777,13 +576,10 @@
 					$('#beneficiary1Relation').attr("disabled", false);
 					$('#beneficiary2Relation').attr("disabled", false);
 			   }
-          }); 
+          });
 	
 	
-	function hideSecondary() {
-		  var x = document.getElementById("secondaryBeneficiarySection");
-		  x.style.display = "none";
-   }
+	
    
    function showSecondary() {
 		  var x = document.getElementById("secondaryBeneficiarySection");
@@ -799,6 +595,11 @@
 		  var x = document.getElementById("primaryBeneficiarySection");
 		  x.style.display = "block";
    }*/
+   
+   function hideSecondary() {
+		  var x = document.getElementById("secondaryBeneficiarySection");
+		  x.style.display = "none";
+	}
 	
   </script>
 	
@@ -809,6 +610,7 @@
   	  var element = document.getElementById("userBeneficiaryDetailsLink");
 	  element.classList.add("active");
 	  
+	 // showPrimary();
 	  
       // initialization of header
       var header = new HSHeader($('#header')).init();

@@ -3,8 +3,11 @@ package com.josthi.web.utils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -13,6 +16,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.EmailConstant;
 import com.josthi.web.po.EmailDbBean;
@@ -176,5 +180,51 @@ public class Utils {
 			    return ResourceUtils.getFile(
 			      "classpath:static/images/default_user.png");
 			}
+
+
+	public static String getBeneficiaryId(String custId) {
+		String beneficiaryId = "";
+		if(custId!=null) {
+			beneficiaryId =  custId.replaceFirst("RU", "BE");
+		}
+		return beneficiaryId;
+	}
+
+
+	public static Timestamp getDob(String dateOfBirth) throws ParseException {
+		if(dateOfBirth!=null && dateOfBirth.trim().length() == 10) {
+			DateFormat df = new SimpleDateFormat(Constant.DATE_FORMAT_FOR_DOB);
+			Date parseDate = df.parse(dateOfBirth);
+			java.sql.Timestamp dob = new java.sql.Timestamp(parseDate.getTime());
+			return dob;
+		}else {
+			return null;
+		}
+		
+	}
+
+
+	public static String calculateAge(String dateOfBirth) throws ParseException {
+		if(dateOfBirth!=null && dateOfBirth.length() == 10) {
+			DateFormat df = new SimpleDateFormat(Constant.DATE_FORMAT_FOR_DOB);
+			Date parseDate = df.parse(dateOfBirth);
+			
+			Calendar cal1 = Calendar.getInstance();
+			cal1.setTime(parseDate);
+			
+			Calendar cal2 = Calendar.getInstance();
+			int i = 0;
+			while (cal1.before(cal2)) {
+				cal1.add(Calendar.YEAR, 1);
+				i+=1;
+			}
+			return i + "years";
+		}else {
+			return "";
+		}
+	}
+
+
+	
 
 }

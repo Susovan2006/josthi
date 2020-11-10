@@ -27,7 +27,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserRegistrationDao
 	
 	
 	public static final String INSERT_USER_AUTH_DETAILS = "INSERT INTO user_auth_table (CUSTOMER_ID, USERID_EMAIL, WORDAPP, REGISTRATION_DATE_TIME, STATUS, LOGIN_STATUS, ROLE, TEMPORARY_LOCK_ENABLED, VERIFIED_USER)" + 
-			"VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	@Override
 	public boolean insertIntoUserAuth(UserRegistrationBean userRegistrationBean) {
 		int result = jdbcTemplate.update(INSERT_USER_AUTH_DETAILS,new Object[]{userRegistrationBean.getCustomerID().trim(),
@@ -36,7 +36,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserRegistrationDao
 																			   new Timestamp(System.currentTimeMillis()), 
 																			   Constant.USER_STATUS_ACTIVE,
 																			   Constant.USER_OFFLINE_STATUS,
-																			   Constant.USER_TYPE_REG_USER,
+																			   userRegistrationBean.getUserType(),
 																			   Constant.USER_TEMPORARY_LOCK_NO,
 																			   "N"});    //User Is nor verified as of now.
 		return (result > 0 ? true : false);

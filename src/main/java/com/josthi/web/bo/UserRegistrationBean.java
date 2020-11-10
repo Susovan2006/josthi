@@ -10,9 +10,11 @@ public class UserRegistrationBean {
 	private String confirmWordApp;
 	private boolean licAgreementChecked;
 	private String areaOfCoverage;
+	private String userType;
 	
 	
 	
+
 	public String getCustomerID() {
 		return customerID;
 	}
@@ -64,6 +66,15 @@ public class UserRegistrationBean {
 	public void setAreaOfCoverage(String areaOfCoverage) {
 		this.areaOfCoverage = areaOfCoverage;
 	}
+	
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "UserRegistrationBean [firstName=" + firstName + ", lastName=" + lastName + ", validEmailId="

@@ -47,6 +47,9 @@ public interface MessageConstant {
 	String USER_EMERGENCY_UPDATE_SUCCESS_MESSAGE = "Emergency details Updated Successfully!!";
 	String USER_EMERGENCY_SAVE_ERROR_MESSAGE = "Exception Occured while saving emergency contact details. Try again later or Contact the Customer Service.";
 	String USER_EMERGENCY_SAVE_VALIDATION_ERROR_MESSAGE = "Looks like there is some issue with the Customer ID, please log out and relogin.";
+	String USER_SESSION_VALIDATION_ERROR_MESSAGE = "Looks like there is some issue with the Authorization, please log out and relogin.";
+	String USER_BENEFECIARY_SAVE_SUCCESS_MESSAGE = "Benefeciary details saved Successfully!!";
+	String USER_BENEFECIARY_SAVE_ERROR_MESSAGE = "Exception Occured while saving Benefeciary details. Try again later or Contact the Customer Service.";
 	
 	String USER_EMERGENCY_DELETE_SUCCESS_MESSAGE = "Contact Deleted";
 }

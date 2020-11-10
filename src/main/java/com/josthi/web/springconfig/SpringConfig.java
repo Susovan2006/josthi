@@ -30,6 +30,7 @@ import com.josthi.web.daoimpl.UserDetailsDaoImpl;
 import com.josthi.web.daoimpl.UserRegistrationDaoImpl;
 import com.josthi.web.mail.EmailSenderService;
 import com.josthi.web.security.SecurityConfig;
+import com.josthi.web.serviceimpl.BeneficiaryServiceImpl;
 import com.josthi.web.serviceimpl.CacheConfigServiceImpl;
 import com.josthi.web.serviceimpl.UserRegistrationServiceImpl;
 import com.josthi.web.utils.HostNamePropertyPlaceHolderConfig;
@@ -238,6 +239,14 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
   * ================  TRANSACTION MANAGER CONFIG  ============================
   * ==========================================================================
   */
+ 
+ @Bean("beneficiaryService")
+ public BeneficiaryServiceImpl beneficiaryServiceImpl(PlatformTransactionManager txnManager) {
+	 BeneficiaryServiceImpl beneficiaryServiceImpl = new BeneficiaryServiceImpl();
+	 beneficiaryServiceImpl.setPlatformTransactionManager(txnManager);
+	 return beneficiaryServiceImpl;
+ }
+ 
  
  @Bean("userRegistrationService")
  public UserRegistrationServiceImpl userRegistrationServiceImpl(PlatformTransactionManager txnManager) {

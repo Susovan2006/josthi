@@ -11,6 +11,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.josthi.web.bo.AgentRegistrationBean;
 import com.josthi.web.bo.UserRegistrationBean;
+import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.UserRegistrationDao;
 import com.josthi.web.service.UserRegistrationService;
 import com.josthi.web.utils.Security;
@@ -38,13 +39,13 @@ public class UserRegistrationServiceImpl implements UserRegistrationService{
 			userRegistrationBean.setConfirmWordApp(Security.encrypt(userRegistrationBean.getConfirmWordApp().trim()));
 			userRegistrationBean.setFirstName(Utils.convertToCamelCase(userRegistrationBean.getFirstName().trim()));
 			userRegistrationBean.setLastName(Utils.convertToCamelCase(userRegistrationBean.getLastName().trim()));
-			
+			userRegistrationBean.setUserType(Constant.USER_TYPE_REG_USER);
 			def = new DefaultTransactionDefinition();
 			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 			def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
 			{
 				txnStatus = platformTransactionManager.getTransaction(def);
-				//DB Calls
+				//DB Calls for Users
 				//--> Insert in the userAuth table.
 				boolean status = false;
 				status = userRegistrationDao.insertIntoUserAuth(userRegistrationBean);
@@ -52,7 +53,6 @@ public class UserRegistrationServiceImpl implements UserRegistrationService{
 				status = userRegistrationDao.insertIntoUserDetail(userRegistrationBean);
 				//--> Increment the next ID +1
 				status = userRegistrationDao.updateNextUid(getNextID+1);
-				
 				
 				platformTransactionManager.commit(txnStatus);
 				return status;

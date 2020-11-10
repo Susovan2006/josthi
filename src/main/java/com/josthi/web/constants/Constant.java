@@ -2,6 +2,8 @@ package com.josthi.web.constants;
 
 public interface Constant {
 	
+	String DATE_FORMAT_FOR_DOB = "yyyy-MM-dd";
+	
 	String USER_STATUS_ACTIVE = "A";
 	String USER_STATUS_DISABLED = "D";
 	String USER_STATUS_VALIDATION_PENDING = "P";
@@ -14,6 +16,9 @@ public interface Constant {
 	String USER_TYPE_BENEFICIARY ="BENUSER";
 	String USER_TEMPORARY_LOCK_YES = "YES";
 	String USER_TEMPORARY_LOCK_NO = "NO";
+	
+	String BENEFICIARY_TYPE_PRIMARY = "PRIMARY";
+	String BENEFICIARY_TYPE_SECONDARY = "SECONDARY";
 	
 	String STATUS_ACTIVE = "ACTIVE";
 	String STATUS_DEACTIVE = "DEACTIVE";

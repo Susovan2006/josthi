@@ -33,22 +33,26 @@ public class EmergencyContactController {
 	
 	/*
 	 * Load the emergency Contact details Page.
+	 * Initially there will be no status or message, but for Save, Update delete we will be passing the message.
+	 * We are taking the User ID from the session.
+	 * 
 	 */
 	@GetMapping("/user/emergencyContacts")
 	public String loadUserEmergencyContacts(Model model, 
 									@RequestParam (name="status", required = false, defaultValue = "") String status,
-									@RequestParam (name="message", required = false, defaultValue = "") String message,
-									
+									@RequestParam (name="message", required = false, defaultValue = "") String message,									
 									EmergencyContactBean emergencyContactBean ,
 									HttpServletRequest request) {
 		
-		UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
-    	logger.debug("******"+userSessionBean.toString());
-    	
-    	 List<EmergencyContactBean> emergencyContactBeanList= userDetailService.getEmergencyContactForUser(userSessionBean.getCustomerId());
-		
-    	 model.addAttribute("emergencyContactBeanList",emergencyContactBeanList);
+		 UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);    	
     	 
+		 List<EmergencyContactBean> emergencyContactBeanList= userDetailService.getEmergencyContactForUser(userSessionBean.getCustomerId());
+		
+		 //Initially this bean Class will be Blank. So that the user can populate the fields from UI.
+    	 model.addAttribute("emergencyContactBeanList",emergencyContactBeanList); 
+    	 model.addAttribute("action","Save");
+    	 
+    	 //This portion is mainly used by the refresh for Save / Update and Delete.
     	 if(status!=null && status.length() > 0) {
 	    	 model.addAttribute("status", status);
 			 model.addAttribute("message", message);
@@ -58,53 +62,59 @@ public class EmergencyContactController {
 	
 	
 	
-	
+	/**
+	 * 
+	 * @param model
+	 * @param emergencyContactBean
+	 * @param custId
+	 * @param request
+	 * @return
+	 * 
+	 * This Method is used for the Save and Update of the Emergency Contact Details.
+	 * Here the important Param is the ContactID.
+	 * If the ContactID is null that means --> Save
+	 * If the CountactID is not Null and has entry in Database --> Update.
+	 * Customer ID we will be getting from the UI and the session, both has to match.
+	 * 
+	 */
 	@RequestMapping(path ="/user/saveEmergencyContact/{custId}", method = RequestMethod.POST)
-	public String saveEmergencyContact(Model model, EmergencyContactBean emergencyContactBean,
+	public String saveUpdateEmergencyContact(Model model, EmergencyContactBean emergencyContactBean,
 									@PathVariable String custId,
 									HttpServletRequest request) {
 		
-    		//logger.info("Name "+userDetailsBean.getFirstName()+"--"+userDetailsBean.getLastName());
-    		//logger.info("Customer ID :"+userDetailsBean.getUid());
-    		logger.info("Customer ID from Session:"+custId);
+    		logger.debug("Customer ID from Session:"+custId);
     		
     		UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
     		String sessionCustomerId = userSessionBean.getCustomerId();
-    		logger.info("Customer ID from Java Session:"+sessionCustomerId);
-    		try {
+    		logger.debug("Customer ID from Java Session:"+sessionCustomerId);
+    		
+    		try {  
     			
+    			//The Session ID and the One coming from the UI should Match, else it will throw an exception.
     			if(!(sessionCustomerId.equalsIgnoreCase(custId))) {
     				model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
         		    model.addAttribute("message", MessageConstant.USER_EMERGENCY_SAVE_VALIDATION_ERROR_MESSAGE);
     			    return MappingConstant.USER_EMERGENCY_CONTACT_DETAILS;
         		}
     			
-    			logger.info("###########"+emergencyContactBean.toString());
+    			logger.debug("Emergency Contact Bean :"+emergencyContactBean.toString());
     			
+    			
+    			//Here we are determining, if it will be save or update.
+    			//for Update logic..
     			if(emergencyContactBean.getContactId() != null && userDetailService.isValidContactId(emergencyContactBean.getContactId())) {
     				logger.info("Update Request!!");
     				boolean status = userDetailService.updateEmergencyDetails(emergencyContactBean, custId);
-    				return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="+MessageConstant.USER_EMERGENCY_UPDATE_SUCCESS_MESSAGE;
+    				return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
+    																+MessageConstant.USER_EMERGENCY_UPDATE_SUCCESS_MESSAGE;
+    			
+    			//Save Logic
     			}else {
     				logger.info("New Save Request!!");
     				boolean status = userDetailService.saveEmergencyDetails(emergencyContactBean, custId);
-    				return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="+MessageConstant.USER_EMERGENCY_SAVE_SUCCESS_MESSAGE;
-    			}
-    			
-    			
-    	    	
-    			//emergencyContactBean.setEmergencyContactName("");
-    			//emergencyContactBean.setEmergencyContactNumber("");
-    			//emergencyContactBean.setRelation("");
-    			//emergencyContactBean.setNotes("");
-    			
-    			//List<EmergencyContactBean> emergencyContactBeanList= userDetailService.getEmergencyContactForUser(userSessionBean.getCustomerId());   	 		
-    	    	//model.addAttribute("emergencyContactBeanList",emergencyContactBeanList);
-    		 
-    		    //model.addAttribute("status", MessageConstant.USER_SUCCESS_STATUS);
-    		    //model.addAttribute("message", MessageConstant.USER_EMERGENCY_SAVE_SUCCESS_MESSAGE);
-			    //return MappingConstant.USER_EMERGENCY_CONTACT_DETAILS;
-    			//return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="+MessageConstant.USER_EMERGENCY_SAVE_SUCCESS_MESSAGE;
+    				return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
+    																+MessageConstant.USER_EMERGENCY_SAVE_SUCCESS_MESSAGE;
+    			}   			
     		}catch(Exception ex) {
     			logger.error("custId :"+custId, ex);
     			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
@@ -115,16 +125,22 @@ public class EmergencyContactController {
 	
 	
 	
+	
+	/**
+	 * 
+	 * @param model
+	 * @param contactId
+	 * @return
+	 * This method is used for deleting the Contact info.
+	 * The deletion will occure based on the ContactID.
+	 */
 	@RequestMapping("/user/deleteEmergencyContact/{contactId}")
 	public String deleteProduct(Model model, @PathVariable(name = "contactId") int contactId) {
 		try {
 			userDetailService.deleteEmergencyContact(contactId);
 			logger.info("contactId :"+contactId+" deleted Successfully..");
-			//model.addAttribute("status", MessageConstant.USER_SUCCESS_STATUS);
-		    //model.addAttribute("message", MessageConstant.USER_EMERGENCY_DELETE_SUCCESS_MESSAGE);
-			//return "redirect:/user/emergencyContacts"; 
-			//return "redirect:/user/emergencyContacts/"+MessageConstant.USER_SUCCESS_STATUS+"/"+MessageConstant.USER_EMERGENCY_DELETE_SUCCESS_MESSAGE;
-			return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="+MessageConstant.USER_EMERGENCY_DELETE_SUCCESS_MESSAGE;
+			return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
+																+MessageConstant.USER_EMERGENCY_DELETE_SUCCESS_MESSAGE;
 		}catch(Exception ex) {
 			logger.error("contactId :"+contactId, ex);
 			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
@@ -134,7 +150,18 @@ public class EmergencyContactController {
 	}
 	
 	
-	//EDIT Emergency Contact 
+	/**
+	 *  
+	 * @param model
+	 * @param contactId
+	 * @param emergencyContactBean
+	 * @param request
+	 * @return
+	 * 
+	 * This method is used for editing the Emergency Contact ID. The edit will open the same 
+	 * screen but with the value populated from the database.
+	 * 
+	 */
 	@RequestMapping("/user/editEmergencyContact/{contactId}")
 	public String editEmergencyContact(Model model, @PathVariable(name = "contactId") int contactId,
 										EmergencyContactBean emergencyContactBean,
@@ -144,10 +171,16 @@ public class EmergencyContactController {
 			
 			
 			UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
-			userDetailService.getEmergencyContact(emergencyContactBean, contactId, userSessionBean.getCustomerId());
-			logger.info("Emergency Contact Update Request from :"+ userSessionBean.getCustomerId());
-	    	 List<EmergencyContactBean> emergencyContactBeanList= userDetailService.getEmergencyContactForUser(userSessionBean.getCustomerId());	 		
+			
+			//Get the contact details Specific to the ContactID. This will be edited by the user.
+			 userDetailService.getEmergencyContact(emergencyContactBean, contactId, userSessionBean.getCustomerId());
+			 logger.info("Emergency Contact Update Request from :"+ userSessionBean.getCustomerId());
+	    	 
+			 //This will fetch all the records specific to the User. This is just for Display purpose in the UI.
+			 List<EmergencyContactBean> emergencyContactBeanList= userDetailService.getEmergencyContactForUser(userSessionBean.getCustomerId());	 		
 	    	 model.addAttribute("emergencyContactBeanList",emergencyContactBeanList);
+	    	 
+	    	 //This Param is just to change the name of the Button.
 	    	 model.addAttribute("action","Update");
 				
 	    	 return MappingConstant.USER_EMERGENCY_CONTACT_DETAILS;

@@ -185,10 +185,11 @@ public class MainController {
 	 */
 	
 	//Beneficiary Details
-	@GetMapping("/user/beneficiaryDetails")
-	public String userBeneficiaryDetails(Model model) {
-			return "user/beneficiary_details_users";
-	}
+	/*
+	 * @GetMapping("/user/beneficiaryDetails") public String
+	 * userBeneficiaryDetails(Model model) { return
+	 * "user/beneficiary_details_users"; }
+	 */
 	
 	//Emergency Contacts
 	/*@GetMapping("/user/emergencyContacts")

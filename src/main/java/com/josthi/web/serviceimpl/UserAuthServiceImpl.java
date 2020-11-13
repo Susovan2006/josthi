@@ -3,9 +3,12 @@ package com.josthi.web.serviceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.josthi.web.bo.PasswordResetBean;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.dao.UserAuthDao;
+import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.service.UserAuthService;
+import com.josthi.web.utils.Security;
 import com.josthi.web.utils.Utils;
 
 @Service("userAuthService")
@@ -59,6 +62,28 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public boolean removeTempLockFromUserAccount() {
 		// TODO Auto-generated method stub
 		return userAuthDao.removeTempLockFromUserAccount();
+	}
+
+	@Override
+	public boolean isValidPassword(String emailId, String wordApp) throws Exception {
+		try {
+			UserAuthBo userAuthBo = userAuthDao.getValidUser(emailId,wordApp);	
+			if(userAuthBo.getWordapp().length()>0) {
+				return true;
+			}else {
+				throw new UserExceptionInvalidData("Looks like you entered incorrect password in the current Password filed.");
+			}
+		}catch(Exception ex) {
+			throw new UserExceptionInvalidData("Looks like you entered incorrect password in the current Password filed.");
+		}
+	}
+
+	@Override
+	public boolean updatePassword(PasswordResetBean passwordResetBean) throws Exception {
+		passwordResetBean.setOldPassword(Security.encrypt(passwordResetBean.getOldPassword()));
+		passwordResetBean.setNewPassword(Security.encrypt(passwordResetBean.getNewPassword()));
+		passwordResetBean.setNewConfirmPassword(Security.encrypt(passwordResetBean.getNewConfirmPassword()));
+		return userAuthDao.updatePassword(passwordResetBean);
 	}
 	
 	

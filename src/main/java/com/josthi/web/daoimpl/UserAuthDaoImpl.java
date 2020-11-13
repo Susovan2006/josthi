@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.josthi.web.bo.PasswordResetBean;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.controller.UserAuthController;
 import com.josthi.web.dao.UserAuthDao;
 import com.josthi.web.dao.rowmapper.UserAuthRowMapper;
 import com.josthi.web.dao.rowmapper.ValidateAuthenticityRowMaper;
+import com.josthi.web.exception.UserExceptionInvalidData;
 
 
 
@@ -40,7 +42,8 @@ public class UserAuthDaoImpl implements UserAuthDao{
 				return userAuthBo;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());
-				return new UserAuthBo();
+				//return new UserAuthBo();
+				throw ex;
 			}
 	}
 	
@@ -157,6 +160,24 @@ public class UserAuthDaoImpl implements UserAuthDao{
 		}catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
 			throw ex;
+		}
+	}
+	
+	
+	public static final String UPDATE_USER_PASSWORD = "UPDATE user_auth_table set WORDAPP=?  where USERID_EMAIL = ? and WORDAPP = ? and CUSTOMER_ID = ?;";
+
+	@Override
+	public boolean updatePassword(PasswordResetBean passwordResetBean) throws Exception {
+		try {
+			
+			int result = jdbcTemplate.update(UPDATE_USER_PASSWORD, new Object[]{passwordResetBean.getNewConfirmPassword(),
+																				passwordResetBean.getEmailId(),
+																				passwordResetBean.getOldPassword(),
+																				passwordResetBean.getUserID()});	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Update failed with the New Password, try again later, or Contact Customer Service.");
 		}
 	}
 	

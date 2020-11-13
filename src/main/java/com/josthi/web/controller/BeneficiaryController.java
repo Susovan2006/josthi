@@ -1,8 +1,12 @@
 package com.josthi.web.controller;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.josthi.web.bo.BeneficiaryDetailBean;
+import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserDetailsBean;
 import com.josthi.web.bo.UserSessionBean;
@@ -46,21 +51,27 @@ public class BeneficiaryController {
 	public String getBeneficiaryList(Model model, 
 									@RequestParam (name="status", required = false, defaultValue = "") String status,
 									@RequestParam (name="message", required = false, defaultValue = "") String message,									
-									HttpServletRequest request) {
+									HttpServletRequest request,
+									HttpSession session) {
 		
 		 UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);    	
     	 
 		 List<BeneficiaryDetailBean> beneficiaryDetailBeanList= beneficiaryService.getBeneficiaryList(userSessionBean.getCustomerId());
 		
-		 logger.info(beneficiaryDetailBeanList.toString());
-		 logger.info("SIZE ="+beneficiaryDetailBeanList.size());
+		 //logger.info(beneficiaryDetailBeanList.toString());
+		 //logger.info("SIZE ="+beneficiaryDetailBeanList.size());
+		
 		 //Initially this bean Class will be Blank. So that the user can populate the fields from UI.
 		 BeneficiaryDetailBean beneficiaryDetailBean = new BeneficiaryDetailBean();
-		 //beneficiaryDetailBean.setFirstName("Susovan");
 		 beneficiaryDetailBean.setState("West Bengal");
 		 model.addAttribute("beneficiaryDetailBeanList",beneficiaryDetailBeanList);
     	 model.addAttribute("beneficiaryDetailBean",beneficiaryDetailBean); 
     	 model.addAttribute("action","Save");
+    	 model.addAttribute("header","Add");
+    	 
+    	 //get Blood Group List - We already fetched these vaules on startup, now setting in the Model.
+    	 List<DropDownBean> bloodGroupList = CacheConfigDataController.bloodGroupList;
+    	 model.addAttribute("bloodGroupList",bloodGroupList);
     	 
     	 //This portion is mainly used by the refresh for Save / Update and Delete.
     	 if(status!=null && status.length() > 0) {
@@ -88,23 +99,22 @@ public class BeneficiaryController {
     			
     			//The Session ID and the One coming from the UI should Match, else it will throw an exception.
     			if(!(sessionCustomerId.equalsIgnoreCase(custId))) {
-    				model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
-        		    model.addAttribute("message", MessageConstant.USER_SESSION_VALIDATION_ERROR_MESSAGE);
-    			    return MappingConstant.USER_BENEFICIARY_DETAILS;
+        		    return "redirect:/user/getBeneficiaryList?status="+MessageConstant.USER_FAILURE_STATUS+"&message="
+						+MessageConstant.USER_SESSION_VALIDATION_ERROR_MESSAGE;
         		}
     			
-    			logger.info("%^%^%^%^ :"+beneficiaryDetailBean.toString());
+    			//logger.info("%^%^%^%^ :"+beneficiaryDetailBean.toString());
     			
     			//Here we are determining, if it will be save or update.
     			//for Update logic..
-    			//if(emergencyContactBean.getContactId() != null && userDetailService.isValidContactId(emergencyContactBean.getContactId())) {
-    			//	logger.info("Update Request!!");
-    			//	boolean status = userDetailService.updateEmergencyDetails(emergencyContactBean, custId);
-    			//	return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
-    			//													+MessageConstant.USER_EMERGENCY_UPDATE_SUCCESS_MESSAGE;
-    			
+    		    if(beneficiaryDetailBean.getBeneficiaryID() != null && 
+    		    					beneficiaryService.isValidBeneficiaryID(beneficiaryDetailBean.getBeneficiaryID())) {
+    				logger.info("Update Request!!");
+    				boolean status = beneficiaryService.updateBeneficiaryDetails(beneficiaryDetailBean);
+    				return "redirect:/user/getBeneficiaryList?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
+    																+MessageConstant.USER_BENEFECIARY_UPDATE_SUCCESS_MESSAGE;    			
     			//Save Logic
-    			//}else {
+    			}else {
     				logger.info("New Save Request!!");
     				int getNextID = userAuthService.getNextID();
     				String beneficiaryId = Utils.getNextCustomerID(Constant.USER_TYPE_BENEFICIARY,getNextID);
@@ -113,12 +123,9 @@ public class BeneficiaryController {
     				boolean status = beneficiaryService.saveBeneficiaryDetails(beneficiaryDetailBean, custId, getNextID);
     				return "redirect:/user/getBeneficiaryList?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
     																 +MessageConstant.USER_BENEFECIARY_SAVE_SUCCESS_MESSAGE;
-    			//}   			
+    			}   			
     		}catch(Exception ex) {
     			logger.error("custId :"+custId, ex);
-    			//model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
-    		    //model.addAttribute("message", MessageConstant.USER_EMERGENCY_SAVE_ERROR_MESSAGE);
-    		    //return MappingConstant.USER_BENEFICIARY_DETAILS;
     		    return "redirect:/user/getBeneficiaryList?status="+MessageConstant.USER_FAILURE_STATUS+"&message="
 				 												+MessageConstant.USER_BENEFECIARY_SAVE_ERROR_MESSAGE;
     		}
@@ -130,31 +137,77 @@ public class BeneficiaryController {
 	
 	
 	
-	@GetMapping("/user/beneficiaryDetails")
-	public String showBeneficiaryForm(Model model, HttpServletRequest request) {
-    	
-    	UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
-    	logger.debug("******"+userSessionBean.toString());  
-    	  
-    	
-    	try {
-
-    		//For Primary
-    		UserDetailsBean primaryBeneficiaryDetailsBean = beneficiaryService.geBeneficiaryDetails(
-    														userSessionBean.getCustomerId(), Constant.BENEFICIARY_TYPE_PRIMARY);
-    		UserDetailsBean secondaryBeneficiaryDetailsBean = beneficiaryService.geBeneficiaryDetails(
-															userSessionBean.getCustomerId(), Constant.BENEFICIARY_TYPE_SECONDARY);
-    		
-    		//primaryBeneficiaryDetailsBean.setFirstName("Susovan");
-    		model.addAttribute("primaryBeneficiaryDetailsBean", primaryBeneficiaryDetailsBean);
-        	model.addAttribute("secondaryBeneficiaryDetailsBean", secondaryBeneficiaryDetailsBean);
-    		
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	@RequestMapping("/user/deleteBeneficiaryDetail/{beneficiaryID}")
+	public String deleteProduct(Model model, @PathVariable(name = "beneficiaryID") String beneficiaryID) {
+		try {
+			beneficiaryService.deleteBeneficiaryDetail(beneficiaryID);
+			logger.info("beneficiaryID :"+beneficiaryID+" deleted Successfully..");
+			return "redirect:/user/getBeneficiaryList?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
+																+MessageConstant.USER_BENEFECIARY_DELETE_SUCCESS_MESSAGE;
+		}catch(Exception ex) {
+			logger.error("beneficiaryID :"+beneficiaryID, ex);
+			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
+		    model.addAttribute("message", MessageConstant.USER_GENERIC_ERROR);
+		    return "redirect:/user/getBeneficiaryList?status="+MessageConstant.USER_FAILURE_STATUS+"&message="
+																			+MessageConstant.USER_GENERIC_ERROR;
 		}
-    		
-		return MappingConstant.USER_BENEFICIARY_DETAILS;
 	}
-
+	
+	
+	
+	
+	
+	@RequestMapping("/user/editBeneficiaryDetail/{beneficiaryID}")
+	public String editEmergencyContact(Model model, @PathVariable(name = "beneficiaryID") String beneficiaryID,
+										BeneficiaryDetailBean beneficiaryDetailBean,
+										HttpServletRequest request) {
+		String errorMessage = MessageConstant.USER_GENERIC_ERROR;
+		
+		try {
+			UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
+			
+			//Get the Beneficiary Detail Specific to the BeneficiaryID. This will be edited by the user.
+			BeneficiaryDetailBean beneficiaryDetailtoEdit = beneficiaryService.getBeneficiaryDetailToEdit(beneficiaryID, userSessionBean.getCustomerId());
+			
+			if(beneficiaryDetailtoEdit == null) {
+				 errorMessage = "There is no Data to Edit";
+				 throw new Exception();				 
+			 }
+			
+			
+			//This Block is used to display the data in the UI screen.
+			if(beneficiaryDetailtoEdit.getDateOfBirthInTimeStamp()!=null) {
+				Timestamp ts = beneficiaryDetailtoEdit.getDateOfBirthInTimeStamp();
+				Date date = new Date();
+				date.setTime(ts.getTime());
+				String formattedDate = new SimpleDateFormat("MM/dd/yyyy").format(date);
+				beneficiaryDetailtoEdit.setDateOfBirth(formattedDate);
+			}
+			
+			logger.info("Beneficiary Update Request from :"+ userSessionBean.getCustomerId() +" for "+ beneficiaryID);
+	    	 
+			logger.info("beneficiaryDetailtoEdit :"+beneficiaryDetailtoEdit.toString());
+			
+			 model.addAttribute("beneficiaryDetailBean",beneficiaryDetailtoEdit);
+			
+			 //This will fetch all the records specific to the User. This is just for Display purpose in the UI.
+			 List<BeneficiaryDetailBean> beneficiaryDetailBeanList= beneficiaryService.getBeneficiaryList(userSessionBean.getCustomerId());	 		
+			 model.addAttribute("beneficiaryDetailBeanList",beneficiaryDetailBeanList);
+	    	 
+			 //get Blood Group List - We already fetched these vaules on startup, now setting in the Model.
+	    	 List<DropDownBean> bloodGroupList = CacheConfigDataController.bloodGroupList;
+	    	 model.addAttribute("bloodGroupList",bloodGroupList);
+			 
+	    	 //This Param is just to change the name of the Button.
+	    	 model.addAttribute("action","Update");
+	    	 model.addAttribute("header","Update");
+				
+	    	 return MappingConstant.USER_BENEFICIARY_DETAILS;
+		
+		}catch(Exception ex) {
+			logger.error("beneficiaryID :"+beneficiaryID, ex);
+			return "redirect:/user/getBeneficiaryList?status="+MessageConstant.USER_FAILURE_STATUS+"&message="+errorMessage;
+		}
+	}
+	
 }

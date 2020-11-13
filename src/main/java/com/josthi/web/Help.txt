@@ -15,3 +15,32 @@ If you want to call the Ajax from outside, on the top of the controller you need
 
 ######################### add New Line Using JavaScript ################
 htmlstring = stringContainingNewLines.replace(/(\r\n|\n|\r)/gm, "<br>");
+
+
+##################### Return Single String ##########################
+List<String> primaryBeneficiaryIdLst  = getJdbcTemplate().query(SELECT_BENEFICIARY_ID_FROM_RELATION,
+																	new Object[] { customerId , Constant.BENEFICIARY_TYPE_PRIMARY },
+																	new RowMapper<String>() {
+																			@Override
+																			public String mapRow(ResultSet rs,
+																					int rowNum) throws SQLException {
+																				return rs.getString(1);
+																			}
+																		});
+
+					if ( primaryBeneficiaryIdLst.isEmpty() ){
+						return null;
+					}else if ( primaryBeneficiaryIdLst.size() == 1 ) { // list contains exactly 1 element
+						return primaryBeneficiaryIdLst.get(0);
+					}else{  // list contains more than 1 elements
+						//your wish, you can either throw the exception or return 1st element.   
+						throw new Exception("Invalid Data in the Database...");
+					}
+					
+					
+########################### if else in Tyhmeleaf ######################
+<!-- Based on Save or Update this field will be AutoFocused -->
+							  	<div th:if="${action == 'Update'} ">
+								</div>
+								<div th:unless="${action == 'Save'}">
+								</div>

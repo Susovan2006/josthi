@@ -19,3 +19,11 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX U S E R   M O D U L E XXXXXXXXXXXXXXXXXXXXX
 		
 3. Displaying the Profile image from the session. --> Done
 		1. The image will be saved in some loaction on the server, we need to fetch the image and display it on the UI screen.
+		
+		
+4. Beneficiary details addition.
+	Pending task.
+		> Setting the Focus on save.
+		> Date of Birth = implement date picker.
+		> exception handling.
+		> Upload beneficiary Pictures.

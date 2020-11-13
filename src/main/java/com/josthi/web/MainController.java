@@ -198,10 +198,10 @@ public class MainController {
 	}*/
 	
 	//Login &amp; security
-	@GetMapping("/user/loginAndsecurity")
-	public String userLoginAndsecurity(Model model) {
-			return "user/login_and_security_user";
-	}
+	/*
+	 * @GetMapping("/user/loginAndsecurity") public String
+	 * userLoginAndsecurity(Model model) { return "user/login_and_security_user"; }
+	 */
 	
 	
 	//Preferences

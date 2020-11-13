@@ -14,12 +14,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import com.josthi.web.po.UserDetailsPO ;
+import com.josthi.web.utils.Utils;
 import com.josthi.web.dao.UserDetailsDao ;
 import com.josthi.web.dao.rowmapper.BeneficiaryDetailRowMapper;
+import com.josthi.web.dao.rowmapper.DropDownRowmapper;
 import com.josthi.web.dao.rowmapper.EmergencyContactDetailsRowMapper;
 import com.josthi.web.dao.rowmapper.UserProfileDetailRowMapperOnCustID;
 import com.josthi.web.dao.rowmapper.ValidateAuthenticityRowMaper;
 import com.josthi.web.bo.BeneficiaryDetailBean;
+import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserDetailsBean ;
@@ -219,66 +222,51 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 	//*****************************************************************************************************************
 	
 	
-	public static final String SELECT_BENEFICIARY_ID_FROM_RELATION = "SELECT BENEFICIARY_ID FROM relation WHERE CUSTOMER_ID = ? AND BENEFICIARY_TYPE = ?";
-	@Override
-	public String getPrimaryBeneficiaryIdFromRelation(String customerId) throws Exception {
-		
-		List<String> primaryBeneficiaryIdLst  = getJdbcTemplate().query(SELECT_BENEFICIARY_ID_FROM_RELATION,
-																	new Object[] { customerId , Constant.BENEFICIARY_TYPE_PRIMARY },
-																	new RowMapper<String>() {
-																			@Override
-																			public String mapRow(ResultSet rs,
-																					int rowNum) throws SQLException {
-																				return rs.getString(1);
-																			}
-																		});
-
-					if ( primaryBeneficiaryIdLst.isEmpty() ){
-						return null;
-					}else if ( primaryBeneficiaryIdLst.size() == 1 ) { // list contains exactly 1 element
-						return primaryBeneficiaryIdLst.get(0);
-					}else{  // list contains more than 1 elements
-						//your wish, you can either throw the exception or return 1st element.   
-						throw new Exception("Invalid Data in the Database...");
-					}
-		
-		}
+	/*
+	 * public static final String SELECT_BENEFICIARY_ID_FROM_RELATION =
+	 * "SELECT BENEFICIARY_ID FROM relation WHERE CUSTOMER_ID = ? AND BENEFICIARY_TYPE = ?"
+	 * ;
+	 * 
+	 * @Override public String getPrimaryBeneficiaryIdFromRelation(String
+	 * customerId) throws Exception {
+	 * 
+	 * List<String> primaryBeneficiaryIdLst =
+	 * getJdbcTemplate().query(SELECT_BENEFICIARY_ID_FROM_RELATION, new Object[] {
+	 * customerId , Constant.BENEFICIARY_TYPE_PRIMARY }, new RowMapper<String>() {
+	 * 
+	 * @Override public String mapRow(ResultSet rs, int rowNum) throws SQLException
+	 * { return rs.getString(1); } });
+	 * 
+	 * if ( primaryBeneficiaryIdLst.isEmpty() ){ return null; }else if (
+	 * primaryBeneficiaryIdLst.size() == 1 ) { // list contains exactly 1 element
+	 * return primaryBeneficiaryIdLst.get(0); }else{ // list contains more than 1
+	 * elements //your wish, you can either throw the exception or return 1st
+	 * element. throw new Exception("Invalid Data in the Database..."); }
+	 * 
+	 * }
+	 */
 	
-	@Override
-	public String getSecondaryBeneficiaryIdFromRelation(String customerId) throws Exception {
-			
-		List<String> secondaryBeneficiaryIdLst  = getJdbcTemplate().query(SELECT_BENEFICIARY_ID_FROM_RELATION,
-																	new Object[] { customerId , Constant.BENEFICIARY_TYPE_SECONDARY },
-																	new RowMapper<String>() {
-																			@Override
-																			public String mapRow(ResultSet rs,
-																					int rowNum) throws SQLException {
-																				return rs.getString(1);
-																			}
-																		});
-
-			if ( secondaryBeneficiaryIdLst.isEmpty() ){
-			  return null;
-			}else if ( secondaryBeneficiaryIdLst.size() == 1 ) { // list contains exactly 1 element
-			  return secondaryBeneficiaryIdLst.get(0);
-			}else{  // list contains more than 1 elements
-			  //your wish, you can either throw the exception or return 1st element.   
-				throw new Exception("Invalid Data in the Database...");
-			}
-	}
+	/*
+	 * @Override public String getSecondaryBeneficiaryIdFromRelation(String
+	 * customerId) throws Exception {
+	 * 
+	 * List<String> secondaryBeneficiaryIdLst =
+	 * getJdbcTemplate().query(SELECT_BENEFICIARY_ID_FROM_RELATION, new Object[] {
+	 * customerId , Constant.BENEFICIARY_TYPE_SECONDARY }, new RowMapper<String>() {
+	 * 
+	 * @Override public String mapRow(ResultSet rs, int rowNum) throws SQLException
+	 * { return rs.getString(1); } });
+	 * 
+	 * if ( secondaryBeneficiaryIdLst.isEmpty() ){ return null; }else if (
+	 * secondaryBeneficiaryIdLst.size() == 1 ) { // list contains exactly 1 element
+	 * return secondaryBeneficiaryIdLst.get(0); }else{ // list contains more than 1
+	 * elements //your wish, you can either throw the exception or return 1st
+	 * element. throw new Exception("Invalid Data in the Database..."); } }
+	 */
 	
 	
 	
-	@Override
-	public UserDetailsBean getPrimaryBeneficiaryDetails() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public UserDetailsBean getSecondaryBeneficiaryDetails() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	
 	public static final String SELECT_BENEFICIARY_DETAILS_ON_BEN_ID = "SELECT UID, FIRST_NAME, MIDDLE_NAME, LAST_NAME, GENDER, "
@@ -327,6 +315,13 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 	
 	
 	
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//------------------------------------- I N S E R T     B E N E F I C I E R Y    D E T A I L S    -----------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	
+	//NB: User Auth entry is being done from userRegistrationDao
 	
 	
 	public static final String INSERT_USER_DETAILS_FOR_BEN = "INSERT INTO user_detail" + 
@@ -407,6 +402,229 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 			throw ex;
 		}
 	}
+	
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//------------------------------------- D E L E T E     B E N E F I C I E R Y    D E T A I L S    --------- -------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	
+	public static final String DELETE_USER_AUTH = "DELETE FROM user_auth_table WHERE CUSTOMER_ID = ?";
+	@Override
+	public boolean deleteBeneficiaryFromUserAuth(String beneficiaryID) throws Exception {
+		try {
+			
+			int result = jdbcTemplate.update(DELETE_USER_AUTH, new Object[]{beneficiaryID});
+			
+			return (result > 0 ? true : false);
+		}catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
+	public static final String DELETE_USER_DETAIL = "DELETE FROM user_detail WHERE UID = ?";
+	@Override
+	public boolean deleteBeneficiaryFromUserDetail(String beneficiaryID) throws Exception {
+		try {
+			
+			int result = jdbcTemplate.update(DELETE_USER_DETAIL, new Object[]{beneficiaryID});
+			
+			return (result > 0 ? true : false);
+		}catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	public static final String DELETE_BENEFICIARY_DETAIL = "DELETE FROM beneficiary_detail WHERE BENEFICIARY_ID = ?";
+	@Override
+	public boolean deleteBeneficiaryFromBeneficiaryDetail(String beneficiaryID) throws Exception {
+		try {
+			
+			int result = jdbcTemplate.update(DELETE_BENEFICIARY_DETAIL, new Object[]{beneficiaryID});
+			
+			return (result > 0 ? true : false);
+		}catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
+	public static final String DELETE_RELATION = "DELETE FROM relation WHERE BENEFICIARY_ID = ?";
+	@Override
+	public boolean deleteBeneficiaryFromRelationDetail(String beneficiaryID) throws Exception {
+		try {
+			
+			int result = jdbcTemplate.update(DELETE_RELATION, new Object[]{beneficiaryID});
+			
+			return (result > 0 ? true : false);
+		}catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//--------------------------------- S E L E C T     B E N E F I C I E R Y    D E T A I L S    T O   E D I T -------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	public static final String SELECT_BENEFICIARY_DETAIL_TO_EDIT = "SELECT A.UID, A.FIRST_NAME, A.MIDDLE_NAME, A.LAST_NAME, A.GENDER, A.USER_ADDRESS_FIRST_LINE, "
+			+ "A.USER_ADDRESS_SECOND_LINE, A.ADDITIONAL_ADDRESS_LINE, A.NEAREST_LAND_MARK, A.CITY_TOWN, "
+			+ "A.STATE, A.COUNTY_DISTRICT, A.COUNTRY, A.ZIP_PIN, A.MOBILE_NO1, A.WHATSAPP_NO, A.SECONDARY_EMAIL, A.USER_STATUS, "
+			+ "B.TID, B.CUSTOMER_ID, B.BENEFICIARY_ID, B.RELATION_WITH_CUSTOMER, B.DATE_OF_BIRTH, B.AGE, B.HEIGHT, B.WEIGHT, B.BLOOD_GROUP, "
+			+ "B.PREFFERED_HOSPITAL, B.MEDICLAME_NAME, B.INSURANCE_NOTE, B.HEALTH_CONDITION, B.MEDICAL_CHALLENGES "
+			+ "FROM user_detail A, beneficiary_detail B where A.UID =  B.BENEFICIARY_ID and B.BENEFICIARY_ID = ? and B.CUSTOMER_ID = ?";
+	@Override
+	public BeneficiaryDetailBean getBeneficiaryDetailToEdit(String beneficiaryID, String customerId) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<BeneficiaryDetailBean> beneficiaryDetailList = getJdbcTemplate().query(
+												 SELECT_BENEFICIARY_DETAIL_TO_EDIT,
+												 new Object[] {beneficiaryID, customerId},
+												 new BeneficiaryDetailRowMapper());
+				if ( beneficiaryDetailList.isEmpty() ){
+					return null;
+				}else if ( beneficiaryDetailList.size() == 1 ) { // list contains exactly 1 element
+					return beneficiaryDetailList.get(0);
+				}else{  // list contains more than 1 elements
+					//your wish, you can either throw the exception or return 1st element.   
+					throw new Exception("Invalid Data in the Database...");
+				}
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//---------------------------------------- V A L I D A T E     B E N E F I C I E R Y    D E T A I L S -------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	
+	//Validate Beneficiary
+	public static final String SELECT_COUNT_USER_AUTH = "SELECT COUNT(*) FROM user_auth_table WHERE CUSTOMER_ID = ?";
+	public static final String SELECT_COUNT_USER_DETAIL = "SELECT COUNT(*) FROM user_detail WHERE UID = ?";
+	public static final String SELECT_COUNT_BENEFICIARY_DETAIL = "SELECT COUNT(*) FROM beneficiary_detail WHERE BENEFICIARY_ID = ?";
+	public static final String SELECT_COUNT_RELATION = "SELECT COUNT(*) FROM relation WHERE BENEFICIARY_ID = ?";
+	@Override
+	public boolean isValidBeneficiaryID(String beneficiaryID) throws Exception {
+		int authCount = getJdbcTemplate().queryForObject(SELECT_COUNT_USER_AUTH, new Object[] { beneficiaryID }, Integer.class);
+		int userDetailCount = getJdbcTemplate().queryForObject(SELECT_COUNT_USER_DETAIL, new Object[] { beneficiaryID }, Integer.class);
+		int beneficiaryDetailCount = getJdbcTemplate().queryForObject(SELECT_COUNT_BENEFICIARY_DETAIL, new Object[] { beneficiaryID }, Integer.class);
+		int relationCount = getJdbcTemplate().queryForObject(SELECT_COUNT_RELATION, new Object[] { beneficiaryID }, Integer.class);
+		
+		if(authCount > 0 && userDetailCount > 0 && beneficiaryDetailCount > 0 && relationCount > 0) {
+			logger.info("Valid Beneficiary with validation Count : -->"+authCount+userDetailCount+beneficiaryDetailCount+relationCount);
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//---------------------------------------- U P D A T E   B E N E F I C I E R Y    D E T A I L S -------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------
+		
+	
+	public static final String UPDATE_USER_DETAILS_TABLE = "Update user_detail set FIRST_NAME = ? , LAST_NAME = ? , GENDER = ? , "
+			+ "USER_ADDRESS_FIRST_LINE = ?, USER_ADDRESS_SECOND_LINE = ? , NEAREST_LAND_MARK = ? , CITY_TOWN = ?," 
+			+ "COUNTY_DISTRICT = ? , ZIP_PIN = ? , MOBILE_NO1 = ? , "
+			+ "WHATSAPP_NO = ? , SECONDARY_EMAIL = ?  where  UID = ?";
+	@Override
+	public boolean updateBeneficiaryFromUserDetail(BeneficiaryDetailBean beneficiaryDetailBean) throws Exception {
+		
+		try {
+			int result = jdbcTemplate.update(UPDATE_USER_DETAILS_TABLE, new Object[]{beneficiaryDetailBean.getFirstName(),
+																					   beneficiaryDetailBean.getLastName(), 
+																					   beneficiaryDetailBean.getGender(),
+																					   beneficiaryDetailBean.getUserAddressFirstLine(),
+																					   beneficiaryDetailBean.getUserAddressSecondLine(),
+																					   beneficiaryDetailBean.getNearestLandMark(),
+																					   beneficiaryDetailBean.getCityTown(),
+																					   //"West Bengal",
+																					   beneficiaryDetailBean.getCountyDistrict(),
+																					   //"India",
+																					   beneficiaryDetailBean.getZipPin(),
+																					   beneficiaryDetailBean.getMobileNo1(),
+																					   beneficiaryDetailBean.getWhatsappNo(),
+																					   beneficiaryDetailBean.getSecondaryEmail(),
+																					   beneficiaryDetailBean.getBeneficiaryID()});	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
+	
+	public static final String UPDATE_BENEFICIARY_DETAILS_TABLE ="UPDATE beneficiary_detail SET RELATION_WITH_CUSTOMER=?, DATE_OF_BIRTH=?, "
+			+ "AGE=?, HEIGHT=?, WEIGHT=?, BLOOD_GROUP=?, PREFFERED_HOSPITAL=?, MEDICLAME_NAME=?, INSURANCE_NOTE=?, HEALTH_CONDITION=?, "
+			+ "MEDICAL_CHALLENGES=? WHERE BENEFICIARY_ID = ?;";
+	@Override
+	public boolean updateBeneficiaryFromBeneficiaryDetail(BeneficiaryDetailBean beneficiaryDetailBean)
+			throws Exception {
+		
+		try {
+			
+			java.sql.Timestamp beneficiaryDateOfBirth = Utils.getDob(beneficiaryDetailBean.getDateOfBirth());
+			if(beneficiaryDateOfBirth!=null) {
+				beneficiaryDetailBean.setDateOfBirthInTimeStamp(beneficiaryDateOfBirth);
+				beneficiaryDetailBean.setAge(Utils.calculateAge(beneficiaryDetailBean.getDateOfBirth().trim()));
+			}
+			
+			int result = jdbcTemplate.update(UPDATE_BENEFICIARY_DETAILS_TABLE, new Object[]{beneficiaryDetailBean.getRelationWithCustomer(),
+																					   beneficiaryDetailBean.getDateOfBirthInTimeStamp(), 
+																					   beneficiaryDetailBean.getAge(),
+																					   beneficiaryDetailBean.getHeight(),
+																					   beneficiaryDetailBean.getWeight(),
+																					   beneficiaryDetailBean.getBloodGroup(),
+																					   beneficiaryDetailBean.getPrefferedHospital(),
+																					   beneficiaryDetailBean.getMediclameInsuranceName(),
+																					   beneficiaryDetailBean.getInsuranceRelatedNotes(),
+																					   beneficiaryDetailBean.getHealthCondition(),
+																					   beneficiaryDetailBean.getMedicalChallenges(),
+																					   beneficiaryDetailBean.getBeneficiaryID()});	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
+	
+	
+	public static final String SELECT_BLOOD_GROUP_LIST = "SELCT TID, DROPDOWN_TYPE, KEY_ID, DROPDOWN_VALUE, ACTIVE FROM dropdown_metadata WHERE  DROPDOWN_TYPE = ? AND ACTIVE = 'Y'";
+	@Override
+	public List<DropDownBean> getBloodGroup(String bloodGroup) {		
+		try{
+			@SuppressWarnings("unchecked")
+			List<DropDownBean> bloodGroupList = getJdbcTemplate().query(
+												 SELECT_BLOOD_GROUP_LIST,
+												 new Object[] {bloodGroup},
+												 new DropDownRowmapper());
+				return bloodGroupList;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
 	
 	
 }

@@ -2,6 +2,7 @@ package com.josthi.web.dao ;
 import java.util.List;
 import com.josthi.web.po.UserDetailsPO ;
 import com.josthi.web.bo.BeneficiaryDetailBean;
+import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserDetailsBean ;
 import com.josthi.web.bo.UserRegistrationBean;
@@ -18,13 +19,25 @@ public interface UserDetailsDao {
 	boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId);
 	
 	//Beneficiary
-	String getPrimaryBeneficiaryIdFromRelation(String customerId) throws Exception;
-	String getSecondaryBeneficiaryIdFromRelation(String customerId) throws Exception;
-	UserDetailsBean getPrimaryBeneficiaryDetails();
-	UserDetailsBean getSecondaryBeneficiaryDetails();
+	//String getPrimaryBeneficiaryIdFromRelation(String customerId) throws Exception;
+	//String getSecondaryBeneficiaryIdFromRelation(String customerId) throws Exception;
+	//UserDetailsBean getPrimaryBeneficiaryDetails();
+	//UserDetailsBean getSecondaryBeneficiaryDetails();
 	UserDetailsBean getBeneficiaryDetails(String primaryBeneficiaryId) throws Exception;
 	List<BeneficiaryDetailBean> getBeneficiaryList(String customerId);
 	boolean insertIntoUserDetail(BeneficiaryDetailBean beneficiaryDetailBean);
 	boolean insertIntoBeneficiaryDetail(BeneficiaryDetailBean beneficiaryDetailBean);
 	boolean insertIntoRelationDetail(BeneficiaryDetailBean beneficiaryDetailBean);
+	
+	
+	boolean deleteBeneficiaryFromUserAuth(String beneficiaryID) throws Exception;
+	boolean deleteBeneficiaryFromUserDetail(String beneficiaryID) throws Exception;
+	boolean deleteBeneficiaryFromBeneficiaryDetail(String beneficiaryID) throws Exception;
+	boolean deleteBeneficiaryFromRelationDetail(String beneficiaryID) throws Exception;
+	BeneficiaryDetailBean getBeneficiaryDetailToEdit(String beneficiaryID, String customerId) throws Exception;
+	boolean isValidBeneficiaryID(String beneficiaryID) throws Exception;
+	//boolean updateBeneficiaryFromUserAuth(BeneficiaryDetailBean beneficiaryDetailBean) throws Exception;
+	boolean updateBeneficiaryFromUserDetail(BeneficiaryDetailBean beneficiaryDetailBean) throws Exception;
+	boolean updateBeneficiaryFromBeneficiaryDetail(BeneficiaryDetailBean beneficiaryDetailBean) throws Exception;
+	List<DropDownBean> getBloodGroup(String bloodGroup);
 }

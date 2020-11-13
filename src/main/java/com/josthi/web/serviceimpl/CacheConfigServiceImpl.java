@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.josthi.web.service.CacheConfigService ;
+import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.dao.CacheConfigDao ;
 import com.josthi.web.daoimpl.CacheConfigDaoImpl;
 import com.josthi.web.po.CacheConfigPO;
@@ -49,6 +50,11 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 		}
 		
 		return configMap;
+	}
+
+	@Override
+	public List<DropDownBean> getBloodGroup(String bloodGroup) {
+		return cacheConfigDao.getDropDownForGroupID(bloodGroup);
 	}
 
 	/*

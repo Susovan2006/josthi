@@ -133,16 +133,37 @@
               <h5 class="card-title">Password</h5>
             </div>
 
+
+				<!-- Alert Section Start-->
+	            <div th:if="${status ne null}">
+		            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+					  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+					      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+					    </svg>
+					  </button>
+					</div>
+				</div>
+				<!-- Alert Section End-->
+
+
             <!-- Body -->
             <div class="card-body">
               <!-- Form -->
-              <form class="js-validate">
+              <form id="changePassword" class="js-validate" th:action="@{/user/changePassword/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
+			  											              th:object="${passwordResetBean}"  method="post">
+			  											              
+			     <input type="hidden" th:field="*{emailId}"  id="userEmailId">
+			     <input type="hidden" th:field="*{role}"  id="userRole">
+			     <input type="hidden" th:field="*{userID}"  id="userId">
+			     
                 <!-- Form Group -->
                 <div class="row form-group">
                   <label for="currentPasswordLabel" class="col-sm-3 col-form-label input-label">Current password</label>
 
                   <div class="col-sm-9 js-form-message">
-                    <input type="password" class="form-control" name="currentPassword" id="currentPasswordLabel" placeholder="Enter current password" aria-label="Enter current password" required>
+                    <input type="password" th:field="*{oldPassword}" class="form-control" name="currentPassword" id="currentPasswordLabel" placeholder="Enter current password" aria-label="Enter current password" required>
                   </div>
                 </div>
                 <!-- End Form Group -->
@@ -152,7 +173,7 @@
                   <label for="newPassword" class="col-sm-3 col-form-label input-label">New password</label>
 
                   <div class="col-sm-9 js-form-message">
-                    <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Enter new password" aria-label="Enter new password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+                    <input type="password" th:field="*{newPassword}" class="form-control" name="newPassword" id="newPassword" placeholder="Enter new password" aria-label="Enter new password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
                   </div>
                 </div>
                 <!-- End Form Group -->
@@ -163,7 +184,7 @@
 
                   <div class="col-sm-9 ">
                     <div class="mb-3 js-form-message">
-                      <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPasswordLabel" placeholder="Confirm your new password" aria-label="Confirm your new password" required>
+                      <input type="password" th:field="*{newConfirmPassword}" class="form-control" name="confirmNewPassword" id="confirmNewPasswordLabel" placeholder="Confirm your new password" aria-label="Confirm your new password" required>
                     </div>
 
 
@@ -378,6 +399,21 @@
 	  }
 	}
 </script>
+
+
+<!-- https://www.concretepage.com/thymeleaf/thymeleaf-javascript-inline-example-with-variable -->
+<script th:inline="javascript">   
+       $(document).ready(function() {
+	       var email = /*[[${session.USER_SESSION_OBJ_KEY.userEmailId}]]*/'null';
+	       var role = /*[[${session.USER_SESSION_OBJ_KEY.userRole}]]*/'null';
+	       var id = /*[[${session.USER_SESSION_OBJ_KEY.customerId}]]*/'null';
+	       $("#userEmailId").val(email);
+	       $("#userRole").val(role);
+	       $("#userId").val(id);
+       });
+</script>
+
+
 
   <!-- IE Support -->
   <script>

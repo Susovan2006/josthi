@@ -2,7 +2,8 @@ package com.josthi.web.constants;
 
 public interface Constant {
 	
-	String DATE_FORMAT_FOR_DOB = "yyyy-MM-dd";
+	//String DATE_FORMAT_FOR_DOB = "yyyy-MM-dd";
+	String DATE_FORMAT_FOR_DOB = "MM/dd/yyyy";
 	
 	String USER_STATUS_ACTIVE = "A";
 	String USER_STATUS_DISABLED = "D";
@@ -37,6 +38,10 @@ public interface Constant {
 	String USER_SESSION_OBJ_KEY = "USER_SESSION_OBJ_KEY";
 	String USER_SESSION_PROFILE_PICTURE_KEY = "USER_SESSION_PROFILE_PICTURE_KEY";
 	String DEFAULT_PROFILE_PICTURE = "/images/default_user.png";
+	
+	
+	//DROPDOWN TYPE
+	String BLOOD_GROUP = "BLOOD_GROUP";
 	
 	
 	

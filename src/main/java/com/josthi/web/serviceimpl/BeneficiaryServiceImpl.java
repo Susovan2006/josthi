@@ -12,6 +12,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.josthi.web.bo.BeneficiaryDetailBean;
+import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.UserDetailsBean;
 import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.constants.Constant;
@@ -41,55 +42,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 	@Autowired
 	private UserRegistrationDao userRegistrationDao;
 	
-	@Override
-	public void getBeneficiaryDetails(UserDetailsBean primaryBeneficiaryDetailsBean,
-			UserDetailsBean secondaryBeneficiaryDetailsBean, String customerId) throws Exception {
-		
-		String primaryBeneficiaryId = userDetailsDao.getPrimaryBeneficiaryIdFromRelation(customerId);
-		String secondaryBeneficiaryId = userDetailsDao.getSecondaryBeneficiaryIdFromRelation(customerId);
-		
-		logger.info("primaryBeneficiaryId :"+primaryBeneficiaryId);
-		logger.info("secondaryBeneficiaryId :"+secondaryBeneficiaryId);
-		
-		//Primary Beneficiary Details 
-		if(primaryBeneficiaryId!=null && primaryBeneficiaryId.length() > 0) {
-			UserDetailsBean primaryBeneficiaryDetailsFromDB = userDetailsDao.getPrimaryBeneficiaryDetails();
-		}
-		
-		//Secondary Beneficiary Details 
-		if(secondaryBeneficiaryId!=null && secondaryBeneficiaryId.length() > 0) {
-			UserDetailsBean secondaryBeneficiaryDetailsFromDB = userDetailsDao.getSecondaryBeneficiaryDetails();
-		}		
-		
-	}
-
-	@Override
-	public UserDetailsBean geBeneficiaryDetails(String customerId, String beneficiaryType) throws Exception {
-		UserDetailsBean userDetailsBean = null;
-		
-		//For Primary beneficiary
-		if(beneficiaryType.equals(Constant.BENEFICIARY_TYPE_PRIMARY)) {
-			String primaryBeneficiaryId = userDetailsDao.getPrimaryBeneficiaryIdFromRelation(customerId);
-			logger.info("primaryBeneficiaryId :"+primaryBeneficiaryId);
-			if(primaryBeneficiaryId!=null && primaryBeneficiaryId.length() > 0) {
-				userDetailsBean = userDetailsDao.getBeneficiaryDetails(primaryBeneficiaryId);
-			}else {
-				userDetailsBean = new UserDetailsBean();
-			}
-		
-		//For Primary beneficiary	
-		}else if(beneficiaryType.equals(Constant.BENEFICIARY_TYPE_SECONDARY)) {
-			String secondaryBeneficiaryId = userDetailsDao.getSecondaryBeneficiaryIdFromRelation(customerId);
-			logger.info("secondaryBeneficiaryId :"+secondaryBeneficiaryId);
-			if(secondaryBeneficiaryId!=null && secondaryBeneficiaryId.length() > 0) {
-				userDetailsBean = userDetailsDao.getBeneficiaryDetails(secondaryBeneficiaryId);
-			}else {
-				userDetailsBean = new UserDetailsBean();
-			}
-		}
-		userDetailsBean.setState("West Bengal");
-		return userDetailsBean;
-	}
+	
 
 	@Override
 	public List<BeneficiaryDetailBean> getBeneficiaryList(String customerId) {
@@ -97,14 +50,13 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 		return userDetailsDao.getBeneficiaryList(customerId);
 	}
 
-	
-	
-	
+		
 	/**
 	 * Save Beneficiary details.
+	 * @throws Exception 
 	 */
 	@Override
-	public boolean saveBeneficiaryDetails(BeneficiaryDetailBean beneficiaryDetailBean, String custId, int nextId) {
+	public boolean saveBeneficiaryDetails(BeneficiaryDetailBean beneficiaryDetailBean, String custId, int nextId) throws Exception {
 		TransactionStatus txnStatus = null;
 		DefaultTransactionDefinition def = null;
 		try {
@@ -164,8 +116,122 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 			logger.error(ex.getMessage(),ex);
 			platformTransactionManager.rollback(txnStatus);
 			logger.info("txn rolled back");
-			return false;
+			throw ex;
 		}
+	}
+
+	@Override
+	public void deleteBeneficiaryDetail(String beneficiaryID) throws Exception {
+		TransactionStatus txnStatus = null;
+		DefaultTransactionDefinition def = null;
+		try {
+			logger.info("Within transaction Block for Delete beneficiary details.");
+			
+			def = new DefaultTransactionDefinition();
+			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+			def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+			{
+				txnStatus = platformTransactionManager.getTransaction(def);
+				
+				
+				//DB Calls for Users
+				boolean status = false;
+				
+				//Delete from User Auth Table.
+				status = userDetailsDao.deleteBeneficiaryFromUserAuth(beneficiaryID);
+				logger.info(beneficiaryID + "Removed from User Auth Table");
+						
+				//--> Insert in user_detail Table
+				status = userDetailsDao.deleteBeneficiaryFromUserDetail(beneficiaryID);
+				logger.info(beneficiaryID + "Removed from User Detail Table");
+				
+				//--> Insert in to beneficiary detail Table
+				status = userDetailsDao.deleteBeneficiaryFromBeneficiaryDetail(beneficiaryID);
+				logger.info(beneficiaryID + "Removed from Beneficiary Detail Table");
+						
+						
+				//--> Insert into Relation Table'
+				status = userDetailsDao.deleteBeneficiaryFromRelationDetail(beneficiaryID);
+				logger.info(beneficiaryID + "Removed from Relation Table");
+				
+				platformTransactionManager.commit(txnStatus);
+				//return status;
+			}
+			
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(),ex);
+			platformTransactionManager.rollback(txnStatus);
+			logger.info("txn rolled back");
+			//return false;
+			throw ex;
+		}
+		
+	}
+
+	@Override
+	public BeneficiaryDetailBean getBeneficiaryDetailToEdit(String beneficiaryID, String customerId) throws Exception {
+		return userDetailsDao.getBeneficiaryDetailToEdit(beneficiaryID, customerId);
+	}
+
+
+
+
+	@Override
+	public boolean isValidBeneficiaryID(String beneficiaryID) throws Exception {
+		// TODO Auto-generated method stub
+		return userDetailsDao.isValidBeneficiaryID(beneficiaryID);
+	}
+
+
+
+
+	@Override
+	public boolean updateBeneficiaryDetails(BeneficiaryDetailBean beneficiaryDetailBean) throws Exception {
+		TransactionStatus txnStatus = null;
+		DefaultTransactionDefinition def = null;
+		try {
+			logger.info("Within transaction Block for Delete beneficiary details.");
+			
+			def = new DefaultTransactionDefinition();
+			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+			def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+			{
+				txnStatus = platformTransactionManager.getTransaction(def);
+				
+				
+				//DB Calls for Users
+				boolean status = false;
+				
+				//Update from User Auth Table.
+				//status = userDetailsDao.updateBeneficiaryFromUserAuth(beneficiaryDetailBean);
+				//logger.info(beneficiaryDetailBean.getBeneficiaryID() + " Updated User Auth Table");
+						
+				//--> Update in user_detail Table
+				status = userDetailsDao.updateBeneficiaryFromUserDetail(beneficiaryDetailBean);
+				logger.info(beneficiaryDetailBean.getBeneficiaryID()  + "Updated User Detail Table");
+				
+				//--> Update in to beneficiary detail Table
+				status = userDetailsDao.updateBeneficiaryFromBeneficiaryDetail(beneficiaryDetailBean);
+				logger.info(beneficiaryDetailBean.getBeneficiaryID()  + "Updated Beneficiary Detail Table");
+						
+				
+				platformTransactionManager.commit(txnStatus);
+				return status;
+			}
+			
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(),ex);
+			platformTransactionManager.rollback(txnStatus);
+			logger.info("txn rolled back");
+			//return false;
+			throw ex;
+		}
+	}
+
+
+	@Override
+	public List<DropDownBean> getBloodGroup(String bloodGroup) {
+		return userDetailsDao.getBloodGroup(bloodGroup);
 	}
 
 }

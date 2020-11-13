@@ -1,5 +1,6 @@
 package com.josthi.web.dao;
 
+import com.josthi.web.bo.PasswordResetBean;
 import com.josthi.web.bo.UserAuthBo;
 
 public interface UserAuthDao {
@@ -21,5 +22,7 @@ public interface UserAuthDao {
 	boolean resetUserIdGenTable();
 
 	boolean removeTempLockFromUserAccount();
+
+	boolean updatePassword(PasswordResetBean passwordResetBean) throws Exception;
 
 }

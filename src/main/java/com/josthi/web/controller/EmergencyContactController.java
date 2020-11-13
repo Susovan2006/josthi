@@ -117,9 +117,11 @@ public class EmergencyContactController {
     			}   			
     		}catch(Exception ex) {
     			logger.error("custId :"+custId, ex);
-    			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
-    		    model.addAttribute("message", MessageConstant.USER_EMERGENCY_SAVE_ERROR_MESSAGE);
-			    return MappingConstant.USER_EMERGENCY_CONTACT_DETAILS;
+    			//model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
+    		    //model.addAttribute("message", MessageConstant.USER_EMERGENCY_SAVE_ERROR_MESSAGE);
+			    //return MappingConstant.USER_EMERGENCY_CONTACT_DETAILS;
+    		    return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_FAILURE_STATUS+"&message="
+																+MessageConstant.USER_EMERGENCY_SAVE_ERROR_MESSAGE;
     		}
 	}
 	
@@ -144,7 +146,7 @@ public class EmergencyContactController {
 		}catch(Exception ex) {
 			logger.error("contactId :"+contactId, ex);
 			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
-		    model.addAttribute("message", MessageConstant.USER_EMERGENCY_GENERIC_ERROR);
+		    model.addAttribute("message", MessageConstant.USER_GENERIC_ERROR);
 		    return MappingConstant.USER_EMERGENCY_CONTACT_DETAILS;
 		}
 	}
@@ -188,7 +190,7 @@ public class EmergencyContactController {
 		}catch(Exception ex) {
 			logger.error("contactId :"+contactId, ex);
 			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
-		    model.addAttribute("message", MessageConstant.USER_EMERGENCY_GENERIC_ERROR);
+		    model.addAttribute("message", MessageConstant.USER_GENERIC_ERROR);
 		    return MappingConstant.USER_EMERGENCY_CONTACT_DETAILS;
 		}
 	}

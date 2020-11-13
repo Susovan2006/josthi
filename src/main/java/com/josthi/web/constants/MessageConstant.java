@@ -42,7 +42,7 @@ public interface MessageConstant {
 	String USER_PROFILE_UPDATE_VALIDATION_ERROR_MESSAGE = "Looks like there is some issue with the Customer ID, please log out and relogin.";
 	
 	
-	String USER_EMERGENCY_GENERIC_ERROR = "Error Occured while performing backend operation, please try again later or call Customer Service.";
+	String USER_GENERIC_ERROR = "Error Occured while performing backend operation, please try again later or call Customer Service.";
 	String USER_EMERGENCY_SAVE_SUCCESS_MESSAGE = "Emergency details saved Successfully!!";
 	String USER_EMERGENCY_UPDATE_SUCCESS_MESSAGE = "Emergency details Updated Successfully!!";
 	String USER_EMERGENCY_SAVE_ERROR_MESSAGE = "Exception Occured while saving emergency contact details. Try again later or Contact the Customer Service.";
@@ -52,4 +52,6 @@ public interface MessageConstant {
 	String USER_BENEFECIARY_SAVE_ERROR_MESSAGE = "Exception Occured while saving Benefeciary details. Try again later or Contact the Customer Service.";
 	
 	String USER_EMERGENCY_DELETE_SUCCESS_MESSAGE = "Contact Deleted";
+	String USER_BENEFECIARY_DELETE_SUCCESS_MESSAGE = "Beneficiary Deleted Successfully.";
+	String USER_BENEFECIARY_UPDATE_SUCCESS_MESSAGE = "Beneficiary details Updated Successfully!!";
 }

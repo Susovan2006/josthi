@@ -21,7 +21,7 @@ public BeneficiaryDetailBean mapRow(ResultSet resultSet,int arg1)throws SQLExcep
 		
 		beneficiaryDetailBean.setUserAddressFirstLine(resultSet.getString("USER_ADDRESS_FIRST_LINE"));
 		beneficiaryDetailBean.setUserAddressSecondLine(resultSet.getString("USER_ADDRESS_SECOND_LINE"));
-		beneficiaryDetailBean.setCountyDistrict(resultSet.getString("NEAREST_LAND_MARK"));
+		beneficiaryDetailBean.setNearestLandMark(resultSet.getString("NEAREST_LAND_MARK"));
 		beneficiaryDetailBean.setCityTown(resultSet.getString("CITY_TOWN"));
 		beneficiaryDetailBean.setState(resultSet.getString("STATE"));
 		beneficiaryDetailBean.setCountyDistrict(resultSet.getString("COUNTY_DISTRICT"));

@@ -493,7 +493,13 @@
 				processData: false, //it prevent jQuery form transforming the data into a query string
 				success: function (data, status) {
 					console.log("SUCCESS : ", data);
-					showSuccessMsg("Success :"+data);	
+					
+					if(isStringContains(data, 'Success :')){
+						showSuccessMsg(data);
+					}else{
+						showError(data);
+					}
+						
 					//alert("Success :"+data);
 		
 				},
@@ -510,7 +516,7 @@
 
 
 		
-		function showError(msg) {
+		   function showError(msg) {
 			  var e1 = document.getElementById("otpStatus");
 			  e1.setAttribute("style", "display:block;background:#ffecec;border: 2px solid #f5aca6");
 			  e1.innerHTML = "&nbsp;"+msg;
@@ -522,6 +528,16 @@
 			  e1.setAttribute("style", "display:block;background:#c3f3cd;border: 2px solid #50ef72");
 			  e1.innerHTML = "&nbsp;"+msg;
 
+			}
+			
+			function isStringContains (StringVal, SubStringVal){
+				var res = StringVal.match(SubStringVal);
+				
+				if( res == null){
+					return false;
+				}else{
+					return true;
+				}
 			}
 
 

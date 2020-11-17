@@ -34,6 +34,8 @@ public interface UserAuthService {
 
 	public boolean updateOtp(String customerID, String emailId, String otp) throws Exception;
 
+	public boolean isOtpFrequencyMatching(String userID) throws Exception;
+
 	//public void updateSchedulerDetails(SchedulerTimerBean schedulerTimerBean);
 
 	//public boolean registerNewUser(UserRegistrationBean userRegistrationBean);

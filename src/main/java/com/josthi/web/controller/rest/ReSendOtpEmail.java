@@ -65,6 +65,10 @@ public class ReSendOtpEmail {
     			
     			String userFirstAndLastName = userAuthService.getUserDetails(userDetailsOnUid.getCustomerId());
     			
+    			if(!(userAuthService.isOtpFrequencyMatching(customerID))) {
+    				throw new UserExceptionInvalidData("Info : OTP already sent few moments back, please wait for atleast 2 min.");
+    			}
+    			
     			String otp = OTPGen.generateRandomNumber(6);
     			
     			//Database Update
@@ -79,19 +83,20 @@ public class ReSendOtpEmail {
     			
     			if(otpQueueStatus) {
     				EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
-    	        	String status = "OTP mailed to "+emailId+ ". Please check your email and enter the OTP here. You should get the email in 1-2 min.";        	    	 
+    	        	String status = "Success : OTP mailed to "+emailId+ ". Please check your email and enter the OTP here. You should get the email in 1-2 min.";        	    	 
     	        	return new ResponseEntity<String>(status , HttpStatus.OK);
     			}else{
-    				throw new UserExceptionInvalidData("Error Occured while triggering the email, please re-login and try");
+    				throw new UserExceptionInvalidData("Error : Error Occured while triggering the email, please re-login and try");
     			}
     			
     		}else {
-    			throw new UserExceptionInvalidData("Looks like the email ID is invalid, Please re-login and try again.");
+    			throw new UserExceptionInvalidData("Error : Looks like the email ID is invalid, Please re-login and try again.");
     		}
         	        	
         }catch(UserExceptionInvalidData ex) {
         	logger.error(ex.getMessage(), ex);
-        	return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+        	//return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<String>(ex.getMessage() , HttpStatus.OK);
         }catch(UserException ex) {
 			logger.error(ex.getMessage(), ex);
 			return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);

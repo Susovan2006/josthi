@@ -2,6 +2,7 @@ package com.josthi.web.dao;
 
 import com.josthi.web.bo.PasswordResetBean;
 import com.josthi.web.bo.UserAuthBo;
+import java.sql.Timestamp;
 
 public interface UserAuthDao {
 
@@ -30,5 +31,7 @@ public interface UserAuthDao {
 	void updateUserValidationStatus(String userID) throws Exception;
 
 	boolean updateOtp(String customerID, String emailId, String otp) throws Exception ;
+
+	Timestamp getOTPLastUpdateTimeStamp(String userID) throws Exception;
 
 }

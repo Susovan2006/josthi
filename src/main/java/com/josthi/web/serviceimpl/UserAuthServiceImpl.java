@@ -1,5 +1,10 @@
 package com.josthi.web.serviceimpl;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,8 @@ import com.josthi.web.utils.Utils;
 @Service("userAuthService")
 public class UserAuthServiceImpl implements UserAuthService{
 
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserAuthServiceImpl.class);
 	@Autowired
 	public UserAuthDao userAuthDao;
 	
@@ -115,6 +122,27 @@ public class UserAuthServiceImpl implements UserAuthService{
 		}catch(Exception ex) {
 			throw ex;
 		}
+	}
+
+	@Override
+	public boolean isOtpFrequencyMatching(String userID) throws Exception {
+		try {
+			Timestamp lastUpdateTime = userAuthDao.getOTPLastUpdateTimeStamp(userID);
+			Timestamp now = new Timestamp(new Date().getTime());
+			
+			if( lastUpdateTime != null && Utils.compareTwoTimeStamps(now, lastUpdateTime) > 1) {
+				System.out.println("######"+lastUpdateTime.toString());
+				return true;
+			}else {
+				return false;
+			}
+
+		}catch(Exception ex) {
+			logger.error(ex.getMessage());
+			throw new UserExceptionInvalidData("Error Occured while Processing the OTP, please try again later or Contact the Service Desk.");
+			//return false;
+		}
+		
 	}
 	
 	

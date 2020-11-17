@@ -2,6 +2,7 @@ package com.josthi.web.daoimpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -231,7 +232,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 	}
 	
 	
-	public static final String UPDATE_USER_OTP = "UPDATE user_auth_table set OTP = ? WHERE CUSTOMER_ID = ? and USERID_EMAIL = ?";
+	public static final String UPDATE_USER_OTP = "UPDATE user_auth_table set OTP = ? , OTP_GEN_DATE_TIME = CURRENT_TIMESTAMP WHERE CUSTOMER_ID = ? and USERID_EMAIL = ?";
 	@Override
 	public boolean updateOtp(String customerID, String emailId, String otp) throws Exception {
 		try {
@@ -243,6 +244,31 @@ public class UserAuthDaoImpl implements UserAuthDao{
 			logger.error(ex.getMessage(), ex);
 			throw new UserExceptionInvalidData("Failed to Update the OTP, please try again.");
 		}
+	}
+	
+	
+	
+	public static final String SELECT_LAST_OTP_TIMESTAMP = "SELECT OTP_GEN_DATE_TIME from user_auth_table where CUSTOMER_ID = ?";
+	@Override
+	public Timestamp getOTPLastUpdateTimeStamp(String userID) throws Exception {
+		List<Timestamp> otpTimeList  = getJdbcTemplate().query(SELECT_LAST_OTP_TIMESTAMP,
+				new Object[] { userID},
+				new RowMapper<Timestamp>() {
+						@Override
+						public Timestamp mapRow(ResultSet rs, int rowNum) throws SQLException {
+							return rs.getTimestamp(1);
+						}
+					});
+
+			if ( otpTimeList.isEmpty()){
+				logger.info("No OTP Time Set");
+				return null;
+			}else if ( otpTimeList.size() == 1 ) { // list contains exactly 1 element
+				logger.info("Valid OTP :"+otpTimeList.get(0));
+				return otpTimeList.get(0);
+			}else{  // list contains more than 1 elements
+				throw new UserExceptionInvalidData("Invalid Data in the Database...");
+			}
 	}
 	
 

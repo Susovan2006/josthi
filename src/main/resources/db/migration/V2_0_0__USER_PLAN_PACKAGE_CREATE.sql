@@ -104,9 +104,10 @@ INSERT INTO dropdown_metadata (DROPDOWN_TYPE,KEY_ID,DROPDOWN_VALUE,ACTIVE) VALUE
 --****************************************************************************************
 --************************ NEXT RELEASE **************************************************
 
-ALTER TABLE `josthi_db`.`user_auth_table` 
-ADD COLUMN `OTP` VARCHAR(45) NULL AFTER `VERIFIED_USER`,
-ADD COLUMN `VALID_EMAIL` VARCHAR(10) NOT NULL DEFAULT 'NO' AFTER `OTP`
+ALTER TABLE user_auth_table
+ADD COLUMN OTP VARCHAR(45) NULL AFTER VERIFIED_USER,
+ADD COLUMN VALID_EMAIL VARCHAR(10) NOT NULL DEFAULT 'NO' AFTER OTP,
+ADD COLUMN OTP_GEN_DATE_TIME DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER VALID_EMAIL;
   
   
   

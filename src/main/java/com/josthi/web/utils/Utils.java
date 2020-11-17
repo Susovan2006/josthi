@@ -66,7 +66,7 @@ public class Utils {
 		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_PASSWORD_RECOVERY);
 		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_PASSWORD_RECOVERY);
 		emailDbBean.setJsonString(jsonValue);
-		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FROM_FOR_PASSWORD_RECOVERY);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_PASSWORD_RECOVERY);
 		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
 		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
 		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
@@ -82,7 +82,7 @@ public class Utils {
 		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_ACCOUNT_UN_LOCK);
 		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_ACCOUNT_UN_LOCK);
 		emailDbBean.setJsonString(jsonValue);
-		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FROM_FOR_ACCOUNT_UNLOCK);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_ACCOUNT_UNLOCK);
 		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
 		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
 		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
@@ -96,7 +96,22 @@ public class Utils {
 		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_WELCOME);
 		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_WELCOME);
 		emailDbBean.setJsonString(jsonValue);
-		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FROM_FOR_WELCOME);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_WELCOME);
+		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
+		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
+		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
+		return emailDbBean;
+	}
+	
+	
+	public static EmailDbBean getEmailBeanForOTP(String emailTo, String jsonValue) {
+		
+		EmailDbBean emailDbBean =  new EmailDbBean();
+		emailDbBean.setSentTo(emailTo);
+		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_OTP);
+		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_OTP);
+		emailDbBean.setJsonString(jsonValue);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_OTP);
 		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
 		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
 		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		

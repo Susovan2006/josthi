@@ -46,7 +46,9 @@ public class UserAccountController {
 	@GetMapping("/user/loginAndsecurity")
 	public String userLoginAndsecurity(Model model,
 										@RequestParam (name="status", required = false, defaultValue = "") String status,
-										@RequestParam (name="message", required = false, defaultValue = "") String message
+										@RequestParam (name="message", required = false, defaultValue = "") String message,
+										@RequestParam (name="statusOtp", required = false, defaultValue = "") String statusOtp,
+										@RequestParam (name="messageOtp", required = false, defaultValue = "") String messageOtp
 										) {
 		
 		PasswordResetBean passwordResetBean = new PasswordResetBean();
@@ -56,13 +58,22 @@ public class UserAccountController {
 			 model.addAttribute("message", message);
    	 	}
 		
+		if(statusOtp!=null && statusOtp.length() > 0) {
+	    	 model.addAttribute("statusOtp", statusOtp);
+			 model.addAttribute("messageOtp", messageOtp);
+  	 	}
+		
 		model.addAttribute("passwordResetBean", passwordResetBean);
 		return "user/login_and_security_user";
 	}
 	
 	
+	
+	//==============================================================================
+	//======================== PASSWORD RESET ======================================
+	//==============================================================================
 	@RequestMapping(path ="/user/changePassword/{custId}", method = RequestMethod.POST)
-	public String savebeneficiaryDetails(Model model, PasswordResetBean passwordResetBean,
+	public String changePassword(Model model, PasswordResetBean passwordResetBean,
 									@PathVariable String custId,
 									HttpServletRequest request) {
 		logger.info("*****************passwordResetBean :"+passwordResetBean.toString());
@@ -79,7 +90,7 @@ public class UserAccountController {
 					 StringUtils.isEmpty(passwordResetBean.getNewConfirmPassword().trim())) {
 				throw new UserExceptionInvalidData("new Password Fields can't be blank");
 			}else if(!(passwordResetBean.getNewPassword().trim().equals(passwordResetBean.getNewConfirmPassword().trim()))) {
-				throw new UserExceptionInvalidData("The New Password & Confirm Password values are not matching. Please try with save value.");
+				throw new UserExceptionInvalidData("The New Password and Confirm Password values are not matching. Please try with save value.");
 			}else if(!(userAuthService.isValidPassword(passwordResetBean.getEmailId(),
 													Security.encrypt(passwordResetBean.getOldPassword().trim())))){
 				throw new UserExceptionInvalidData("The existing password is not matching with the supplied one. Please re-enter the correct password");
@@ -112,7 +123,53 @@ public class UserAccountController {
 	
 	
 	//==============================================================================
-	//======================== PASSWORD RESET ======================================
+	//======================== OTP VALIDATION ======================================
 	//==============================================================================
-
+	
+	
+	@RequestMapping(path ="/user/validateOtp", method = RequestMethod.POST)
+	public String validateOtp(Model model, PasswordResetBean passwordResetBean,
+												HttpServletRequest request) {
+		logger.info("*****************passwordResetBean :"+passwordResetBean.toString());
+		
+		String actionStatus = "";
+		String message = "";
+		try {			
+			ValidateSession.isValidSession(request);
+			ValidateSession.isValidUser(request, passwordResetBean.getUserID());
+			
+			if(passwordResetBean.getOtp().trim().length() == 0) {
+				throw new UserExceptionInvalidData("OTP is a required field, it should be a 6 byte numeric value. check your email, else generate a new one.");
+			}else if(passwordResetBean.getOtp().trim().length() != 6) {
+				throw new UserExceptionInvalidData("OTP should be a 6 digit numeric number.");
+			}else {
+				
+				boolean status = userAuthService.validateOTP(passwordResetBean);
+				if(status) {
+					actionStatus = MessageConstant.USER_SUCCESS_STATUS;
+					message = "Email ID validated Successfully.";
+					return "redirect:/user/loginAndsecurity?statusOtp="+actionStatus+"&messageOtp="+message;
+				}else {
+					throw new UserExceptionInvalidData("Looks like the OTP has expired or invalid, please regenerate the OTP and re-enter. The OTP will be delivered to the registered emailID");
+				}
+			}
+			
+			
+		}catch(UserExceptionInvalidData ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message = ex.getMessage();
+			return "redirect:/user/loginAndsecurity?statusOtp="+actionStatus+"&messageOtp="+message;
+		}catch(UserException ex) {
+			logger.error(ex.getMessage(), ex);
+			return "redirect:/login";
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message = ex.getMessage();
+			return "redirect:/user/loginAndsecurity?statusOtp="+actionStatus+"&messageOtp="+message;
+		}
+		
+	}
+	
 }

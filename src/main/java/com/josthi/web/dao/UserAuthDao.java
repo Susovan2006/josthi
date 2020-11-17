@@ -25,4 +25,10 @@ public interface UserAuthDao {
 
 	boolean updatePassword(PasswordResetBean passwordResetBean) throws Exception;
 
+	boolean isValidOtp(String userID, String otp) throws Exception;
+
+	void updateUserValidationStatus(String userID) throws Exception;
+
+	boolean updateOtp(String customerID, String emailId, String otp) throws Exception ;
+
 }

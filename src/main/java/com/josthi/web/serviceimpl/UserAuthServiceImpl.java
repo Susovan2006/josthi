@@ -18,7 +18,7 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public UserAuthDao userAuthDao;
 	
 	@Override
-	public UserAuthBo getValidUser(String uid, String password) {
+	public UserAuthBo getValidUser(String uid, String password){
 		UserAuthBo userAuthBo = userAuthDao.getValidUser(uid,password);		
 		return userAuthBo;
 	}
@@ -84,6 +84,37 @@ public class UserAuthServiceImpl implements UserAuthService{
 		passwordResetBean.setNewPassword(Security.encrypt(passwordResetBean.getNewPassword()));
 		passwordResetBean.setNewConfirmPassword(Security.encrypt(passwordResetBean.getNewConfirmPassword()));
 		return userAuthDao.updatePassword(passwordResetBean);
+	}
+
+	@Override
+	public boolean validateOTP(PasswordResetBean passwordResetBean) throws Exception {
+		String otp = passwordResetBean.getOtp().trim();
+		try {
+			if(userAuthDao.isValidOtp(passwordResetBean.getUserID(), otp)) {
+				userAuthDao.updateUserValidationStatus(passwordResetBean.getUserID());
+				return true;
+			}else {
+				return false;
+			}
+		}catch(Exception ex) {
+			//throw new UserExceptionInvalidData("OTP Validation Failed, re-validate the OTP or regenerate the OTP. ");
+			throw ex;
+		}
+	}
+
+	@Override
+	public boolean updateOtp(String customerID, String emailId, String otp) throws Exception {
+		try {
+			if(userAuthDao.updateOtp(customerID, emailId, otp)) {
+				return true;
+			}else {
+				throw new UserExceptionInvalidData("OTP Update Failed, Try again later.");
+			}
+		}catch(UserExceptionInvalidData ex) {
+			throw ex;
+		}catch(Exception ex) {
+			throw ex;
+		}
 	}
 	
 	

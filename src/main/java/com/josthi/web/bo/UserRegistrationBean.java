@@ -11,6 +11,7 @@ public class UserRegistrationBean {
 	private boolean licAgreementChecked;
 	private String areaOfCoverage;
 	private String userType;
+	private String otp;
 	
 	
 	
@@ -72,6 +73,13 @@ public class UserRegistrationBean {
 	}
 	public void setUserType(String userType) {
 		this.userType = userType;
+	}
+	
+	public String getOtp() {
+		return otp;
+	}
+	public void setOtp(String otp) {
+		this.otp = otp;
 	}
 	
 	

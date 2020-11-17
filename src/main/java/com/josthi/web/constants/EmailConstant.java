@@ -11,6 +11,10 @@ public interface EmailConstant {
 	String EMAIL_FROM_FOR_WELCOME = "welcome@josthi.com";
 	String SUBJECT_FROM_FOR_WELCOME = "Josthi.com | Welcome to josthi.com";
 	
+	//OTP
+	String EMAIL_FROM_FOR_OTP = "account@josthi.com";
+	String SUBJECT_FROM_FOR_OTP = "Josthi.com | One time password(OTP)";
+	
 	//Password Lock
 	String EMAIL_FROM_FOR_ACCOUNT_UN_LOCK = "welcome@josthi.com";
 	String SUBJECT_FROM_FOR_ACCOUNT_UN_LOCK = "Josthi.com | Account unlock";
@@ -26,9 +30,10 @@ public interface EmailConstant {
 	String DELEVERED_EMAIL_DELIVARY_STATUS = "DELEVERED";
 	
 	//email Templates
-	String TEMPLATE_FROM_FOR_PASSWORD_RECOVERY = "email_account_recovery";
-	String TEMPLATE_FROM_FOR_ACCOUNT_UNLOCK = "email_account_unlock";
-	String TEMPLATE_FROM_FOR_WELCOME = "email_welcome_josthi";
+	String TEMPLATE_FORM_FOR_PASSWORD_RECOVERY = "email_account_recovery";
+	String TEMPLATE_FORM_FOR_ACCOUNT_UNLOCK = "email_account_unlock";
+	String TEMPLATE_FORM_FOR_WELCOME = "email_welcome_josthi";
+	String TEMPLATE_FORM_FOR_OTP = "email_validate_account_otp";
 	
 	
 	

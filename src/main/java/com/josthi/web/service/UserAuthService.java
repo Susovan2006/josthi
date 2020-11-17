@@ -30,6 +30,10 @@ public interface UserAuthService {
 
 	public boolean updatePassword(PasswordResetBean passwordResetBean) throws Exception;
 
+	public boolean validateOTP(PasswordResetBean passwordResetBean) throws Exception;
+
+	public boolean updateOtp(String customerID, String emailId, String otp) throws Exception;
+
 	//public void updateSchedulerDetails(SchedulerTimerBean schedulerTimerBean);
 
 	//public boolean registerNewUser(UserRegistrationBean userRegistrationBean);

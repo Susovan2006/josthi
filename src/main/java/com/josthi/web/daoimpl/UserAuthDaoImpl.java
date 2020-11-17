@@ -1,8 +1,13 @@
 package com.josthi.web.daoimpl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.josthi.web.bo.PasswordResetBean;
@@ -41,7 +46,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 												 new ValidateAuthenticityRowMaper());
 				return userAuthBo;
 			}catch(Exception ex){
-				logger.error(ex.getMessage());
+				logger.error(ex.getMessage(), ex);
 				//return new UserAuthBo();
 				throw ex;
 			}
@@ -178,6 +183,65 @@ public class UserAuthDaoImpl implements UserAuthDao{
 		}catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
 			throw new UserExceptionInvalidData("Update failed with the New Password, try again later, or Contact Customer Service.");
+		}
+	}
+	
+	
+	
+	//========================================================================================
+	//=========================== O T P    V A L I D A T I O N  ==============================
+	//========================================================================================
+	
+	public static final String SELECT_OTP_FROM_USER_AUTH = "SELECT OTP FROM user_auth_table WHERE  CUSTOMER_ID = ? and OTP = ?";
+	@Override
+	public boolean isValidOtp(String userID, String otp) throws Exception {
+		List<String> otpList  = getJdbcTemplate().query(SELECT_OTP_FROM_USER_AUTH,
+							new Object[] { userID , otp.trim()},
+							new RowMapper<String>() {
+									@Override
+									public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+										return rs.getString(1);
+									}
+								});
+			
+			if ( otpList.isEmpty()){
+				logger.info("No OTP Set");
+				return false;
+			}else if ( otpList.size() == 1 ) { // list contains exactly 1 element
+				logger.info("Valid OTP :"+otpList.get(0));
+				return true;
+			}else{  // list contains more than 1 elements
+				throw new UserExceptionInvalidData("Invalid Data in the Database...");
+			}
+	}
+	
+	
+	public static final String UPDATE_USER_EMAIL_VALIDATION_STATUS = "UPDATE user_auth_table set VALID_EMAIL = 'YES' where CUSTOMER_ID = ?";
+	@Override
+	public void updateUserValidationStatus(String userID) throws Exception {
+		try {
+			
+			int result = jdbcTemplate.update(UPDATE_USER_EMAIL_VALIDATION_STATUS, new Object[]{userID});	
+			
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Failed to Update the OTP, please try again.");
+		}
+		
+	}
+	
+	
+	public static final String UPDATE_USER_OTP = "UPDATE user_auth_table set OTP = ? WHERE CUSTOMER_ID = ? and USERID_EMAIL = ?";
+	@Override
+	public boolean updateOtp(String customerID, String emailId, String otp) throws Exception {
+		try {
+			
+			int result = jdbcTemplate.update(UPDATE_USER_OTP, new Object[]{otp , customerID, emailId});	
+			return (result > 0 ? true : false);
+			
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Failed to Update the OTP, please try again.");
 		}
 	}
 	

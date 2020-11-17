@@ -8,6 +8,7 @@ public class PasswordResetBean {
 	private String userID;
 	private String role;
 	private String emailId;
+	private String otp;
 	
 	public String getOldPassword() {
 		return oldPassword;
@@ -45,12 +46,21 @@ public class PasswordResetBean {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+	
+	public String getOtp() {
+		return otp;
+	}
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
 	@Override
 	public String toString() {
 		return "PasswordResetBean [oldPassword=" + oldPassword + ", newPassword=" + newPassword
 				+ ", newConfirmPassword=" + newConfirmPassword + ", userID=" + userID + ", role=" + role + ", emailId="
-				+ emailId + "]";
+				+ emailId + ", otp=" + otp + "]";
 	}
+
+	
 	
 	
 	

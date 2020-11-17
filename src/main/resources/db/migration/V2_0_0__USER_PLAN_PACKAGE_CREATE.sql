@@ -100,6 +100,13 @@ INSERT INTO dropdown_metadata (DROPDOWN_TYPE,KEY_ID,DROPDOWN_VALUE,ACTIVE) VALUE
 ,('BLOOD_GROUP','AB+','AB+','Y')
 ,('BLOOD_GROUP','Others','Others','Y')
 ,('BLOOD_GROUP','No Idea','No Idea','Y');
+
+--****************************************************************************************
+--************************ NEXT RELEASE **************************************************
+
+ALTER TABLE `josthi_db`.`user_auth_table` 
+ADD COLUMN `OTP` VARCHAR(45) NULL AFTER `VERIFIED_USER`,
+ADD COLUMN `VALID_EMAIL` VARCHAR(10) NOT NULL DEFAULT 'NO' AFTER `OTP`
   
   
   

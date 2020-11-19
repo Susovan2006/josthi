@@ -7,10 +7,27 @@
   <!--  ======================== CSS INCLUDES ===================== -->	
   <div th:replace="user_common :: includes"></div>
   <!--  ======================== CSS INCLUDES ===================== -->
+   <style>
+    	#ajaxStatus {
+		  display: none;
+		  color: #555;
+		  border-radius: 5px;
+		  font-family: Tahoma, Geneva, Arial, sans-serif;
+		  font-size: .8em;
+		  padding: 5px 5px 5px 30px;
+		  margin: 5px 5px 5px 5px;
+		  width:100%;
+		  background: #ffecec;
+		  border: 2px solid #f5aca6;
+		}
+
+		
+	</style>
   
 </head>
 <body>
-  
+   <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.customerId}" id="hiddenCustomerID" />
+   <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.userEmailId}" id="hiddenEmailID" />
 
   <!-- ========== MAIN ========== -->
   <main id="content" role="main" class="bg-light">
@@ -56,27 +73,41 @@
             <div class="card-header">
               <h5 class="card-title">Preferences</h5>
             </div>
+            
+            
+                 <!-- Alert Section Start-->
+	            <div th:if="${status ne null}">
+		            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+					  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+					      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+					    </svg>
+					  </button>
+					</div>
+				</div>
+				<!-- Alert Section End-->
 
             <!-- Body -->
             <div class="card-body">
               <!-- Form -->
-              <form>
+              <form id="save_user_Pref" class="js-validate" th:action="@{/user/saveUserPref/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
+			  											              				th:object="${userPreferencesBean}"  method="post">
                 <!-- Form Group -->
                 <div class="row form-group">
                   <label for="languageLabel" class="col-sm-3 col-form-label input-label">Language</label>
 
                   <div class="col-sm-9">
                     <!-- Select -->
-                    <select class="js-custom-select" id="languageLabel"
+                    <select th:field="*{language}" class="js-custom-select" id="language"
                             data-hs-select2-options='{
                               "minimumResultsForSearch": "Infinity"
                             }'>
-                      <option label="empty"></option>
-                      <option value="english" selected>English</option>
-					  <option value="bengali" >Bengali</option>
-					  <option value="hindi" >Hindi</option>
-					  <option value="others" >Others</option>
-                      
+                            
+                            <option th:each="language : ${languageDropdownList}"
+                             					th:value="${language.keyId}"
+                             					th:text="${language.value}" />
+                                            
                     </select>
                     <!-- End Select -->
                   </div>
@@ -88,217 +119,15 @@
                   <label for="timeZoneLabel" class="col-sm-3 col-form-label input-label">Time zone</label>
 
                   <div class="col-sm-9">
-                    <select class="js-custom-select" id="timeZoneLabel"
+                    <select th:field="*{timeZone}" class="js-custom-select" id="timeZone"
                             data-hs-select2-options='{                            
                               "placeholder": "Select TimeZone"
                             }'>
-						<option label="empty"></option>
-						<option value="1ACDT" >ACDT ~ Australian Central Daylight Saving Time ~ UTC+10:30</option>
-						<option value="2ACST" >ACST ~ Australian Central Standard Time ~ UTC+09:30</option>
-						<option value="3ACT" >ACT ~ Acre Time ~ UTC−05</option>
-						<option value="4ACT" >ACT ~ ASEAN Common Time (unofficial) ~ UTC+06:30 – UTC+09</option>
-						<option value="5ACWST" >ACWST ~ Australian Central Western Standard Time (unofficial) ~ UTC+08:45</option>
-						<option value="6ADT" >ADT ~ Atlantic Daylight Time ~ UTC−03</option>
-						<option value="7AEDT" >AEDT ~ Australian Eastern Daylight Saving Time ~ UTC+11</option>
-						<option value="8AEST" >AEST ~ Australian Eastern Standard Time ~ UTC+10</option>
-						<option value="9AET" >AET ~ Australian Eastern Time ~ UTC+10/UTC+11</option>
-						<option value="10AFT" >AFT ~ Afghanistan Time ~ UTC+04:30</option>
-						<option value="11AKDT" >AKDT ~ Alaska Daylight Time ~ UTC−08</option>
-						<option value="12AKST" >AKST ~ Alaska Standard Time ~ UTC−09</option>
-						<option value="13ALMT" >ALMT ~ AlmaAta Time[1] ~ UTC+06</option>
-						<option value="14AMST" >AMST ~ Amazon Summer Time (Brazil)[2] ~ UTC−03</option>
-						<option value="15AMT" >AMT ~ Amazon Time (Brazil)[3] ~ UTC−04</option>
-						<option value="16AMT" >AMT ~ Armenia Time ~ UTC+04</option>
-						<option value="17ANAT" >ANAT ~ Anadyr Time[4] ~ UTC+12</option>
-						<option value="18AQTT" >AQTT ~ Aqtobe Time[5] ~ UTC+05</option>
-						<option value="19ART" >ART ~ Argentina Time ~ UTC−03</option>
-						<option value="20AST" >AST ~ Arabia Standard Time ~ UTC+03</option>
-						<option value="21AST" >AST ~ Atlantic Standard Time ~ UTC−04</option>
-						<option value="22AWST" >AWST ~ Australian Western Standard Time ~ UTC+08</option>
-						<option value="23AZOST" >AZOST ~ Azores Summer Time ~ UTC±00</option>
-						<option value="24AZOT" >AZOT ~ Azores Standard Time ~ UTC−01</option>
-						<option value="25AZT" >AZT ~ Azerbaijan Time ~ UTC+04</option>
-						<option value="26BDT" >BDT ~ Brunei Time ~ UTC+08</option>
-						<option value="27BIOT" >BIOT ~ British Indian Ocean Time ~ UTC+06</option>
-						<option value="28BIT" >BIT ~ Baker Island Time ~ UTC−12</option>
-						<option value="29BOT" >BOT ~ Bolivia Time ~ UTC−04</option>
-						<option value="30BRST" >BRST ~ Brasília Summer Time ~ UTC−02</option>
-						<option value="31BRT" >BRT ~ Brasília Time ~ UTC−03</option>
-						<option value="32BST" >BST ~ Bangladesh Standard Time ~ UTC+06</option>
-						<option value="33BST" >BST ~ Bougainville Standard Time[6] ~ UTC+11</option>
-						<option value="34BST" >BST ~ British Summer Time (British Standard Time from Feb 1968 to Oct 1971) ~ UTC+01</option>
-						<option value="35BTT" >BTT ~ Bhutan Time ~ UTC+06</option>
-						<option value="36CAT" >CAT ~ Central Africa Time ~ UTC+02</option>
-						<option value="37CCT" >CCT ~ Cocos Islands Time ~ UTC+06:30</option>
-						<option value="38CDT" >CDT ~ Central Daylight Time (North America) ~ UTC−05</option>
-						<option value="39CDT" >CDT ~ Cuba Daylight Time[7] ~ UTC−04</option>
-						<option value="40CEST" >CEST ~ Central European Summer Time (Cf. HAEC) ~ UTC+02</option>
-						<option value="41CET" >CET ~ Central European Time ~ UTC+01</option>
-						<option value="42CHADT" >CHADT ~ Chatham Daylight Time ~ UTC+13:45</option>
-						<option value="43CHAST" >CHAST ~ Chatham Standard Time ~ UTC+12:45</option>
-						<option value="44CHOT" >CHOT ~ Choibalsan Standard Time ~ UTC+08</option>
-						<option value="45CHOST" >CHOST ~ Choibalsan Summer Time ~ UTC+09</option>
-						<option value="46CHST" >CHST ~ Chamorro Standard Time ~ UTC+10</option>
-						<option value="47CHUT" >CHUT ~ Chuuk Time ~ UTC+10</option>
-						<option value="48CIST" >CIST ~ Clipperton Island Standard Time ~ UTC−08</option>
-						<option value="49WITA" >WITA ~ Central Indonesia Time ~ UTC+08</option>
-						<option value="50CKT" >CKT ~ Cook Island Time ~ UTC−10</option>
-						<option value="51CLST" >CLST ~ Chile Summer Time ~ UTC−03</option>
-						<option value="52CLT" >CLT ~ Chile Standard Time ~ UTC−04</option>
-						<option value="53COST" >COST ~ Colombia Summer Time ~ UTC−04</option>
-						<option value="54COT" >COT ~ Colombia Time ~ UTC−05</option>
-						<option value="55CST" >CST ~ Central Standard Time (North America) ~ UTC−06</option>
-						<option value="56CST" >CST ~ China Standard Time ~ UTC+08</option>
-						<option value="57CST" >CST ~ Cuba Standard Time ~ UTC−05</option>
-						<option value="58CT" >CT ~ Central Time ~ UTC06/UTC05</option>
-						<option value="59CVT" >CVT ~ Cape Verde Time ~ UTC−01</option>
-						<option value="60CWST" >CWST ~ Central Western Standard Time (Australia) unofficial ~ UTC+08:45</option>
-						<option value="61CXT" >CXT ~ Christmas Island Time ~ UTC+07</option>
-						<option value="62DAVT" >DAVT ~ Davis Time ~ UTC+07</option>
-						<option value="63DDUT" >DDUT ~ Dumont d'Urville Time ~ UTC+10</option>
-						<option value="64DFT" >DFT ~ AIXspecific equivalent of Central European Time[NB 1] ~ UTC+01</option>
-						<option value="65EASST" >EASST ~ Easter Island Summer Time ~ UTC−05</option>
-						<option value="66EAST" >EAST ~ Easter Island Standard Time ~ UTC−06</option>
-						<option value="67EAT" >EAT ~ East Africa Time ~ UTC+03</option>
-						<option value="68ECT" >ECT ~ Eastern Caribbean Time (does not recognise DST) ~ UTC−04</option>
-						<option value="69ECT" >ECT ~ Ecuador Time ~ UTC−05</option>
-						<option value="70EDT" >EDT ~ Eastern Daylight Time (North America) ~ UTC−04</option>
-						<option value="71EEST" >EEST ~ Eastern European Summer Time ~ UTC+03</option>
-						<option value="72EET" >EET ~ Eastern European Time ~ UTC+02</option>
-						<option value="73EGST" >EGST ~ Eastern Greenland Summer Time ~ UTC±00</option>
-						<option value="74EGT" >EGT ~ Eastern Greenland Time ~ UTC−01</option>
-						<option value="75WIT" >WIT ~ Eastern Indonesian Time ~ UTC+09</option>
-						<option value="76EST" >EST ~ Eastern Standard Time (North America) ~ UTC−05</option>
-						<option value="77FET" >FET ~ Furthereastern European Time ~ UTC+03</option>
-						<option value="78FJT" >FJT ~ Fiji Time ~ UTC+12</option>
-						<option value="79FKST" >FKST ~ Falkland Islands Summer Time ~ UTC−03</option>
-						<option value="80FKT" >FKT ~ Falkland Islands Time ~ UTC−04</option>
-						<option value="81FNT" >FNT ~ Fernando de Noronha Time ~ UTC−02</option>
-						<option value="82GALT" >GALT ~ Galápagos Time ~ UTC−06</option>
-						<option value="83GAMT" >GAMT ~ Gambier Islands Time ~ UTC−09</option>
-						<option value="84GET" >GET ~ Georgia Standard Time ~ UTC+04</option>
-						<option value="85GFT" >GFT ~ French Guiana Time ~ UTC−03</option>
-						<option value="86GILT" >GILT ~ Gilbert Island Time ~ UTC+12</option>
-						<option value="87GIT" >GIT ~ Gambier Island Time ~ UTC−09</option>
-						<option value="88GMT" >GMT ~ Greenwich Mean Time ~ UTC±00</option>
-						<option value="89GST" >GST ~ South Georgia and the South Sandwich Islands Time ~ UTC−02</option>
-						<option value="90GST" >GST ~ Gulf Standard Time ~ UTC+04</option>
-						<option value="91GYT" >GYT ~ Guyana Time ~ UTC−04</option>
-						<option value="92HDT" >HDT ~ Hawaii–Aleutian Daylight Time ~ UTC−09</option>
-						<option value="93HAEC" >HAEC ~ Heure Avancée d'Europe Centrale Frenchlanguage name for CEST ~ UTC+02</option>
-						<option value="94HST" >HST ~ Hawaii–Aleutian Standard Time ~ UTC−10</option>
-						<option value="95HKT" >HKT ~ Hong Kong Time ~ UTC+08</option>
-						<option value="96HMT" >HMT ~ Heard and McDonald Islands Time ~ UTC+05</option>
-						<option value="97HOVST" >HOVST ~ Hovd Summer Time (not used from 2017present) ~ UTC+08</option>
-						<option value="98HOVT" >HOVT ~ Hovd Time ~ UTC+07</option>
-						<option value="99ICT" >ICT ~ Indochina Time ~ UTC+07</option>
-						<option value="100IDLW" >IDLW ~ International Day Line West time zone ~ UTC−12</option>
-						<option value="101IDT" >IDT ~ Israel Daylight Time ~ UTC+03</option>
-						<option value="102IOT" >IOT ~ Indian Ocean Time ~ UTC+03</option>
-						<option value="103IRDT" >IRDT ~ Iran Daylight Time ~ UTC+04:30</option>
-						<option value="104IRKT" >IRKT ~ Irkutsk Time ~ UTC+08</option>
-						<option value="105IRST" >IRST ~ Iran Standard Time ~ UTC+03:30</option>
-						<option value="106IST" selected>IST ~ Indian Standard Time ~ UTC+05:30</option>
-						<option value="107IST" >IST ~ Irish Standard Time[8] ~ UTC+01</option>
-						<option value="108IST" >IST ~ Israel Standard Time ~ UTC+02</option>
-						<option value="109JST" >JST ~ Japan Standard Time ~ UTC+09</option>
-						<option value="110KALT" >KALT ~ Kaliningrad Time ~ UTC+02</option>
-						<option value="111KGT" >KGT ~ Kyrgyzstan Time ~ UTC+06</option>
-						<option value="112KOST" >KOST ~ Kosrae Time ~ UTC+11</option>
-						<option value="113KRAT" >KRAT ~ Krasnoyarsk Time ~ UTC+07</option>
-						<option value="114KST" >KST ~ Korea Standard Time ~ UTC+09</option>
-						<option value="115LHST" >LHST ~ Lord Howe Standard Time ~ UTC+10:30</option>
-						<option value="116LHST" >LHST ~ Lord Howe Summer Time ~ UTC+11</option>
-						<option value="117LINT" >LINT ~ Line Islands Time ~ UTC+14</option>
-						<option value="118MAGT" >MAGT ~ Magadan Time ~ UTC+12</option>
-						<option value="119MART" >MART ~ Marquesas Islands Time ~ UTC−09:30</option>
-						<option value="120MAWT" >MAWT ~ Mawson Station Time ~ UTC+05</option>
-						<option value="121MDT" >MDT ~ Mountain Daylight Time (North America) ~ UTC−06</option>
-						<option value="122MET" >MET ~ Middle European Time Same zone as CET ~ UTC+01</option>
-						<option value="123MEST" >MEST ~ Middle European Summer Time Same zone as CEST ~ UTC+02</option>
-						<option value="124MHT" >MHT ~ Marshall Islands Time ~ UTC+12</option>
-						<option value="125MIST" >MIST ~ Macquarie Island Station Time ~ UTC+11</option>
-						<option value="126MIT" >MIT ~ Marquesas Islands Time ~ UTC−09:30</option>
-						<option value="127MMT" >MMT ~ Myanmar Standard Time ~ UTC+06:30</option>
-						<option value="128MSK" >MSK ~ Moscow Time ~ UTC+03</option>
-						<option value="129MST" >MST ~ Malaysia Standard Time ~ UTC+08</option>
-						<option value="130MST" >MST ~ Mountain Standard Time (North America) ~ UTC−07</option>
-						<option value="131MUT" >MUT ~ Mauritius Time ~ UTC+04</option>
-						<option value="132MVT" >MVT ~ Maldives Time ~ UTC+05</option>
-						<option value="133MYT" >MYT ~ Malaysia Time ~ UTC+08</option>
-						<option value="134NCT" >NCT ~ New Caledonia Time ~ UTC+11</option>
-						<option value="135NDT" >NDT ~ Newfoundland Daylight Time ~ UTC−02:30</option>
-						<option value="136NFT" >NFT ~ Norfolk Island Time ~ UTC+11</option>
-						<option value="137NOVT" >NOVT ~ Novosibirsk Time [9] ~ UTC+07</option>
-						<option value="138NPT" >NPT ~ Nepal Time ~ UTC+05:45</option>
-						<option value="139NST" >NST ~ Newfoundland Standard Time ~ UTC−03:30</option>
-						<option value="140NT" >NT ~ Newfoundland Time ~ UTC−03:30</option>
-						<option value="141NUT" >NUT ~ Niue Time ~ UTC−11</option>
-						<option value="142NZDT" >NZDT ~ New Zealand Daylight Time ~ UTC+13</option>
-						<option value="143NZST" >NZST ~ New Zealand Standard Time ~ UTC+12</option>
-						<option value="144OMST" >OMST ~ Omsk Time ~ UTC+06</option>
-						<option value="145ORAT" >ORAT ~ Oral Time ~ UTC+05</option>
-						<option value="146PDT" >PDT ~ Pacific Daylight Time (North America) ~ UTC−07</option>
-						<option value="147PET" >PET ~ Peru Time ~ UTC−05</option>
-						<option value="148PETT" >PETT ~ Kamchatka Time ~ UTC+12</option>
-						<option value="149PGT" >PGT ~ Papua New Guinea Time ~ UTC+10</option>
-						<option value="150PHOT" >PHOT ~ Phoenix Island Time ~ UTC+13</option>
-						<option value="151PHT" >PHT ~ Philippine Time ~ UTC+08</option>
-						<option value="152PKT" >PKT ~ Pakistan Standard Time ~ UTC+05</option>
-						<option value="153PMDT" >PMDT ~ Saint Pierre and Miquelon Daylight Time ~ UTC−02</option>
-						<option value="154PMST" >PMST ~ Saint Pierre and Miquelon Standard Time ~ UTC−03</option>
-						<option value="155PONT" >PONT ~ Pohnpei Standard Time ~ UTC+11</option>
-						<option value="156PST" >PST ~ Pacific Standard Time (North America) ~ UTC−08</option>
-						<option value="157PST" >PST ~ Philippine Standard Time ~ UTC+08</option>
-						<option value="158PYST" >PYST ~ Paraguay Summer Time[10] ~ UTC−03</option>
-						<option value="159PYT" >PYT ~ Paraguay Time[11] ~ UTC−04</option>
-						<option value="160RET" >RET ~ Réunion Time ~ UTC+04</option>
-						<option value="161ROTT" >ROTT ~ Rothera Research Station Time ~ UTC−03</option>
-						<option value="162SAKT" >SAKT ~ Sakhalin Island Time ~ UTC+11</option>
-						<option value="163SAMT" >SAMT ~ Samara Time ~ UTC+04</option>
-						<option value="164SAST" >SAST ~ South African Standard Time ~ UTC+02</option>
-						<option value="165SBT" >SBT ~ Solomon Islands Time ~ UTC+11</option>
-						<option value="166SCT" >SCT ~ Seychelles Time ~ UTC+04</option>
-						<option value="167SDT" >SDT ~ Samoa Daylight Time ~ UTC−10</option>
-						<option value="168SGT" >SGT ~ Singapore Time ~ UTC+08</option>
-						<option value="169SLST" >SLST ~ Sri Lanka Standard Time ~ UTC+05:30</option>
-						<option value="170SRET" >SRET ~ Srednekolymsk Time ~ UTC+11</option>
-						<option value="171SRT" >SRT ~ Suriname Time ~ UTC−03</option>
-						<option value="172SST" >SST ~ Samoa Standard Time ~ UTC−11</option>
-						<option value="173SST" >SST ~ Singapore Standard Time ~ UTC+08</option>
-						<option value="174SYOT" >SYOT ~ Showa Station Time ~ UTC+03</option>
-						<option value="175TAHT" >TAHT ~ Tahiti Time ~ UTC−10</option>
-						<option value="176THA" >THA ~ Thailand Standard Time ~ UTC+07</option>
-						<option value="177TFT" >TFT ~ French Southern and Antarctic Time[12] ~ UTC+05</option>
-						<option value="178TJT" >TJT ~ Tajikistan Time ~ UTC+05</option>
-						<option value="179TKT" >TKT ~ Tokelau Time ~ UTC+13</option>
-						<option value="180TLT" >TLT ~ Timor Leste Time ~ UTC+09</option>
-						<option value="181TMT" >TMT ~ Turkmenistan Time ~ UTC+05</option>
-						<option value="182TRT" >TRT ~ Turkey Time ~ UTC+03</option>
-						<option value="183TOT" >TOT ~ Tonga Time ~ UTC+13</option>
-						<option value="184TVT" >TVT ~ Tuvalu Time ~ UTC+12</option>
-						<option value="185ULAST" >ULAST ~ Ulaanbaatar Summer Time ~ UTC+09</option>
-						<option value="186ULAT" >ULAT ~ Ulaanbaatar Standard Time ~ UTC+08</option>
-						<option value="187UTC" >UTC ~ Coordinated Universal Time ~ UTC±00</option>
-						<option value="188UYST" >UYST ~ Uruguay Summer Time ~ UTC−02</option>
-						<option value="189UYT" >UYT ~ Uruguay Standard Time ~ UTC−03</option>
-						<option value="190UZT" >UZT ~ Uzbekistan Time ~ UTC+05</option>
-						<option value="191VET" >VET ~ Venezuelan Standard Time ~ UTC−04</option>
-						<option value="192VLAT" >VLAT ~ Vladivostok Time ~ UTC+10</option>
-						<option value="193VOLT" >VOLT ~ Volgograd Time ~ UTC+04</option>
-						<option value="194VOST" >VOST ~ Vostok Station Time ~ UTC+06</option>
-						<option value="195VUT" >VUT ~ Vanuatu Time ~ UTC+11</option>
-						<option value="196WAKT" >WAKT ~ Wake Island Time ~ UTC+12</option>
-						<option value="197WAST" >WAST ~ West Africa Summer Time ~ UTC+02</option>
-						<option value="198WAT" >WAT ~ West Africa Time ~ UTC+01</option>
-						<option value="199WEST" >WEST ~ Western European Summer Time ~ UTC+01</option>
-						<option value="200WET" >WET ~ Western European Time ~ UTC±00</option>
-						<option value="201WIB" >WIB ~ Western Indonesian Time ~ UTC+07</option>
-						<option value="202WGST" >WGST ~ West Greenland Summer Time[13] ~ UTC−02</option>
-						<option value="203WGT" >WGT ~ West Greenland Time[14] ~ UTC−03</option>
-						<option value="204WST" >WST ~ Western Standard Time ~ UTC+08</option>
-						<option value="205YAKT" >YAKT ~ Yakutsk Time ~ UTC+09</option>
-						<option value="206YEKT" >YEKT ~ Yekaterinburg Time ~ UTC+05</option>
+                            
+                            
+                           <option th:each="timezone : ${timezoneDropdownList}"
+                             					th:value="${timezone.keyId}"
+                             					th:text="${timezone.value}" /> 
                       
                     </select>
                   </div>
@@ -312,7 +141,7 @@
                     <span class="card-text font-size-1">Want to get email Alert o Plan renewal.</span>
                   </span>
                   <span class="col-4 col-sm-3">
-                    <input type="checkbox" class="toggle-switch-input" id="preferencesSwitch1">
+                    <input type="checkbox" class="toggle-switch-input" name="preferencesSwitch1" id="preferencesSwitch1" th:checked="*{planRenewalAlert}">
                     <span class="toggle-switch-label ml-auto">
                       <span class="toggle-switch-indicator"></span>
                     </span>
@@ -327,7 +156,7 @@
                     <span class="card-text font-size-1">Do you want the Agent to send whapsapp Notification?</span>
                   </span>
                   <span class="col-4 col-sm-3">
-                    <input type="checkbox" class="toggle-switch-input" id="preferencesSwitch2" checked>
+                    <input type="checkbox" class="toggle-switch-input" id="preferencesSwitch2" th:checked="*{whatsappNotificationsAlert}">
                     <span class="toggle-switch-label ml-auto">
                       <span class="toggle-switch-indicator"></span>
                     </span>
@@ -342,7 +171,7 @@
                     <span class="card-text font-size-1">Do you want josthi.com to send Promotional offers via email?</span>
                   </span>
                   <span class="col-4 col-sm-3">
-                    <input type="checkbox" class="toggle-switch-input" id="preferencesSwitch3" checked>
+                    <input type="checkbox" class="toggle-switch-input" id="preferencesSwitch3" th:checked="*{promotionalOfferAlert}">
                     <span class="toggle-switch-label ml-auto">
                       <span class="toggle-switch-indicator"></span>
                     </span>
@@ -355,6 +184,10 @@
                   <span class="mx-2"></span>
                   <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
+                
+                <div class="row">
+					<label  id="ajaxStatus"></label>
+				</div>
               </form>
               <!-- End Form -->
             </div>
@@ -447,7 +280,99 @@
         var goTo = new HSGoTo($(this)).init();
       });
     });
+    
+    
+    
+    $('#preferencesSwitch1').on('change', function() {
+        var val = this.checked ? true : false;
+        saveUserPreferences('planRenewalAlert',val);
+    });
+    
+    $('#preferencesSwitch2').on('change', function() {
+        var val = this.checked ? true : false;
+        saveUserPreferences('whatsappNotificationsAlert',val);
+    });
+    
+    $('#preferencesSwitch3').on('change', function() {
+        var val = this.checked ? true : false;
+        saveUserPreferences('promotionalOfferAlert',val);
+    });
+    
+    
+    
   </script>
+  
+  <script>
+		  function saveUserPreferences(alertType, value){
+					var custId = $('#hiddenCustomerID').val();
+					var emailId = $('#hiddenEmailID').val();
+					
+					var formData = new FormData();
+					formData.append('customerID',custId);
+					formData.append('emailId',emailId);
+					formData.append('alertType',alertType);
+					formData.append('value',value);
+					
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',
+						url: "/saveUserPreferences",
+						data: formData,
+						dataType: 'html', //Important , it has to be HTML to get HTML String Back
+						cache: false,
+						timeout: 600000,
+						contentType: false,
+						processData: false, //it prevent jQuery form transforming the data into a query string
+						success: function (data, status) {
+							console.log("SUCCESS : ", data);
+							
+							if(isStringContains(data, 'Success :')){
+								//showSuccessMsg(data); //Used don't need to know if the value is saved. but will be notified for Error.
+							}else{
+								showError(data);
+							}
+								
+							//alert("Success :"+data);
+				
+						},
+						error: function (xhr, status, error) {
+							console.log("ERROR : ", xhr.status);
+							console.log("ERROR status: ", status);
+							console.log("ERROR error: ", error);
+							showError("Error : Exception occured while sending the OTP email, try again, if you still see the error, contact the customer service.");
+							//alert("Error :"+error);
+				
+						}
+					});
+				}
+		  
+		  
+		  
+		  	function showError(msg) {
+			  var e1 = document.getElementById("ajaxStatus");
+			  e1.setAttribute("style", "display:block;background:#ffecec;border: 2px solid #f5aca6");
+			  e1.innerHTML = "&nbsp;"+msg;
+
+			}
+			
+			function showSuccessMsg(msg) {
+			  var e1 = document.getElementById("ajaxStatus");
+			  e1.setAttribute("style", "display:block;background:#c3f3cd;border: 2px solid #50ef72");
+			  e1.innerHTML = "&nbsp;"+msg;
+
+			}
+			
+			function isStringContains (StringVal, SubStringVal){
+				var res = StringVal.match(SubStringVal);
+				
+				if( res == null){
+					return false;
+				}else{
+					return true;
+				}
+			}
+		
+		</Script>
   
   
 

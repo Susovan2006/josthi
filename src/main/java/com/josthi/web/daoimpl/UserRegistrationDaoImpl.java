@@ -44,6 +44,13 @@ private static final Logger logger = LoggerFactory.getLogger(UserRegistrationDao
 	}
 	
 	
+	public static final String INSERT_USER_PREFERENCES ="INSERT INTO user_preferences (USER_ID) VALUES (?)";
+	@Override
+	public boolean insertUserDefaultPreference(String customerID) throws Exception {
+		int result = jdbcTemplate.update(INSERT_USER_PREFERENCES,new Object[]{customerID});   
+		
+		return (result > 0 ? true : false);
+	}
 	
 	
 	public static final String INSERT_USER_DETAILS = "INSERT INTO user_detail (UID, FIRST_NAME, LAST_NAME, USER_STATUS) VALUES(?, ?, ? ,?)";
@@ -113,6 +120,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserRegistrationDao
 																					 agentRegistrationBean.getCoverageArea()});
 		return (result > 0 ? true : false);
 	}
+	
 	
 	
 	

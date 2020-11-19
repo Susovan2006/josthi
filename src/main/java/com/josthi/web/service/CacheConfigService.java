@@ -11,6 +11,10 @@ public interface CacheConfigService {
 	Map<String, List<CacheConfigPO>> getConfigData();
 
 	List<DropDownBean> getBloodGroup(String bloodGroup);
+
+	List<DropDownBean> getLanguages() throws Exception;
+
+	List<DropDownBean> getTimeZones() throws Exception;
 	
 	
 }

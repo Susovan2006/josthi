@@ -37,4 +37,11 @@ public class DropDownBean {
 	public void setActive(String active) {
 		this.active = active;
 	}
+	@Override
+	public String toString() {
+		return "DropDownBean [tid=" + tid + ", dropDownType=" + dropDownType + ", keyId=" + keyId + ", value=" + value
+				+ ", active=" + active + "]";
+	}
+	
+	
 }

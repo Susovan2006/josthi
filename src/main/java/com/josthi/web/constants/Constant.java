@@ -42,6 +42,8 @@ public interface Constant {
 	
 	//DROPDOWN TYPE
 	String BLOOD_GROUP = "BLOOD_GROUP";
+	String LANGUAGE = "Language";
+	String TIME_ZONE = "TimeZone";
 	
 	
 	

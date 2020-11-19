@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.josthi.web.service.CacheConfigService ;
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.CacheConfigDao ;
 import com.josthi.web.daoimpl.CacheConfigDaoImpl;
+import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.po.CacheConfigPO;
 
 @Service("cacheConfigService")
@@ -55,6 +57,26 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 	@Override
 	public List<DropDownBean> getBloodGroup(String bloodGroup) {
 		return cacheConfigDao.getDropDownForGroupID(bloodGroup);
+	}
+
+	@Override
+	public List<DropDownBean> getLanguages() throws Exception {
+		try {
+			return cacheConfigDao.getDropDownForGroupID(Constant.LANGUAGE);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the Language values from the Server. Please try later");
+		}
+	}
+
+	@Override
+	public List<DropDownBean> getTimeZones() throws Exception {
+		try {
+			return cacheConfigDao.getDropDownForGroupID(Constant.TIME_ZONE);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the TimeZone values from the Server. Please try later");
+		}
 	}
 
 	/*

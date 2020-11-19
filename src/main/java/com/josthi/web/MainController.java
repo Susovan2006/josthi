@@ -205,10 +205,10 @@ public class MainController {
 	
 	
 	//Preferences
-	@GetMapping("/user/preferences")
-	public String userPreferences(Model model) {
-			return "user/preferences_user";
-	}
+	/*
+	 * @GetMapping("/user/preferences") public String userPreferences(Model model) {
+	 * return "user/preferences_user"; }
+	 */
 	
 	//Subscribe a Plan
 	@GetMapping("/user/subscribePlan")

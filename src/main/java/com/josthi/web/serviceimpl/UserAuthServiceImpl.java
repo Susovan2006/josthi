@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.josthi.web.bo.PasswordResetBean;
 import com.josthi.web.bo.UserAuthBo;
+import com.josthi.web.bo.UserPreferencesBean;
 import com.josthi.web.dao.UserAuthDao;
 import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.service.UserAuthService;
@@ -131,7 +132,7 @@ public class UserAuthServiceImpl implements UserAuthService{
 			Timestamp now = new Timestamp(new Date().getTime());
 			
 			if( lastUpdateTime != null && Utils.compareTwoTimeStamps(now, lastUpdateTime) > 1) {
-				System.out.println("######"+lastUpdateTime.toString());
+				//System.out.println("######"+lastUpdateTime.toString());
 				return true;
 			}else {
 				return false;
@@ -143,6 +144,51 @@ public class UserAuthServiceImpl implements UserAuthService{
 			//return false;
 		}
 		
+	}
+
+	@Override
+	public UserPreferencesBean getUserPref(String userId) throws Exception {
+		try {
+			UserPreferencesBean userPref = userAuthDao.getUserPref(userId);
+			if(userPref == null) {
+				userAuthDao.saveDeafultUserPref(userId);
+				return new UserPreferencesBean("English","106IST",false, false, false);
+			}else {
+				return userPref;
+			}
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public boolean updateUserPreperences(UserPreferencesBean userPreferencesBean, String userId) throws Exception {
+		try {
+			if(userAuthDao.updateUserPreperences(userPreferencesBean, userId)) {
+				return true;
+			}else {
+				throw new UserExceptionInvalidData("Data Update Failed, Try again later.");
+			}
+		}catch(UserExceptionInvalidData ex) {
+			throw ex;
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public boolean saveUserPref(String customerID, String alertType, String value) throws Exception {
+		try {
+			if(userAuthDao.updateUserPref(customerID, alertType, value)) {
+				return true;
+			}else {
+				throw new UserExceptionInvalidData("Data Update Failed, Try again later.");
+			}
+		}catch(UserExceptionInvalidData ex) {
+			throw ex;
+		}catch(Exception ex) {
+			throw ex;
+		}
 	}
 	
 	

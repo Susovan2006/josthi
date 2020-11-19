@@ -120,7 +120,7 @@
               </div>
             </div>
             
-            <!-- Alert Section Start-->
+            	<!-- Alert Section Start-->
 	            <div th:if="${statusOtp ne null}">
 		            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${statusOtp == 'Success'} ? alert-success : alert-warning">
 					  <strong><span th:text="${statusOtp}"></span>:</strong> <span th:text="${messageOtp}"></span>
@@ -131,9 +131,6 @@
 					  </button>
 					</div>
 				</div>
-				
-				
-
 				<!-- Alert Section End-->
 
             <!-- Body -->

@@ -17,4 +17,6 @@ public interface UserRegistrationDao {
 
 	boolean insertIntoAgentEnquery(AgentRegistrationBean agentRegistrationBean);
 
+	boolean insertUserDefaultPreference(String customerID) throws Exception;
+
 }

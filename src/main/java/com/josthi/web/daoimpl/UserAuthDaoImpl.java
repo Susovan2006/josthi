@@ -13,9 +13,11 @@ import org.springframework.stereotype.Repository;
 
 import com.josthi.web.bo.PasswordResetBean;
 import com.josthi.web.bo.UserAuthBo;
+import com.josthi.web.bo.UserPreferencesBean;
 import com.josthi.web.controller.UserAuthController;
 import com.josthi.web.dao.UserAuthDao;
 import com.josthi.web.dao.rowmapper.UserAuthRowMapper;
+import com.josthi.web.dao.rowmapper.UserPreferenceRowMaper;
 import com.josthi.web.dao.rowmapper.ValidateAuthenticityRowMaper;
 import com.josthi.web.exception.UserExceptionInvalidData;
 
@@ -269,6 +271,96 @@ public class UserAuthDaoImpl implements UserAuthDao{
 			}else{  // list contains more than 1 elements
 				throw new UserExceptionInvalidData("Invalid Data in the Database...");
 			}
+	}
+	
+	
+	
+	public static final String SELECT_USER_PREF ="SELECT TID, USER_ID, TIME_ZONE, PREFERED_LANGUAGE, PLAN_RENEWAL_REMINDER, WHATSAPP_NOTIFICATION, EMAIL_NOTIFICATION_FOR_AD FROM user_preferences WHERE USER_ID=?";
+	@Override
+	public UserPreferencesBean getUserPref(String userId) throws Exception {
+		@SuppressWarnings("unchecked")
+		List<UserPreferencesBean> UserPreferencesList  = getJdbcTemplate().query(SELECT_USER_PREF,
+																new Object[] { userId},
+																new UserPreferenceRowMaper());
+
+			if ( UserPreferencesList.isEmpty()){
+				logger.info("No Pref Setup");
+				return null;
+			}else if ( UserPreferencesList.size() == 1 ) { // list contains exactly 1 element
+				logger.info("User Pref :"+UserPreferencesList.get(0));
+				return UserPreferencesList.get(0);
+			}else{  // list contains more than 1 elements
+				throw new UserExceptionInvalidData("Invalid Data in the Database...");
+			}
+	}
+	
+	
+	
+	public static final String UPDATE_USER_PREFERENCES = "UPDATE user_preferences " 
+			+ "SET TIME_ZONE=? , PREFERED_LANGUAGE=?, LAST_UPDATE_TIMESTAMP=CURRENT_TIMESTAMP "
+			+ "WHERE USER_ID = ?;";
+	@Override
+	public boolean updateUserPreperences(UserPreferencesBean userPreferencesBean, String userId) throws Exception {
+		try {
+			
+			int result = jdbcTemplate.update(UPDATE_USER_PREFERENCES, new Object[]{
+																userPreferencesBean.getTimeZone(),
+																userPreferencesBean.getLanguage(),
+																userId
+														});	
+			return (result > 0 ? true : false);
+			
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Failed to Update the User Preferences, please try again.");
+		}
+	}
+	
+	
+	public static final String UPDATE_USER_PREFERENCES_PLAN_RENEWAL = "UPDATE user_preferences SET LAST_UPDATE_TIMESTAMP=CURRENT_TIMESTAMP, "
+																	 + "PLAN_RENEWAL_REMINDER = ? WHERE USER_ID = ? ";
+	public static final String UPDATE_USER_PREFERENCES_WHATAPP_NOTIFICATION = "UPDATE user_preferences SET LAST_UPDATE_TIMESTAMP=CURRENT_TIMESTAMP, "
+			 														 + "WHATSAPP_NOTIFICATION = ? WHERE USER_ID = ? ";
+	public static final String UPDATE_USER_PREFERENCES_PROMOTIONAL_OFFER = "UPDATE user_preferences SET LAST_UPDATE_TIMESTAMP=CURRENT_TIMESTAMP, "
+			 														 + "EMAIL_NOTIFICATION_FOR_AD = ? WHERE USER_ID = ? ";
+	@Override
+	public boolean updateUserPref(String customerID, String alertType, String value) throws Exception {
+			try {
+			
+			int result = 0;
+			boolean checkBoxValue = Boolean.parseBoolean(value);
+			if(alertType.equalsIgnoreCase("planRenewalAlert")) {
+				  result = jdbcTemplate.update(UPDATE_USER_PREFERENCES_PLAN_RENEWAL,new Object[]{checkBoxValue, customerID});
+				  
+			}else if(alertType.equalsIgnoreCase("whatsappNotificationsAlert")) {
+				  result = jdbcTemplate.update(UPDATE_USER_PREFERENCES_WHATAPP_NOTIFICATION,new Object[]{checkBoxValue, customerID});
+				  
+			}else if(alertType.equalsIgnoreCase("promotionalOfferAlert")) {
+				  result = jdbcTemplate.update(UPDATE_USER_PREFERENCES_PROMOTIONAL_OFFER,new Object[]{checkBoxValue, customerID});
+				  
+			}
+					
+			
+			return (result > 0 ? true : false);
+			
+			}catch(Exception ex) {
+				logger.error(ex.getMessage(), ex);
+				throw new UserExceptionInvalidData("Failed to Update the User Preferences, please try again.");
+			}
+	}
+	
+	
+	
+	public static final String INSERT_DEFAULT_USER_PREF = "insert into user_preferences (USER_ID) values (?)";
+	@Override
+	public void saveDeafultUserPref(String userId) throws Exception {
+		try {
+			int result = jdbcTemplate.update(INSERT_DEFAULT_USER_PREF,new Object[]{userId});
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while inserting the default settings");
+		}
+		
 	}
 	
 

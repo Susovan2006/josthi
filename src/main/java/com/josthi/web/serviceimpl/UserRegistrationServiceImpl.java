@@ -49,10 +49,17 @@ public class UserRegistrationServiceImpl implements UserRegistrationService{
 				//--> Insert in the userAuth table.
 				boolean status = false;
 				status = userRegistrationDao.insertIntoUserAuth(userRegistrationBean);
+				
+				//User Pref
+				status = userRegistrationDao.insertUserDefaultPreference(userRegistrationBean.getCustomerID().trim());
+				
 				//--> Insert in user_detail Table
 				status = userRegistrationDao.insertIntoUserDetail(userRegistrationBean);
+				
 				//--> Increment the next ID +1
 				status = userRegistrationDao.updateNextUid(getNextID+1);
+				
+				
 				
 				platformTransactionManager.commit(txnStatus);
 				return status;

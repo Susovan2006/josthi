@@ -28,9 +28,9 @@ import com.josthi.web.utils.Security;
 import com.josthi.web.utils.ValidateSession;
 
 @Controller
-public class UserAccountController {
+public class UserLoginAndSecurityController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserAccountController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserLoginAndSecurityController.class);
 	
 	
 	@Autowired

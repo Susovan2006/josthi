@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Service Request | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  
+  
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Request a Service</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Plan and Service</li>
+              <li class="breadcrumb-item active" aria-current="page">Request a Service</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Request a service</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              <p class="card-text">Describe the request you are looking for.</p>
+
+              <form class="js-validate">
+                <!-- Form Group -->
+				
+				<!-- ROW 1 --> 
+				<div class="row form-group">
+                  <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">Request Type<i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="This is based on Selected Plan."></i><span class="text-danger">*</span></label>
+
+                  <div class="col-sm-9 js-form-message">
+                    <div class="input-group">						
+						<select class="form-control show-tick" required data-msg="Please Select Service Type.">
+                                <option></option>                    
+								<option>Need Emergency Help</option>
+                                <option>Need Home Service</option>
+                        </select>
+                    </div>
+                  </div>
+				  
+				  
+                </div>
+				
+				<!-- ROW 2 --> 
+				<div class="row form-group">
+                  <label for="firstNameLabel" class="col-sm-2 col-form-label input-label">Fulfill Date<i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="The date/Time can vary based on urgency."></i><span class="text-danger">*</span></label>
+
+                  <div class="col-sm-4 js-form-message">
+                    <div class="input-group ">						
+						<input type="date" class="js-masked-input form-control"  
+								id="requestFulfillDate" name="requestFulfillDate" placeholder="dd-mm-yyyy" min="1985-01-01" max="2000-12-31" 
+								data-msg="Fulfill Date is mandatory." required>
+                    </div>
+                  </div>
+				  
+				  <label for="beneficiaryLabel" class="col-sm-2 col-form-label input-label">Beneficiary Name</label>
+				  <div class="col-sm-4 js-form-message">
+                    <div class="input-group ">
+                      <select class="form-control show-tick">                             
+								<option>Family</option>
+								<option>Primary Beneficiary</option>
+                                <option>Secondary Beneficiary</option>
+                                
+                        </select>
+                    </div>
+                  </div>
+				  
+                </div>
+                
+                
+                <!-- Row 3 -->
+				<div class="row">                				  
+				  <div class="col-sm-12">
+                    <div class="form-group">
+					  <label class="input-label">Special notes on Service</label>
+					  
+					  <textarea cols="30" rows="3" class="form-control no-resize" id="serviveRequestNotes" name="serviveRequestNotes" placeholder="" 
+								maxlength="400"></textarea>
+					</div>
+                  </div>
+				 </div>
+
+                <!-- End Form Group -->
+
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary">Submit Request</button>
+                </div>
+				
+			<BR>
+			<BR>
+			
+			
+			<table class="table table-thead-bordered">
+			  <thead class="thead-light">
+				<tr>
+				  <th scope="col">Req No</th>
+				  <th scope="col">Req For</th>
+				  <th scope="col">Request Date</th>
+				  <th scope="col">Status</th>
+				  <th scope="col">Action</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr>
+				  <th scope="row">1</th>
+				  <td>MR XXX YYY</td>
+				  <td>10/10/2020</td>
+				  <td>Initiated</td>
+				  <td><a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-edit"></i></a> 
+				  </td>
+				</tr>
+				<tr>
+				  <th scope="row">2</th>
+				  <td>MR AAA BBBB</td>
+				  <td>10/10/2020</td>
+				  <td>Initiated</td>
+				  <td>
+					  <a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+					  <a href="#"><i class="fa fa-edit"></i></a>
+				  </td>
+				</tr>
+				<tr>
+				  <th scope="row">3</th>
+				  <td>MR AAA BBBB</td>
+				  <td>10/10/2020</td>
+				  <td>Initiated</td>
+				  <td>
+					<a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+					<a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+					<a href="#"><i class="fa fa-edit"></i></a>
+				  </td>
+				</tr>
+			  </tbody>
+			</table>
+
+				
+				
+              </form>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+
+        </div>
+        <!--end Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:replace="user_common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  <div th:insert="user_common :: js-includes"></div>
+  <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+  
+  <script>
+    $(document).on('ready', function () {
+    	
+    	  var element = document.getElementById("userRequestServiceLink");
+    	  element.classList.add("active");
+    	
+    	
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+	  
+	  
+	  
+	  // Setting the Request FulFill Date.
+		var dtToday = new Date();
+		var maxMonth = dtToday.getMonth() + 2;
+		var month = dtToday.getMonth()+1;
+		var day = dtToday.getDate();
+		var year = dtToday.getFullYear();
+
+		if(maxMonth < 10)
+			maxMonth = '0' + maxMonth.toString();
+		
+		if(month < 10)
+			month = '0' + month.toString();
+			
+		if(day < 10)
+			day = '0' + day.toString();
+
+		var maxDate = year + '-' + maxMonth + '-' + day; 
+		var minDate = year + '-' + month + '-' + day; 
+		//alert(maxDate +'---'+minDate);			
+		$('#requestFulfillDate').attr('max', maxDate);
+		$('#requestFulfillDate').attr('min', minDate);
+		
+		
+		$( "#requestFulfillDate" ).change(function() {
+			var inPutDate = $( "#requestFulfillDate" ).val();
+			//alert(inPutDate);
+			
+			var monthNames = [ "January", "February", "March", "April", "May", "June",
+					"July", "August", "September", "October", "November", "December" ];
+
+			var newDate = new Date(inPutDate);
+			var formattedDate = newDate.getDate() + '-'+monthNames[newDate.getMonth()] + '-' + newDate.getFullYear();
+			//$('#requestFulfillDate').val(formattedDate);
+			
+		});
+	  
+    });
+  </script>
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

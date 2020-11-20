@@ -25,6 +25,7 @@ import com.josthi.web.daoimpl.CacheConfigDaoImpl;
 import com.josthi.web.daoimpl.EmailDaoImpl;
 import com.josthi.web.daoimpl.FileWikiDaoImpl;
 import com.josthi.web.daoimpl.SchedulerDaoImpl;
+import com.josthi.web.daoimpl.ServiceRequestDaoImpl;
 import com.josthi.web.daoimpl.UserAuthDaoImpl;
 import com.josthi.web.daoimpl.UserDetailsDaoImpl;
 import com.josthi.web.daoimpl.UserRegistrationDaoImpl;
@@ -32,6 +33,7 @@ import com.josthi.web.mail.EmailSenderService;
 import com.josthi.web.security.SecurityConfig;
 import com.josthi.web.serviceimpl.BeneficiaryServiceImpl;
 import com.josthi.web.serviceimpl.CacheConfigServiceImpl;
+import com.josthi.web.serviceimpl.ServiceRequestServiceImpl;
 import com.josthi.web.serviceimpl.UserRegistrationServiceImpl;
 import com.josthi.web.utils.HostNamePropertyPlaceHolderConfig;
 
@@ -201,6 +203,14 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	 return fileWikiDaoImpl;
  }
  
+ @Bean("serviceRequestDao")
+ public ServiceRequestDaoImpl serviceRequestDaoImpl(DataSource josthiDataSource) {
+	 ServiceRequestDaoImpl serviceRequestDaoImpl = new ServiceRequestDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 serviceRequestDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return serviceRequestDaoImpl;
+ }
+ 
  
  @Bean("userDetailsDao")
  public UserDetailsDaoImpl userDetailsDaoImpl(DataSource josthiDataSource) {
@@ -253,6 +263,14 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	 UserRegistrationServiceImpl userRegistrationServiceImpl = new UserRegistrationServiceImpl();
 	 userRegistrationServiceImpl.setPlatformTransactionManager(txnManager);
 	 return userRegistrationServiceImpl;
+ }
+ 
+ 
+ @Bean("serviceRequestService")
+ public ServiceRequestServiceImpl serviceRequestServiceImpl(PlatformTransactionManager txnManager) {
+	 ServiceRequestServiceImpl serviceRequestServiceImpl = new ServiceRequestServiceImpl();
+	 serviceRequestServiceImpl.setPlatformTransactionManager(txnManager);
+	 return serviceRequestServiceImpl;
  }
  
  @Bean("txnManager")

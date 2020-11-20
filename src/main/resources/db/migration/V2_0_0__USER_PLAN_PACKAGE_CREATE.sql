@@ -102,7 +102,7 @@ INSERT INTO dropdown_metadata (DROPDOWN_TYPE,KEY_ID,DROPDOWN_VALUE,ACTIVE) VALUE
 ,('BLOOD_GROUP','No Idea','No Idea','Y');
 
 --****************************************************************************************
---************************ NEXT RELEASE **************************************************
+--************************ Installed on 19 Nov********************************************
 
 ALTER TABLE user_auth_table
 ADD COLUMN OTP VARCHAR(45) NULL AFTER VERIFIED_USER,
@@ -131,7 +131,7 @@ VALUES('Language', 'Bengali', 'Bengali', 'Y', CURRENT_TIMESTAMP),
 ('Language', 'All', 'All', 'Y', CURRENT_TIMESTAMP);
 
 -- TIME ZONE SCRIPT
-INSERT INTO josthi_db.dropdown_metadata (DROPDOWN_TYPE, KEY_ID, DROPDOWN_VALUE, ACTIVE, UPDATE_DATE) VALUES
+INSERT INTO dropdown_metadata (DROPDOWN_TYPE, KEY_ID, DROPDOWN_VALUE, ACTIVE, UPDATE_DATE) VALUES
 ('TimeZone', '106IST', 'IST ~ Indian Standard Time ~ UTC+05:30', 'Y', CURRENT_TIMESTAMP),
 ('TimeZone', '1ACDT', 'ACDT ~ Australian Central Daylight Saving Time ~ UTC+10:30', 'Y', CURRENT_TIMESTAMP),
 ('TimeZone', '2ACST', 'ACST ~ Australian Central Standard Time ~ UTC+09:30', 'Y', CURRENT_TIMESTAMP),
@@ -339,6 +339,28 @@ INSERT INTO josthi_db.dropdown_metadata (DROPDOWN_TYPE, KEY_ID, DROPDOWN_VALUE, 
 ('TimeZone', '205YAKT', 'YAKT ~ Yakutsk Time ~ UTC+09', 'Y', CURRENT_TIMESTAMP),
 ('TimeZone', '206YEKT', 'YEKT ~ Yekaterinburg Time ~ UTC+05', 'Y', CURRENT_TIMESTAMP);
 
+
+--********************************************************************************************
+--*********************** NEXT RELEASE *******************************************************
+CREATE TABLE service_request_table (
+  UID INT NOT NULL AUTO_INCREMENT,
+  TICKET_NO VARCHAR(15) NOT NULL,
+  REQUESTED_BY VARCHAR(20) NOT NULL DEFAULT 'CUSTOMER',
+  REQUESTER_ID VARCHAR(15) NOT NULL,
+  REQUESTED_FOR VARCHAR(15) NOT NULL,
+  REQUESTED_VIA VARCHAR(20) NULL,
+  ASSIGNED_TO VARCHAR(15) NULL,
+  REQUESTED_ON DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  TO_BE_COMPLETED_BY DATETIME NULL,
+  SERVICE_TYPE VARCHAR(45) NULL,
+  SERVICE_CATEGORY VARCHAR(200) NULL,
+  SERVICE_REQ_DESCRIPTION VARCHAR(3000) NOT NULL DEFAULT 'Service Request',
+  SERVICE_URGENCY VARCHAR(100) NULL,
+  SERVICE_STATUS VARCHAR(45) NULL,
+  LAST_UPDATE DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  COMMENTS  VARCHAR(200) NULL,
+  PRIMARY KEY (UID),
+  UNIQUE INDEX TICKET_NO_UNIQUE (TICKET_NO ASC) VISIBLE);
 
   
   

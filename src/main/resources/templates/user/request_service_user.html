@@ -8,6 +8,13 @@
   <div th:replace="user_common :: includes"></div>
   <!--  ======================== CSS INCLUDES ===================== -->	
   
+    <!-- Susovan -->
+  <Style>
+	  .customBorder {
+			border: 0.0625rem solid #5c5e63 !important;
+	  }
+  
+  </Style>
   
   
 </head>
@@ -53,11 +60,303 @@
         </div>
 
         <div class="col-lg-9">
+        
+        <!-- ********************** CARD 1 ************************************-->
+		
+			<div class="card mb-3 mb-lg-5">
+	            <div class="card-header">
+	              <div class="d-flex align-items-center">
+	                <h5 class="card-title">Open a Service Request Ticket</h5>
+	                <span class="badge badge-soft-danger ml-2"></span>
+	              </div>
+	            </div>
+	
+	            <!-- Body -->
+	            <div class="card-body">
+	              <p class="card-text"></p>
+	
+	
+					<!-- Step Form -->
+					<form class="js-step-form js-validate"
+						  data-hs-step-form-options='{
+							"progressSelector": "#advancedFormStepFormProgress",
+							"stepsSelector": "#advancedFormStepFormContent",
+							"isValidate": true
+						  }'>
+					  <!-- Step -->
+					  <ul id="advancedFormStepFormProgress" class="js-step-progress step step-md step-inline mb-5">
+						<li class="step-item">
+						  <div class="step-content-wrapper">
+							<span class="step-icon step-icon-soft-primary">1</span>
+							<div class="step-content">
+							  <span class="step-inline-title">Beneficiary</span>
+							</div>
+						  </div>
+						</li>
+	
+						<li class="step-item">
+						  <div class="step-content-wrapper">
+							<span class="step-icon step-icon-soft-primary">2</span>
+							<div class="step-content">
+							  <span class="step-inline-title">Service</span>
+							</div>
+						  </div>
+						</li>
+	
+						<li class="step-item">
+						  <div class="step-content-wrapper">
+							<span class="step-icon step-icon-soft-primary">3</span>
+							<div class="step-content">
+							  <span class="step-inline-title">Review</span>
+							</div>
+						  </div>
+						</li>
+	
+						<li class="step-item">
+						  <div class="step-content-wrapper">
+							<span class="step-icon step-icon-soft-primary">4</span>
+							<div class="step-content">
+							  <span class="step-inline-title">Confirmation</span>
+							</div>
+						  </div>
+						</li>
+					  </ul>
+					  <!-- End Step -->
+						</BR>
+						</BR>
+					  <!-- Content Step Form -->
+					  <div id="advancedFormStepFormContent" class="customBorder rounded p-4">
+					  <!-- TAB 1 -->
+						<div id="advancedFormSelectStepOne" class="active">
+						  <!-- Input Group -->
+						  <div class="mb-4">
+							<label class="input-label" for="advancedFormUsername">Select Beneficiary</label>
+							<!--<div class="input-group input-group-sm js-form-message">
+							  <input type="text" class="form-control" name="advancedFormUsername" id="advancedFormUsername" placeholder="Username" aria-label="Username" required data-msg="Please enter a username address.">
+							</div>-->
+							
+							<div class="input-group-sm js-form-message">
+								<div class="input-group ">
+								  <select id="selectedBeneficiaryName" class="form-control show-tick" required data-msg="This is a required field, looks like the beneficiary is not added. Go to Beneficiary Details link and add them." >                            
+											<option></option>
+											<option>Primary Beneficiary</option>
+											<option>Secondary Beneficiary</option>
+											
+									</select>
+								</div>
+							</div>
+							
+						  </div>
+						  <!-- End Input Group -->
+	
+						  <div class="d-flex justify-content-end">
+							<button onclick="deafultDate();" type="button" class="btn btn-sm btn-primary transition-3d-hover mr-1"
+									data-hs-step-form-next-options='{
+									  "targetSelector": "#advancedFormSelectStepTwo"
+									}'>Next</button>
+						  </div>
+						</div>
+	
+						<!-- ****************** TAB 2 *****************************************-->
+						<div id="advancedFormSelectStepTwo" style="display: none;">
+						  <!-- Input Group -->	
+							<!-- ROW 1 -->
+							<div class="row"> 
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label id="serviceTypeLbl" class="input-label">Service Type.</label>
+									  <select id="selectedServiceType" class="form-control show-tick " required data-msg="This is a required field.">                            
+												<option></option>
+												<option>Pre-Paid Servise</option>
+												<option>Adhoc Service</option>
+												
+										</select>
+									</div>
+								</div>
+								
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label id="FulfillDateLbl" class="input-label">Fulfill Date<i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Should be with in a month."></i><span class="text-danger">*</span></label>
+									  
+									  <input type="date" class="js-masked-input form-control"  
+											id="requestFulfillDate" name="requestFulfillDate" placeholder="dd-mm-yyyy" min="1985-01-01" max="2000-12-31" 
+											data-msg="Fulfill Date is mandatory." required>
+									</div>
+								</div>
+							 
+							</div>
+							
+							<!-- ROW 2 --> 
+							
+							<div class="row"> 
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label id="serviceCategoryLbl" class="input-label">Service Category.</label>
+										<select class="form-control" id="selectedCategory" name="Category"  
+														required data-msg="Category can't be blank, looks like no plan is purchased.">
+												<option></option>
+												<option>DR Appointment.</option>
+												<option>Need Home Delivary Service.</option>
+											</select>
+									</div>
+								</div>
+								
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label id="UrgencyLbl" class="input-label">Urgency/Priority</label>
+										<select id="selectedUrgency" class="form-control" name="Urgency"  
+											required data-msg="Select the urgency of the request.">
+											
+											<option></option>
+											<option>Emergency</option>
+											<option>Moderate</option>
+											<option>Low</option>
+											</select>
+									</div>
+								</div>
+							 
+							</div>
+							
+							<!-- Row 3 -->
+							<div class="row">                				  
+							  <div class="col-sm-12">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Request Details (2000 char Max)</label>
+								  
+								  <textarea cols="30" rows="3" class="form-control no-resize" id="requestNotes" name="requestNotes" placeholder="Put the request description in details." 
+											maxlength="2000" required data-msg="Please describe in details."></textarea>
+								</div>
+							  </div>
+							 </div>
+	
+						  <div class="d-flex justify-content-end">
+							<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+							   data-hs-step-form-prev-options='{
+								 "targetSelector": "#advancedFormSelectStepOne"
+							   }'>Back</a>
+							<button onclick="reviewData();" type="button" class="btn btn-sm btn-primary transition-3d-hover"
+									data-hs-step-form-next-options='{
+									  "targetSelector": "#advancedFormSelectStepThree"
+									}'>Next</button>
+						  </div>
+						</div>
+						<!-- TAB 3 -->
+						<div id="advancedFormSelectStepThree" style="display: none;">
+						  <!-- Input Group -->
+						  <!-- ROW 1 --> 
+							
+							<div class="row"> 
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label id="serviceCategoryLbl" class="input-label">Service For:</label>
+									  <p id="benefetiaryId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Request Type</label>
+									  <p id="requestTypeId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Service Date</label>
+									  <p id="serviceDateId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Urgency</label>
+									  <p id="urgencyId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+							 
+							</div>
+							<!-- ROW 2 -->
+							<div class="row"> 
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Service Title:</label>
+									  <p id="serviceTitleId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Additional Charges</label>
+									  <p id="chargeId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Status</label>
+									  <p id="statusId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+							</div>
+							
+							<!-- ROW 3 -->
+							<div class="row">                				  
+							  <div class="col-sm-12">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Request Description</label>
+								  <p id="descriptionId" class="font-size-1 text-primary"></p>
+								  
+								</div>
+							  </div>
+							 </div>						 
+							 </BR>
+						  <!-- End Input Group -->
+	
+	
+						  <div class="d-flex justify-content-end">
+							<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+							   data-hs-step-form-prev-options='{
+								 "targetSelector": "#advancedFormSelectStepTwo"
+							   }'>Back</a>
+							<button type="button" class="btn btn-sm btn-primary transition-3d-hover"
+									data-hs-step-form-next-options='{
+									  "targetSelector": "#advancedFormSelectStepFour"
+									}'>Next</button>
+						  </div>
+						</div>
+						<!-- TAB 4 -->
+						<div id="advancedFormSelectStepFour" style="display: none;">
+						  Please click on the Submit button to Confirm.
+	
+						  <div class="d-flex justify-content-end">
+							<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+							   data-hs-step-form-prev-options='{
+								 "targetSelector": "#advancedFormSelectStepThree"
+							   }'>Back</a>
+							<button type="button" class="btn btn-sm btn-primary transition-3d-hover">Done</button>
+						  </div>
+						</div>
+					  </div>
+					  <!-- End Content Step Form -->
+					</form>
+					<!-- End Step Form -->
+	              
+	            </div>
+	            <!-- End Body -->
+	          </div>
+        
+        
+        
+        
+        
+        
+        
+        <!-- ********************** CARD 2 ************************************-->
           <!-- Card -->
           <div class="card mb-3 mb-lg-5">
             <div class="card-header">
               <div class="d-flex align-items-center">
-                <h5 class="card-title">Request a service</h5>
+                <h5 class="card-title">Posted Service Request</h5>
                 <span class="badge badge-soft-danger ml-2"></span>
               </div>
             </div>
@@ -68,73 +367,8 @@
 
               <form class="js-validate">
                 <!-- Form Group -->
-				
-				<!-- ROW 1 --> 
-				<div class="row form-group">
-                  <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">Request Type<i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="This is based on Selected Plan."></i><span class="text-danger">*</span></label>
-
-                  <div class="col-sm-9 js-form-message">
-                    <div class="input-group">						
-						<select class="form-control show-tick" required data-msg="Please Select Service Type.">
-                                <option></option>                    
-								<option>Need Emergency Help</option>
-                                <option>Need Home Service</option>
-                        </select>
-                    </div>
-                  </div>
-				  
-				  
-                </div>
-				
-				<!-- ROW 2 --> 
-				<div class="row form-group">
-                  <label for="firstNameLabel" class="col-sm-2 col-form-label input-label">Fulfill Date<i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="The date/Time can vary based on urgency."></i><span class="text-danger">*</span></label>
-
-                  <div class="col-sm-4 js-form-message">
-                    <div class="input-group ">						
-						<input type="date" class="js-masked-input form-control"  
-								id="requestFulfillDate" name="requestFulfillDate" placeholder="dd-mm-yyyy" min="1985-01-01" max="2000-12-31" 
-								data-msg="Fulfill Date is mandatory." required>
-                    </div>
-                  </div>
-				  
-				  <label for="beneficiaryLabel" class="col-sm-2 col-form-label input-label">Beneficiary Name</label>
-				  <div class="col-sm-4 js-form-message">
-                    <div class="input-group ">
-                      <select class="form-control show-tick">                             
-								<option>Family</option>
-								<option>Primary Beneficiary</option>
-                                <option>Secondary Beneficiary</option>
-                                
-                        </select>
-                    </div>
-                  </div>
-				  
-                </div>
-                
-                
-                <!-- Row 3 -->
-				<div class="row">                				  
-				  <div class="col-sm-12">
-                    <div class="form-group">
-					  <label class="input-label">Special notes on Service</label>
-					  
-					  <textarea cols="30" rows="3" class="form-control no-resize" id="serviveRequestNotes" name="serviveRequestNotes" placeholder="" 
-								maxlength="400"></textarea>
-					</div>
-                  </div>
-				 </div>
-
-                <!-- End Form Group -->
-
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary">Submit Request</button>
-                </div>
-				
-			<BR>
-			<BR>
-			
-			
+				<BR>
+				<BR>
 			<table class="table table-thead-bordered">
 			  <thead class="thead-light">
 				<tr>
@@ -225,6 +459,7 @@
 
   <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
   <div th:insert="user_common :: js-includes"></div>
+  <script th:src="@{/vendor/hs-step-form/dist/hs-step-form.min.js}"></script>
   <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
   
   <script>
@@ -233,6 +468,10 @@
     	  var element = document.getElementById("userRequestServiceLink");
     	  element.classList.add("active");
     	
+      //Step form - Susovan
+       $('.js-step-form').each(function () {
+    		  var stepForm = new HSStepForm($(this)).init();
+    	});
     	
       // initialization of header
       var header = new HSHeader($('#header')).init();
@@ -307,6 +546,44 @@
 		});
 	  
     });
+  </script>
+  
+  
+  <script>
+	function deafultDate(){
+		var defaultDate = new Date();
+		defaultDate.setDate(defaultDate.getDate()+7);
+		formattedDate = defaultDate.getMonth()+1 +'/'+defaultDate.getDate()+'/'+defaultDate.getFullYear();
+		//alert(formattedDate);
+		document.getElementById("requestFulfillDate").value = formattedDate;
+		//$('#requestFulfillDate').val(formattedDate)
+	};  
+
+	function reviewData(){
+		
+		var a = document.getElementById("selectedBeneficiaryName");
+		document.getElementById("benefetiaryId").innerHTML = a.options[a.selectedIndex].text;
+		
+		var b = document.getElementById("selectedServiceType");
+		document.getElementById("requestTypeId").innerHTML = b.options[b.selectedIndex].text;
+		
+		var c = document.getElementById("requestFulfillDate");
+		document.getElementById("serviceDateId").innerHTML = c.value;
+		
+		var d = document.getElementById("selectedUrgency");
+		document.getElementById("urgencyId").innerHTML = d.options[d.selectedIndex].text;
+		
+		var e = document.getElementById("selectedCategory");
+		document.getElementById("serviceTitleId").innerHTML = e.options[e.selectedIndex].text;
+		
+		document.getElementById("chargeId").innerHTML = '0$';
+		
+		document.getElementById("statusId").innerHTML = 'Initiated';
+		
+		var f = document.getElementById("requestNotes");
+		document.getElementById("descriptionId").innerHTML = f.value;
+		
+		}	
   </script>
   
   

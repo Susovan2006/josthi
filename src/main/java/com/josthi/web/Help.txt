@@ -44,3 +44,44 @@ List<String> primaryBeneficiaryIdLst  = getJdbcTemplate().query(SELECT_BENEFICIA
 								</div>
 								<div th:unless="${action == 'Save'}">
 								</div>
+								
+								
+								
+############################# SETTING VALUE IN HIDDEN GIELD ###############
+<!-- These Values are populated from session -->
+<input type="hidden" th:field="*{requestedBy}"  id="requesterNameServReq">
+<input type="hidden" th:field="*{requesterId}"  id="userIdServReq">
+
+
+
+<script th:inline="javascript">   
+       $(document).ready(function() {
+	       
+	       var name = /*[[${session.USER_SESSION_OBJ_KEY.userName}]]*/'null';
+	       var id = /*[[${session.USER_SESSION_OBJ_KEY.customerId}]]*/'null';
+
+	       $("#requesterNameServReq").val(name);
+	       $("#userIdServReq").val(id);
+	         
+       });
+</script>
+
+############################### PASSING THYMELEAF VALUE TO JAVA SCRIPT ##################
+
+<button class="btn btn-primary" th:data-id="${serviceRequestBean.ticketNo}" 
+	onclick="submitTicketNotes(this,this.getAttribute('data-id'))" type="button">Save changes
+</button>
+
+			OR
+			
+<button class="btn btn-primary" th:data-id="${serviceRequestBean.ticketNo}" 
+	th:onclick="submitTicketNotes(this,[[${serviceRequestBean.ticketNo}]])" type="button">Save changes
+</button>
+
+
+<script>
+function submitTicketNotes(val, ticketNo) {
+    var x = document.getElementById("editNotes"+ticketNo).value;
+    alert("Ticket No:"+ticketNo+"MSG :"+x);
+}
+</script>

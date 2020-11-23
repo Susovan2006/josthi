@@ -18,7 +18,7 @@ public interface UserAuthDao {
 
 	boolean updateLoginStatusOnSuccess(UserAuthBo userDetails);
 
-	int getNectID();
+	int getNextID();
 
 	String getUserFirstAndLastName(String customerId);
 

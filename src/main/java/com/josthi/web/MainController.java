@@ -223,10 +223,10 @@ public class MainController {
 	}
 	
 	//RequestService
-	@GetMapping("/user/requestService")
-	public String userRequestService(Model model) {
-			return "user/request_service_user";
-	}
+	/*
+	 * @GetMapping("/user/requestService") public String userRequestService(Model
+	 * model) { return "user/request_service_user"; }
+	 */
 	
 	//Reports
 	@GetMapping("/user/reports")

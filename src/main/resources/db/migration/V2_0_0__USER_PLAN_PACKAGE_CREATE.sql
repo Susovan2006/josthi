@@ -341,13 +341,14 @@ INSERT INTO dropdown_metadata (DROPDOWN_TYPE, KEY_ID, DROPDOWN_VALUE, ACTIVE, UP
 
 
 --********************************************************************************************
---*********************** NEXT RELEASE *******************************************************
+--*********************** Installed on 20th Nov 2020******************************************
 CREATE TABLE service_request_table (
   UID INT NOT NULL AUTO_INCREMENT,
   TICKET_NO VARCHAR(15) NOT NULL,
   REQUESTED_BY VARCHAR(20) NOT NULL DEFAULT 'CUSTOMER',
   REQUESTER_ID VARCHAR(15) NOT NULL,
-  REQUESTED_FOR VARCHAR(15) NOT NULL,
+  REQUESTED_FOR VARCHAR(200) NOT NULL,
+  BENEFICIARY_ID VARCHAR(15) NULL,
   REQUESTED_VIA VARCHAR(20) NULL,
   ASSIGNED_TO VARCHAR(15) NULL,
   REQUESTED_ON DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -360,7 +361,44 @@ CREATE TABLE service_request_table (
   LAST_UPDATE DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   COMMENTS  VARCHAR(200) NULL,
   PRIMARY KEY (UID),
-  UNIQUE INDEX TICKET_NO_UNIQUE (TICKET_NO ASC) VISIBLE);
+  UNIQUE INDEX TICKET_NO_UNIQUE (TICKET_NO ASC));
+  
+  
+INSERT INTO dropdown_metadata (DROPDOWN_TYPE, KEY_ID, DROPDOWN_VALUE, ACTIVE, UPDATE_DATE)
+VALUES('ServiceType', 'Pre-Paid Service', 'Pre-Paid Service', 'Y', CURRENT_TIMESTAMP),
+('ServiceType', 'On Demand Service', 'On Demand Service', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Doctor Appointments', 'Doctor Appointments', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Medical Diagnostics', 'Medical Diagnostics', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Arranging Nursing Services', 'Arranging Nursing Services', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', '24X7 Oncall Support', '24X7 Oncall Support', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Arranging Physiotherapy', 'Arranging Physiotherapy', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Medicines Delivery', 'Medicines Delivery', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Ambulance Assistance', 'Ambulance Assistance', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Arranging Hospitalization', 'Arranging Hospitalization', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Hearing aids & Vision aids', 'Hearing aids & Vision aids', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Cooked Food Delivery', 'Cooked Food Delivery', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Cook Service at Home', 'Cook Service at Home', 'Y', CURRENT_TIMESTAMP),
+('PaidServicaCategory', 'Transportation Arrangement', 'Transportation Arrangement', 'Y', CURRENT_TIMESTAMP),
+('OnDemandServicaCategory', 'Hearing aids & Vision aids', 'Hearing aids & Vision aids', 'Y', CURRENT_TIMESTAMP),
+('OnDemandServicaCategory', 'Cooked Food Delivery', 'Cooked Food Delivery', 'Y', CURRENT_TIMESTAMP),
+('OnDemandServicaCategory', 'Cook Service at Home', 'Cook Service at Home', 'Y', CURRENT_TIMESTAMP),
+('OnDemandServicaCategory', 'Transportation Arrangement', 'Transportation Arrangement', 'Y', CURRENT_TIMESTAMP),
+('UrgencyType', 'Low', 'Low', 'Y', CURRENT_TIMESTAMP),
+('UrgencyType', 'Medium', 'Medium', 'Y', CURRENT_TIMESTAMP),
+('UrgencyType', 'High', 'High', 'Y', CURRENT_TIMESTAMP),
+('UrgencyType', 'Urgent', 'Urgent', 'Y', CURRENT_TIMESTAMP);
+
+
+CREATE TABLE service_ticket_history (
+  HISTORY_ID INT NOT NULL AUTO_INCREMENT,
+  TICKET_NUMBER VARCHAR(15) NULL,
+  STATUS VARCHAR(45) NULL,
+  COMMENTS VARCHAR(2000) NULL,
+  UPDATE_TIMESTAMP DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UPDATED_BY_NAME VARCHAR(200) NULL,
+  UPDATED_BY_ID VARCHAR(15) NULL,
+  PRIMARY KEY (HISTORY_ID));
+
 
   
   

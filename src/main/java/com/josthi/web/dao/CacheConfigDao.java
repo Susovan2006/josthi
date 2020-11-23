@@ -14,6 +14,8 @@ public interface CacheConfigDao {
 
 	List<DropDownBean> getDropDownForGroupID(String bloodGroup);
 
+	List<DropDownBean> getBeneficiaryList(String userId) throws Exception;
+
 
 
 }

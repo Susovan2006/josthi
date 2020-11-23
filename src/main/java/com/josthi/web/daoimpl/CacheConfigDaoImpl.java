@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.CacheConfigDao;
+import com.josthi.web.dao.rowmapper.BeneficiaryDropDownRowmapper;
 import com.josthi.web.dao.rowmapper.CacheConfigRowMapper;
 import com.josthi.web.dao.rowmapper.DropDownRowmapper;
 import com.josthi.web.po.CacheConfigPO;
@@ -70,9 +71,32 @@ private static final Logger logger = LoggerFactory.getLogger(CacheConfigDaoImpl.
 		try{
 			@SuppressWarnings("unchecked")
 			List<DropDownBean> dropDownGroupList = getJdbcTemplate().query(
-												SELECT_DROPDOWN_GROUP_LIST,
+												 SELECT_DROPDOWN_GROUP_LIST,
 												 new Object[] {listGroup},
 												 new DropDownRowmapper());
+				return dropDownGroupList;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	
+	//============================================================================================
+	//========================== S E R V I C E    R E Q E S T ====================================
+	//============================================================================================
+	public static final String SELECT_DROPDOWN_BENEFICIARY ="select A.BENEFICIARY_ID, B.FIRST_NAME, B.LAST_NAME FROM " + 
+			" beneficiary_detail A, user_detail B" + 
+			" where A.BENEFICIARY_ID =  B.UID and A.CUSTOMER_ID = ?";
+	@Override
+	public List<DropDownBean> getBeneficiaryList(String userId) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<DropDownBean> dropDownGroupList = getJdbcTemplate().query(
+												 SELECT_DROPDOWN_BENEFICIARY,
+												 new Object[] {userId},
+												 new BeneficiaryDropDownRowmapper());
 				return dropDownGroupList;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());

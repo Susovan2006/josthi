@@ -51,6 +51,26 @@ public class Utils {
 		return custId.toString();
 		
 	}
+	
+	
+	
+public static String getNextTicketID(String type,int nextCount) {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("MMdd");
+		StringBuffer custId = new StringBuffer();
+		if(type.equalsIgnoreCase(Constant.REQUEST_TICKET)) {
+			custId.append("TKT");
+		}else if(type.equalsIgnoreCase(Constant.REQUEST_INCIDENT)) {
+			custId.append("INC");
+		}
+		custId.append(formatter.format(new Date()));
+		custId.append(String.format("%05d", nextCount));
+				
+		
+		
+		return custId.toString();
+		
+	}
 
 	
 	/**
@@ -217,6 +237,23 @@ public class Utils {
 		}
 		
 	}
+	
+	public static Timestamp getRequestFulFillDate(String fulFillDate) throws ParseException {
+		if(fulFillDate!=null && fulFillDate.trim().length() == 10) {
+			DateFormat df = new SimpleDateFormat(Constant.DATE_FORMAT_FOR_TICKET_COMPLETION_DATE);
+			Date parseDate = df.parse(fulFillDate);
+			java.sql.Timestamp fulFillSqlDate = new java.sql.Timestamp(parseDate.getTime());
+			return fulFillSqlDate;
+		}else {
+			return null;
+		}
+		
+	}
+	
+	public static Timestamp getDateAdditionValue(int daysToAdd) throws ParseException {		
+		return new Timestamp(System.currentTimeMillis() + daysToAdd * 86400000);
+
+	}
 
 
 	public static String calculateAge(String dateOfBirth) throws ParseException {
@@ -253,6 +290,14 @@ public class Utils {
 	  long diffDays = diff / (24 * 60 * 60 * 1000);
 
 	    return diffMinutes;
+	}
+	
+	
+	public static String timestampToFormattedString(Timestamp ts , String format) {
+		Date date = new Date();
+		date.setTime(ts.getTime());
+		String formattedDate = new SimpleDateFormat(format).format(date);
+		return formattedDate;
 	}
 
 

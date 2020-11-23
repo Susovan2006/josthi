@@ -79,6 +79,73 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 		}
 	}
 
+	
+	
+	//============================================================================================
+	//========================== S E R V I C E    R E Q E S T ====================================
+	//============================================================================================
+	
+	@Override
+	public List<DropDownBean> getBeneficiaryList(String userId) throws Exception {
+		try {
+			return cacheConfigDao.getBeneficiaryList(userId);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the Beneficiary values from the Server. Please try later");
+		}
+	}
+
+	@Override
+	public List<DropDownBean> getServiceTypeList(String userId) throws Exception {
+		try {
+			return cacheConfigDao.getDropDownForGroupID(Constant.SERVICE_TYPE);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the Service type values from the Server. Please try later");
+		}
+	}
+
+	@Override
+	public List<DropDownBean> getServicaCategoryList(String userId) throws Exception {
+		try {
+			return cacheConfigDao.getDropDownForGroupID(Constant.PAID_SERVICE);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the Paid Service values from the Server. Please try later");
+		}
+	}
+
+	@Override
+	public List<DropDownBean> getOnDemandServicaList() throws Exception {
+		try {
+			return cacheConfigDao.getDropDownForGroupID(Constant.ON_DEMAND_SERVICE);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the on demand Service values from the Server. Please try later");
+		}
+	}
+
+	@Override
+	public List<DropDownBean> getUrgencyTypeList() throws Exception {
+		try {
+			return cacheConfigDao.getDropDownForGroupID(Constant.URGENCY_TYPE);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the on urgency values from the Server. Please try later");
+		}
+	}
+
+	@Override
+	public List<DropDownBean> getDefaultList() throws Exception {
+		DropDownBean dropDownBean = new DropDownBean();
+		dropDownBean.setKeyId("");
+		dropDownBean.setKeyId("");
+		
+		List<DropDownBean> DropDownList = new ArrayList<DropDownBean>();
+		DropDownList.add(dropDownBean);
+		return DropDownList;
+	}
+
 	/*
 	 * public void setCacheConfigDao(CacheConfigDaoImpl cacheConfigDaoImpl) {
 	 * this.cacheConfigDao = cacheConfigDaoImpl; }

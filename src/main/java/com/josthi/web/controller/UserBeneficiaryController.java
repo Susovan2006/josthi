@@ -35,7 +35,7 @@ import com.josthi.web.service.UserDetailService;
 import com.josthi.web.utils.Utils;
 
 @Controller
-public class BeneficiaryController {
+public class UserBeneficiaryController {
 	
 	
 	@Autowired
@@ -44,7 +44,7 @@ public class BeneficiaryController {
 	@Autowired
 	private UserAuthService userAuthService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(BeneficiaryController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserBeneficiaryController.class);
 	
 	
 	@GetMapping("/user/getBeneficiaryList")

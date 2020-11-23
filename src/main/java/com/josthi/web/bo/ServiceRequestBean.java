@@ -8,10 +8,13 @@ public class ServiceRequestBean {
 	private String requestedBy ;
 	private String requesterId ;
 	private String requestedFor ;
+	private String beneficiaryId;
 	private String requestedVia ;
 	private String assignedTo ;
 	private Timestamp requestedOn ;
+	private String requestedDate ;
 	private Timestamp toBeCompletedBy ;
+	private String toBeCompletedByStr ;
 	private String serviceType ;
 	private String serviceCategory ;
 	private String serviceReqDescription ;
@@ -19,6 +22,21 @@ public class ServiceRequestBean {
 	private String serviceStatus ;
 	private Timestamp lastUpdate ;
 	private String comments ;
+	
+	
+
+	public String getBeneficiaryId() {
+		return beneficiaryId;
+	}
+	public void setBeneficiaryId(String beneficiaryId) {
+		this.beneficiaryId = beneficiaryId;
+	}
+	public String getToBeCompletedByStr() {
+		return toBeCompletedByStr;
+	}
+	public void setToBeCompletedByStr(String toBeCompletedByStr) {
+		this.toBeCompletedByStr = toBeCompletedByStr;
+	}
 	public Integer getUid() {
 		return uid;
 	}
@@ -115,15 +133,24 @@ public class ServiceRequestBean {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+	
+	public String getRequestedDate() {
+		return requestedDate;
+	}
+	public void setRequestedDate(String requestedDate) {
+		this.requestedDate = requestedDate;
+	}
 	@Override
 	public String toString() {
 		return "ServiceRequestBean [uid=" + uid + ", ticketNo=" + ticketNo + ", requestedBy=" + requestedBy
 				+ ", requesterId=" + requesterId + ", requestedFor=" + requestedFor + ", requestedVia=" + requestedVia
-				+ ", assignedTo=" + assignedTo + ", requestedOn=" + requestedOn + ", toBeCompletedBy=" + toBeCompletedBy
+				+ ", assignedTo=" + assignedTo + ", requestedOn=" + requestedOn + ", requestedDate=" + requestedDate
+				+ ", toBeCompletedBy=" + toBeCompletedBy + ", toBeCompletedByStr=" + toBeCompletedByStr
 				+ ", serviceType=" + serviceType + ", serviceCategory=" + serviceCategory + ", serviceReqDescription="
 				+ serviceReqDescription + ", serviceUrgency=" + serviceUrgency + ", serviceStatus=" + serviceStatus
 				+ ", lastUpdate=" + lastUpdate + ", comments=" + comments + "]";
 	}
+	
 	
 	
 	

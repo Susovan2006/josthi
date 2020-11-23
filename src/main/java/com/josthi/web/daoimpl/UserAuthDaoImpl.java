@@ -123,7 +123,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 	
 	public static final String SELECT_NEXT_ID =  "SELECT NextUserID from userid_generation_table";
 	@Override
-	public int getNectID() {
+	public int getNextID() {
 		// TODO Auto-generated method stub
 		 int result = jdbcTemplate.queryForObject(SELECT_NEXT_ID, Integer.class);
 		 return result;

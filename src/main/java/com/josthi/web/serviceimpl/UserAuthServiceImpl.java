@@ -53,7 +53,7 @@ public class UserAuthServiceImpl implements UserAuthService{
 
 	@Override
 	public int getNextID() {
-		return userAuthDao.getNectID();
+		return userAuthDao.getNextID();
 	}
 
 	@Override

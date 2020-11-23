@@ -4,6 +4,7 @@ public interface Constant {
 	
 	//String DATE_FORMAT_FOR_DOB = "yyyy-MM-dd";
 	String DATE_FORMAT_FOR_DOB = "MM/dd/yyyy";
+	String DATE_FORMAT_FOR_TICKET_COMPLETION_DATE = "yyyy-MM-dd";
 	
 	String USER_STATUS_ACTIVE = "A";
 	String USER_STATUS_DISABLED = "D";
@@ -15,6 +16,8 @@ public interface Constant {
 	String USER_TYPE_AGENT = "AGENT";
 	String USER_TYPE_SUB_AGENT = "SUBAGENT";
 	String USER_TYPE_BENEFICIARY ="BENUSER";
+	String REQUEST_TICKET = "TICKET";
+	String REQUEST_INCIDENT = "INCIDENT";
 	String USER_TEMPORARY_LOCK_YES = "YES";
 	String USER_TEMPORARY_LOCK_NO = "NO";
 	
@@ -33,6 +36,17 @@ public interface Constant {
 	String ENQUERY_STATUS_OPEN = "OPEN";
 	
 	
+	//TICKET STATUS
+	String TICKET_STATUS_INITIATED = "INITIATED";
+	String TICKET_STATUS_INPROGRESS = "WORK_IN_PROGRESS";
+	String TICKET_STATUS_RESOLVED = "RESOLVED";
+	
+	String TICKET_STATUS_OPEN = "OPEN";
+	String TICKET_STATUS_REOPEN = "REOPEN";
+	String TICKET_STATUS_WAITING_FOR_INFO = "WAITING_FOR_INFO";
+	String TICKET_STATUS_COMPLETED = "COMPLETED";
+	String TICKET_STATUS_CLOSED = "CLOSED";
+	
 	
 	//Session Objects
 	String USER_SESSION_OBJ_KEY = "USER_SESSION_OBJ_KEY";
@@ -44,6 +58,11 @@ public interface Constant {
 	String BLOOD_GROUP = "BLOOD_GROUP";
 	String LANGUAGE = "Language";
 	String TIME_ZONE = "TimeZone";
+	
+	String SERVICE_TYPE = "ServiceType";
+	String PAID_SERVICE = "PaidServicaCategory";
+	String ON_DEMAND_SERVICE = "OnDemandServicaCategory";
+	String URGENCY_TYPE = "UrgencyType";
 	
 	
 	

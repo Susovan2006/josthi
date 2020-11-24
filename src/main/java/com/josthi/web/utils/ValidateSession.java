@@ -18,10 +18,14 @@ public class ValidateSession {
 				throw new UserException("Session has expired, please relogin");
 			}else {
 	    		UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
-	    		if(!(userSessionBean.isUserSessionValid())){
-	    			throw new UserException("Session has expired, please relogin");
+	    		if(userSessionBean!=null) {
+		    		if(!(userSessionBean.isUserSessionValid())){
+		    			throw new UserException("Session has expired, please relogin");
+		    		}else {
+		    			return true;
+		    		}
 	    		}else {
-	    			return true;
+	    			throw new UserException("Session has expired, please relogin");
 	    		}
 			}
 			

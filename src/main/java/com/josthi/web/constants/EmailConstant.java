@@ -15,6 +15,10 @@ public interface EmailConstant {
 	String EMAIL_FROM_FOR_OTP = "account@josthi.com";
 	String SUBJECT_FROM_FOR_OTP = "Josthi.com | One time password(OTP)";
 	
+	//SERVICE REQUEST
+	String EMAIL_FROM_FOR_SERVICE = "service@josthi.com";
+	String SUBJECT_FROM_FOR_SERVICE = "Josthi.com | serviceRequest";
+	
 	//Password Lock
 	String EMAIL_FROM_FOR_ACCOUNT_UN_LOCK = "welcome@josthi.com";
 	String SUBJECT_FROM_FOR_ACCOUNT_UN_LOCK = "Josthi.com | Account unlock";
@@ -34,6 +38,8 @@ public interface EmailConstant {
 	String TEMPLATE_FORM_FOR_ACCOUNT_UNLOCK = "email_account_unlock";
 	String TEMPLATE_FORM_FOR_WELCOME = "email_welcome_josthi";
 	String TEMPLATE_FORM_FOR_OTP = "email_validate_account_otp";
+	//https://beefree.io/editor/?template=your-visit-to-the-spa-invoice# (open in Firefox)
+	String TEMPLATE_FORM_FOR_SERVICE_REQUEST_UPDATE = "email_ticket_update";
 	
 	
 	

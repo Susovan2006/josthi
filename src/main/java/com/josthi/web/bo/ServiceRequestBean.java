@@ -22,6 +22,8 @@ public class ServiceRequestBean {
 	private String serviceStatus ;
 	private Timestamp lastUpdate ;
 	private String comments ;
+	private String lastCommentsNotes ;
+	private String lastUpdatedBy ;
 	
 	
 
@@ -139,6 +141,19 @@ public class ServiceRequestBean {
 	}
 	public void setRequestedDate(String requestedDate) {
 		this.requestedDate = requestedDate;
+	}
+	
+	public String getLastCommentsNotes() {
+		return lastCommentsNotes;
+	}
+	public void setLastCommentsNotes(String lastCommentsNotes) {
+		this.lastCommentsNotes = lastCommentsNotes;
+	}
+	public String getLastUpdatedBy() {
+		return lastUpdatedBy;
+	}
+	public void setLastUpdatedBy(String lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy;
 	}
 	@Override
 	public String toString() {

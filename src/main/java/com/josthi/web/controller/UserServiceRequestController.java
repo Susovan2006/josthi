@@ -1,6 +1,8 @@
 package com.josthi.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,9 +26,12 @@ import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.MessageConstant;
 import com.josthi.web.exception.UserException;
 import com.josthi.web.exception.UserExceptionInvalidData;
+import com.josthi.web.po.EmailDbBean;
 import com.josthi.web.service.CacheConfigService;
+import com.josthi.web.service.EmailService;
 import com.josthi.web.service.ServiceRequestService;
 import com.josthi.web.service.UserAuthService;
+import com.josthi.web.utils.Utils;
 import com.josthi.web.utils.ValidateSession;
 
 @Controller
@@ -43,6 +48,9 @@ public class UserServiceRequestController {
 	
 	@Autowired
 	ServiceRequestService serviceRequestService;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@GetMapping("/user/requestService")
 	public String userRequestService(Model model,
@@ -154,7 +162,32 @@ public class UserServiceRequestController {
 				if(ticketNumber!=null && ticketNumber.length() > 0) {
 					actionStatus = MessageConstant.USER_SUCCESS_STATUS;
 					message = "Ticket created Successfully. Here is the Ticket no :"+ticketNumber;
-					//Send email.
+					ServiceRequestBean serviceRequestBeanForEmail = serviceRequestService.getServiceRequestDetailsOnTicketNumber(custId.trim(),ticketNumber);
+	    			if(serviceRequestBean!=null) {
+	    				
+	    				UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY); 
+	    				String sessionEmailId = userSessionBean.getUserEmailId();
+	    				
+	                	//Service email 
+	        	        Map<String, String> serviceEmailMap = new HashMap<String, String>();
+	        	        serviceEmailMap.put("ticketNumber", serviceRequestBeanForEmail.getTicketNo());
+	        	        serviceEmailMap.put("createDate", serviceRequestBeanForEmail.getRequestedDate());
+	        	        serviceEmailMap.put("requestedFor", serviceRequestBeanForEmail.getRequestedFor());       	        
+	        	        serviceEmailMap.put("requestedBy", serviceRequestBeanForEmail.getRequestedBy());
+	        	        serviceEmailMap.put("customerId", serviceRequestBeanForEmail.getRequesterId());
+	        	        serviceEmailMap.put("beneficiaryId", serviceRequestBeanForEmail.getBeneficiaryId());
+	        	        serviceEmailMap.put("urgency", serviceRequestBeanForEmail.getServiceUrgency());
+	        	        serviceEmailMap.put("status", serviceRequestBeanForEmail.getServiceStatus());
+	        	        serviceEmailMap.put("serviceCharge", "0$");
+	        	        serviceEmailMap.put("paymentStatus","Covered by Plan");
+	        	        serviceEmailMap.put("serviceType",serviceRequestBeanForEmail.getServiceType());
+	        	        serviceEmailMap.put("serviceDesc",serviceRequestBeanForEmail.getServiceReqDescription());
+	        	        serviceEmailMap.put("serviceLastUpdateUser",serviceRequestBeanForEmail.getLastUpdatedBy());
+	        	        serviceEmailMap.put("serviceLastUpdateComments",serviceRequestBeanForEmail.getLastCommentsNotes());
+	        	        
+	        	        EmailDbBean emailDbBeanForService = Utils.getEmailBeanForServiceTicket(sessionEmailId, serviceRequestBeanForEmail.getTicketNo(), Utils.mapToString(serviceEmailMap));
+	        	        boolean serviceQueueStatus = emailService.queueEmail(emailDbBeanForService);
+	    			}
 				}else{
 					actionStatus = MessageConstant.USER_FAILURE_STATUS;
 					message = "Ticket creation Failed.";
@@ -173,12 +206,24 @@ public class UserServiceRequestController {
 			logger.error(ex.getMessage(), ex);
 			return "redirect:/login";
 		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
 			actionStatus = MessageConstant.USER_FAILURE_STATUS;
 			message = "System Error Occured while saving the Request. Call Customer Service.";
 			return "redirect:/user/requestService?status="+actionStatus+"&message="+message;
 		}
 		
 		
+	}
+	
+	
+	
+	
+	@RequestMapping(path ="/user/ticketHistory/{ticket}", method = RequestMethod.GET)
+	public String ticketHistory(Model model,
+									@PathVariable String ticket,
+									HttpServletRequest request) {
+		logger.info("***********************"+ticket);
+		return "user/ticket_history";
 	}
 	
 	

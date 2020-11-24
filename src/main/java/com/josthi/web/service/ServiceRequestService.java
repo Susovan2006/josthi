@@ -10,4 +10,8 @@ public interface ServiceRequestService {
 
 	List<ServiceRequestBean> getServiceRequestList(String userId) throws Exception;
 
+	boolean updateUserNotes(String customerID, String notes, String urgency, String status, String ticketNo) throws Exception;
+
+	ServiceRequestBean getServiceRequestDetailsOnTicketNumber(String customerID, String ticketNo) throws Exception;
+
 }

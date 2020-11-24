@@ -364,6 +364,8 @@ CREATE TABLE service_request_table (
   UNIQUE INDEX TICKET_NO_UNIQUE (TICKET_NO ASC));
   
   
+
+  
 INSERT INTO dropdown_metadata (DROPDOWN_TYPE, KEY_ID, DROPDOWN_VALUE, ACTIVE, UPDATE_DATE)
 VALUES('ServiceType', 'Pre-Paid Service', 'Pre-Paid Service', 'Y', CURRENT_TIMESTAMP),
 ('ServiceType', 'On Demand Service', 'On Demand Service', 'Y', CURRENT_TIMESTAMP),
@@ -399,7 +401,13 @@ CREATE TABLE service_ticket_history (
   UPDATED_BY_ID VARCHAR(15) NULL,
   PRIMARY KEY (HISTORY_ID));
 
+--########################## NEXT RELEASE #######################################
+ALTER TABLE `josthi_db`.`service_request_table` 
+ADD COLUMN `LAST_UPDATE_COMMENTS` VARCHAR(2000) NULL AFTER `COMMENTS`,
+ADD COLUMN `LAST_UPDATE_USER` VARCHAR(200) NULL AFTER `LAST_UPDATE_COMMENTS`;
 
+ALTER TABLE `josthi_db`.`service_request_table` 
+CHANGE COLUMN `REQUESTED_BY` `REQUESTED_BY` VARCHAR(200) NOT NULL DEFAULT 'CUSTOMER' ;
   
   
   

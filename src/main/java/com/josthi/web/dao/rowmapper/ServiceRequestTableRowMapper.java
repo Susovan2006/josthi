@@ -30,6 +30,8 @@ public ServiceRequestBean mapRow(ResultSet resultSet,int arg1)throws SQLExceptio
 		serviceRequestBean.setServiceStatus(resultSet.getString("SERVICE_STATUS"));
 		serviceRequestBean.setLastUpdate(resultSet.getTimestamp("LAST_UPDATE"));
 		serviceRequestBean.setComments(resultSet.getString("COMMENTS"));
+		serviceRequestBean.setLastCommentsNotes(resultSet.getString("LAST_UPDATE_COMMENTS"));
+		serviceRequestBean.setLastUpdatedBy(resultSet.getString("LAST_UPDATE_USER"));
 		return serviceRequestBean;
 		}
 	}

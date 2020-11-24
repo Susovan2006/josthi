@@ -136,5 +136,69 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 	public List<ServiceRequestBean> getServiceRequestList(String userId) throws Exception {
 		return serviceRequestDao.getServiceRequestList(userId);
 	}
+
+	
+	
+	//*****************************************************************************************************
+	//*********************************** FROM REST SERVICE ***********************************************
+	//*****************************************************************************************************
+	
+	
+	@Override
+	public boolean updateUserNotes(String customerID, String notes, String urgency, String status, String ticketNo)
+			throws Exception {
+		TransactionStatus txnStatus = null;
+		DefaultTransactionDefinition def = null;
+		try {
+			logger.info("Within transaction Block for Notes Update");
+
+			def = new DefaultTransactionDefinition();
+			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+			def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+			{
+					txnStatus = platformTransactionManager.getTransaction(def);
+					//DB Calls for Users
+					//--> Update in the Service Request table.
+					boolean updateStatus = false;
+					String requesterName = userAuthDao.getUserFirstAndLastName(customerID);
+					updateStatus = serviceRequestDao.updateServiceRequestTable(customerID,
+																				requesterName,
+																				notes,
+																				urgency, 
+																				status, 
+																				ticketNo);
+					
+					//Update Service History table.
+					updateStatus = serviceRequestDao.insertUserServiceHistoryTable(customerID,
+																						requesterName,
+																						notes,
+																						urgency, 
+																						status, 
+																						ticketNo);
+												
+					platformTransactionManager.commit(txnStatus);
+					return true;
+
+				
+			}
+			
+		}catch(UserExceptionInvalidData ex) {
+			logger.error(ex.getMessage());
+			platformTransactionManager.rollback(txnStatus);
+			logger.info("txn rolled back due to user exception");
+			throw ex;
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(),ex);
+			platformTransactionManager.rollback(txnStatus);
+			logger.info("txn rolled back");
+			throw ex;
+		}
+	}
+
+	@Override
+	public ServiceRequestBean getServiceRequestDetailsOnTicketNumber(String customerID, String ticketNo)
+			throws Exception {
+		return serviceRequestDao.getServiceRequestDetailsOnTicketNumber(customerID, ticketNo);
+	}
 	
 }

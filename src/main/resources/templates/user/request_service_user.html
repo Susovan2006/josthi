@@ -24,6 +24,21 @@
 		    word-wrap: break-word;
 		    white-space:pre-wrap;
 		}
+		
+		
+	 /* this CSS is to display the message from Ajax call*/
+	  .ticketStatus {
+		  display: none;
+		  color: #555;
+		  border-radius: 5px;
+		  font-family: Tahoma, Geneva, Arial, sans-serif;
+		  font-size: .8em;
+		  padding: 5px 5px 5px 30px;
+		  margin: 5px 5px 5px 5px;
+		  width:100%;
+		  background: #ffecec;
+		  border: 2px solid #f5aca6;
+		}
   
   </Style>
   
@@ -440,8 +455,11 @@
                                                   data-placement="top" title="Want to Edit the Service Request?"></span></a>&nbsp;&nbsp;
                                                   
                                   <!-- Ticket History-->
-								  <a data-toggle="modal" data-target="#modal-toHistory"
+								  <!-- <a data-toggle="modal" data-target="#modal-toHistory"
                                            th:attr="data-target='#modal-toHistory'+${serviceRequestBean.ticketNo}">
+                                            <span class="fa fa-history" data-toggle="tooltip"
+                                                  data-placement="top" title="View the history of the Ticket"></span></a>&nbsp;&nbsp; -->
+                                  <a th:href="@{/user/ticketHistory/{ticket}(ticket=${serviceRequestBean.ticketNo})}">
                                             <span class="fa fa-history" data-toggle="tooltip"
                                                   data-placement="top" title="View the history of the Ticket"></span></a>&nbsp;&nbsp;
 								  
@@ -554,7 +572,7 @@
 											
 											<div class="d-flex justify-content-end">
 									              <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Close</button>
-									              <button type="button" class="btn btn-primary">Save changes</button>
+									              
 									        </div>
 					
 											<hr class="my-5">
@@ -574,7 +592,7 @@
 									  <div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
 										  <!-- Header -->
-										  <div class="modal-top-cover bg-secondary text-center">
+										  <!-- <div class="modal-top-cover bg-secondary text-center">
 											<figure class="position-absolute right-0 bottom-0 left-0">
 											  <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
 												<path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"/>
@@ -588,21 +606,33 @@
 												</svg>
 											  </button>
 											</div>
-										  </div>
-										  <!-- End Header -->
-					
+										  </div> 
+										  
 										  <div class="modal-top-cover-avatar">
 											<img class="avatar avatar-lg avatar-circle avatar-border-lg avatar-centered shadow-soft" th:src="@{/images/josthi/icon/IE_icon.png}" alt="Logo">
 										  </div>
+										  -->
+										  <div class="modal-header">
+									          <h5 id="addNewCardModalTitle" class="modal-title">Update Ticket :<span th:text="${serviceRequestBean.ticketNo}"></span>
+									          /<span th:text="${serviceRequestBean.requestedFor}"></span></h5>
+									          <div class="modal-close">
+									            <button type="button" class="btn btn-icon btn-xs btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+									              <svg width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+									                <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+									              </svg>
+									            </button>
+									          </div>
+									        </div>
+										  <!-- End Header -->
 					
 										  <!-- Body -->
 										  <form>
 										  <div class="modal-body pt-3 pb-sm-5 px-sm-5">
-											<div class="text-center mb-5">
-											  <h3 class="mb-1">Service Request : #<span th:text="${serviceRequestBean.ticketNo}"></span></h3>
-											  <span class="d-block" th:text="${serviceRequestBean.requestedFor}"></span>
+											<div class="mb-5">
+											  <!-- <h3 class="mb-1">Service Request : #<span th:text="${serviceRequestBean.ticketNo}"></span></h3> -->
+											  Request:<span th:text="${serviceRequestBean.serviceCategory}"></span>
+											  <span class="d-block text-primary" th:text="${serviceRequestBean.serviceReqDescription}"></span>
 											</div>
-					
 					
 											<small class="text-cap mb-2">Add Notes to Ticket.</small>
 					
@@ -611,7 +641,7 @@
 												<div class="d-flex justify-content-between align-items-center">
 												  <span>Request Priority/Urgency :</span>
 												  <span>
-												  			<select th:field="${serviceRequestBean.serviceStatus}" th:id="editUrgency+${serviceRequestBean.ticketNo}" class="form-control" name="Urgency"  
+												  			<select th:id="editUrgency+${serviceRequestBean.ticketNo}" class="form-control" name="Urgency"  
 															required data-msg="Select the urgency of the request.">												
 															<option th:each="urgencyType : ${urgencyTypeList}"
 			                             					th:value="${urgencyType.keyId}"
@@ -629,10 +659,9 @@
 												  <span>
 												  		<select th:id="editStatus+${serviceRequestBean.ticketNo}" class="form-control" name="status"  
 															required data-msg="Select a status.">												
-															<option value="ADD NOTES"> ADD NOTES</option>
-															<option value="ADD INFO"> ADD INFO</option>
-															<option value="CANCEL">CANCEL</option>
-															<option value="CLOSE">CLOSE</option>
+															<option th:value="ADD_NOTES" th:text="ADD_NOTES"></option>
+															<option th:value="CANCEL" th:text="CANCEL"></option>
+															<option th:value="CLOSE" th:text="CLOSE"></option>
 											
 														</select>
 												  
@@ -646,7 +675,7 @@
 												  
 												  <textarea cols="100" rows="3" class="form-control no-resize" 
 												  th:id="editNotes+${serviceRequestBean.ticketNo}" name="requestNotes" placeholder="Put the request description in details." 
-												  maxlength="2000" required data-msg="Please describe in details."></textarea>
+												  maxlength="1000" required data-msg="Please describe in details."></textarea>
 												  
 												  </span>
 												</div>
@@ -654,6 +683,9 @@
 											</ul>
 					
 											<hr class="my-5">
+											<div class="row">
+												<label  class="wrap-text ticketStatus" th:id="ticketStatus+${serviceRequestBean.ticketNo}"></label>
+											</div>
 											<div class="d-flex justify-content-end">
 									              <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Close</button>
 									              <!-- <button type="button" class="btn btn-primary" 
@@ -666,7 +698,9 @@
 													
 													
 													<button class="btn btn-primary" th:data-id="${serviceRequestBean.ticketNo}" 
-													    th:onclick="submitTicketNotes(this,[[${serviceRequestBean.ticketNo}]], [[${session.USER_SESSION_OBJ_KEY.customerId}]])" type="button">Save changes
+													    th:onclick="submitTicketNotes(this,[[${serviceRequestBean.ticketNo}]],
+													    	 [[${session.USER_SESSION_OBJ_KEY.customerId}]],
+													    	 [[${session.USER_SESSION_OBJ_KEY.userEmailId}]])" type="button">Save changes
 													</button>
 									        
 									        
@@ -1081,10 +1115,84 @@
        });
 </script>
 
+
+<!-- Ajax Call -->
 <script>
-function submitTicketNotes(val, ticketNo, customerId) {
-    var x = document.getElementById("editNotes"+ticketNo).value;
-    alert("Ticket No:"+ticketNo+"MSG :"+x+"customerId :"+customerId);
+function submitTicketNotes(val, ticketNo, customerId, emailId) {
+    var notes = document.getElementById("editNotes"+ticketNo).value;   
+    var urgency = document.getElementById("editUrgency"+ticketNo).value;
+    var status = document.getElementById("editStatus"+ticketNo).value;
+    
+    
+    var formData = new FormData();
+	formData.append('notes',notes);
+	formData.append('urgency',urgency);
+	formData.append('status',status);
+	formData.append('customerId',customerId);
+	formData.append('ticketNo',ticketNo);
+	formData.append('emailId',emailId);
+    
+    //alert("Ticket No:"+ticketNo+"MSG :"+notes+"customerId :"+customerId+"/urgency:"+urgency);
+    
+	$.ajax({
+		type: "POST",
+		enctype: 'multipart/form-data',
+		url: "/addNotesToTicket",
+		data: formData,
+		dataType: 'html', //Important , it has to be HTML to get HTML String Back
+		cache: false,
+		timeout: 600000,
+		contentType: false,
+		processData: false, //it prevent jQuery form transforming the data into a query string
+		success: function (data, status) {
+			console.log("SUCCESS : ", data);
+			
+			if(isStringContains(data, 'Success :')){
+				showSuccessMsg(data, ticketNo );
+			}else{
+				showError(data, ticketNo);
+			}
+				
+			//alert("Success :"+data);
+
+		},
+		error: function (xhr, status, error) {
+			console.log("ERROR : ", xhr.status);
+			console.log("ERROR status: ", status);
+			console.log("ERROR error: ", error);
+			showError("Error : Exception occured while updating the Ticket, if you still see the error, contact the customer service.");
+			//alert("Error :"+error);
+
+		}
+	});
+	
+	
+	
+	
+	
+		function showError(msg, ticketNo) {
+		  var e1 = document.getElementById("ticketStatus"+ticketNo);
+		  e1.setAttribute("style", "display:block;background:#ffecec;border: 2px solid #f5aca6");
+		  e1.innerHTML = "&nbsp;"+msg;
+
+		}
+		
+		function showSuccessMsg(msg, ticketNo) {
+		  var e1 = document.getElementById("ticketStatus"+ticketNo);
+		  e1.setAttribute("style", "display:block;background:#c3f3cd;border: 2px solid #50ef72");
+		  e1.innerHTML = "&nbsp;"+msg;
+
+		}
+		
+		function isStringContains (StringVal, SubStringVal){
+			var res = StringVal.match(SubStringVal);
+			
+			if( res == null){
+				return false;
+			}else{
+				return true;
+			}
+		}
 }
 </script>  
   

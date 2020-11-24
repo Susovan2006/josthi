@@ -139,6 +139,21 @@ public static String getNextTicketID(String type,int nextCount) {
 	}
 	
 	
+	public static EmailDbBean getEmailBeanForServiceTicket(String emailTo, String ticketNumber, String jsonValue) {
+		
+		EmailDbBean emailDbBean =  new EmailDbBean();
+		emailDbBean.setSentTo(emailTo);
+		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_SERVICE);
+		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_SERVICE + " : "+ticketNumber);
+		emailDbBean.setJsonString(jsonValue);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_SERVICE_REQUEST_UPDATE);
+		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
+		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
+		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
+		return emailDbBean;
+	}
+	
+	
 	/**
 	 * 
 	 * @param map

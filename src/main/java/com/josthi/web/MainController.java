@@ -246,6 +246,10 @@ public class MainController {
 			return "user/feedback_from_user";
 	}
 	
+	@GetMapping("/user/ticketHistory")
+	public String ticketHistory(Model model) {
+		return "user/ticket_history";
+	}
 	
 	/**
 	 * ============================================================================================

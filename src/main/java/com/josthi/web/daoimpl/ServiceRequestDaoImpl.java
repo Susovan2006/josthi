@@ -12,6 +12,8 @@ import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.dao.ServiceRequestDao;
 import com.josthi.web.dao.rowmapper.BeneficiaryDetailRowMapper;
 import com.josthi.web.dao.rowmapper.ServiceRequestTableRowMapper;
+import com.josthi.web.exception.UserExceptionInvalidData;
+import com.josthi.web.utils.Utils;
 
 public class ServiceRequestDaoImpl implements ServiceRequestDao{
 	
@@ -85,7 +87,7 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 	
 	public static final String SELECT_ACTIVE_TICKET_DETAILS_LIST = "SELECT UID, TICKET_NO, REQUESTED_BY, REQUESTER_ID, "
 			+ "REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
-			+ "SERVICE_CATEGORY, SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS " 
+			+ "SERVICE_CATEGORY, SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
 			+ "FROM service_request_table WHERE REQUESTER_ID = ? and SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
 	
 	@Override
@@ -99,6 +101,88 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 				return serviceRequestBeanList;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	
+	//-----------------------------------------------------------------------------------------
+	//------------------------------- FROM REST SERVICE ---------------------------------------
+	//-----------------------------------------------------------------------------------------
+	
+	public static final String SELECT_ACTIVE_TICKET_ON_TICKET_NUM = "SELECT UID, TICKET_NO, REQUESTED_BY, REQUESTER_ID, "
+			+ "REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
+			+ "SERVICE_CATEGORY, SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
+			+ "FROM service_request_table WHERE REQUESTER_ID = ? and TICKET_NO = ? and SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
+	
+	@Override
+	public ServiceRequestBean getServiceRequestDetailsOnTicketNumber(String userId, String ticketNum) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<ServiceRequestBean> serviceRequestBeanList = getJdbcTemplate().query(
+												 SELECT_ACTIVE_TICKET_ON_TICKET_NUM,
+												 new Object[] {userId, ticketNum},
+												 new ServiceRequestTableRowMapper());
+				//return ;
+				
+				if ( serviceRequestBeanList.isEmpty()){
+					logger.info("No Ticket Found");
+					return null;
+				}else if ( serviceRequestBeanList.size() == 1 ) { // list contains exactly 1 element
+					//logger.info("User Pref :"+serviceRequestBeanList.get(0));
+					return serviceRequestBeanList.get(0);
+				}else{  // list contains more than 1 elements
+					throw new UserExceptionInvalidData("Invalid Data in the Database...");
+				}
+				
+				
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	public static final String UPDATE_SERVICE_RECUEST_TABLE_WITH_USER_NOTES = "UPDATE service_request_table set" + 
+			" SERVICE_URGENCY=?, SERVICE_STATUS=?, LAST_UPDATE=CURRENT_TIMESTAMP, LAST_UPDATE_COMMENTS = ?, LAST_UPDATE_USER = ? " + 
+			" WHERE TICKET_NO=? AND REQUESTER_ID = ?;";
+	@Override
+	public boolean updateServiceRequestTable(String customerID, String requesterName, 
+											String notes, String urgency,
+											String status, String ticketNo) throws Exception {
+		try {
+			int result = jdbcTemplate.update(UPDATE_SERVICE_RECUEST_TABLE_WITH_USER_NOTES, new Object[]{
+																										urgency,
+																										status,
+																										notes,
+																										requesterName,
+																										ticketNo,
+																										customerID});	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
+	
+
+	@Override
+	public boolean insertUserServiceHistoryTable(String customerID, String requesterName, String notes, String urgency,
+																			String status, String ticketNo) throws Exception {
+			try {
+				int result = jdbcTemplate.update(INSERT_SERVICE_HISTORY_TABLE, new Object[]{ticketNo,
+																							status,
+																							notes,
+																							//Default date
+																							requesterName,
+																							customerID,
+																						  });	
+				return (result > 0 ? true : false);
+			}catch(Exception ex) {
+				logger.error(ex.getMessage(), ex);
 				throw ex;
 			}
 	}

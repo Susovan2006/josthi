@@ -279,16 +279,16 @@ public class UserAuthDaoImpl implements UserAuthDao{
 	@Override
 	public UserPreferencesBean getUserPref(String userId) throws Exception {
 		@SuppressWarnings("unchecked")
-		List<UserPreferencesBean> UserPreferencesList  = getJdbcTemplate().query(SELECT_USER_PREF,
+		List<UserPreferencesBean> userPreferencesList  = getJdbcTemplate().query(SELECT_USER_PREF,
 																new Object[] { userId},
 																new UserPreferenceRowMaper());
 
-			if ( UserPreferencesList.isEmpty()){
+			if ( userPreferencesList.isEmpty()){
 				logger.info("No Pref Setup");
 				return null;
-			}else if ( UserPreferencesList.size() == 1 ) { // list contains exactly 1 element
-				logger.info("User Pref :"+UserPreferencesList.get(0));
-				return UserPreferencesList.get(0);
+			}else if ( userPreferencesList.size() == 1 ) { // list contains exactly 1 element
+				logger.info("User Pref :"+userPreferencesList.get(0));
+				return userPreferencesList.get(0);
 			}else{  // list contains more than 1 elements
 				throw new UserExceptionInvalidData("Invalid Data in the Database...");
 			}

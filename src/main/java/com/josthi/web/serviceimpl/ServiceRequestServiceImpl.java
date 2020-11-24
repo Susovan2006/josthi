@@ -12,6 +12,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.josthi.web.bo.ServiceRequestBean;
+import com.josthi.web.bo.ServiceRequestHistoryBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.ServiceRequestDao;
 import com.josthi.web.dao.UserAuthDao;
@@ -199,6 +200,23 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 	public ServiceRequestBean getServiceRequestDetailsOnTicketNumber(String customerID, String ticketNo)
 			throws Exception {
 		return serviceRequestDao.getServiceRequestDetailsOnTicketNumber(customerID, ticketNo);
+	}
+
+	@Override
+	public boolean isValidTicket(String ticket) {
+		try {
+			return serviceRequestDao.isValidTicket(ticket);
+		}catch(Exception ex) {
+			logger.error("no ticket Found with :"+ticket, ex);
+			return false;
+		}
+		
+	}
+
+	@Override
+	public List<ServiceRequestHistoryBean> getServiceRequestHistoryBeanList(String ticket) throws Exception {
+		// TODO Auto-generated method stub
+		return serviceRequestDao.getServiceRequestHistoryBeanList(ticket);
 	}
 	
 }

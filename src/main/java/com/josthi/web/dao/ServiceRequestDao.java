@@ -3,6 +3,7 @@ package com.josthi.web.dao;
 import java.util.List;
 
 import com.josthi.web.bo.ServiceRequestBean;
+import com.josthi.web.bo.ServiceRequestHistoryBean;
 
 public interface ServiceRequestDao {
 
@@ -19,5 +20,9 @@ public interface ServiceRequestDao {
 			String status, String ticketNo) throws Exception;
 
 	ServiceRequestBean getServiceRequestDetailsOnTicketNumber(String userId, String ticketNum) throws Exception;
+
+	boolean isValidTicket(String ticket);
+
+	List<ServiceRequestHistoryBean> getServiceRequestHistoryBeanList(String ticket) throws Exception;
 
 }

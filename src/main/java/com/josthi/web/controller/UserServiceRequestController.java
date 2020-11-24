@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.ServiceRequestBean;
+import com.josthi.web.bo.ServiceRequestHistoryBean;
 import com.josthi.web.bo.UserPreferencesBean;
 import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
@@ -56,6 +57,9 @@ public class UserServiceRequestController {
 	public String userRequestService(Model model,
 			@RequestParam (name="status", required = false, defaultValue = "") String status,
 			@RequestParam (name="message", required = false, defaultValue = "") String message,
+			@RequestParam (name="statusForTable", required = false, defaultValue = "") String statusForTable,
+			@RequestParam (name="messageForTable", required = false, defaultValue = "") String messageForTable,
+			@RequestParam (name="gotoPoint", required = false, defaultValue = "") String gotoPoint,
 			HttpServletRequest request) throws Exception {
 		
 			String actionStatus = "";
@@ -64,15 +68,23 @@ public class UserServiceRequestController {
 			
 			ValidateSession.isValidSession(request);
 			
+			//Used for CARD 1
 			if(status!=null && status.length() > 0) {
 		    	 model.addAttribute("status", status);
 				 model.addAttribute("message", message);
 	   	 	}
 			
+			//Used for CARD 2
+			if(statusForTable!=null && statusForTable.length() > 0) {
+		    	 model.addAttribute("statusForTable", statusForTable);
+				 model.addAttribute("messageForTable", messageForTable);
+	   	 	}
+			
+			//Getting the Customer ID from Session.
 			UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY); 
 			String userId = userSessionBean.getCustomerId();
 			
-
+			//Initializing a new Bean so that it can be passed to the UI for the users to create the Ticket.
 			ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
 			
 			//Pulling all the active Tickets to be displayed on the Screen.
@@ -103,8 +115,12 @@ public class UserServiceRequestController {
 			model.addAttribute("serviceRequestBean",serviceRequestBean);
 			model.addAttribute("serviceRequestBeanList",serviceRequestBeanList);
 			
-			return "user/request_service_user";
 			
+			if(gotoPoint!=null && gotoPoint.length()>0) {
+				return "user/request_service_user#"+gotoPoint;
+			}else {
+				return "user/request_service_user";
+			}
 			
 			
 			
@@ -222,8 +238,46 @@ public class UserServiceRequestController {
 	public String ticketHistory(Model model,
 									@PathVariable String ticket,
 									HttpServletRequest request) {
-		logger.info("***********************"+ticket);
-		return "user/ticket_history";
+		
+		
+		String actionStatus = "";
+		String message = "";
+		try {					
+			ValidateSession.isValidSession(request);
+
+			if(ticket!=null && ticket.length() > 0 && serviceRequestService.isValidTicket(ticket)) {
+				
+				List<ServiceRequestHistoryBean> serviceRequestHistoryBeanList= serviceRequestService.getServiceRequestHistoryBeanList(ticket);
+				//logger.info("***********************"+serviceRequestHistoryBeanList.toString());
+				model.addAttribute("serviceRequestHistoryBeanList",serviceRequestHistoryBeanList);
+				model.addAttribute("ticket",ticket);
+				return "user/ticket_history";
+
+			 }else{
+					//actionStatus = MessageConstant.USER_FAILURE_STATUS;
+				 message = "Invalid Ticket Number, please log out and re login.";
+				 throw new UserExceptionInvalidData(message);
+			 }
+
+		}catch(UserExceptionInvalidData ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message = ex.getMessage();
+			return "redirect:/user/requestService?statusForTable="+actionStatus+"&messageForTable="+message;
+		}catch(UserException ex) {
+			logger.error(ex.getMessage(), ex);
+			return "redirect:/login";
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message = "System Error Occured while Fetching the ticket history. Call Customer Service.";
+			return "redirect:/user/requestService?statusForTable="+actionStatus+"&messageForTable="+message;
+		}
+		
+		
+		
+		
+		
 	}
 	
 	

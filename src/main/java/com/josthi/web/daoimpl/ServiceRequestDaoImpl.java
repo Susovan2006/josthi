@@ -9,8 +9,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.bo.ServiceRequestBean;
+import com.josthi.web.bo.ServiceRequestHistoryBean;
 import com.josthi.web.dao.ServiceRequestDao;
 import com.josthi.web.dao.rowmapper.BeneficiaryDetailRowMapper;
+import com.josthi.web.dao.rowmapper.ServiceRequestHistoryRowMapper;
 import com.josthi.web.dao.rowmapper.ServiceRequestTableRowMapper;
 import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.utils.Utils;
@@ -183,6 +185,44 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 				return (result > 0 ? true : false);
 			}catch(Exception ex) {
 				logger.error(ex.getMessage(), ex);
+				throw ex;
+			}
+	}
+	
+	
+	//------------------------------------------------------------------------------------------------------------------------------------
+	//-------------------------------- VIEW   TICKET   HISTORY  --------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------------------------------------------
+	
+	public static final String SELECT_TICKET_COUNT_FROM_SERVICE_DETAILS = "SELECT COUNT(*) from service_request_table WHERE TICKET_NO = ?";
+	public static final String SELECT_TICKET_COUNT_FROM_SERVICE_HISTORY = "SELECT COUNT(*) from service_ticket_history WHERE TICKET_NUMBER = ?";
+	@Override
+	public boolean isValidTicket(String ticket) {
+		int detailCount = getJdbcTemplate().queryForObject(SELECT_TICKET_COUNT_FROM_SERVICE_DETAILS, new Object[] { ticket }, Integer.class);
+		int historyCount = getJdbcTemplate().queryForObject(SELECT_TICKET_COUNT_FROM_SERVICE_HISTORY, new Object[] { ticket }, Integer.class);
+		if(detailCount ==  1 && historyCount >0) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	
+	
+	public static final String SELECT_TICKET_HISTORY_LIST = "SELECT ROW_NUMBER() OVER (	ORDER BY UPDATE_TIMESTAMP) COUNTER, "
+			+ " HISTORY_ID, TICKET_NUMBER, STATUS, COMMENTS, UPDATE_TIMESTAMP, UPDATED_BY_NAME, UPDATED_BY_ID " + 
+			"FROM service_ticket_history where TICKET_NUMBER = ? order by UPDATE_TIMESTAMP ASC";
+	@Override
+	public List<ServiceRequestHistoryBean> getServiceRequestHistoryBeanList(String ticket) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<ServiceRequestHistoryBean> serviceRequestHistoryBeanList = getJdbcTemplate().query(
+													SELECT_TICKET_HISTORY_LIST,
+												 new Object[] {ticket},
+												 new ServiceRequestHistoryRowMapper());
+				return serviceRequestHistoryBeanList;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
 				throw ex;
 			}
 	}

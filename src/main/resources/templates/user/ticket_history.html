@@ -62,89 +62,49 @@
             <!-- Body -->
             <div class="card-body">
               
-										  <!-- Body -->
-										  <div class="modal-body pt-3 pb-sm-5 px-sm-5">
-											<div class="text-center mb-5">
-											  <h3 class="mb-1">Request Details from josthi.com</h3>
-											  <span class="d-block">Req #3682303</span>
-											</div>
+					<!-- CARD Body -->
+						<div class="modal-body pt-3 pb-sm-5 px-sm-5">
+							<div class="text-center mb-5">
+								<h3 class="mb-1">Ticket Details</h3>
+								<span class="d-block" th:text="${ticket}"></span>
+							</div>
 					
-											<!-- HISTORY Susovan -->
-											<!-- Step -->
-											<ul class="step step-timeline-md">
-											  <li class="step-item">
-											    <div class="step-content-wrapper">
-											      <span class="step-icon step-icon-soft-primary">1</span>
-											      <div class="step-content">
-											        <h4>First step</h4>
-											        <p class="text-body wrap-text">Achieve virtually any design and layout from within the one template.</p>
-											      </div>
-											    </div>
-											  </li>
+							<!-- HISTORY Susovan -->
+							<div th:if="${not #lists.isEmpty(serviceRequestHistoryBeanList)}" class="table_wrapper">
+							<!-- Step -->
+							<ul class="step step-timeline-md" th:each="serviceRequestHistoryBean : ${serviceRequestHistoryBeanList}">
+								<li class="step-item">
+									<div class="step-content-wrapper">
+										<span class="step-icon step-icon-soft-primary" th:text="${serviceRequestHistoryBean.counter}">1</span>
+											<div class="step-content">
+											    <h5 th:text="${serviceRequestHistoryBean.status} + '&#10 ON ' + ${serviceRequestHistoryBean.updateTimestamp}"></h5>
+											    <p class="text-body wrap-text" th:text="${serviceRequestHistoryBean.comments}"></p>
+											</div>
+									</div>
+								</li>
 											
-											  <li class="step-item">
-											    <div class="step-content-wrapper">
-											      <span class="step-icon step-icon-soft-primary">2</span>
-											      <div class="step-content">
-											        <h4>Second step</h4>
-											        <p class="text-body wrap-text">We strive to figure out ways to help your business grow through all platforms.</p>
-											      </div>
-											    </div>
-											  </li>
-											
-											  <li class="step-item">
-											    <div class="step-content-wrapper">
-											      <span class="step-icon step-icon-soft-primary">3</span>
-											      <div class="step-content">
-											        <h4>Third step</h4>
-											        <p class="text-body wrap-text">Find what you need in one template and combine features at will.</p>
-											      </div>
-											    </div>
-											  </li>
-											
-											  <li class="step-item">
-											    <div class="step-content-wrapper">
-											      <span class="step-icon step-icon-soft-primary">4</span>
-											      <div class="step-content">
-											        <h4>Fourth step</h4>
-											        <p class="text-body wrap-text">Find what you need in one template and combine features at will.</p>
-											      </div>
-											    </div>
-											  </li>
-											
-											  <li class="step-item">
-											    <div class="step-content-wrapper">
-											      <span class="step-icon step-icon-soft-primary">5</span>
-											      <div class="step-content">
-											        <h4>Fifth step</h4>
-											        <p class="text-body wrap-text">Find what you need in one template and combine features at will.</p>
-											      </div>
-											    </div>
-											  </li>
-											</ul>
-											<!-- End Step -->
-											
+							</ul>
+							<!-- End Step -->
+							</div>
+							
+							
+							<!-- ELSE BLOCK IN CASE NO BENEFECIARY SELECTED -->
+							<div th:unless="${not #lists.isEmpty(serviceRequestHistoryBeanList)}">
+								<p class="card-text">No History available for this ticket.</p>
+							</div>				
 
 															
-											<!-- Footer -->
-											<div class="card-footer d-flex justify-content-end">
-											  
-											  <span class="mx-2"></span>
-											  
-											  <button class="btn btn-primary" onclick="window.open('/user/requestService','_self')">Back To Ticket Screen</button>
-											</div>
-											<!-- End Footer -->
-										  </div>
-										  <!-- End Body -->
-
-
-					
-
-
-
+							<!-- Footer -->
+							<div class="card-footer d-flex justify-content-end">
+								<span class="mx-2"></span>											  
+								<button class="btn btn-primary" onclick="window.open('/user/requestService','_self')">Back To Ticket Screen</button>
+							</div>
+							<!-- End Footer -->
+						</div>
+						<!-- End Body -->
 
             </div>
-            <!-- End Body -->
+            <!-- End CARD Body -->
           </div>
           <!-- End Card -->
 

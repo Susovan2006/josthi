@@ -85,3 +85,27 @@ function submitTicketNotes(val, ticketNo) {
     alert("Ticket No:"+ticketNo+"MSG :"+x);
 }
 </script>
+
+
+
+
+########################### JAVA SCRIPT NULL CHECK ########################
+function isEmpty(value){
+	return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+}
+
+################################# SCROLL to a Specific DIV #######################
+
+<script th:inline="javascript">   
+       $(document).ready(function() {
+	       	       
+	       var focus = /*[[${gotoPoint}]]*/'null';
+	       if(!(isEmpty(focus))){
+	    	   document.getElementById('ticketTable').scrollIntoView();
+	       }else{
+	    	   document.getElementById('card1').scrollIntoView();
+	       }
+	       alert(focus);
+	         
+       });
+</script>

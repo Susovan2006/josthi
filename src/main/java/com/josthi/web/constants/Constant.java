@@ -5,6 +5,8 @@ public interface Constant {
 	//String DATE_FORMAT_FOR_DOB = "yyyy-MM-dd";
 	String DATE_FORMAT_FOR_DOB = "MM/dd/yyyy";
 	String DATE_FORMAT_FOR_TICKET_COMPLETION_DATE = "yyyy-MM-dd";
+	String DATE_FORMAT_FOR_TICKET_HISTORY ="d MMM yyyy hh:mm aaa";
+	//https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
 	
 	String USER_STATUS_ACTIVE = "A";
 	String USER_STATUS_DISABLED = "D";

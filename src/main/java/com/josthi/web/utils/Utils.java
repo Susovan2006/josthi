@@ -253,6 +253,14 @@ public static String getNextTicketID(String type,int nextCount) {
 		
 	}
 	
+	public static String timestampToFormattedString(Timestamp ts) {
+		Date date = new Date();
+		date.setTime(ts.getTime());
+		String formattedDate = new SimpleDateFormat(Constant.DATE_FORMAT_FOR_TICKET_HISTORY).format(date);
+		return formattedDate;
+		
+	}
+	
 	public static Timestamp getRequestFulFillDate(String fulFillDate) throws ParseException {
 		if(fulFillDate!=null && fulFillDate.trim().length() == 10) {
 			DateFormat df = new SimpleDateFormat(Constant.DATE_FORMAT_FOR_TICKET_COMPLETION_DATE);

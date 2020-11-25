@@ -89,7 +89,7 @@
         
         <!-- ********************** CARD 1 ************************************-->
 		
-			<div class="card mb-3 mb-lg-5">
+			<div class="card mb-3 mb-lg-5" id="card1">
 	            <div class="card-header">
 	              <div class="d-flex align-items-center">
 	                <h5 class="card-title">Open a Service Request Ticket</h5>
@@ -434,7 +434,7 @@
 							
 					<div th:if="${not #lists.isEmpty(serviceRequestBeanList)}" class="table_wrapper">	
 						
-						<table class="table table-thead-bordered">
+						<table class="table table-thead-bordered" id="ticketTable">
 						  <thead class="thead-light">
 							<tr>
 							  <th scope="col">Request No</th>
@@ -445,8 +445,8 @@
 							</tr>
 						  </thead>
 						  	<tbody>
-								<tr th:each="serviceRequestBean : ${serviceRequestBeanList}">
-							      <td th:text="${serviceRequestBean.ticketNo}">1</td>
+								<tr th:each="serviceRequestBean : ${serviceRequestBeanList}" >
+							      <td th:id="${serviceRequestBean.ticketNo}" th:text="${serviceRequestBean.ticketNo}">1</td>
 							      <td th:text="${serviceRequestBean.requestedFor}">Name</td>
 							      <td th:text="${serviceRequestBean.requestedDate}">Date</td>
 							      <td th:text="${serviceRequestBean.serviceStatus}">Status</td>
@@ -567,7 +567,7 @@
 											  <li class="list-group-item text-dark">
 												<div class="d-flex justify-content-between align-items-center">
 												  <span>Last Updated on:</span>
-												  <span class="text-primary" th:text="${serviceRequestBean.lastUpdate}"></span>
+												  <span class="text-primary" th:text="${serviceRequestBean.formattedLastUpdate}"></span>
 												</div>
 											  </li>
 											  <li class="list-group-item text-dark">
@@ -1125,6 +1125,14 @@
 
 	       $("#requesterNameServReq").val(name);
 	       $("#userIdServReq").val(id);
+	       
+	       var focus = /*[[${gotoPoint}]]*/'null';
+	       if(!(isEmpty(focus))){
+	    	   document.getElementById('ticketTable').scrollIntoView();
+	       }else{
+	    	   document.getElementById('card1').scrollIntoView();
+	       }
+	       //alert(focus);
 	         
        });
 </script>
@@ -1132,6 +1140,11 @@
 
 <!-- Ajax Call -->
 <script>
+function isEmpty(value){
+	return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+}
+
+
 function submitTicketNotes(val, ticketNo, customerId, emailId) {
     var notes = document.getElementById("editNotes"+ticketNo).value;   
     var urgency = document.getElementById("editUrgency"+ticketNo).value;

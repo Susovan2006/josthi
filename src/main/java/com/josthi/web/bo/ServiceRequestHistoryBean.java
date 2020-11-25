@@ -9,6 +9,7 @@ public class ServiceRequestHistoryBean {
 	private String status ;
 	private String comments ;
 	private Timestamp updateTimestamp ;
+	private String formattedUpdateTimestamp;
 	private String updatedByName ;
 	private String updatedById ;
 	private int counter;
@@ -43,6 +44,15 @@ public class ServiceRequestHistoryBean {
 	}
 	public void setUpdateTimestamp(Timestamp updateTimestamp) {
 		this.updateTimestamp = updateTimestamp;
+	}
+	
+	
+	
+	public String getFormattedUpdateTimestamp() {
+		return formattedUpdateTimestamp;
+	}
+	public void setFormattedUpdateTimestamp(String formattedUpdateTimestamp) {
+		this.formattedUpdateTimestamp = formattedUpdateTimestamp;
 	}
 	public String getUpdatedByName() {
 		return updatedByName;

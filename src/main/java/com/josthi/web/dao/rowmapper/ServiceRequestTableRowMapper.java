@@ -21,7 +21,7 @@ public ServiceRequestBean mapRow(ResultSet resultSet,int arg1)throws SQLExceptio
 		serviceRequestBean.setAssignedTo(resultSet.getString("ASSIGNED_TO"));
 		serviceRequestBean.setRequestedOn(resultSet.getTimestamp("REQUESTED_ON"));
 		//For Display Purpose.
-		serviceRequestBean.setRequestedDate(Utils.timestampToFormattedString(resultSet.getTimestamp("REQUESTED_ON"), "MM/dd/YY"));
+		serviceRequestBean.setRequestedDate(Utils.timestampToFormattedString(resultSet.getTimestamp("REQUESTED_ON"), "d MMM yyyy"));
 		serviceRequestBean.setToBeCompletedBy(resultSet.getTimestamp("TO_BE_COMPLETED_BY"));
 		serviceRequestBean.setServiceType(resultSet.getString("SERVICE_TYPE"));
 		serviceRequestBean.setServiceCategory(resultSet.getString("SERVICE_CATEGORY"));
@@ -29,6 +29,7 @@ public ServiceRequestBean mapRow(ResultSet resultSet,int arg1)throws SQLExceptio
 		serviceRequestBean.setServiceUrgency(resultSet.getString("SERVICE_URGENCY"));
 		serviceRequestBean.setServiceStatus(resultSet.getString("SERVICE_STATUS"));
 		serviceRequestBean.setLastUpdate(resultSet.getTimestamp("LAST_UPDATE"));
+		serviceRequestBean.setFormattedLastUpdate(Utils.timestampToFormattedString(resultSet.getTimestamp("LAST_UPDATE"), "d MMM yyyy hh:mm aaa"));
 		serviceRequestBean.setComments(resultSet.getString("COMMENTS"));
 		serviceRequestBean.setLastCommentsNotes(resultSet.getString("LAST_UPDATE_COMMENTS"));
 		serviceRequestBean.setLastUpdatedBy(resultSet.getString("LAST_UPDATE_USER"));

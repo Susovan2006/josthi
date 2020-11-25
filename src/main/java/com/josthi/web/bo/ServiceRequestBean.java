@@ -21,6 +21,7 @@ public class ServiceRequestBean {
 	private String serviceUrgency ;
 	private String serviceStatus ;
 	private Timestamp lastUpdate ;
+	private String formattedLastUpdate;
 	private String comments ;
 	private String lastCommentsNotes ;
 	private String lastUpdatedBy ;
@@ -128,6 +129,14 @@ public class ServiceRequestBean {
 	}
 	public void setLastUpdate(Timestamp lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+	
+	
+	public String getFormattedLastUpdate() {
+		return formattedLastUpdate;
+	}
+	public void setFormattedLastUpdate(String formattedLastUpdate) {
+		this.formattedLastUpdate = formattedLastUpdate;
 	}
 	public String getComments() {
 		return comments;

@@ -117,11 +117,10 @@ public class UserServiceRequestController {
 			
 			
 			if(gotoPoint!=null && gotoPoint.length()>0) {
-				return "user/request_service_user#"+gotoPoint;
-			}else {
-				return "user/request_service_user";
+				model.addAttribute("gotoPoint",gotoPoint);
 			}
 			
+			return "user/request_service_user";
 			
 			
 		} catch(UserExceptionInvalidData ex) {

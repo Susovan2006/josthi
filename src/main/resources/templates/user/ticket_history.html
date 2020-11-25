@@ -8,6 +8,14 @@
   <div th:replace="user_common :: includes"></div>
   <!--  ======================== CSS INCLUDES ===================== -->
   
+  <style>
+  .wrap-text {
+		    word-wrap: break-word;
+		    white-space:pre-wrap;
+		}
+  
+  </style>
+  
 </head>
 <body>
   
@@ -71,13 +79,15 @@
 					
 							<!-- HISTORY Susovan -->
 							<div th:if="${not #lists.isEmpty(serviceRequestHistoryBeanList)}" class="table_wrapper">
-							<!-- Step -->
-							<ul class="step step-timeline-md" th:each="serviceRequestHistoryBean : ${serviceRequestHistoryBeanList}">
-								<li class="step-item">
+							<!-- Step step-timeline-md-->
+							<ul class="step ">
+								<li class="step-item" th:each="serviceRequestHistoryBean : ${serviceRequestHistoryBeanList}">
 									<div class="step-content-wrapper">
 										<span class="step-icon step-icon-soft-primary" th:text="${serviceRequestHistoryBean.counter}">1</span>
 											<div class="step-content">
-											    <h5 th:text="${serviceRequestHistoryBean.status} + '&#10 ON ' + ${serviceRequestHistoryBean.updateTimestamp}"></h5>
+											    <span class="badge badge-primary text-uppercase ml-1" th:text="${serviceRequestHistoryBean.status}"></span>
+											    <span class="d-block text-body font-size-1" th:text="${serviceRequestHistoryBean.formattedUpdateTimestamp}"></span>
+												<h6 class="mb-0" th:text="${serviceRequestHistoryBean.updatedByName}"></h6>
 											    <p class="text-body wrap-text" th:text="${serviceRequestHistoryBean.comments}"></p>
 											</div>
 									</div>
@@ -97,7 +107,7 @@
 							<!-- Footer -->
 							<div class="card-footer d-flex justify-content-end">
 								<span class="mx-2"></span>											  
-								<button class="btn btn-primary" onclick="window.open('/user/requestService','_self')">Back To Ticket Screen</button>
+								<button class="btn btn-primary" onclick="window.open('/user/requestService?gotoPoint=ticketTable','_self')">Back To Ticket Screen</button>
 							</div>
 							<!-- End Footer -->
 						</div>

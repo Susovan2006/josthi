@@ -12,7 +12,7 @@ public class ServiceRequestHistoryBean {
 	private String formattedUpdateTimestamp;
 	private String updatedByName ;
 	private String updatedById ;
-	private int counter;
+	//private int counter;
 	
 	
 	public Integer getHistoryId() {
@@ -66,22 +66,7 @@ public class ServiceRequestHistoryBean {
 	public void setUpdatedById(String updatedById) {
 		this.updatedById = updatedById;
 	}
-	public int getCounter() {
-		return counter;
-	}
-	public void setCounter(int counter) {
-		this.counter = counter;
-	}
-	@Override
-	public String toString() {
-		return "ServiceRequestHistoryBean [historyId=" + historyId + ", ticketNumber=" + ticketNumber + ", status="
-				+ status + ", comments=" + comments + ", updateTimestamp=" + updateTimestamp + ", updatedByName="
-				+ updatedByName + ", updatedById=" + updatedById + ", counter=" + counter + "]";
-	}
-	
-	
-	
-	
-	
+
+
 
 }

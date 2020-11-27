@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.josthi.web.bo.PasswordResetBean;
+import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserPreferencesBean;
 import com.josthi.web.controller.UserAuthController;
@@ -40,14 +41,23 @@ public class UserAuthDaoImpl implements UserAuthDao{
 
 	public static final String SELECT_VALIDATE_LOGIN_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED, VERIFIED_USER FROM user_auth_table where USERID_EMAIL = ? and WORDAPP = ?;";
 	@Override
-	public UserAuthBo getValidUser(String uid, String password) {
+	public UserAuthBo getValidUser(String uid, String password) throws Exception {
 		try{
 			@SuppressWarnings("unchecked")
-			UserAuthBo userAuthBo = (UserAuthBo) getJdbcTemplate().queryForObject(
+
+			List<UserAuthBo> userAuthBoList = getJdbcTemplate().query(
 												 SELECT_VALIDATE_LOGIN_SQL,
 												 new Object[] { uid.trim(),password.trim() },
 												 new ValidateAuthenticityRowMaper());
-				return userAuthBo;
+			if ( userAuthBoList.isEmpty()){
+				logger.info("User not Found");
+				return null;
+			}else if ( userAuthBoList.size() == 1 ) { // list contains exactly 1 element
+				//logger.info("User Pref :"+serviceRequestBeanList.get(0));
+				return userAuthBoList.get(0);
+			}else{  // list contains more than 1 elements
+				throw new UserExceptionInvalidData("Invalid Data in the Database...");
+			}
 			}catch(Exception ex){
 				logger.error(ex.getMessage(), ex);
 				//return new UserAuthBo();

@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 public interface UserAuthDao {
 
-	UserAuthBo getValidUser(String uid, String password);
+	UserAuthBo getValidUser(String uid, String password) throws Exception;
 
 	UserAuthBo getValidUser(String emailID);
 

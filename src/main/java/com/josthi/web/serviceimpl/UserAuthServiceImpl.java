@@ -26,7 +26,7 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public UserAuthDao userAuthDao;
 	
 	@Override
-	public UserAuthBo getValidUser(String uid, String password){
+	public UserAuthBo getValidUser(String uid, String password) throws Exception{
 		UserAuthBo userAuthBo = userAuthDao.getValidUser(uid,password);		
 		return userAuthBo;
 	}

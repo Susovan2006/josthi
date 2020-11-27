@@ -81,15 +81,17 @@
 							<div th:if="${not #lists.isEmpty(serviceRequestHistoryBeanList)}" class="table_wrapper">
 							<!-- Step step-timeline-md-->
 							<ul class="step ">
-								<li class="step-item" th:each="serviceRequestHistoryBean : ${serviceRequestHistoryBeanList}">
+								<li class="step-item" th:each="serviceRequestHistoryBean, iterStat  : ${serviceRequestHistoryBeanList}">
 									<div class="step-content-wrapper">
-										<span class="step-icon step-icon-soft-primary" th:text="${serviceRequestHistoryBean.counter}">1</span>
+										<span class="step-icon step-icon-soft-primary" th:text="${iterStat.count}">1</span>
+										<!-- <span class="step-icon step-icon-soft-primary" th:text="${serviceRequestHistoryBean.counter}">1</span> -->									
 											<div class="step-content">
 											    <span class="badge badge-primary text-uppercase ml-1" th:text="${serviceRequestHistoryBean.status}"></span>
 											    <span class="d-block text-body font-size-1" th:text="${serviceRequestHistoryBean.formattedUpdateTimestamp}"></span>
 												<h6 class="mb-0" th:text="${serviceRequestHistoryBean.updatedByName}"></h6>
 											    <p class="text-body wrap-text" th:text="${serviceRequestHistoryBean.comments}"></p>
 											</div>
+											
 									</div>
 								</li>
 											

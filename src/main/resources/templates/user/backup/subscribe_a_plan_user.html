@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Plan and Pricing | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  
+  <Style>
+	  table {
+		table-layout: fixed;
+		word-wrap: break-word;
+		margin-top:auto;
+		margin-bottom:auto;
+	}
+	.text-sm {
+		font-size: 12px;
+	}
+	.price {
+		font-size: 1.5em;
+	}
+  </Style>
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Plan Subscription</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Plan and Service</li>
+              <li class="breadcrumb-item active" aria-current="page">Plan Subscription</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+		
+		
+		<!-- CARD 1 -->
+		
+		<div class="card mb-3 mb-lg-5">
+            <!-- Header -->
+            <div class="card-header">
+              <h5 class="card-header-title">Your Current Plan</h5>
+
+            </div>
+            <!-- End Header -->
+
+            <!-- Body -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-7 mb-4 mb-md-0">
+                  <div class="mb-4">
+                    <small class="text-cap">Your plan Name:</small>
+                    <h5>Gold Plan</h5>
+                  </div>
+				  
+				  <div class="mb-4">
+                    <small class="text-cap">Your plan (billed yearly):</small>
+                    <h5>Starter - April 2020</h5>
+                  </div>
+
+                  <div>
+                    <small class="text-cap">Total per year</small>
+                    <h3 class="text-primary">$264 USD</h3>
+                  </div>
+                </div>
+
+                <div class="col-md-5 text-md-right">
+                  <a class="btn btn-sm btn-white mr-1 mb-0 mb-md-2" href="#">Cancel subscription</a>
+                  <a class="btn btn-sm btn-primary transition-3d-hover mb-0 mb-md-2" href="../pages/pricing.html">Update plan</a>
+                </div>
+              </div>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+		
+		
+		
+		
+		
+		
+          <!-- Card 2-->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Want to update your Plan.</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+				<!-- Pricing Section -->
+				<div class="container space-1">
+				  <h4 class="mb-3">Pricing plans</h4>
+
+				  <!-- Pricing -->
+				  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
+					<input type="radio" id="pricingRadio1" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input" checked>
+					<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-4" for="pricingRadio1">
+					  <span class="row">
+						<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
+						  <span class="d-block mb-2">
+							<span class="text-primary font-weight-bold align-top">$</span>
+							<span class="font-size-3 text-primary font-weight-bold">25</span>
+							<span class="font-size-1">/ mo</span>
+						  </span>
+						</span>
+						<span class="col-sm-9 order-sm-1">
+						  <span class="d-block h3 mb-1">Basic</span>
+						  <span class="d-block">Plan for single Beneficiary, Stater Plan.</span>
+						</span>
+					  </span>
+					</label>
+				  </div>
+				  <!-- End Pricing -->
+
+				  <!-- Pricing -->
+				  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
+					<input type="radio" id="pricingRadio2" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
+					<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-4" for="pricingRadio2">
+					  <span class="row">
+						<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
+						  <span class="d-block mb-2">
+							<span class="text-primary font-weight-bold align-top">$</span>
+							<span class="font-size-3 text-primary font-weight-bold">44</span>
+							<span class="font-size-1">/ mo</span>
+						  </span>
+						</span>
+						<span class="col-sm-9 order-sm-1">
+						  <span class="d-block h3 mb-1">Silver</span>
+						  <span class="d-block">Plan for double Beneficiaries, With essential services.</span>
+						</span>
+					  </span>
+					</label>
+				  </div>
+				  <!-- End Pricing -->
+
+				  <!-- Pricing -->
+				  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
+					<input type="radio" id="pricingRadio3" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
+					<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-4" for="pricingRadio3">
+					  <span class="row">
+						<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
+						  <span class="d-block mb-2">
+							<span class="text-primary font-weight-bold align-top">$</span>
+							<span class="font-size-3 text-primary font-weight-bold">99</span>
+							<span class="font-size-1">/ mo</span>
+						  </span>
+						</span>
+						<span class="col-sm-9 order-sm-1">
+						  <span class="d-block h3 mb-1">Gold</span>
+						  <span class="d-block">Plan for double Beneficiaries, With essential and Value added services.</span>
+						</span>
+					  </span>
+					</label>
+				  </div>
+				  <!-- End Pricing -->
+
+				  <div class="text-center mt-5">
+					<div class="mb-5">
+					  <p class="font-size-1">Need customised Plan? <a class="font-weight-bold" href="#">Contact us for custom pricing</a></p>
+					</div>
+					<button type="button" class="btn btn-primary btn-wide transition-3d-hover">Submit</button>
+				  </div>
+				</div>
+				<!-- End Pricing Section -->
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+		  
+		  
+		  
+		  <!-- Card 2-->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Compare your Plans</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+				
+				
+				<table class="table table-hover table-bordered" style="text-align:center;padding-left:200px; padding-right:200px;">
+						<col style="width:40%">
+						<col style="width:20%">
+						<col style="width:20%">
+						<col style="width:20%">
+					
+					
+					<thead>
+					  <tr class="active">
+						  <th style="background:#fff"></th>
+						  <th><center><h3>Basic</h3><p class="text-muted text-sm">Stater Plan.</p></center></th>
+						  <th><center><h3>Silver</h3><p class="text-muted text-sm">Essential services.</p></center></th>
+						  <th><center><h3>Gold</h3><p class="text-muted text-sm">Eessential & Value added services.</p></center></th>
+					  </tr>
+					</thead>
+					<tbody>
+					  <tr>
+						<td><br />Price</td>
+						<td><h3 class="panel-title price">$399</h3></td>
+						<td><h3 class="panel-title price">$699</h3></td>
+						<td><h3 class="panel-title price">$799</h3></td>
+					  </tr>
+					  <tr>
+						<td colspan="4" align="left" style="padding-left:20px;" class="active"><b>Service and Features</b></td>
+					  </tr>
+					  <tr>
+						<td>Beneficiaries</td>
+						<td>Single</td>
+						<td>Double</td>
+						<td>Double</td>
+
+					  </tr>
+					  <tr>
+						<td>24X7 Contact Centre</td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					  <tr>
+						<td>Doctor Appointments </td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					 <tr>
+						<td>Arranging Physiotherapy</td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					  <tr>
+						<td> Ambulance Assistance</td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					  <tr>
+						<td>Non Medical Emergency</td>
+						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					 <tr>
+						<td>Hospitilization 24X7 </td>
+						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					  <tr>
+						<td>Regular Status update</td>
+						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					  <tr>
+						<td>Arranging Home repair/Cleaning</td>
+						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
+						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					  <tr>
+						<td>Arranging Plumbing services </td>
+						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
+						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					 <tr>
+						<td>Arranging Electrician </td>
+						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
+						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
+						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
+					  </tr>
+					  
+					  <tr>
+						<td>Customer Rating</td>
+						<td>A</td>
+						<td>A+</td>
+						<td>A++</td>
+					  </tr>
+					  
+						<!--<tr><td></td>
+						<td><a class="btn btn-info" style="margin-top:10px; margin-bottom:10px">Order Now</a></td>
+						<td><a class="btn btn-info" style="margin-top:10px; margin-bottom:10px">Order Now</a></td>
+						<td><a class="btn btn-info" style="margin-top:10px; margin-bottom:10px">Order Now</a></td></tr> -->
+					</tbody>
+				  </table>
+				
+				
+			
+			</div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+        </div>
+        <!--end Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:replace="user_common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  <div th:insert="user_common :: js-includes"></div>
+  <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+  
+  <script>
+    $(document).on('ready', function () {
+    	
+    	
+    var element = document.getElementById("userSubscribePlanLink");
+    element.classList.add("active");
+    	  
+    	  
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

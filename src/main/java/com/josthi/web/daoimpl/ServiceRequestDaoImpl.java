@@ -209,8 +209,7 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 	}
 	
 	
-	public static final String SELECT_TICKET_HISTORY_LIST = "SELECT ROW_NUMBER() OVER (	ORDER BY UPDATE_TIMESTAMP) COUNTER, "
-			+ " HISTORY_ID, TICKET_NUMBER, STATUS, COMMENTS, UPDATE_TIMESTAMP, UPDATED_BY_NAME, UPDATED_BY_ID " + 
+	public static final String SELECT_TICKET_HISTORY_LIST = "SELECT HISTORY_ID, TICKET_NUMBER, STATUS, COMMENTS, UPDATE_TIMESTAMP, UPDATED_BY_NAME, UPDATED_BY_ID " + 
 			"FROM service_ticket_history where TICKET_NUMBER = ? order by UPDATE_TIMESTAMP ASC";
 	@Override
 	public List<ServiceRequestHistoryBean> getServiceRequestHistoryBeanList(String ticket) throws Exception {

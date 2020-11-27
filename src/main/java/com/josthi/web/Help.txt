@@ -109,3 +109,7 @@ function isEmpty(value){
 	         
        });
 </script>
+
+
+################## ITARATOR in Thymeleaf ################
+https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#keeping-iteration-status

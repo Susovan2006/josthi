@@ -124,81 +124,435 @@
 
             <!-- Body -->
             <div class="card-body">
-				<!-- Pricing Section -->
-				<div class="container space-1">
-				  <h4 class="mb-3">Pricing plans</h4>
+				<!-- ################################################################################################################ -->
+				<!-- #######################					S T E P     F O R M			 				######################### -->
+				<!-- ################################################################################################################ -->
+				<!-- Step Form -->
+				<form class="js-step-form js-validate"
+					  data-hs-step-form-options='{
+						"progressSelector": "#advancedFormStepFormProgress",
+						"stepsSelector": "#advancedFormStepFormContent",
+						"isValidate": true
+					  }'>
+				<div class="row">
+				<div class="col-lg-3">
+				  <!-- Step -->
+				  <ul id="advancedFormStepFormProgress" class="js-step-progress step step-border-last-0">
+					<li class="step-item">
+					  <div class="step-content-wrapper">
+						<span class="step-icon step-icon-soft-primary">        
+							<i class="fas fa-ambulance"></i>
+						</span>
+						<div class="step-content">
+						  <span class="step-inline-title">Plan</span>
+						</div>
+					  </div>
+					</li>
+					
+					<li class="step-item">
+					  <div class="step-content-wrapper">
+						<span class="step-icon step-icon-soft-primary">        
+							<i class="fas fa-clock"></i>
+						</span>
+						<div class="step-content">
+						  <span class="step-inline-title">Duration</span>
+						</div>
+					  </div>
+					</li>
 
-				  <!-- Pricing -->
-				  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
-					<input type="radio" id="pricingRadio1" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input" checked>
-					<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-4" for="pricingRadio1">
-					  <span class="row">
-						<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
-						  <span class="d-block mb-2">
-							<span class="text-primary font-weight-bold align-top">$</span>
-							<span class="font-size-3 text-primary font-weight-bold">25</span>
-							<span class="font-size-1">/ mo</span>
-						  </span>
+					<li class="step-item">
+					  <div class="step-content-wrapper">
+						<span class="step-icon step-icon-soft-primary">
+							<i class="fas fa-users"></i>
 						</span>
-						<span class="col-sm-9 order-sm-1">
-						  <span class="d-block h3 mb-1">Basic</span>
-						  <span class="d-block">Plan for single Beneficiary, Stater Plan.</span>
+						<div class="step-content">
+						  <span class="step-inline-title">Benefetiary</span>
+						</div>
+					  </div>
+					</li>
+
+					<li class="step-item">
+					  <div class="step-content-wrapper">
+						<span class="step-icon step-icon-soft-primary">
+							<i class="fas fa-check"></i>
 						</span>
-					  </span>
-					</label>
+						<div class="step-content">
+						  <span class="step-inline-title">Review</span>
+						</div>
+					  </div>
+					</li>
+
+					<li class="step-item">
+					  <div class="step-content-wrapper">
+						<span class="step-icon step-icon-soft-primary">
+							<i class="fas fa-credit-card"></i>
+						</span>
+						<div class="step-content">
+						  <span class="step-inline-title">Payment</span>
+						</div>
+					  </div>
+					</li>
+				  </ul>
+				  <!-- End Step -->
 				  </div>
-				  <!-- End Pricing -->
+				  
+				  <div class="col-lg-9">
+				  <!-- Content Step Form -->
+				  <div id="advancedFormStepFormContent" class="border rounded p-4">
+					<div id="advancedFormSelectStepOne" class="active">
+					  
+					<!-- Pricing Section -->
+					<div class="container space-0">
+					  <h4 class="mb-3">Available plans</h4>
 
-				  <!-- Pricing -->
-				  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
-					<input type="radio" id="pricingRadio2" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
-					<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-4" for="pricingRadio2">
-					  <span class="row">
-						<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
-						  <span class="d-block mb-2">
-							<span class="text-primary font-weight-bold align-top">$</span>
-							<span class="font-size-3 text-primary font-weight-bold">44</span>
-							<span class="font-size-1">/ mo</span>
+					  <!-- Pricing -->
+					  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
+						<input type="radio" id="pricingRadio1" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input" checked>
+						<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-2" for="pricingRadio1">
+						  <span class="row">
+							<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
+							  <span class="d-block mb-2">
+								<span class="text-primary font-weight-bold align-top">$</span>
+								<span class="font-size-3 text-primary font-weight-bold">25</span>
+								<span class="font-size-1">/ mo</span>
+							  </span>
+							</span>
+							<span class="col-sm-9 order-sm-1">
+							  <span class="d-block h3 mb-1">Basic</span>
+							  
+							  <div>
+									  <span class="d-block font-size-1">Plan for single Beneficiary, Stater Plan.</span>	
+
+									  <div class="collapse" id="collapseLinkBasic">
+										<span class="d-block font-size-1">Monthly Charge.</span>
+									  </div>
+
+									  <a class="link-collapse" data-toggle="collapse" href="#collapseLinkBasic" role="button" aria-expanded="false" aria-controls="collapseLinkExample">
+										<span class="link-collapse-default font-size-1">View Price breakup</span>
+										<span class="link-collapse-active font-size-1">Hide</span>
+									  </a>
+								</div>
+							</span>
 						  </span>
-						</span>
-						<span class="col-sm-9 order-sm-1">
-						  <span class="d-block h3 mb-1">Silver</span>
-						  <span class="d-block">Plan for double Beneficiaries, With essential services.</span>
-						</span>
-					  </span>
-					</label>
-				  </div>
-				  <!-- End Pricing -->
+						</label>
+					  </div>
+					  <!-- End Pricing -->
 
-				  <!-- Pricing -->
-				  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
-					<input type="radio" id="pricingRadio3" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
-					<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-4" for="pricingRadio3">
-					  <span class="row">
-						<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
-						  <span class="d-block mb-2">
-							<span class="text-primary font-weight-bold align-top">$</span>
-							<span class="font-size-3 text-primary font-weight-bold">99</span>
-							<span class="font-size-1">/ mo</span>
+					  <!-- Pricing -->
+					  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
+						<input type="radio" id="pricingRadio2" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
+						<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-2" for="pricingRadio2">
+						  <span class="row">
+							<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
+							  <span class="d-block mb-2">
+								<span class="text-primary font-weight-bold align-top">$</span>
+								<span class="font-size-3 text-primary font-weight-bold">44</span>
+								<span class="font-size-1">/ mo</span>
+							  </span>
+							</span>
+							<span class="col-sm-9 order-sm-1">
+							  <span class="d-block h3 mb-1">Silver</span>							  						  
+								  <div>
+									  <span class="d-block font-size-1">Plan for double Beneficiaries, With essential services.</span>	
+
+									  <div class="collapse" id="collapseLinkSilver">
+										<span class="d-block font-size-1">Monthly Charge.</span>
+									  </div>
+
+									  <a class="link-collapse" data-toggle="collapse" href="#collapseLinkSilver" role="button" aria-expanded="false" aria-controls="collapseLinkExample">
+										<span class="link-collapse-default font-size-1">View Price breakup</span>
+										<span class="link-collapse-active font-size-1">Hide</span>
+									  </a>
+								</div>
+							</span>
 						  </span>
-						</span>
-						<span class="col-sm-9 order-sm-1">
-						  <span class="d-block h3 mb-1">Gold</span>
-						  <span class="d-block">Plan for double Beneficiaries, With essential and Value added services.</span>
-						</span>
-					  </span>
-					</label>
-				  </div>
-				  <!-- End Pricing -->
+						</label>
+					  </div>
+					  <!-- End Pricing -->
 
-				  <div class="text-center mt-5">
-					<div class="mb-5">
-					  <p class="font-size-1">Need customised Plan? <a class="font-weight-bold" href="#">Contact us for custom pricing</a></p>
+					  <!-- Pricing -->
+					  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
+						<input type="radio" id="pricingRadio3" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
+						<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-2" for="pricingRadio3">
+						  <span class="row">
+							<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
+							  <span class="d-block mb-2">
+								<span class="text-primary font-weight-bold align-top">$</span>
+								<span class="font-size-3 text-primary font-weight-bold">99</span>
+								<span class="font-size-1">/ mo</span>
+							  </span>
+							</span>
+							<span class="col-sm-9 order-sm-1">
+							  <span class="d-block h3 mb-1">Gold</span>
+							  	<div>
+									  <span class="d-block font-size-1">Enjoy all the facility available.</span>	
+
+									  <div class="collapse" id="collapseLinkGold">
+										<span class="d-block font-size-1">Monthly Charge.</span>
+									  </div>
+
+									  <a class="link-collapse" data-toggle="collapse" href="#collapseLinkGold" role="button" aria-expanded="false" aria-controls="collapseLinkExample">
+										<span class="link-collapse-default font-size-1">View Price breakup</span>
+										<span class="link-collapse-active font-size-1">Hide</span>
+									  </a>
+								</div>
+							</span>
+						  </span>
+						</label>
+					  </div>
+					  <!-- End Pricing -->
+
+					  <div class="text-center mt-5">
+						<div class="mb-5">
+						  <p class="font-size-1">Need customised Plan? <a class="font-weight-bold" href="#">Contact us for custom pricing</a></p>
+						</div>
+					  </div>
 					</div>
-					<button type="button" class="btn btn-primary btn-wide transition-3d-hover">Submit</button>
+					<!-- End Pricing Section -->
+					  
+
+					  <div class="d-flex justify-content-end">
+						<button type="button" class="btn btn-sm btn-primary transition-3d-hover mr-1"
+								data-hs-step-form-next-options='{
+								  "targetSelector": "#advancedFormSelectStepTwo"
+								}'>Next</button>
+					  </div>
+					</div>
+
+					<div id="advancedFormSelectStepTwo" style="display: none;">
+					  <!-- Input Group -->
+					  <div class="mb-4">
+						  <div class="form-group js-form-message">
+							<label class="input-label" for="selectedPlanFor">Is this Plan for a Single beneficiary or a Family (Max 3 Person)</label>
+							<div class="input-group input-group-sm">						  
+								<select id="selectedPlanFor" class="form-control" name="selectedPlanFor"  
+												required data-msg="Select beneficiary type, the plice will vary based on the selection.">										
+									
+									<option>Single Beneficiary</option>
+									<option>family Plan (2 Pserson)</option>
+									<option>family Plan (3 Pserson)</option>
+								</select>
+							
+							</div>
+						  </div>
+					  </div>
+					  <!-- End Input Group -->
+
+					  <!-- Input Group -->
+					  <div class="mb-4">
+						<div class="form-group js-form-message">
+							<label class="input-label" for="planDuration">Last name</label>
+							<div class="input-group input-group-sm">
+							  <select id="planDuration" class="form-control" name="planDuration"  
+												required data-msg="Select the duration of the Plan, Better to go with yearly Plan and save more!!.">										
+									<option>Monthly (30 Days)</option>
+									<option>For 3 Months (60 Days)</option>
+									<option>For 6 Months (180 Days)</option>
+									<option>For 1 Year (365 Days)</option>
+								</select>
+							</div>
+						</div>
+					  </div>
+					  <!-- End Input Group -->
+
+					  <!-- Input Group -->
+					  <div class="mb-4">
+						  <div class="form-group js-form-message">
+							<label class="input-label" for="sameLocationConfirmation">Please confirm the family members are staying in the same location?</label>
+							<div class="input-group input-group-sm">
+							  <select id="sameLocationConfirmation" class="form-control" name="sameLocationConfirmation"  
+												required data-msg="If the family members are not staying in the same location, the plan will be void.">										
+									<option>disagree</option>
+									<option>I Agree, the family members are residing in same address.</option>
+								</select>
+							</div>
+						  </div>
+					  </div>
+					  <!-- End Input Group -->
+
+					  <div class="d-flex justify-content-end">
+						<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+						   data-hs-step-form-prev-options='{
+							 "targetSelector": "#advancedFormSelectStepOne"
+						   }'>Back</a>
+						<button type="button" class="btn btn-sm btn-primary transition-3d-hover"
+								data-hs-step-form-next-options='{
+								  "targetSelector": "#advancedFormSelectStepThree"
+								}'>Next</button>
+					  </div>
+					</div>
+
+					<div id="advancedFormSelectStepThree" style="display: none;">
+					  <!-- Input Group -->
+					  <div class="row"> 
+							<div class="subject-info-box-1 col-sm-5">
+							  <select multiple="multiple" id='lstBox1' class="form-control">
+								<option value="Susovan Gumtya">Susovan Gumtya</option>
+								<option value="Sayani Gumtya">Sayani Gumtya</option>
+								<option value="Bhabani Gumtya">Bhabani Gumtya</option>
+							  </select>
+							</div>
+
+							<div class="subject-info-arrows text-center col-sm-2">
+							  <button type="button" id='btnAllRight' class="btn btn-soft-primary btn-icon btn-xs">
+							  <i class="fas fa-forward"></i>
+							  </button>
+							  </br>
+							  <button type="button" id='btnRight' class="btn btn-soft-primary btn-icon btn-xs">
+							  <i class="fas fa-chevron-right"></i>
+							  </button>
+							  </br>
+							  <button type="button" id='btnLeft' class="btn btn-soft-primary btn-icon btn-xs">
+							  <i class="fas fa-chevron-left"></i>
+							  </button>
+							  </br>
+							  <button type="button" id='btnAllLeft' class="btn btn-soft-primary btn-icon btn-xs">
+								<i class="fas fa-backward"></i>
+							  </button>
+							</div>
+
+							<div class="subject-info-box-2 col-sm-5">
+							  <select multiple="multiple" id='lstBox2' class="form-control">
+								<!-- Initially This is Blank-->
+							  </select>
+							</div>
+
+							
+						</div> 
+					  <!-- End Input Group -->
+						</br>
+						</br>
+						</br>
+					  <div class="d-flex justify-content-end">
+						<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+						   data-hs-step-form-prev-options='{
+							 "targetSelector": "#advancedFormSelectStepTwo"
+						   }'>Back</a>
+						<button type="button" class="btn btn-sm btn-primary transition-3d-hover"
+								data-hs-step-form-next-options='{
+								  "targetSelector": "#advancedFormSelectStepFour"
+								}'>Next</button>
+					  </div>
+					</div>
+					
+					
+					<div id="advancedFormSelectStepFour" style="display: none;">
+					  <!-- Input Group -->
+							<div class="row"> 
+							<div class="col-sm-4">
+								<div class="form-group js-form-message">
+								  <label id="serviceCategoryLbl" class="input-label">Plan Name:</label>
+								  <p id="benefetiaryId" class="font-size-1 text-primary">Gold</p>
+								</div>
+							</div>
+							
+							<div class="col-sm-5">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Plan Type:</label>
+								  <p id="requestTypeId" class="font-size-1 text-primary">Family Plan(2) Members</p>
+								</div>
+							</div>
+							
+							<div class="col-sm-3">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Plan For:</label>
+								  <p id="serviceDateId" class="font-size-1 text-primary">90 days</p>
+								</div>
+							</div>
+							
+						 
+						</div>
+						<!-- ROW 2 -->
+						<div class="row"> 
+							<div class="col-sm-4">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Plan Start Date:</label>
+								  <p id="serviceTitleId" class="font-size-1 text-primary">Jan 1 2021</p>
+								</div>
+							</div>
+							
+							<div class="col-sm-5">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Plan Expire Date:</label>
+								  <p id="chargeId" class="font-size-1 text-primary">March 30 2021</p>
+								</div>
+							</div>
+							
+							<div class="col-sm-3">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Plan Price:</label>
+								  <p id="statusId" class="font-size-1 text-primary">90$</p>
+								</div>
+							</div>
+						</div>
+						<!-- ROW 3 -->
+						<div class="row"> 
+							<div class="col-sm-4">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Primary Benefetiary:</label>
+								  <p id="serviceTitleId" class="font-size-1 text-primary">Susovan Gumtya</p>
+								</div>
+							</div>
+							
+							<div class="col-sm-4">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Secondary Benefetiary:</label>
+								  <p id="chargeId" class="font-size-1 text-primary">Sayani Gumtya</p>
+								</div>
+							</div>
+							
+							<div class="col-sm-4">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Additional Benefetiary :</label>
+								  <p id="statusId" class="font-size-1 text-primary">NA</p>
+								</div>
+							</div>
+						</div>
+						
+						<!-- ROW 4 -->
+						<div class="row">                				  
+						  <div class="col-sm-12">
+							<div class="form-group js-form-message">
+							  <label class="input-label">Price Breakup</label>
+							  <p id="descriptionId" class="font-size-1 text-primary"></p>
+							  
+							</div>
+						  </div>
+						 </div>						 
+						 </BR>
+					  <!-- End Input Group -->
+
+					  <div class="d-flex justify-content-end">
+						<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+						   data-hs-step-form-prev-options='{
+							 "targetSelector": "#advancedFormSelectStepThree"
+						   }'>Back</a>
+						<button type="button" class="btn btn-sm btn-primary transition-3d-hover"
+								data-hs-step-form-next-options='{
+								  "targetSelector": "#advancedFormSelectStepFive"
+								}'>Confirm And Pay</button>
+					  </div>
+					</div>
+
+					<div id="advancedFormSelectStepFive" style="display: none;">
+					  You have successfully enrolled the Plan!
+
+					  <div class="d-flex justify-content-end">
+						<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+						   data-hs-step-form-prev-options='{
+							 "targetSelector": "#advancedFormSelectStepFour"
+						   }'>Back</a>
+						<button type="button" class="btn btn-sm btn-primary transition-3d-hover">Done</button>
+					  </div>
+					</div>
 				  </div>
+				  <!-- End Content Step Form -->
 				</div>
-				<!-- End Pricing Section -->
+				</div>
+				</form>
+				<!-- End Step Form -->
+				
+
             </div>
             <!-- End Body -->
           </div>
@@ -368,6 +722,7 @@
 
   <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
   <div th:insert="user_common :: js-includes"></div>
+  <script th:src="@{/vendor/hs-step-form/dist/hs-step-form.min.js}"></script>
   <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
   
   <script>
@@ -376,7 +731,11 @@
     	
     var element = document.getElementById("userSubscribePlanLink");
     element.classList.add("active");
-    	  
+	  
+      //Step form - Susovan
+	  $('.js-step-form').each(function () {
+		  var stepForm = new HSStepForm($(this)).init();
+	   });
     	  
       // initialization of header
       var header = new HSHeader($('#header')).init();
@@ -413,6 +772,62 @@
       });
     });
   </script>
+  
+    <!-- Script to move Beneficiary to Plan -->
+    <Script>
+
+	  (function () {
+	  $("#btnRight").click(function (e) {
+		var selectedOpts = $("#lstBox1 option:selected");
+		if (selectedOpts.length == 0) {
+		  alert("Nothing to move.");
+		  e.preventDefault();
+		}
+
+		$("#lstBox2").append($(selectedOpts).clone());
+		$(selectedOpts).remove();
+		e.preventDefault();
+	  });
+
+	  $("#btnAllRight").click(function (e) {
+		var selectedOpts = $("#lstBox1 option");
+		if (selectedOpts.length == 0) {
+		  alert("Nothing to move.");
+		  e.preventDefault();
+		}
+
+		$("#lstBox2").append($(selectedOpts).clone());
+		$(selectedOpts).remove();
+		e.preventDefault();
+	  });
+
+	  $("#btnLeft").click(function (e) {
+		var selectedOpts = $("#lstBox2 option:selected");
+		if (selectedOpts.length == 0) {
+		  alert("Nothing to move.");
+		  e.preventDefault();
+		}
+
+		$("#lstBox1").append($(selectedOpts).clone());
+		$(selectedOpts).remove();
+		e.preventDefault();
+	  });
+
+	  $("#btnAllLeft").click(function (e) {
+		var selectedOpts = $("#lstBox2 option");
+		if (selectedOpts.length == 0) {
+		  alert("Nothing to move.");
+		  e.preventDefault();
+		}
+
+		$("#lstBox1").append($(selectedOpts).clone());
+		$(selectedOpts).remove();
+		e.preventDefault();
+	  });
+	})(jQuery);
+  
+  </script>
+  
   
   
 

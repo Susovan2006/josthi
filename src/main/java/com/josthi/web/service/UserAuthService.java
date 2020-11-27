@@ -9,7 +9,7 @@ import com.josthi.web.bo.UserRegistrationBean;
 public interface UserAuthService {
 	
 	
-	public UserAuthBo getValidUser(String uid, String password);
+	public UserAuthBo getValidUser(String uid, String password) throws Exception;
 
 	public int isValidUserID(String emailID);
 

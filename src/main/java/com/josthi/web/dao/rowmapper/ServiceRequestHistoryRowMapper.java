@@ -20,7 +20,6 @@ public ServiceRequestHistoryBean mapRow(ResultSet resultSet,int arg1)throws SQLE
 		serviceRequestHistoryBean.setFormattedUpdateTimestamp(Utils.timestampToFormattedString(resultSet.getTimestamp("UPDATE_TIMESTAMP")));
 		serviceRequestHistoryBean.setUpdatedByName(resultSet.getString("UPDATED_BY_NAME"));
 		serviceRequestHistoryBean.setUpdatedById(resultSet.getString("UPDATED_BY_ID"));
-		serviceRequestHistoryBean.setCounter(resultSet.getInt("COUNTER"));
 		return serviceRequestHistoryBean;
 		}
 	}

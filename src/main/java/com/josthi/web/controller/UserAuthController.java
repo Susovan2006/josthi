@@ -23,6 +23,7 @@ import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.EmailConstant;
 import com.josthi.web.constants.MessageConstant;
+import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.mail.EmailController;
 import com.josthi.web.po.EmailDbBean;
 import com.josthi.web.scheduler.EmailScheduler;
@@ -206,7 +207,11 @@ public class UserAuthController {
 				return "login_simple";
 			}
 			
+		}catch(UserExceptionInvalidData ex) {
+			model.addAttribute("errorMessage", ex.getMessage());
+			return "login_simple";
 		}catch(Exception ex) {
+			model.addAttribute("errorMessage", MessageConstant.LOGIN_ERROR_GENERAL);
 			return "login_simple";
 		}
 		

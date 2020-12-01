@@ -24,5 +24,9 @@ public interface UserDetailService {
 	boolean isValidContactId(Integer contactId);
 
 	boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId);
+
+	boolean updateAgentAdminProfile(UserDetailsBean userDetailsBean) throws Exception;
+
+	UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception;
 	
 }

@@ -16,5 +16,9 @@ public interface MappingConstant {
 	String VERBIAGE_HTML_PLAN_DETAILS_SECTION_BASIC = "BasicService";
 	String VERBIAGE_HTML_PLAN_DETAILS_SECTION_EMERGENCY = "EmergencyService";
 	String VERBIAGE_HTML_PLAN_DETAILS_SECTION_GENERAL = "GeneralService";
+	
+	
+	//----------------AGENTS AND ADMIN----------------
+	String AGENT_PROFILE = "agentAdmin/profile_agent_admin";
 
 }

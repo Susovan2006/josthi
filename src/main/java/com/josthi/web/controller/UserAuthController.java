@@ -59,9 +59,21 @@ public class UserAuthController {
 	 * @return
 	 */
 	@GetMapping("/login")
-	public String login(UserAuthBo userAuthBo, Model model) {
+	public String login(UserAuthBo userAuthBo, Model model,
+			@RequestParam (name="status", required = false, defaultValue = "") String status,
+			@RequestParam (name="message", required = false, defaultValue = "") String message) {
+		
+		if(status!=null && status.length() > 0 && 
+				status.equalsIgnoreCase(MessageConstant.USER_FAILURE_STATUS)) {
+			 model.addAttribute("errorMessage", message);
+  	 	}
+		
+		if(status!=null && status.length() > 0 && 
+				status.equalsIgnoreCase(MessageConstant.USER_SUCCESS_STATUS)) {
+			 model.addAttribute("successMessage", message);
+  	 	}
+		
 		logger.info("Login Service Called.");
-		//model.addAttribute("errorMessage", "Hello");
 		return "login_simple";
 	}
 	

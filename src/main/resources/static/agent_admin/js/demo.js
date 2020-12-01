@@ -41,7 +41,8 @@ function setSkinListHeightAndScroll(isFirstTime) {
         size: '6px',
         alwaysVisible: false,
         borderRadius: '0',
-        railBorderRadius: '0'
+        railBorderRadius: '0',
+		
     });
 }
 
@@ -61,11 +62,12 @@ function setSettingListHeightAndScroll(isFirstTime) {
         size: '6px',
         alwaysVisible: false,
         borderRadius: '0',
-        railBorderRadius: '0'
+        railBorderRadius: '0',
+		
     });
 }
 
-//Activate notification and task dropdown on top right menu
+//Activate notification and task dropdown on top right menu - Susovan (was 4 px)
 function activateNotificationAndTasksScroll() {
     $('.navbar-right .dropdown-menu .body .menu').slimscroll({
         height: '254px',

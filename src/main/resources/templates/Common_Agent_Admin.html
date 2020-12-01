@@ -37,6 +37,9 @@
 	
 	    <!-- Custom Css -->
 	    <link th:href="@{/agent_admin/css/style.css}" rel="stylesheet">
+	    
+	    <!-- Edited by Susovan Css 
+	    <link th:href="@{/agent_admin/css/susovan.css}" rel="stylesheet">-->
 	
 	    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
 	    <link th:href="@{/agent_admin/css/all-themes.css}" rel="stylesheet" />
@@ -319,6 +322,40 @@
 	                            <span>Home</span>
 	                        </a>
 	                    </li>
+	                    
+	                    <li>
+	                        <a href="javascript:void(0);" class="menu-toggle">
+	                            <i class="material-icons">record_voice_over</i>
+	                            <span>Admin Action</span>
+	                        </a>
+	                        <ul class="ml-menu">
+	                            <li>
+	                                <a href="javascript:void(0);"> <!-- class="menu-toggle" for + -->
+	                                    <span>Assign Agent</span>
+	                                </a>
+	                            </li>
+	                            <li>
+	                                <a href="javascript:void(0);"> <!-- class="menu-toggle" for + -->
+	                                    <span>Edit Plan</span>
+	                                </a>
+	                            </li>
+	                            <li>
+	                                <a href="javascript:void(0);">
+	                                    <span>Edit Price</span>
+	                                </a>
+	
+	                            </li>
+	                            <li>
+	                                <a href="javascript:void(0);">
+	                                    <span>Timer Manager</span>
+	                                </a>
+	
+	                            </li>
+	                        </ul>
+	                    </li>
+	                    
+	                    
+	                    
 	                    <li id ="viewRequestLink">
 	                        <a href="/agentAdmin/viewRequest">
 	                            <i class="material-icons">fact_check</i>

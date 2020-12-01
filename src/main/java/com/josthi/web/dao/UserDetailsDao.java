@@ -40,4 +40,6 @@ public interface UserDetailsDao {
 	boolean updateBeneficiaryFromUserDetail(BeneficiaryDetailBean beneficiaryDetailBean) throws Exception;
 	boolean updateBeneficiaryFromBeneficiaryDetail(BeneficiaryDetailBean beneficiaryDetailBean) throws Exception;
 	List<DropDownBean> getBloodGroup(String bloodGroup);
+	boolean updateAgentAdminProfile(UserDetailsBean userDetailsBean) throws Exception;
+	UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception;
 }

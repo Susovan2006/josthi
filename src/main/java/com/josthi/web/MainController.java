@@ -262,10 +262,10 @@ public class MainController {
 			return "/agentAdmin/index";
 	}
 	
-	@GetMapping("/agentAdmin/profile")
-	public String agentAdminProfile(Model model) {
-			return "/agentAdmin/profile_agent_admin";
-	}
+	/*
+	 * @GetMapping("/agentAdmin/profile") public String agentAdminProfile(Model
+	 * model) { return "/agentAdmin/profile_agent_admin"; }
+	 */
 	
 	@GetMapping("/agentAdmin/settings")
 	public String agentAdminSettings(Model model) {

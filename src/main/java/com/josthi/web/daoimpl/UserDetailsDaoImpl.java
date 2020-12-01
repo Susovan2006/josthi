@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 import com.josthi.web.po.UserDetailsPO ;
 import com.josthi.web.utils.Utils;
 import com.josthi.web.dao.UserDetailsDao ;
+import com.josthi.web.dao.rowmapper.AgentAdminProfileDetailRowMapperOnCustID;
 import com.josthi.web.dao.rowmapper.BeneficiaryDetailRowMapper;
 import com.josthi.web.dao.rowmapper.DropDownRowmapper;
 import com.josthi.web.dao.rowmapper.EmergencyContactDetailsRowMapper;
@@ -625,6 +626,74 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 			}
 	}
 	
+	
+	
+	//*****************************************************************************************************************
+	//******************** A G E N T    A D M I N    S E C T I O N  ***************************************************
+	//*****************************************************************************************************************
+	
+	
+	public static final String UPDATE_AGENT_ADMIN_PROFILE_DETAILS = "Update user_detail set FIRST_NAME = ? , LAST_NAME = ? , "
+			+ " USER_ADDRESS_FIRST_LINE = ?, USER_ADDRESS_SECOND_LINE = ? , ADDITIONAL_ADDRESS_LINE= ?, "
+			+ " POLICE_STATION = ? , NEAREST_LAND_MARK = ?, COVERAGE_AREA = ? ,  CITY_TOWN = ?," 
+			+ " STATE = 'West Bengal', COUNTY_DISTRICT = ? , COUNTRY = 'India', ZIP_PIN = ? , MOBILE_NO1 = ? , "
+			+ " MOBILE_NO2 = ? , WHATSAPP_NO = ? , LAND_LINE_NO = ? , " 
+			+ " SECONDARY_EMAIL = ? , WEBSITE = ? , FACEBOOK_LINK = ? , AGENCY_NAME = ? , AGENCY_DESCRIPTION = ? where  UID = ?";
+	@Override
+	public boolean updateAgentAdminProfile(UserDetailsBean userDetailsBean) throws Exception {
+		try {
+			int result = jdbcTemplate.update(UPDATE_AGENT_ADMIN_PROFILE_DETAILS, new Object[]{userDetailsBean.getFirstName(),
+																		               userDetailsBean.getLastName(), 																		               
+																		               userDetailsBean.getUserAddressFirstLine(),
+																		               userDetailsBean.getUserAddressSecondLine(),
+																		               userDetailsBean.getUserAdditionalAddressLine(),
+																		               userDetailsBean.getPoliceStation(),
+																		               userDetailsBean.getNearestLandMark(),
+																		               userDetailsBean.getCoverageArea(),
+																		               userDetailsBean.getCityTown(),
+																		               //userDetailsBean.getState(),
+																		               userDetailsBean.getCountyDistrict(),
+																		               //userDetailsBean.getCountry(),
+																		               userDetailsBean.getZipPin(),
+																		               userDetailsBean.getMobileNo1(),
+																		               userDetailsBean.getMobileNo2(),
+																		               userDetailsBean.getWhatsappNo(),
+																		               userDetailsBean.getLandLineNo(),																		        
+																		               userDetailsBean.getSecondaryEmail(),
+																		               userDetailsBean.getWebsite(),
+																		               userDetailsBean.getFacebookLink(),
+																		               userDetailsBean.getAgencyName(),
+																		               userDetailsBean.getAgencyDescription(),
+																		               userDetailsBean.getUid()});	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
+	
+	public static final String SELECT_AGENT_ADMIN_DETAILS_ON_CUST_ID = "SELECT UID, FIRST_NAME, LAST_NAME,  "
+			+ "USER_ADDRESS_FIRST_LINE, USER_ADDRESS_SECOND_LINE, ADDITIONAL_ADDRESS_LINE, "
+			+ "POLICE_STATION, NEAREST_LAND_MARK, COVERAGE_AREA, CITY_TOWN, STATE, COUNTY_DISTRICT, COUNTRY, ZIP_PIN, "
+			+ "MOBILE_NO1, MOBILE_NO2, WHATSAPP_NO, LAND_LINE_NO, SECONDARY_EMAIL, WEBSITE, "
+			+ "FACEBOOK_LINK, USER_STATUS, AGENCY_NAME, AGENCY_DESCRIPTION FROM user_detail where UID = ?";
+	@Override
+	public UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception{
+		try{
+			@SuppressWarnings("unchecked")
+			UserDetailsBean userDetailsBean = (UserDetailsBean) getJdbcTemplate().queryForObject(
+													SELECT_AGENT_ADMIN_DETAILS_ON_CUST_ID,
+												 new Object[] {customerId},
+												 new AgentAdminProfileDetailRowMapperOnCustID());
+				return userDetailsBean;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+				
+			}
+	}
 	
 	
 }

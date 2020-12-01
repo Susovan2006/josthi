@@ -103,8 +103,29 @@ public class UserDetailsServiceImpl implements UserDetailService{
 
 	@Override
 	public boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) {
-		// TODO Auto-generated method stub
 		return userDetailsDao.updateEmergencyDetails(emergencyContactBean, custId);
+	}
+
+	
+	
+	
+	//*****************************************************************************************************************
+	//******************** A G E N T    A D M I N    S E C T I O N  ***************************************************
+	//*****************************************************************************************************************
+	
+	
+	@Override
+	public boolean updateAgentAdminProfile(UserDetailsBean userDetailsBean) throws Exception {
+		try {
+			return userDetailsDao.updateAgentAdminProfile(userDetailsBean);
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+
+	@Override
+	public UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception {
+		return userDetailsDao.getAgentAdminProfileDetails(customerId);
 	}
 
 	

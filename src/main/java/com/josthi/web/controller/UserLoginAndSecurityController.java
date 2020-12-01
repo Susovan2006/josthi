@@ -110,7 +110,9 @@ public class UserLoginAndSecurityController {
 			return "redirect:/user/loginAndsecurity?status="+actionStatus+"&message="+message;
 		}catch(UserException ex) {
 			logger.error(ex.getMessage(), ex);
-			return "redirect:/login";
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message =  ex.getMessage();
+			return "redirect:/login?status="+actionStatus+"&message="+message;
 		}catch(Exception ex) {
 			actionStatus = MessageConstant.USER_FAILURE_STATUS;
 			message = ex.getMessage();

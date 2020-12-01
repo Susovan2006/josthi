@@ -1,0 +1,33 @@
+.alert-success-agent {
+  color: #fff;
+  background-color: #00c9a7;
+  border-color: #00c9a7;
+}
+
+.alert-success-agent hr {
+  border-top-color: #00b092;
+}
+
+.alert-success-agent .alert-link {
+  color: #fff;
+}
+
+
+.alert-warning-agent {
+  color: #1e2022;
+  background-color: #f5ca99;
+  border-color: #f5ca99;
+}
+
+.alert-warning-agent hr {
+  border-top-color: #f3be82;
+}
+
+.alert-warning-agent .alert-link {
+  color: #1e2022;
+}
+
+.mb-0,
+.my-0 {
+  margin-bottom: 0 !important;
+}

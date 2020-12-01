@@ -140,7 +140,9 @@ public class UserServiceRequestController {
 			return "user/request_service_user";
 		}catch(UserException ex) {
 			logger.error(ex.getMessage(), ex);
-			return "redirect:/login";
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message =  ex.getMessage();
+			return "redirect:/login?status="+actionStatus+"&message="+message;
 		}catch(Exception ex) {
 			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
 			model.addAttribute("message", ex.getMessage());

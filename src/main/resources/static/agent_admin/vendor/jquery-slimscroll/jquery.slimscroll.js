@@ -162,7 +162,8 @@
                 var rail = $(divS)
                   .addClass(o.railClass)
                   .css({
-                      width: o.size,
+                      //width: o.size, //Added By Susovan
+					  width: '14px',
                       height: '100%',
                       position: 'absolute',
                       top: 0,
@@ -178,7 +179,8 @@
                   .addClass(o.barClass)
                   .css({
                       background: o.color,
-                      width: o.size,
+                      //width: o.size, //Added By Susovan
+					  width: '14px',
                       position: 'absolute',
                       top: 0,
                       opacity: o.opacity,

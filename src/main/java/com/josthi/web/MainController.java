@@ -257,9 +257,9 @@ public class MainController {
 	 * ============================================================================================
 	 */
 	
-	@GetMapping("/agentAdmin/home")
+	@GetMapping("/admin/home")
 	public String agentAdminHome(Model model) {
-			return "/agentAdmin/index";
+			return "/admin/home_admin";
 	}
 	
 	/*
@@ -267,24 +267,30 @@ public class MainController {
 	 * model) { return "/agentAdmin/profile_agent_admin"; }
 	 */
 	
-	@GetMapping("/agentAdmin/settings")
-	public String agentAdminSettings(Model model) {
-			return "/agentAdmin/account_settings";
-	}
+	/*
+	 * @GetMapping("/agentAdmin/settings") public String agentAdminSettings(Model
+	 * model) { return "/agentAdmin/account_settings"; }
+	 */
 	
 	@GetMapping("/agentAdmin/contactRepo")
 	public String agentAdminContactRepo(Model model) {
 			return "/agentAdmin/build_service_repository";
 	}
 	
-	@GetMapping("/agentAdmin/viewRequest")
-	public String agentAdminViewRequest(Model model) {
-			return "/agentAdmin/view_request_agent";
-	}
+	/*
+	 * @GetMapping("/admin/viewTicketRequest") public String
+	 * agentAdminViewRequest(Model model) { return
+	 * "/admin/manage_service_request_admin"; }
+	 */
 	
 	@GetMapping("/agentAdmin/searchUser")
 	public String agentAdminSearchUser(Model model) {
 			return "/agentAdmin/search_user_agent";
 	}
+	
+	/*
+	 * @GetMapping("/common/viewProfile") public String viewProfile(Model model) {
+	 * return "/common/user_profile_view_in_frame"; }
+	 */
 
 }

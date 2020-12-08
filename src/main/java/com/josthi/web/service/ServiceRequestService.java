@@ -9,7 +9,7 @@ public interface ServiceRequestService {
 
 	String createTicket(ServiceRequestBean serviceRequestBean, String trim) throws Exception;
 
-	List<ServiceRequestBean> getServiceRequestList(String userId) throws Exception;
+	List<ServiceRequestBean> getServiceRequestList(String userId, String role) throws Exception;
 
 	boolean updateUserNotes(String customerID, String notes, String urgency, String status, String ticketNo) throws Exception;
 

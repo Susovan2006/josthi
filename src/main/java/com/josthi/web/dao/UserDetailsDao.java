@@ -12,11 +12,11 @@ public interface UserDetailsDao {
 	UserDetailsBean getUserDetails(String customerId);
 	boolean updateUserDetails(UserDetailsBean userDetailsBean, String custId);
 	List<EmergencyContactBean> getEmergencyContactListForUser(String customerId);
-	boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId);
+	boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) throws Exception;
 	void deleteEmergencyContact(int contactId);
 	EmergencyContactBean getEmergencyContactBean(int contactId, String customerId);
 	int isValidContactId(Integer contactId);
-	boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId);
+	boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) throws Exception;
 	
 	//Beneficiary
 	//String getPrimaryBeneficiaryIdFromRelation(String customerId) throws Exception;

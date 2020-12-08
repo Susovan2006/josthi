@@ -43,6 +43,8 @@ public interface UserAuthService {
 
 	public boolean saveUserPref(String customerID, String alertType, String value) throws Exception;
 
+	public UserAuthBo getProfileDisplayDetails(String userID) throws Exception;
+
 	//public void updateSchedulerDetails(SchedulerTimerBean schedulerTimerBean);
 
 	//public boolean registerNewUser(UserRegistrationBean userRegistrationBean);

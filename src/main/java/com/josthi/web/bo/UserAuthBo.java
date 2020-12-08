@@ -9,6 +9,7 @@ public class UserAuthBo {
 	private String useridEmail ;
 	private String wordapp ;
 	private Timestamp registrationDateTime ;
+	private String registrationDateTimeStr ;
 	private String status ;
 	private Timestamp loginTime ;
 	private String loginStatus ;
@@ -47,6 +48,14 @@ public class UserAuthBo {
 	}
 	public void setRegistrationDateTime(Timestamp registrationDateTime){
 		this.registrationDateTime = registrationDateTime ;
+	}
+	
+	
+	public String getRegistrationDateTimeStr() {
+		return registrationDateTimeStr;
+	}
+	public void setRegistrationDateTimeStr(String registrationDateTimeStr) {
+		this.registrationDateTimeStr = registrationDateTimeStr;
 	}
 	public String getStatus(){
 		return status ;

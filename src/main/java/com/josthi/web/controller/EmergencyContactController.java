@@ -21,7 +21,10 @@ import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.MappingConstant;
 import com.josthi.web.constants.MessageConstant;
+import com.josthi.web.exception.UserException;
+import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.service.UserDetailService;
+import com.josthi.web.utils.ValidateSession;
 
 @Controller
 public class EmergencyContactController {
@@ -84,21 +87,12 @@ public class EmergencyContactController {
 		
     		logger.debug("Customer ID from Session:"+custId);
     		
-    		UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
-    		String sessionCustomerId = userSessionBean.getCustomerId();
-    		logger.debug("Customer ID from Java Session:"+sessionCustomerId);
-    		
-    		try {  
+    		String actionStatus = "";
+    		String message = "";  		
+    		try { 
     			
-    			//The Session ID and the One coming from the UI should Match, else it will throw an exception.
-    			if(!(sessionCustomerId.equalsIgnoreCase(custId))) {
-    				model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
-        		    model.addAttribute("message", MessageConstant.USER_EMERGENCY_SAVE_VALIDATION_ERROR_MESSAGE);
-    			    return MappingConstant.USER_EMERGENCY_CONTACT_DETAILS;
-        		}
-    			
-    			logger.debug("Emergency Contact Bean :"+emergencyContactBean.toString());
-    			
+    			ValidateSession.isValidSession(request);
+        		ValidateSession.isValidUser(request, custId.trim());    			
     			
     			//Here we are determining, if it will be save or update.
     			//for Update logic..
@@ -115,11 +109,18 @@ public class EmergencyContactController {
     				return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
     																+MessageConstant.USER_EMERGENCY_SAVE_SUCCESS_MESSAGE;
     			}   			
+    		}catch(UserExceptionInvalidData ex) {
+    			logger.error(ex.getMessage(), ex);
+    			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+    			message = ex.getMessage();
+    			return "redirect:/user/emergencyContacts?status="+actionStatus+"&message="+message;
+    		}catch(UserException ex) {
+    			logger.error(ex.getMessage(), ex);
+    			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+    			message = ex.getMessage();
+    			return "redirect:/login?status="+actionStatus+"&message="+message;
     		}catch(Exception ex) {
     			logger.error("custId :"+custId, ex);
-    			//model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
-    		    //model.addAttribute("message", MessageConstant.USER_EMERGENCY_SAVE_ERROR_MESSAGE);
-			    //return MappingConstant.USER_EMERGENCY_CONTACT_DETAILS;
     		    return "redirect:/user/emergencyContacts?status="+MessageConstant.USER_FAILURE_STATUS+"&message="
 																+MessageConstant.USER_EMERGENCY_SAVE_ERROR_MESSAGE;
     		}

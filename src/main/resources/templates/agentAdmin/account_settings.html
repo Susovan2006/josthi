@@ -45,45 +45,69 @@
                               <h2>
                                   Change Password
                               </h2>
+                              
+                            <!-- Alert Section Start-->
+                            <div th:if="${status ne null}">
+	                            <div class="alert alert-dismissible" role="alert" th:classappend="${status == 'Success'} ? bg-green : alert-warning">
+	                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                                <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+	                            </div>
+                            </div>
+                             <!-- Alert Section END-->
 
                           </div>
                           <div class="body">
                               <div class="demo-masked-input">
                                   <div class="row clearfix">
-                                    <form id="change_password" class="form-horizontal">
-
+                                    <form id="change_password" class="form-horizontal" th:action="@{/agentAdmin/changePassword/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
+			  											              th:object="${passwordResetBean}"  method="post">
+										
+									<input type="hidden" th:field="*{emailId}"  id="userEmailId">
+			     					<input type="hidden" th:field="*{role}"  id="userRole">
+			     					<input type="hidden" th:field="*{userID}"  id="userId">
+										
                                       <div>
                                           <label for="OldPassword" class="col-sm-3 control-label">Old Password</label>
                                           <div class="col-sm-9">
                                               <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="password" class="form-control" id="OldPassword" name="OldPassword" placeholder="Old Password" required>
+                                                    <input type="password" th:field="*{oldPassword}" class="form-control" id="OldPassword" name="OldPassword" placeholder="Old Password" required>
                                                 </div>
                                               </div>
                                           </div>
                                       </div>
                                       <div>
-                                          <label for="NewPassword" class="col-sm-3 control-label">New Password</label>
+                                          <label for="NewPassword" class="col-sm-3 control-label">
+                                          <i class="far fa-question-circle" 
+										   data-toggle="tooltip" data-placement="top" 
+										   title="1. Should be atleast 8 char long &#13 2. Should have atleast 1 Letter  and 1 Number &#13 3. Should contain alteast one of these special char !@#$*+- &#13 4. Any other Special char is not allowed."></i>
+                                          New Password</label>
                                           <div class="col-sm-9">
                                               <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="password" class="form-control" id="NewPassword" name="NewPassword" placeholder="New Password" minlength="8" required>
+                                                    <input type="password" th:field="*{newPassword}" class="form-control" id="NewPassword" name="NewPassword" placeholder="New Password" minlength="8" required>
                                                 </div>
                                               </div>
                                           </div>
                                       </div>
                                       <div>
-                                          <label for="NewPasswordConfirm" class="col-sm-3 control-label">New Password (Confirm)</label>
+                                          <label for="NewPasswordConfirm" class="col-sm-3 control-label">
+                                          <i class="far fa-question-circle" 
+										   data-toggle="tooltip" data-placement="top" 
+										   title="1. Should be atleast 8 char long &#13 2. Should have atleast 1 Letter  and 1 Number &#13 3. Should contain alteast one of these special char !@#$*+- &#13 4. Any other Special char is not allowed."></i>
+                                          New Password (Confirm)</label>
                                           <div class="col-sm-9">
                                               <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input type="password" class="form-control" id="NewPasswordConfirm" name="NewPasswordConfirm" placeholder="New Password (Confirm)" minlength="8" required>
+                                                    <input type="password" th:field="*{newConfirmPassword}" class="form-control" id="NewPasswordConfirm" name="NewPasswordConfirm" placeholder="New Password (Confirm)" minlength="8" required>
                                                 </div>
                                               </div>
                                            </div>
                                       </div>
                                       <div class="form-group">
                                           <div class="col-sm-offset-3 col-sm-9">
+                                          	  <a class="btn btn-white" href="javascript:clear();">Clear</a>
+											  	<span class="mx-2"></span>
                                               <button type="submit" class="btn btn-primary waves-effect">SUBMIT</button>
                                           </div>
                                       </div>
@@ -107,11 +131,34 @@
 	    	  var element = document.getElementById("agentSettingsLink");
 	    	  element.classList.add("active");
 	    });
-    </script>   
+	    
+	    
+		function clear(){
+			document.getElementById('OldPassword').value = '';
+			document.getElementById('NewPassword').value = '';
+			document.getElementById('NewPasswordConfirm').value = '';
+		}
+	    
+    </script> 
+    
+    <!-- https://www.concretepage.com/thymeleaf/thymeleaf-javascript-inline-example-with-variable -->
+	<script th:inline="javascript">   
+	       $(function() {
+		       var email = /*[[${session.USER_SESSION_OBJ_KEY.userEmailId}]]*/'null';
+		       var role = /*[[${session.USER_SESSION_OBJ_KEY.userRole}]]*/'null';
+		       var id = /*[[${session.USER_SESSION_OBJ_KEY.customerId}]]*/'null';
+		       $("#userEmailId").val(email);
+		       $("#userRole").val(role);
+		       $("#userId").val(id); 
+		       alert(email+'-'+role+'-'+id);
+	       });
+	</script>  
     
     <script>
     $(function () {
+    	    
             $('#change_password').validate({
+            	
                 rules: {
                     'terms': {
                         required: true

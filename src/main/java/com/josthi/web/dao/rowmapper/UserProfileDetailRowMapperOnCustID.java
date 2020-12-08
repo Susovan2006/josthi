@@ -5,22 +5,23 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.josthi.web.bo.UserDetailsBean;
 import com.josthi.web.po.UserDetailsPO ;
+import com.josthi.web.utils.Utils;
 public class UserProfileDetailRowMapperOnCustID implements RowMapper<UserDetailsBean> {
 	@Override
 public UserDetailsBean mapRow(ResultSet resultSet,int arg1)throws SQLException {
 		UserDetailsBean userDetailsBean= new UserDetailsBean() ;
 		userDetailsBean.setUid(resultSet.getString("UID"));
-		userDetailsBean.setFirstName(resultSet.getString("FIRST_NAME"));
+		userDetailsBean.setFirstName(Utils.convertToCamelCase(resultSet.getString("FIRST_NAME")));
 		userDetailsBean.setMiddleName(resultSet.getString("MIDDLE_NAME"));
-		userDetailsBean.setLastName(resultSet.getString("LAST_NAME"));
+		userDetailsBean.setLastName(Utils.convertToCamelCase(resultSet.getString("LAST_NAME")));
 		userDetailsBean.setGender(resultSet.getString("GENDER"));
 		
 		userDetailsBean.setUserAddressFirstLine(resultSet.getString("USER_ADDRESS_FIRST_LINE"));
 		userDetailsBean.setUserAddressSecondLine(resultSet.getString("USER_ADDRESS_SECOND_LINE"));
-		userDetailsBean.setCityTown(resultSet.getString("CITY_TOWN"));
+		userDetailsBean.setCityTown(Utils.convertToCamelCase(resultSet.getString("CITY_TOWN")));
 		userDetailsBean.setState(resultSet.getString("STATE"));
 		userDetailsBean.setCountyDistrict(resultSet.getString("COUNTY_DISTRICT"));
-		userDetailsBean.setCountry(resultSet.getString("COUNTRY"));
+		userDetailsBean.setCountry(Utils.convertToCamelCase(resultSet.getString("COUNTRY")));
 		userDetailsBean.setZipPin(resultSet.getString("ZIP_PIN"));
 		
 		userDetailsBean.setMobileNo1(resultSet.getString("MOBILE_NO1"));

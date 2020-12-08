@@ -13,12 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.BindingResult;
+
+import com.josthi.web.service.UserAuthService;
 import com.josthi.web.service.UserDetailService ;
+import com.josthi.web.utils.ValidateSession;
+import com.josthi.web.bo.BeneficiaryDetailBean;
+import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserDetailsBean ;
 import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.MappingConstant;
 import com.josthi.web.constants.MessageConstant;
+import com.josthi.web.exception.UserException;
+import com.josthi.web.exception.UserExceptionInvalidData;
 
 //@Help: https://www.dariawan.com/tutorials/spring/spring-boot-thymeleaf-crud-example/
 
@@ -29,21 +36,47 @@ public class UserDetailsController{
 	@Autowired
     private UserDetailService userDetailService;
 	
+	@Autowired
+	UserAuthService userAuthService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(UserDetailsController.class);
 	
     @GetMapping("/user/profile")
 	public String userProfile(Model model, UserDetailsBean userDetailsBean, 
 											HttpServletRequest request) {
     	
-    	UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
-    	logger.debug("******"+userSessionBean.toString());  
-    	    
-    	UserDetailsBean userDetailsfromDb = userDetailService.getUserDetails(userSessionBean.getCustomerId());
-    	userDetailService.setDataToDisplay(userDetailsfromDb, userDetailsBean);
-    	
-    	logger.debug("Bean :"+userDetailsBean.toString());
+    	try {
     		
-		return MappingConstant.USER_PROFILE_DETAILS;
+    		ValidateSession.isValidSession(request);
+    		
+	    	UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
+	    	logger.debug("******"+userSessionBean.toString());  
+	    	    
+	    	UserDetailsBean userDetailsfromDb = userDetailService.getUserDetails(userSessionBean.getCustomerId());
+	    	userDetailService.setDataToDisplay(userDetailsfromDb, userDetailsBean);
+	    	
+	    	logger.debug("Bean :"+userDetailsBean.toString());
+	    		
+			return MappingConstant.USER_PROFILE_DETAILS;
+			
+    	}catch(UserExceptionInvalidData ex) {
+			logger.error(ex.getMessage(), ex);
+			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
+			model.addAttribute("message", ex.getMessage());			
+			return MappingConstant.USER_PROFILE_DETAILS;
+		
+    	}catch(UserException ex) {
+			logger.error(ex.getMessage(), ex);
+			String status = MessageConstant.USER_FAILURE_STATUS;
+			String message =  ex.getMessage();
+			return "redirect:/login?status="+status+"&message="+message;
+		
+    	}catch(Exception ex) {
+    		logger.error(ex.getMessage(), ex);
+			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
+			model.addAttribute("message", ex.getMessage());						
+			return MappingConstant.USER_PROFILE_DETAILS;
+		}
 	}
     
     
@@ -55,26 +88,33 @@ public class UserDetailsController{
 	public String userProfileUpdate(Model model, UserDetailsBean userDetailsBean,  
 									@PathVariable String custId,
 									HttpServletRequest request) {
-    		logger.info("Name "+userDetailsBean.getFirstName()+"--"+userDetailsBean.getLastName());
-    		logger.info("Customer ID :"+userDetailsBean.getUid());
-    		logger.info("Customer ID from Session:"+custId);
     		
-    		UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
-    		String sessionCustomerId = userSessionBean.getCustomerId();
-    		logger.info("Customer ID from Java Session:"+sessionCustomerId);
+    		
+    		String actionStatus = "";
+			String message = "";
     		try {
+    			ValidateSession.isValidSession(request);
+        		ValidateSession.isValidUser(request, custId.trim());
     			
-    			if(!(sessionCustomerId.equalsIgnoreCase(custId))) {
-    				model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
-        		    model.addAttribute("message", MessageConstant.USER_PROFILE_UPDATE_ERROR_MESSAGE);
-    			    return MappingConstant.USER_PROFILE_DETAILS;
-        		}
     			
     			String status = userDetailService.updateUserDetails(userDetailsBean, custId);
     		 
     		    model.addAttribute("status", MessageConstant.USER_SUCCESS_STATUS);
     		    model.addAttribute("message", MessageConstant.USER_PROFILE_UPDATE_SUCCESS_MESSAGE);
 			    return MappingConstant.USER_PROFILE_DETAILS;
+    		
+    		}catch(UserExceptionInvalidData ex) {
+    			logger.error(ex.getMessage(), ex);
+    			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
+    		    model.addAttribute("message", ex.getMessage());
+			    return MappingConstant.USER_PROFILE_DETAILS;
+    		
+    		}catch(UserException ex) {
+    			logger.error(ex.getMessage(), ex);
+    			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+    			message = ex.getMessage();
+    			return "redirect:/login?status="+actionStatus+"&message="+message;
+    		
     		}catch(Exception ex) {
     			logger.error("custId :"+custId, ex);
     			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
@@ -83,37 +123,46 @@ public class UserDetailsController{
     		}
 	}
     
-	/*
-	 * private void setDataToDisplay(UserDetailsBean userDetailsfromDb,
-	 * UserDetailsBean userDetailsBean) {
-	 * userDetailsBean.setFirstName(userDetailsfromDb.getFirstName());
-	 * userDetailsBean.setLastName(userDetailsfromDb.getLastName());
-	 * userDetailsBean.setUid(userDetailsfromDb.getUid());
-	 * userDetailsBean.setGender(userDetailsfromDb.getGender());
-	 * 
-	 * userDetailsBean.setUserAddressFirstLine(userDetailsfromDb.
-	 * getUserAddressFirstLine());
-	 * userDetailsBean.setUserAddressSecondLine(userDetailsfromDb.
-	 * getUserAddressSecondLine());
-	 * userDetailsBean.setCityTown(userDetailsfromDb.getCityTown());
-	 * userDetailsBean.setState(userDetailsfromDb.getState());
-	 * userDetailsBean.setCountyDistrict(userDetailsfromDb.getCountyDistrict());
-	 * userDetailsBean.setCountry(userDetailsfromDb.getCountry());
-	 * userDetailsBean.setZipPin(userDetailsfromDb.getZipPin());
-	 * 
-	 * userDetailsBean.setMobileNo1(userDetailsfromDb.getMobileNo1());
-	 * userDetailsBean.setMobileNo2(userDetailsfromDb.getMobileNo2());
-	 * userDetailsBean.setWhatsappNo(userDetailsfromDb.getWhatsappNo());
-	 * userDetailsBean.setLandLineNo(userDetailsfromDb.getLandLineNo());
-	 * userDetailsBean.setFaxNo(userDetailsfromDb.getFaxNo());
-	 * userDetailsBean.setOfficePhNo(userDetailsfromDb.getOfficePhNo());
-	 * 
-	 * userDetailsBean.setSecondaryEmail(userDetailsfromDb.getSecondaryEmail());
-	 * userDetailsBean.setWebsite(userDetailsfromDb.getWebsite());
-	 * userDetailsBean.setFacebookLink(userDetailsfromDb.getFacebookLink());
-	 * 
-	 * userDetailsBean.setUserStatus(userDetailsfromDb.getUserStatus()); }
-	 */
+
+    /* ============================================================================================================================ */
+    /* ============================== U S E R    P R O F I L E   F O R     A G E N T   A N D   A D M I N ========================== */
+    /* ============================================================================================================================ */
+    
+    @GetMapping("/common/viewProfileUser/{userID}")
+	public String viewProfile(Model model, @PathVariable(name = "userID") String userID,
+												UserDetailsBean userDetailsBean,
+												HttpServletRequest request) {
+		String actionStatus = "";
+		String message = "";
+    	try {
+    		
+    		ValidateSession.isValidSession(request);
+    		
+    		UserDetailsBean userDetailsfromDb = userDetailService.getUserDetails(userID);
+    		UserAuthBo userAuthBo = userAuthService.getProfileDisplayDetails(userID);
+    		model.addAttribute("userDetailsfromDb",userDetailsfromDb);
+    		model.addAttribute("userType","Josthi User");
+    		model.addAttribute("userAuthBo",userAuthBo);
+    		
+    		return "/common/user_profile_view_in_frame";
+    	}catch(UserExceptionInvalidData ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message = ex.getMessage();
+			return "/common/user_profile_view_in_frame?status="+actionStatus+"&message="+message;
+		}catch(UserException ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message = ex.getMessage();
+			return "redirect:/login?status="+actionStatus+"&message="+message;
+		}catch(Exception ex) {
+			logger.error("userID :"+userID, ex);
+			message = "Error Occured while Fetching the User details.";
+			return "/common/user_profile_view_in_frame?status="+MessageConstant.USER_FAILURE_STATUS+"&message="+message;
+		}
+    	
+			
+	}
     
     
     

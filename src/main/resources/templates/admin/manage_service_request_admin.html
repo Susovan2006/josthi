@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Title -->
+  <title>Service Request | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <div th:replace="user_common :: datatable-css"></div>	
+  <!--  ======================== CSS INCLUDES ===================== -->
+
+
+
+  
+  
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Manage Service Request</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+			  <li class="breadcrumb-item" th:text="${#strings.capitalize(#strings.toLowerCase(session.USER_SESSION_OBJ_KEY.userRole))}">User</li>
+              <li class="breadcrumb-item">Action</li>
+              <li class="breadcrumb-item active" aria-current="page">Manage Service Request</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+		  
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container-fluid space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Card Name.</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              
+
+                <form id="search_request" class="js-validate" th:action="@{/admin/searchTicket/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
+			  											              				th:object="${serviceRequestBean}"  method="post">
+                
+                
+                <button type="button" class="btn  btn-soft-primary" data-toggle="collapse" data-target="#searchPanel">Search Criteria
+				<i class="fas fa-search ml-1"></i>
+				</button>
+				  <div id="searchPanel" class="collapse">
+					<!-- Row 1 -->
+					<div class="row">                				  
+					  <div class="col-sm-4">
+	                    <div class="form-group js-form-message">
+						  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Customer Who requested the service."></i>Customer ID<span class="text-danger"></span></label>
+						  
+									<input type="text" th:field="*{requesterId}" class="js-masked-input form-control" id="customerId" name="customerId" placeholder="" 
+									aria-label="customerId" value="" data-msg="" >
+								 
+						</div>
+	                  </div>
+					 
+	
+	                  <div class="col-sm-4">
+	                    <div class="form-group js-form-message">
+						  <label id="secondaryCellNo" class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Customer First Name."></i>Customer Name<span class="text-danger"></span></label>
+						  <input type="text" th:field="*{requestedBy}" class="js-masked-input form-control"   
+									id="customerName" name="customerName" placeholder="" value="" data-msg="">
+						</div>
+	                  </div>
+					  
+					  <div class="col-sm-4">
+	                    <div class="form-group js-form-message">
+						  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="If you have the ticket Number, no other search condition is required."></i>Ticket No/Service ID<span class="text-danger"></span></label>
+						  <input type="text" th:field="*{ticketNo}" class="js-masked-input form-control" data-msg="" 
+									id="ticketNumber" name="ticketNumber" placeholder="" value="">
+								 
+						</div>
+	                  </div>
+	                </div>
+						
+					<!-- Row 2 -->
+					<div class="row">                				  
+					  <div class="col-sm-4">
+	                    <div class="form-group js-form-message">
+						  <label class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Customer Who requested the service."></i>Beneficiary ID<span class="text-danger"></span></label>
+						  
+									<input type="text" th:field="*{beneficiaryId}" class="js-masked-input form-control" id="beneficiaryId" name="beneficiaryId" placeholder="" 
+									aria-label="beneficiaryId" value="" data-msg="" >
+								 
+						</div>
+	                  </div>
+					 
+	
+	                  <div class="col-sm-4">
+	                    <div class="form-group js-form-message">
+						  <label id="secondaryCellNo" class="input-label"><i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Customer First Name."></i>Beneficiary Name<span class="text-danger"></span></label>
+						  <input type="text" th:field="*{requestedFor}" class="js-masked-input form-control"   
+									id="customerName" name="customerName" placeholder="" value="" data-msg="">
+						</div>
+	                  </div>
+					  
+					  <div class="col-sm-4">
+	                    <div class="form-group js-form-message">
+						  <label class="input-label">Request Type<span class="text-danger"></span></label>
+						    <select class="form-control show-tick" th:field="*{serviceCategory}">
+	                                <option value="0"></option>
+	                                <option th:value="M" th:text="Male">XXX</option>
+	    							<option th:value="F" th:text="Female">YYYY</option>
+	                        </select>
+								 
+						</div>
+	                  </div>
+	                </div>	
+						
+					<!-- Row 3 -->
+					<div class="row">                				  
+					  <div class="col-sm-4">
+	                    <div class="form-group js-form-message">
+						  <label class="input-label">Request Status<span class="text-danger"></span></label>					  
+						    <select class="form-control show-tick" th:field="*{serviceStatus}">
+	                                <option value="0"></option>
+	                                <option th:value="M" th:text="Male">XXX</option>
+	    							<option th:value="F" th:text="Female">YYYY</option>
+	                        </select>
+								 
+						</div>
+	                  </div>
+					 
+	
+	                  <div class="col-sm-4">
+	                    <div class="form-group js-form-message">
+						  <label id="secondaryCellNo" class="input-label">Requested In Last<span class="text-danger"></span></label>
+						  	<select class="form-control show-tick">
+	                                <option value="0"></option>
+	                                <option th:value="M" th:text="Male">2 Days</option>
+	    							<option th:value="F" th:text="Female">10 Days</option>
+	                        </select>
+						</div>
+	                  </div>
+					  
+					  <div class="col-sm-4">
+	                    <div class="form-group js-form-message">
+						  <label class="input-label">Last Updated by<span class="text-danger"></span></label>
+						    <input type="text" class="js-masked-input form-control"   
+									id="startDate" name="startDate" placeholder="" value="" data-msg="">
+								 
+						</div>
+	                  </div>
+	                </div>		
+						
+						
+						
+					<div class="col-md-2">
+	                            <p>
+	                                <b></b>
+	                            </p>
+	                            <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+	                </div>	
+
+				</div>
+
+
+              </form>
+
+				<hr class="my-3">
+
+				<!-- #################################################################################################-->
+				<!--								TABLE START 													  -->
+				<!-- #################################################################################################-->
+				
+				<div th:if="${not #lists.isEmpty(adminServiceRequestBeanList)}" class="table_wrapper">
+						<table id="example" class="display nowrap" style="width:100%">
+						<thead>
+							<tr>
+								<th>Ticket#</th>
+								<th>Requested By</th>
+								<th>Requested For</th>
+								<th>Requested On</th>
+								<th>Status/Urgency</th>
+								<th>Target Date</th>
+								<th>Service Category</th>
+								<th>Assigned To</th>
+								<th>Last Updated On/By</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="serviceRequestBean : ${adminServiceRequestBeanList}" >
+								<td class="text-primary" th:id="${serviceRequestBean.ticketNo}" th:text="${serviceRequestBean.ticketNo}">1</td>
+				                <td class="table-column-pl-0">
+				                    <a class="d-flex align-items-center" th:href="@{'/common/viewProfileUser/' + ${serviceRequestBean.requesterId}}">
+				                      <div class="avatar avatar-circle">
+				                        <img class="avatar-img" th:src="@{/getProfileImage/}+ ${serviceRequestBean.requesterId}" alt="Profile Image">
+				                      </div>
+				                      <div class="ml-3">
+				                        <span class="d-block h5 text-hover-primary mb-0" th:text="${serviceRequestBean.requestedBy}">
+				                        		<i class="fa fa-user-circle text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed" style="color:green"></i></span>
+				                        <span class="d-block font-size-sm text-body" th:text="${serviceRequestBean.requesterId}"></span>
+				                      </div>
+				                    </a>
+				                  </td>
+				                
+				                <td>
+				                    <!--<span class="d-block h6 mb-0 .text-dark" th:text="${serviceRequestBean.requestedFor}"></span>
+				                    <span class="d-block font-size-1 .text-body" th:text="${serviceRequestBean.beneficiaryId}"></span> -->
+				                    <a class="d-flex align-items-center" th:href="@{'/common/viewProfileBeneficiary/' + ${serviceRequestBean.beneficiaryId}}">
+				                      <div class="avatar avatar-circle">
+				                        <img class="avatar-img" th:src="@{/getProfileImage/}+ ${serviceRequestBean.beneficiaryId}" alt="Image Description">
+				                      </div>
+				                      <div class="ml-3">
+				                        <span class="d-block h5 text-hover-primary mb-0" th:text="${serviceRequestBean.requestedFor}">
+				                        		<i class="fa fa-user-circle text-primary" data-toggle="tooltip" data-placement="top" title="Top endorsed" style="color:green"></i></span>
+				                        <span class="d-block font-size-sm text-body" th:text="${serviceRequestBean.beneficiaryId}"></span>
+				                      </div>
+				                    </a>
+				                </td>
+								
+								<td th:text="${serviceRequestBean.requestedDate}"></td>
+								<!--  <td th:text="${serviceRequestBean.serviceStatus}"></td>-->
+								<td>
+									<span class="d-block h6 mb-0 .text-dark" th:text="${serviceRequestBean.serviceStatus}"></span>
+				                    <span class="d-block font-size-1 .text-body" th:text="${serviceRequestBean.serviceUrgency}"></span>								
+								</td>
+								<td th:text="${serviceRequestBean.toBeCompletedByStr}"></td>								
+								<td th:text="${serviceRequestBean.serviceCategory}"></td>
+								<td th:text="${serviceRequestBean.assignedTo}"></td>
+								<!--  <td th:text="${serviceRequestBean.lastUpdatedBy}"></td>-->
+								<td>
+									<span class="d-block h6 mb-0 .text-dark" th:text="${serviceRequestBean.lastUpdatedBy}"></span>
+				                    <span class="d-block font-size-1 .text-body" th:text="${serviceRequestBean.formattedLastUpdate}"></span>								
+								</td>
+							</tr>
+							
+						</tbody>
+					</table>
+				</div>
+				<div th:unless="${not #lists.isEmpty(adminServiceRequestBeanList)}">
+						<p class="card-text">As of now you don't have any Service Request.</p>
+				</div>
+
+				<!-- #################################################################################################-->
+				<!--								TABLE END 													  	  -->
+				<!-- #################################################################################################-->
+
+
+
+
+
+
+			  
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+		  
+		  <!-- https://themes.getbootstrap.com/preview/?theme_id=55924 -->
+		  
+		  
+			<!-- Card -->
+			
+			<!-- End Card -->
+		  
+		  
+		  
+		  
+		  
+		  
+
+
+        </div>
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+  
+  
+  <!-- ========== FOOTER ========== -->
+  <div th:replace="user_common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- JS Global Compulsory -->
+    <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  		<div th:insert="user_common :: js-includes"></div>
+  		<div th:insert="user_common :: js-datatable-includes"></div>
+  	<!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+
+
+  
+<script>
+
+
+    $(document).ready(function () {
+    	
+    	var element = document.getElementById("manageServiceRequestLink");
+    	element.classList.add("active");
+    	
+        // initialization of header
+        var header = new HSHeader($('#header')).init();
+  	  
+  	    // initialization of select2
+  		$('.js-select2-custom').each(function () {
+  		  var select2 = $.HSCore.components.HSSelect2.init($(this));
+  		});
+
+        // initialization of show animations
+        $('.js-animation-link').each(function () {
+          var showAnimation = new HSShowAnimation($(this)).init();
+        });
+
+        // initialization of go to
+        $('.js-go-to').each(function () {
+          var goTo = new HSGoTo($(this)).init();
+        });
+    	
+    	
+    	
+        $('#example').DataTable({
+			"pageLength": 30,
+			"scrollX": true,			
+			paging:  true,
+			select: true,
+			keys: true,
+			dom: 'Bfrtip',
+			buttons: [
+				{
+					extend:    'copyHtml5',
+					text:      '<i class="fas fa-copy"></i>',
+					titleAttr: 'Copy'
+				},
+				{
+					extend:    'excelHtml5',
+					text:      '<i class="fas fa-file-excel"></i>',
+					titleAttr: 'Excel'
+				},
+				{
+					extend:    'csvHtml5',
+					text:      '<i class="fas fa-file"></i>',
+					titleAttr: 'CSV'
+				},
+				{
+					extend:    'pdfHtml5',
+					text:      '<i class="fas fa-file-pdf"></i>',
+					titleAttr: 'PDF'
+				},
+				{
+					extend:    'print',
+					text:      '<i class="fa fa-print"></i>',
+					titleAttr: 'print'
+				}
+			]
+		});
+    });
+</script>
+  
+  
+      
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

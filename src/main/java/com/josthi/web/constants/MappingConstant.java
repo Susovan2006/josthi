@@ -10,6 +10,7 @@ public interface MappingConstant {
 	String USER_PROFILE_UPDATE = "user/userProfileUpdate";
 	String USER_EMERGENCY_CONTACT_DETAILS = "user/emergency_contact_user";
 	String USER_BENEFICIARY_DETAILS = "user/beneficiary_details_users";
+	String USER_LOGIN_AND_SECURITY = "user/login_and_security_user";
 	
 	String VERBIAGE_HTML_PLAN_DETAILS = "service_details.html";
 	
@@ -19,6 +20,8 @@ public interface MappingConstant {
 	
 	
 	//----------------AGENTS AND ADMIN----------------
-	String AGENT_PROFILE = "agentAdmin/profile_agent_admin";
+	String ADMIN_PROFILE = "admin/profile_admin";  //*profile_agent_admin";
+	String ADMIN_ACCOUNT_SETTINGS = "agentAdmin/account_settings";
+	String ADMIN_MANAGE_TICKET = "/admin/manage_service_request_admin";
 
 }

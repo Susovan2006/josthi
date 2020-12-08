@@ -190,6 +190,11 @@ public class UserAuthServiceImpl implements UserAuthService{
 			throw ex;
 		}
 	}
+
+	@Override
+	public UserAuthBo getProfileDisplayDetails(String userID) throws Exception {
+		return userAuthDao.getProfileDisplayDetails(userID);
+	}
 	
 	
 	/*

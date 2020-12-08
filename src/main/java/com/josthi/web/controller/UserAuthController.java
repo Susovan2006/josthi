@@ -136,8 +136,12 @@ public class UserAuthController {
 							return "user/home_user";
 						}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
 							logger.info("Agent LOGIN Successful");
-							return "agentAdmin/index";
+							return "admin/home_admin";
+						}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_ADMIN)) {
+							logger.info("Admin LOGIN Successful");
+							return "admin/home_admin";
 						}else {
+							model.addAttribute("errorMessage", "Invalid User Role. Contact Customer Service.");
 							return "login_simple";
 						}
 					}else {

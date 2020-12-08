@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Admin Home| Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->
+  
+  <link rel="stylesheet" th:href="@{/css/susovan-style.css}">
+  <!-- Google Fonts Needed for The Icons-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+  
+  
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white" th:text="${#strings.capitalize(#strings.toLowerCase(session.USER_SESSION_OBJ_KEY.userRole))} +' Home'">Home</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item" th:text="${#strings.capitalize(#strings.toLowerCase(session.USER_SESSION_OBJ_KEY.userRole))}"></li>
+              <li class="breadcrumb-item active" aria-current="page">Home</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+		  <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container-fluid space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          <!-- End Navbar -->
+        </div>
+
+
+        <div class="col-lg-9">
+		
+		
+		<!-- INFOBOX START github.com/mhuggins/jquery-countTo -->			
+			<div class="row clearfix">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-pink hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">playlist_add_check</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">NEW TASKS</div>
+                            <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-cyan hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">help</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">NEW REQUEST</div>
+                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-light-green hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">forum</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">NEW QUERY</div>
+                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-orange hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">person_add</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">NEW CUSTOMER</div>
+                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<!-- INFOBOX END github.com/mhuggins/jquery-countTo -->
+			
+			
+			<!-- ******************************************************* -->
+			<!--                   GRAPH SECTION 						 -->
+			<!-- ******************************************************* -->
+		    <div class="row clearfix">
+                <!-- Line Chart -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+						  <div class="d-flex align-items-center">
+							<h5 class="card-title">Line Chart.</h5>
+							<span class="badge badge-soft-danger ml-2"></span>
+						  </div>
+						</div>
+                        <div class="graph-body">
+                            <canvas id="line_chart" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Line Chart -->
+                <!-- Bar Chart -->
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="card">
+                         <div class="card-header">
+						  <div class="d-flex align-items-center">
+							<h5 class="card-title">Bar Chart.</h5>
+							<span class="badge badge-soft-danger ml-2"></span>
+						  </div>
+						</div>
+                        <div class="graph-body">
+                            <canvas id="bar_chart" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Bar Chart -->
+            </div>
+		
+
+		<BR>
+		<BR>
+		
+		
+		
+		
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Card Name.</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              <p class="card-text">This is a first time setup to validate your email.</p>
+
+              <form class="js-validate">
+                <!-- Form Group -->
+                <div class="row form-group">
+                  <label for="accountPasswordLabel" class="col-sm-3 col-form-label input-label">One Time password</label>
+
+                  <div class="col-sm-9 js-form-message">
+                    <input type="password" class="form-control" name="currentPassword" id="accountPasswordLabel" placeholder="Enter the OTP (the session will expire in 20 min)" aria-label="Enter the OTP (the session will expire in 20 min)" required>
+                    <small class="form-text">Please enter the OTP you received in email.</small>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary">Set up</button>
+                </div>
+              </form>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+
+        </div>
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:replace="user_common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+    <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  	  <div th:insert="user_common :: js-includes"></div>
+  	  <script th:src="@{/vendor/hs-file-attach/dist/hs-file-attach.min.js}"></script>
+  	  
+  	  <!-- ######################  NEW ############### -->
+      <!-- Jquery CountTo Plugin Js -->
+	  <script th:src="@{/vendor/jquery-countto/jquery.countTo.js}"></script>
+		  
+	  <!-- Chart Plugins Js -->
+      <script th:src="@{/vendor/chartjs/Chart.bundle.js}"></script>
+  	<!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+  
+
+
+  <!-- JS Plugins Init. -->
+  
+<!--   <script>
+    $.sessionTimeout({
+        keepAliveUrl: 'keep-alive.html',
+        logoutUrl: '/destroy',
+        redirUrl: '/destroy',
+        warnAfter: 900000, //After 900000 ms i.e. 15 min, the Popup will come.
+        redirAfter: 20000,
+        countdownBar: true
+    });
+    </script> -->
+  
+  <script>
+    $(document).on('ready', function () {
+      
+    	var element = document.getElementById("userHomeLink");
+	    element.classList.add("active");
+    	
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+  <script>
+  $(function () {
+    //Widgets count
+    $('.count-to').countTo();
+	});
+  
+  </script>
+  
+  
+  <Script>
+		  $(function () {
+			new Chart(document.getElementById("line_chart").getContext("2d"), getChartJs('line'));
+			new Chart(document.getElementById("bar_chart").getContext("2d"), getChartJs('bar'));
+			new Chart(document.getElementById("radar_chart").getContext("2d"), getChartJs('radar'));
+			new Chart(document.getElementById("pie_chart").getContext("2d"), getChartJs('pie'));
+		});
+
+		function getChartJs(type) {
+			var config = null;
+
+			if (type === 'line') {
+				config = {
+					type: 'line',
+					data: {
+						labels: ["January", "February", "March", "April", "May", "June", "July"],
+						datasets: [{
+							label: "My First dataset",
+							data: [65, 59, 80, 81, 56, 55, 40],
+							borderColor: 'rgba(0, 188, 212, 0.75)',
+							backgroundColor: 'rgba(0, 188, 212, 0.3)',
+							pointBorderColor: 'rgba(0, 188, 212, 0)',
+							pointBackgroundColor: 'rgba(0, 188, 212, 0.9)',
+							pointBorderWidth: 1
+						}, {
+								label: "My Second dataset",
+								data: [28, 48, 40, 19, 86, 27, 90],
+								borderColor: 'rgba(233, 30, 99, 0.75)',
+								backgroundColor: 'rgba(233, 30, 99, 0.3)',
+								pointBorderColor: 'rgba(233, 30, 99, 0)',
+								pointBackgroundColor: 'rgba(233, 30, 99, 0.9)',
+								pointBorderWidth: 1
+							}]
+					},
+					options: {
+						responsive: true,
+						legend: false
+					}
+				}
+			}
+			else if (type === 'bar') {
+				config = {
+					type: 'bar',
+					data: {
+						labels: ["January", "February", "March", "April", "May", "June", "July"],
+						datasets: [{
+							label: "My First dataset",
+							data: [65, 59, 80, 81, 56, 55, 40],
+							backgroundColor: 'rgba(0, 188, 212, 0.8)'
+						}, {
+								label: "My Second dataset",
+								data: [28, 48, 40, 19, 86, 27, 90],
+								backgroundColor: 'rgba(233, 30, 99, 0.8)'
+							}]
+					},
+					options: {
+						responsive: true,
+						legend: false
+					}
+				}
+			}
+			else if (type === 'radar') {
+				config = {
+					type: 'radar',
+					data: {
+						labels: ["January", "February", "March", "April", "May", "June", "July"],
+						datasets: [{
+							label: "My First dataset",
+							data: [65, 25, 90, 81, 56, 55, 40],
+							borderColor: 'rgba(0, 188, 212, 0.8)',
+							backgroundColor: 'rgba(0, 188, 212, 0.5)',
+							pointBorderColor: 'rgba(0, 188, 212, 0)',
+							pointBackgroundColor: 'rgba(0, 188, 212, 0.8)',
+							pointBorderWidth: 1
+						}, {
+								label: "My Second dataset",
+								data: [72, 48, 40, 19, 96, 27, 100],
+								borderColor: 'rgba(233, 30, 99, 0.8)',
+								backgroundColor: 'rgba(233, 30, 99, 0.5)',
+								pointBorderColor: 'rgba(233, 30, 99, 0)',
+								pointBackgroundColor: 'rgba(233, 30, 99, 0.8)',
+								pointBorderWidth: 1
+							}]
+					},
+					options: {
+						responsive: true,
+						legend: false
+					}
+				}
+			}
+			else if (type === 'pie') {
+				config = {
+					type: 'pie',
+					data: {
+						datasets: [{
+							data: [225, 50, 100, 40],
+							backgroundColor: [
+								"rgb(233, 30, 99)",
+								"rgb(255, 193, 7)",
+								"rgb(0, 188, 212)",
+								"rgb(139, 195, 74)"
+							],
+						}],
+						labels: [
+							"Pink",
+							"Amber",
+							"Cyan",
+							"Light Green"
+						]
+					},
+					options: {
+						responsive: true,
+						legend: false
+					}
+				}
+			}
+			return config;
+		}
+  
+  
+  </script>
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

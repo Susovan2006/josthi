@@ -9,6 +9,55 @@ import com.josthi.web.exception.UserException;
 
 public class ValidateSession {
 	
+	public static String getUserId(HttpServletRequest request) throws Exception{
+		try {
+			isValidSession(request);
+			UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY); 
+			return userSessionBean.getCustomerId();
+			
+		}catch(UserException ex) {
+			throw ex;
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+	
+	public static String getUserRole(HttpServletRequest request) throws Exception{
+		try {
+			isValidSession(request);
+			UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY); 
+			return userSessionBean.getUserRole();			
+		}catch(UserException ex) {
+			throw ex;
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+	
+	public static String getUserName(HttpServletRequest request) throws Exception{
+		try {
+			isValidSession(request);
+			UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY); 
+			return userSessionBean.getUserName();			
+		}catch(UserException ex) {
+			throw ex;
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+	
+	public static String getUserEmail(HttpServletRequest request) throws Exception{
+		try {
+			isValidSession(request);
+			UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY); 
+			return userSessionBean.getUserEmailId();			
+		}catch(UserException ex) {
+			throw ex;
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+	
 	
 	public static boolean isValidSession(HttpServletRequest request) throws Exception {	
 		try {

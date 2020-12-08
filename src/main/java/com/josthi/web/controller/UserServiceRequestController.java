@@ -80,15 +80,15 @@ public class UserServiceRequestController {
 				 model.addAttribute("messageForTable", messageForTable);
 	   	 	}
 			
-			//Getting the Customer ID from Session.
-			UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY); 
-			String userId = userSessionBean.getCustomerId();
+			//Getting the Customer ID / role from Session.
+			String userId = ValidateSession.getUserId(request);
+			String userRole = ValidateSession.getUserRole(request);
 			
 			//Initializing a new Bean so that it can be passed to the UI for the users to create the Ticket.
 			ServiceRequestBean serviceRequestBean = new ServiceRequestBean();
 			
 			//Pulling all the active Tickets to be displayed on the Screen.
-			List<ServiceRequestBean> serviceRequestBeanList= serviceRequestService.getServiceRequestList(userId);
+			List<ServiceRequestBean> serviceRequestBeanList= serviceRequestService.getServiceRequestList(userId, userRole);
 			
 			List<DropDownBean> beneficiaryList = cacheConfigService.getBeneficiaryList(userId);
 			
@@ -134,7 +134,6 @@ public class UserServiceRequestController {
 			model.addAttribute("onDemandServicaList",cacheConfigService.getDefaultList());
 			model.addAttribute("urgencyTypeList",cacheConfigService.getDefaultList());
 			model.addAttribute("serviceRequestBean",new ServiceRequestBean());
-			
 			
 			
 			return "user/request_service_user";

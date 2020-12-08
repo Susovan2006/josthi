@@ -133,7 +133,7 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 			+ " EMERGENCY_CONTACT_NAME, EMERGENCY_CONTACT_NUMBER, RELATION, NOTES) "
 			+ " VALUES (?, ? , ? , ? , ?)";
 	@Override
-	public boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) {
+	public boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) throws Exception{
 		
 		try {
 			int result = jdbcTemplate.update(INSERT_EMERGENCY_CONTACT_DETAILS_ON_CUST_ID, new Object[]{
@@ -198,7 +198,7 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 			+ "EMERGENCY_CONTACT_NAME=? , EMERGENCY_CONTACT_NUMBER=? , RELATION = ? , NOTES = ? "
 			+ " WHERE PRIMARY_UID = ? and CONTACT_ID = ?";
 	@Override
-	public boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) {
+	public boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) throws Exception{
 		try {
 			
 			int result = jdbcTemplate.update(UPDATE_EMERGENCY_CONTACT_DETAILS, new Object[]{ 
@@ -634,20 +634,22 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 	
 	
 	public static final String UPDATE_AGENT_ADMIN_PROFILE_DETAILS = "Update user_detail set FIRST_NAME = ? , LAST_NAME = ? , "
-			+ " USER_ADDRESS_FIRST_LINE = ?, USER_ADDRESS_SECOND_LINE = ? , ADDITIONAL_ADDRESS_LINE= ?, "
-			+ " POLICE_STATION = ? , NEAREST_LAND_MARK = ?, COVERAGE_AREA = ? ,  CITY_TOWN = ?," 
+			+ " GENDER = ? , USER_ADDRESS_FIRST_LINE = ?, USER_ADDRESS_SECOND_LINE = ? , ADDITIONAL_ADDRESS_LINE= ?, "
+			+ " POLICE_STATION = ? , POST_OFFICE = ? , NEAREST_LAND_MARK = ?, COVERAGE_AREA = ? ,  CITY_TOWN = ?," 
 			+ " STATE = 'West Bengal', COUNTY_DISTRICT = ? , COUNTRY = 'India', ZIP_PIN = ? , MOBILE_NO1 = ? , "
-			+ " MOBILE_NO2 = ? , WHATSAPP_NO = ? , LAND_LINE_NO = ? , " 
+			+ " MOBILE_NO2 = ? , WHATSAPP_NO = ? , LAND_LINE_NO = ? , FAX_NO = ? ,  OFFICE_PH_NO = ?, " 
 			+ " SECONDARY_EMAIL = ? , WEBSITE = ? , FACEBOOK_LINK = ? , AGENCY_NAME = ? , AGENCY_DESCRIPTION = ? where  UID = ?";
 	@Override
 	public boolean updateAgentAdminProfile(UserDetailsBean userDetailsBean) throws Exception {
 		try {
 			int result = jdbcTemplate.update(UPDATE_AGENT_ADMIN_PROFILE_DETAILS, new Object[]{userDetailsBean.getFirstName(),
-																		               userDetailsBean.getLastName(), 																		               
+																		               userDetailsBean.getLastName(), 
+																		               userDetailsBean.getGender(),
 																		               userDetailsBean.getUserAddressFirstLine(),
 																		               userDetailsBean.getUserAddressSecondLine(),
 																		               userDetailsBean.getUserAdditionalAddressLine(),
 																		               userDetailsBean.getPoliceStation(),
+																		               userDetailsBean.getPostOffice(),
 																		               userDetailsBean.getNearestLandMark(),
 																		               userDetailsBean.getCoverageArea(),
 																		               userDetailsBean.getCityTown(),
@@ -658,7 +660,9 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 																		               userDetailsBean.getMobileNo1(),
 																		               userDetailsBean.getMobileNo2(),
 																		               userDetailsBean.getWhatsappNo(),
-																		               userDetailsBean.getLandLineNo(),																		        
+																		               userDetailsBean.getLandLineNo(),	
+																		               userDetailsBean.getFaxNo(),
+																		               userDetailsBean.getOfficePhNo(),
 																		               userDetailsBean.getSecondaryEmail(),
 																		               userDetailsBean.getWebsite(),
 																		               userDetailsBean.getFacebookLink(),
@@ -674,10 +678,10 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 	
 	
 	
-	public static final String SELECT_AGENT_ADMIN_DETAILS_ON_CUST_ID = "SELECT UID, FIRST_NAME, LAST_NAME,  "
+	public static final String SELECT_AGENT_ADMIN_DETAILS_ON_CUST_ID = "SELECT UID, FIRST_NAME, LAST_NAME, GENDER,  "
 			+ "USER_ADDRESS_FIRST_LINE, USER_ADDRESS_SECOND_LINE, ADDITIONAL_ADDRESS_LINE, "
-			+ "POLICE_STATION, NEAREST_LAND_MARK, COVERAGE_AREA, CITY_TOWN, STATE, COUNTY_DISTRICT, COUNTRY, ZIP_PIN, "
-			+ "MOBILE_NO1, MOBILE_NO2, WHATSAPP_NO, LAND_LINE_NO, SECONDARY_EMAIL, WEBSITE, "
+			+ "POLICE_STATION, POST_OFFICE, NEAREST_LAND_MARK, COVERAGE_AREA, CITY_TOWN, STATE, COUNTY_DISTRICT, COUNTRY, ZIP_PIN, "
+			+ "MOBILE_NO1, MOBILE_NO2, WHATSAPP_NO, LAND_LINE_NO, FAX_NO, OFFICE_PH_NO, SECONDARY_EMAIL, WEBSITE, "
 			+ "FACEBOOK_LINK, USER_STATUS, AGENCY_NAME, AGENCY_DESCRIPTION FROM user_detail where UID = ?";
 	@Override
 	public UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception{

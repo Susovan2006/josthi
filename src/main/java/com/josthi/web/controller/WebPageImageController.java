@@ -55,5 +55,18 @@ public class WebPageImageController {
     }
 	
 	
+	
+	@RequestMapping(value = "/profileBackground", method = RequestMethod.GET,
+            produces = MediaType.IMAGE_JPEG_VALUE)
+
+    public void profileBackground(HttpServletResponse response) throws IOException {
+
+		ClassPathResource imgFile = new ClassPathResource("/static/images/josthi/profileBackground/background_1.png");
+
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
+    }
+	
+	
 
 }

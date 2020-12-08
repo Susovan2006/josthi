@@ -58,70 +58,74 @@ public class AgentRegistrationController {
 											Model model) throws Exception {
 			
 			logger.info("###############"+agentRegistrationBean.toString());
-			
-			//Basic Validation
-			if(!(agentRegistrationBean.getPassword().trim().equals(agentRegistrationBean.getConfirmPassword().trim()))) {
-				model.addAttribute("errorMessage", MessageConstant.NEW_REGISTRATION_FAILED_UNMATCH_PASSWORD);
-				return MappingConstant.AGENT_REGISTRATION;
-			}
-			
-			//Null Check
-			//All the field should have the values.
-			if(StringUtils.isEmpty(agentRegistrationBean.getFirstName().trim()) || 
-					StringUtils.isEmpty(agentRegistrationBean.getLastName().trim())	||
-					StringUtils.isEmpty(agentRegistrationBean.getEmailID().trim()) ||
-					StringUtils.isEmpty(agentRegistrationBean.getContactNo().trim()) ||
-					StringUtils.isEmpty(agentRegistrationBean.getPassword().trim()) ||
-					StringUtils.isEmpty(agentRegistrationBean.getConfirmPassword().trim())
-					){
-				model.addAttribute("errorMessage", MessageConstant.NEW_REGISTRATION_FAILED_REQUIRED_FIELDS);
-				return MappingConstant.AGENT_REGISTRATION;
-			}
-			
-			
-			//Not an existing User.
-			if(!(isValidUserIDOnly(agentRegistrationBean.getEmailID().trim()))) {
-				int getNextID = userAuthService.getNextID();
-				String agentID = Utils.getNextCustomerID(Constant.USER_TYPE_AGENT,getNextID);
-				logger.info("Agent ID"+agentID);
-				
-				agentRegistrationBean.setAgentID(agentID);
-				
-				//Here we are encrypting the Password and storing in the Database.
-				agentRegistrationBean.setConfirmPassword(Security.encrypt(agentRegistrationBean.getConfirmPassword().trim()));
-				agentRegistrationBean.setFirstName(Utils.convertToCamelCase(agentRegistrationBean.getFirstName().trim()));
-				agentRegistrationBean.setLastName(Utils.convertToCamelCase(agentRegistrationBean.getLastName().trim()));
-				
-				boolean status = userRegistrationService.registerNewAgent(agentRegistrationBean, getNextID);
-				if(status) {
-					System.out.println("---- SUCCESS ------");
-					//email section
-					//Customer ID
-					// F & L Name.
-					Map<String, String> map = new HashMap<String, String>();
-			        map.put("name", agentRegistrationBean.getFirstName()+" "+agentRegistrationBean.getLastName());
-			        map.put("custID", agentID);
-			        
-			        EmailDbBean emailDbBean = Utils.getEmailBeanForWelcome(agentRegistrationBean.getEmailID().trim(), Utils.mapToString(map));
-			        System.out.println(emailDbBean);
-					boolean emailQueueStatus = emailService.queueEmail(emailDbBean);
-					if(emailQueueStatus) {				
-						model.addAttribute("successMessage", MessageConstant.NEW_REGISTRATION_SUCCESSFUL);
-						EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
-						return MappingConstant.LOGIN_PAGE;
-					}else{
-						model.addAttribute("successMessage", MessageConstant.NEW_REGISTRATION_SUCCESSFUL_CONDITIONAL);
-						return MappingConstant.LOGIN_PAGE;
-					}
-				
-				}else {
-					model.addAttribute("errorMessage", MessageConstant.NEW_REGISTRATION_FAILED);
+			try {
+				//Basic Validation
+				if(!(agentRegistrationBean.getPassword().trim().equals(agentRegistrationBean.getConfirmPassword().trim()))) {
+					model.addAttribute("errorMessage", MessageConstant.NEW_REGISTRATION_FAILED_UNMATCH_PASSWORD);
 					return MappingConstant.AGENT_REGISTRATION;
 				}
-			
 				
-			}else {
-				model.addAttribute("errorMessage", MessageConstant.NEW_REGISTRATION_DUPLICATE_USER_ID);
+				//Null Check
+				//All the field should have the values.
+				if(StringUtils.isEmpty(agentRegistrationBean.getFirstName().trim()) || 
+						StringUtils.isEmpty(agentRegistrationBean.getLastName().trim())	||
+						StringUtils.isEmpty(agentRegistrationBean.getEmailID().trim()) ||
+						StringUtils.isEmpty(agentRegistrationBean.getContactNo().trim()) ||
+						StringUtils.isEmpty(agentRegistrationBean.getPassword().trim()) ||
+						StringUtils.isEmpty(agentRegistrationBean.getConfirmPassword().trim())
+						){
+					model.addAttribute("errorMessage", MessageConstant.NEW_REGISTRATION_FAILED_REQUIRED_FIELDS);
+					return MappingConstant.AGENT_REGISTRATION;
+				}
+				
+				
+				//Not an existing User.
+				if(!(isValidUserIDOnly(agentRegistrationBean.getEmailID().trim()))) {
+					int getNextID = userAuthService.getNextID();
+					String agentID = Utils.getNextCustomerID(Constant.USER_TYPE_AGENT,getNextID);
+					logger.info("Agent ID"+agentID);
+					
+					agentRegistrationBean.setAgentID(agentID);
+					
+					//Here we are encrypting the Password and storing in the Database.
+					agentRegistrationBean.setConfirmPassword(Security.encrypt(agentRegistrationBean.getConfirmPassword().trim()));
+					agentRegistrationBean.setFirstName(Utils.convertToCamelCase(agentRegistrationBean.getFirstName().trim()));
+					agentRegistrationBean.setLastName(Utils.convertToCamelCase(agentRegistrationBean.getLastName().trim()));
+					
+					boolean status = userRegistrationService.registerNewAgent(agentRegistrationBean, getNextID);
+					if(status) {
+						System.out.println("---- SUCCESS ------");
+						//email section
+						//Customer ID
+						// F & L Name.
+						Map<String, String> map = new HashMap<String, String>();
+				        map.put("name", agentRegistrationBean.getFirstName()+" "+agentRegistrationBean.getLastName());
+				        map.put("custID", agentID);
+				        
+				        EmailDbBean emailDbBean = Utils.getEmailBeanForWelcome(agentRegistrationBean.getEmailID().trim(), Utils.mapToString(map));
+				        System.out.println(emailDbBean);
+						boolean emailQueueStatus = emailService.queueEmail(emailDbBean);
+						if(emailQueueStatus) {				
+							model.addAttribute("successMessage", MessageConstant.NEW_REGISTRATION_SUCCESSFUL);
+							EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
+							return MappingConstant.LOGIN_PAGE;
+						}else{
+							model.addAttribute("successMessage", MessageConstant.NEW_REGISTRATION_SUCCESSFUL_CONDITIONAL);
+							return MappingConstant.LOGIN_PAGE;
+						}
+					
+					}else {
+						model.addAttribute("errorMessage", MessageConstant.NEW_REGISTRATION_FAILED);
+						return MappingConstant.AGENT_REGISTRATION;
+					}
+				
+					
+				}else {
+					model.addAttribute("errorMessage", MessageConstant.NEW_REGISTRATION_DUPLICATE_USER_ID);
+					return MappingConstant.AGENT_REGISTRATION;
+				}
+			}catch(Exception ex) {
+				model.addAttribute("errorMessage", "System Error occured during the registration process, please try later or contact the System Admin.");
 				return MappingConstant.AGENT_REGISTRATION;
 			}
 			

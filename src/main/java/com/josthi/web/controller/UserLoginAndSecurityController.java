@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.bo.PasswordResetBean;
+import com.josthi.web.bo.UserDetailsBean;
 import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
+import com.josthi.web.constants.MappingConstant;
 import com.josthi.web.constants.MessageConstant;
 import com.josthi.web.exception.UserException;
 import com.josthi.web.exception.UserExceptionInvalidData;
@@ -48,23 +50,47 @@ public class UserLoginAndSecurityController {
 										@RequestParam (name="status", required = false, defaultValue = "") String status,
 										@RequestParam (name="message", required = false, defaultValue = "") String message,
 										@RequestParam (name="statusOtp", required = false, defaultValue = "") String statusOtp,
-										@RequestParam (name="messageOtp", required = false, defaultValue = "") String messageOtp
-										) {
+										@RequestParam (name="messageOtp", required = false, defaultValue = "") String messageOtp,
+										HttpServletRequest request) {
+		try {
+			ValidateSession.isValidSession(request);
+			
+			PasswordResetBean passwordResetBean = new PasswordResetBean();
+			
+			if(status!=null && status.length() > 0) {
+		    	 model.addAttribute("status", status);
+				 model.addAttribute("message", message);
+	   	 	}
+			
+			if(statusOtp!=null && statusOtp.length() > 0) {
+		    	 model.addAttribute("statusOtp", statusOtp);
+				 model.addAttribute("messageOtp", messageOtp);
+	  	 	}
+			
+			model.addAttribute("passwordResetBean", passwordResetBean);
+			return MappingConstant.USER_LOGIN_AND_SECURITY;
 		
-		PasswordResetBean passwordResetBean = new PasswordResetBean();
+		}catch(UserExceptionInvalidData ex) {
+			logger.error(ex.getMessage(), ex);
+			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
+			model.addAttribute("message", ex.getMessage());			
+			model.addAttribute("passwordResetBean", new PasswordResetBean());
+			return MappingConstant.USER_LOGIN_AND_SECURITY;
 		
-		if(status!=null && status.length() > 0) {
-	    	 model.addAttribute("status", status);
-			 model.addAttribute("message", message);
-   	 	}
+    	}catch(UserException ex) {
+			logger.error(ex.getMessage(), ex);
+			status = MessageConstant.USER_FAILURE_STATUS;
+			message =  ex.getMessage();
+			return "redirect:/login?status="+status+"&message="+message;
 		
-		if(statusOtp!=null && statusOtp.length() > 0) {
-	    	 model.addAttribute("statusOtp", statusOtp);
-			 model.addAttribute("messageOtp", messageOtp);
-  	 	}
-		
-		model.addAttribute("passwordResetBean", passwordResetBean);
-		return "user/login_and_security_user";
+    	}catch(Exception ex) {
+    		logger.error(ex.getMessage(), ex);
+			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
+			model.addAttribute("message", "System Error occured while getting the user info.");
+			model.addAttribute("passwordResetBean", new PasswordResetBean());
+						
+			return MappingConstant.USER_LOGIN_AND_SECURITY;
+		}
 	}
 	
 	
@@ -90,7 +116,7 @@ public class UserLoginAndSecurityController {
 					 StringUtils.isEmpty(passwordResetBean.getNewConfirmPassword().trim())) {
 				throw new UserExceptionInvalidData("new Password Fields can't be blank");
 			}else if(!(passwordResetBean.getNewPassword().trim().equals(passwordResetBean.getNewConfirmPassword().trim()))) {
-				throw new UserExceptionInvalidData("The New Password and Confirm Password values are not matching. Please try with save value.");
+				throw new UserExceptionInvalidData("The New Password and Confirm Password values are not matching. Please try with same value.");
 			}else if(!(userAuthService.isValidPassword(passwordResetBean.getEmailId(),
 													Security.encrypt(passwordResetBean.getOldPassword().trim())))){
 				throw new UserExceptionInvalidData("The existing password is not matching with the supplied one. Please re-enter the correct password");
@@ -114,8 +140,9 @@ public class UserLoginAndSecurityController {
 			message =  ex.getMessage();
 			return "redirect:/login?status="+actionStatus+"&message="+message;
 		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
 			actionStatus = MessageConstant.USER_FAILURE_STATUS;
-			message = ex.getMessage();
+			message = "Exception Occured while updating the New Password, Please try later or contact the Customer Service.";
 			return "redirect:/user/loginAndsecurity?status="+actionStatus+"&message="+message;
 		}
 		

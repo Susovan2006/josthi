@@ -17,6 +17,7 @@ import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserPreferencesBean;
 import com.josthi.web.controller.UserAuthController;
 import com.josthi.web.dao.UserAuthDao;
+import com.josthi.web.dao.rowmapper.UserAuthDetailsToDisplayRowMaper;
 import com.josthi.web.dao.rowmapper.UserAuthRowMapper;
 import com.josthi.web.dao.rowmapper.UserPreferenceRowMaper;
 import com.josthi.web.dao.rowmapper.ValidateAuthenticityRowMaper;
@@ -371,6 +372,31 @@ public class UserAuthDaoImpl implements UserAuthDao{
 			throw new UserExceptionInvalidData("Error Occured while inserting the default settings");
 		}
 		
+	}
+	
+	
+	public static final String SELECT_USER_DETAILS_FOR_DISPLAY = "SELECT USERID_EMAIL, STATUS, ROLE, REGISTRATION_DATE_TIME, VERIFIED_USER FROM user_auth_table WHERE CUSTOMER_ID = ?";
+	@Override
+	public UserAuthBo getProfileDisplayDetails(String userID) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+
+			List<UserAuthBo> userAuthBoList = getJdbcTemplate().query(
+												 SELECT_USER_DETAILS_FOR_DISPLAY,
+												 new Object[] {userID},
+												 new UserAuthDetailsToDisplayRowMaper());
+			if ( userAuthBoList.isEmpty()){
+				logger.info("User not Found");
+				return null;
+			}else if ( userAuthBoList.size() == 1 ) { // list contains exactly 1 element
+				return userAuthBoList.get(0);
+			}else{  // list contains more than 1 elements
+				throw new UserExceptionInvalidData("Invalid Data in the Database...");
+			}
+			}catch(Exception ex){
+				logger.error(ex.getMessage(), ex);
+				throw ex;
+			}
 	}
 	
 

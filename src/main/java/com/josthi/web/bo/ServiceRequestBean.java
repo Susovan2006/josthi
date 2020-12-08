@@ -167,13 +167,16 @@ public class ServiceRequestBean {
 	@Override
 	public String toString() {
 		return "ServiceRequestBean [uid=" + uid + ", ticketNo=" + ticketNo + ", requestedBy=" + requestedBy
-				+ ", requesterId=" + requesterId + ", requestedFor=" + requestedFor + ", requestedVia=" + requestedVia
-				+ ", assignedTo=" + assignedTo + ", requestedOn=" + requestedOn + ", requestedDate=" + requestedDate
-				+ ", toBeCompletedBy=" + toBeCompletedBy + ", toBeCompletedByStr=" + toBeCompletedByStr
-				+ ", serviceType=" + serviceType + ", serviceCategory=" + serviceCategory + ", serviceReqDescription="
-				+ serviceReqDescription + ", serviceUrgency=" + serviceUrgency + ", serviceStatus=" + serviceStatus
-				+ ", lastUpdate=" + lastUpdate + ", comments=" + comments + "]";
+				+ ", requesterId=" + requesterId + ", requestedFor=" + requestedFor + ", beneficiaryId=" + beneficiaryId
+				+ ", requestedVia=" + requestedVia + ", assignedTo=" + assignedTo + ", requestedOn=" + requestedOn
+				+ ", requestedDate=" + requestedDate + ", toBeCompletedBy=" + toBeCompletedBy + ", toBeCompletedByStr="
+				+ toBeCompletedByStr + ", serviceType=" + serviceType + ", serviceCategory=" + serviceCategory
+				+ ", serviceReqDescription=" + serviceReqDescription + ", serviceUrgency=" + serviceUrgency
+				+ ", serviceStatus=" + serviceStatus + ", lastUpdate=" + lastUpdate + ", formattedLastUpdate="
+				+ formattedLastUpdate + ", comments=" + comments + ", lastCommentsNotes=" + lastCommentsNotes
+				+ ", lastUpdatedBy=" + lastUpdatedBy + "]";
 	}
+	
 	
 	
 	

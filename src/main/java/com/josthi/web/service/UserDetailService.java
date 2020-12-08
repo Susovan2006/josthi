@@ -15,7 +15,7 @@ public interface UserDetailService {
 
 	List<EmergencyContactBean> getEmergencyContactForUser(String customerId);
 
-	boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId);
+	boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) throws Exception;
 
 	void deleteEmergencyContact(int contactId);
 
@@ -23,7 +23,7 @@ public interface UserDetailService {
 
 	boolean isValidContactId(Integer contactId);
 
-	boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId);
+	boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) throws Exception;
 
 	boolean updateAgentAdminProfile(UserDetailsBean userDetailsBean) throws Exception;
 

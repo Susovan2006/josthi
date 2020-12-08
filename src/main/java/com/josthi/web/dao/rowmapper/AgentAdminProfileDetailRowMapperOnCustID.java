@@ -13,12 +13,13 @@ public UserDetailsBean mapRow(ResultSet resultSet,int arg1)throws SQLException {
 		userDetailsBean.setFirstName(resultSet.getString("FIRST_NAME"));
 		//userDetailsBean.setMiddleName(resultSet.getString("MIDDLE_NAME"));
 		userDetailsBean.setLastName(resultSet.getString("LAST_NAME"));
-		//userDetailsBean.setGender(resultSet.getString("GENDER"));
+		userDetailsBean.setGender(resultSet.getString("GENDER"));
 		
 		userDetailsBean.setUserAddressFirstLine(resultSet.getString("USER_ADDRESS_FIRST_LINE"));
 		userDetailsBean.setUserAddressSecondLine(resultSet.getString("USER_ADDRESS_SECOND_LINE"));
 		userDetailsBean.setUserAdditionalAddressLine(resultSet.getString("ADDITIONAL_ADDRESS_LINE"));
 		userDetailsBean.setPoliceStation(resultSet.getString("POLICE_STATION"));
+		userDetailsBean.setPostOffice(resultSet.getString("POST_OFFICE"));
 		userDetailsBean.setNearestLandMark(resultSet.getString("NEAREST_LAND_MARK"));
 		userDetailsBean.setCityTown(resultSet.getString("CITY_TOWN"));
 		userDetailsBean.setCoverageArea(resultSet.getString("COVERAGE_AREA"));
@@ -31,7 +32,8 @@ public UserDetailsBean mapRow(ResultSet resultSet,int arg1)throws SQLException {
 		userDetailsBean.setMobileNo2(resultSet.getString("MOBILE_NO2"));
 		userDetailsBean.setWhatsappNo(resultSet.getString("WHATSAPP_NO"));
 		userDetailsBean.setLandLineNo(resultSet.getString("LAND_LINE_NO"));
-		
+		userDetailsBean.setFaxNo(resultSet.getString("FAX_NO"));
+		userDetailsBean.setOfficePhNo(resultSet.getString("OFFICE_PH_NO"));
 		
 		userDetailsBean.setSecondaryEmail(resultSet.getString("SECONDARY_EMAIL"));
 		userDetailsBean.setWebsite(resultSet.getString("WEBSITE"));

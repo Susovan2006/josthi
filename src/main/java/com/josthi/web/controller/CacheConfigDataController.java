@@ -38,6 +38,7 @@ public class CacheConfigDataController {
 		    
 			configMap = cacheConfigService.getConfigData();
 			bloodGroupList = cacheConfigService.getBloodGroup(Constant.BLOOD_GROUP);
+			//serviceRequestTypeForAdminList = cacheConfigService.getBloodGroup(Constant.BLOOD_GROUP);
 			
 			logger.info("========================================================================");
 			logger.info(Utils.getQueryTime("cacheConfigData()", startTime));

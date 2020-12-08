@@ -8,6 +8,11 @@ Numeric field in HTML : pattern="^[0-9]*$"
 
 for a line in HTML --> <hr class="my-3">
 
+
+################### SLOW ECLIPSE ######################
+
+C:\Users\susov\workspace\.metadata\.plugins\org.eclipse.ui.workbench rename workbench.xml.bak
+
 ################## Ajax Call from Out side ####################
 If you want to call the Ajax from outside, on the top of the controller you need to put 
 @CrossOrigin("*");
@@ -113,3 +118,8 @@ function isEmpty(value){
 
 ################## ITARATOR in Thymeleaf ################
 https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#keeping-iteration-status
+
+
+############## THYMELEAF String Operation ##############
+
+<p class="card-text" th:text="${#strings.capitalize(#strings.toLowerCase(session.USER_SESSION_OBJ_KEY.userRole))} +' Contact Details'">Contact Details</p>

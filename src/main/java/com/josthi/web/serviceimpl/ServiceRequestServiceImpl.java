@@ -134,8 +134,16 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 	}
 
 	@Override
-	public List<ServiceRequestBean> getServiceRequestList(String userId) throws Exception {
-		return serviceRequestDao.getServiceRequestList(userId);
+	public List<ServiceRequestBean> getServiceRequestList(String userId, String role) throws Exception {
+		if(role.equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {
+			return serviceRequestDao.getServiceRequestList(userId);
+		}else if(role.equalsIgnoreCase(Constant.USER_TYPE_ADMIN)) {
+			return serviceRequestDao.getServiceRequestList(userId);
+		}else if(role.equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
+			return serviceRequestDao.getServiceRequestList("RU200921008");
+		}else {
+			throw new UserExceptionInvalidData("Looks like the User Role is invalid, please contact the Customer Service");
+		}
 	}
 
 	

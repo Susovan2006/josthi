@@ -35,7 +35,7 @@ public class AgentProfileManagementController {
 	
 	
 	
-	@GetMapping("/agentAdmin/profile")
+	@GetMapping("/admin/profile")
 	public String getAgentProfile(Model model, 
 							@RequestParam (name="status", required = false, defaultValue = "") String status,
 						    @RequestParam (name="message", required = false, defaultValue = "") String message,
@@ -56,14 +56,14 @@ public class AgentProfileManagementController {
 				 model.addAttribute("message", message);
 	   	 	}
 
-        	return MappingConstant.AGENT_PROFILE;
+        	return MappingConstant.ADMIN_PROFILE;
         	
     	}catch(UserExceptionInvalidData ex) {
 			logger.error(ex.getMessage(), ex);
 			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
 			model.addAttribute("message", ex.getMessage());			
 			model.addAttribute("agentDetailsfromDb",new UserDetailsBean());
-			return MappingConstant.AGENT_PROFILE;
+			return MappingConstant.ADMIN_PROFILE;
 		
     	}catch(UserException ex) {
 			logger.error(ex.getMessage(), ex);
@@ -72,11 +72,12 @@ public class AgentProfileManagementController {
 			return "redirect:/login?status="+status+"&message="+message;
 		
     	}catch(Exception ex) {
+    		logger.error(ex.getMessage(), ex);
 			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);
 			model.addAttribute("message", ex.getMessage());
 			model.addAttribute("agentDetailsfromDb",new UserDetailsBean());
 						
-			return MappingConstant.AGENT_PROFILE;
+			return MappingConstant.ADMIN_PROFILE;
 		}
     	
     }
@@ -85,7 +86,7 @@ public class AgentProfileManagementController {
 	
 	// 
 	
-    @RequestMapping(path ="/agentAdmin/agentProfileUpdate/{custId}", method = RequestMethod.POST)
+    @RequestMapping(path ="/admin/profileUpdate/{custId}", method = RequestMethod.POST)
 	public String agentProfileUpdate(Model model, UserDetailsBean userDetailsBean,  
 									@PathVariable String custId,
 									HttpServletRequest request) {
@@ -94,24 +95,23 @@ public class AgentProfileManagementController {
 		String message = "";
     	try {
     		
-    		UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);
-    		String sessionCustomerId = userSessionBean.getCustomerId();
     		ValidateSession.isValidSession(request);
     		ValidateSession.isValidUser(request, custId.trim());
     		
-    		logger.info("Data before Save @@@@@@@@@@"+userDetailsBean.toString());
+    		//logger.info("Data before Save @@@@@@@@@@"+userDetailsBean.toString());
+    		logger.info("Data before Save @@@@@@@@@@"+userDetailsBean.getUid());
     		
     		boolean updateStatus = userDetailService.updateAgentAdminProfile(userDetailsBean);
     		
     		actionStatus = MessageConstant.USER_SUCCESS_STATUS;
     		message = "Data Updated Successfully";
-    		return "redirect:/agentAdmin/profile?status="+actionStatus+"&message="+message;
+    		return "redirect:/admin/profile?status="+actionStatus+"&message="+message;
     		
     	}catch(UserExceptionInvalidData ex) {
 			logger.error(ex.getMessage(), ex);
 			actionStatus = MessageConstant.USER_FAILURE_STATUS;
 			message = ex.getMessage();
-			return "redirect:/agentAdmin/profile?status="+actionStatus+"&message="+message;
+			return "redirect:/admin/profile?status="+actionStatus+"&message="+message;
 		}catch(UserException ex) {
 			logger.error(ex.getMessage(), ex);
 			actionStatus = MessageConstant.USER_FAILURE_STATUS;
@@ -121,7 +121,7 @@ public class AgentProfileManagementController {
 			logger.error(ex.getMessage(), ex);
 			actionStatus = MessageConstant.USER_FAILURE_STATUS;
 			message = "System Error Occured while saving the Request. Call Customer Service.";
-			return "redirect:/agentAdmin/profile?status="+actionStatus+"&message="+message;
+			return "redirect:/admin/profile?status="+actionStatus+"&message="+message;
 		}
     	
     	

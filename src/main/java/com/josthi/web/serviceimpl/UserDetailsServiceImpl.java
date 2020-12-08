@@ -67,7 +67,7 @@ public class UserDetailsServiceImpl implements UserDetailService{
 	}
 
 	@Override
-	public boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) {
+	public boolean saveEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) throws Exception{
 		return userDetailsDao.saveEmergencyDetails(emergencyContactBean, custId);
 	}
 
@@ -102,7 +102,7 @@ public class UserDetailsServiceImpl implements UserDetailService{
 	}
 
 	@Override
-	public boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) {
+	public boolean updateEmergencyDetails(EmergencyContactBean emergencyContactBean, String custId) throws Exception{
 		return userDetailsDao.updateEmergencyDetails(emergencyContactBean, custId);
 	}
 

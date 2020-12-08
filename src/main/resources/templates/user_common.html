@@ -5,9 +5,27 @@
 
 
 	<!-- ======================================================================================= -->
-	<!-- =============================== CSS INCLUDES ========================================== -->
+	<!-- ============================ DataTable CSS INCLUDES =================================== -->
 	<!-- ======================================================================================= -->
-
+	
+	<div th:fragment="datatable-css">
+		<link rel="stylesheet"  th:href="@{/vendor/jquery-datatable/css/jquery-ui.css}">
+		<link rel="stylesheet"  th:href="@{/vendor/jquery-datatable/css/dataTables.jqueryui.min.css}">
+		<link rel="stylesheet"  th:href="@{/vendor/jquery-datatable/css/autoFill.jqueryui.min.css}">
+		
+		<!-- EXPORT BUTTON -->	
+		<link rel="stylesheet"  th:href="@{/vendor/jquery-datatable/css/buttons.dataTables.min.css}">
+		<!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>-->
+		<link rel="stylesheet"  th:href="@{/vendor/jquery-datatable/css/select.dataTables.min.css}">
+		
+		<link rel="stylesheet"  th:href="@{/vendor/jquery-datatable/css/keyTable.dataTables.min.css}">
+	</div>
+	
+	
+	
+	<!-- ======================================================================================= -->
+	<!-- ============================== General CSS INCLUDES =================================== -->
+	<!-- ======================================================================================= -->
 	<div th:fragment="includes">
 	<!-- Required Meta Tags Always Come First -->
 	  <meta charset="utf-8">
@@ -44,6 +62,34 @@
 	<!-- ======================================================================================= -->
 	<!-- ======================= JAVA SCRIPT INCLUDES ========================================== -->
 	<!-- ======================================================================================= -->
+	
+	<div th:fragment="js-datatable-includes">
+		<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>-->
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/jquery.dataTables.min.js}"></script>
+		
+		
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/jquery.dataTables.min.js}"></script>
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/dataTables.jqueryui.min.js}"></script>
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/dataTables.autoFill.min.js}"></script>
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/autoFill.jqueryui.min.js}"></script>
+		
+		<!-- Export Button -->
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/dataTables.buttons.min.js}"></script>
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/jszip.min.js}"></script>
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/pdfmake.min.js}"></script>
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/vfs_fonts.js}"></script>
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/buttons.html5.min.js}"></script>
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/buttons.print.min.js}"></script>
+		
+		<!-- XLS like Key feature -->
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/dataTables.keyTable.min.js}"></script>
+		
+		<!-- Select Row in Database -->
+		<script type="text/javascript" th:src="@{/vendor/jquery-datatable/js/dataTables.select.min.js}"></script>
+	
+	</div>
+	
 	
 	<div th:fragment="js-includes">
 		<!-- JS Global Compulsory -->
@@ -93,7 +139,7 @@
 			keepAliveUrl: 'keep-alive.html',
 			logoutUrl: '/destroy',
 			redirUrl: '/destroy',
-			warnAfter: 900000, //After 900000 ms i.e. 15 min, the Popup will come.
+			warnAfter: 30000, //After 900000 ms i.e. 15 min, the Popup will come.
 			redirAfter: 20000,
 			countdownBar: true
 		});
@@ -132,105 +178,255 @@
                     <p class="card-text font-size-1" th:text="${session.USER_SESSION_OBJ_KEY.userEmailId}">UserEmailID</p>
                   </div>
                   <!-- End Avatar -->
-
-					<ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
-                    <li class="nav-item">
-                      <a id= "userHomeLink" class="nav-link" href="/user/home">
-                        <i class="fas fa-home nav-icon"></i>
-                        Home
-                      </a>
-                    </li>
-					</ul>
 					
-                  <h6 class="text-cap small">Account</h6>
-                  <!-- List -->
-                  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
-                    <li class="nav-item">
-                      <a id= "userProfileLink" class="nav-link " href="/user/profile">
-                        <i class="fas fa-id-card nav-icon"></i>
-                        User Profile
-                      </a>
-                    </li>
-					<li class="nav-item">
-                      <a id= "userBeneficiaryDetailsLink" class="nav-link" href="/user/getBeneficiaryList">
-                        <i class="fas fa-users nav-icon"></i>
-                        Beneficiary Details
-                      </a>
-                    </li>
-					<li class="nav-item">
-                      <a id= "userEmergencyContactsLink" class="nav-link " href="/user/emergencyContacts">
-                        <i class="fas fa-heartbeat nav-icon"></i>
-                        Emergency Contacts
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a id= "userLoginAndsecurityLink" class="nav-link" href="/user/loginAndsecurity">
-                        <i class="fas fa-shield-alt nav-icon"></i>
-                        Login &amp; security
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a id= "userPreferencesLink" class="nav-link" href="/user/preferences">
-                        <i class="fas fa-sliders-h nav-icon"></i>
-                        Preferences
-                      </a>
-                    </li>
-                  </ul>
-                  <!-- End List -->
-
-				  <h6 class="text-cap small">Plan and Subscription</h6>
-				  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2">
-                    <li class="nav-item">
-                      <a id= "userSubscribePlanLink" class="nav-link" href="/user/subscribePlan">
-                        <i class="fas fa-user-plus nav-icon"></i>
-                        Subscribe a Plan
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a id= "userPurchaseHistoryLink" class="nav-link" href="/user/purchaseHistory">
-                        <i class="fas fa-history nav-icon"></i>
-                        Purchase History
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a id= "userRequestServiceLink" class="nav-link" href="/user/requestService">
-                        <i class="fas fa-paper-plane nav-icon"></i>
-                        Request a Service
-                        <span class="badge badge-soft-navy badge-pill nav-link-badge">new</span>
-                      </a>
-                    </li>
-                  </ul>
-				  <BR>
-				  <h6 class="text-cap small">Others</h6>
-				  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2">
-                    <li class="nav-item">
-                      <a id="userReportsLink" class="nav-link" href="/user/reports">
-                        <i class="fas fa-list-alt nav-icon"></i>
-                        Reports
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a id="userDocumentsLink" class="nav-link" href="/user/documents">
-                        <i class="fas fa-folder nav-icon"></i>
-                        Documents
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a id="reminderLink" class="nav-link" href="/user/ticketHistory">
-                        <i class="fas fa-bell nav-icon"></i>
-                        Reminder
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a id="userFeedbackLink" class="nav-link" href="/user/feedback">
-                        <i class="fas fa-comments nav-icon"></i>
-                        Feedback
-                        <span class="badge badge-soft-navy badge-pill nav-link-badge">new</span>
-                      </a>
-                    </li>
-                  </ul>
-
-
+				  <!-- ################################################################## -->
+				  <!-- ################## U S E R   N A V I G A T I O N ################# -->
+				  <!-- ################################################################## -->
+				  <div th:if="${session.USER_SESSION_OBJ_KEY.userRole == 'USER'} ">	
+						<ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
+	                    <li class="nav-item">
+	                      <a id= "userHomeLink" class="nav-link" href="/user/home">
+	                        <i class="fas fa-home nav-icon"></i>
+	                        Home
+	                      </a>
+	                    </li>
+						</ul>
+						
+	                  <h6 class="text-cap small">Account</h6>
+	                  <!-- List -->
+	                  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
+	                    <li class="nav-item">
+	                      <a id= "userProfileLink" class="nav-link " href="/user/profile">
+	                        <i class="fa fa-user-circle nav-icon"></i>
+	                        User Profile
+	                      </a>
+	                    </li>
+						<li class="nav-item">
+	                      <a id= "userBeneficiaryDetailsLink" class="nav-link" href="/user/getBeneficiaryList">
+	                        <i class="fas fa-users nav-icon"></i>
+	                        Beneficiary Details
+	                      </a>
+	                    </li>
+						<li class="nav-item">
+	                      <a id= "userEmergencyContactsLink" class="nav-link " href="/user/emergencyContacts">
+	                        <i class="fas fa-heartbeat nav-icon"></i>
+	                        Emergency Contacts
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "userLoginAndsecurityLink" class="nav-link" href="/user/loginAndsecurity">
+	                        <i class="fas fa-shield-alt nav-icon"></i>
+	                        Login &amp; security
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "userPreferencesLink" class="nav-link" href="/user/preferences">
+	                        <i class="fas fa-sliders-h nav-icon"></i>
+	                        Preferences
+	                      </a>
+	                    </li>
+	                  </ul>
+	                  <!-- End List -->
+	
+					  <h6 class="text-cap small">Plan and Subscription</h6>
+					  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2">
+	                    <li class="nav-item">
+	                      <a id= "userSubscribePlanLink" class="nav-link" href="/user/subscribePlan">
+	                        <i class="fas fa-user-plus nav-icon"></i>
+	                        Subscribe a Plan
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "userPurchaseHistoryLink" class="nav-link" href="/user/purchaseHistory">
+	                        <i class="fas fa-history nav-icon"></i>
+	                        Purchase History
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "userRequestServiceLink" class="nav-link" href="/user/requestService">
+	                        <i class="fas fa-paper-plane nav-icon"></i>
+	                        Request a Service
+	                        <span class="badge badge-soft-navy badge-pill nav-link-badge">new</span>
+	                      </a>
+	                    </li>
+	                  </ul>
+					  <BR>
+					  <h6 class="text-cap small">Others</h6>
+					  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2">
+	                    <li class="nav-item">
+	                      <a id="userReportsLink" class="nav-link" href="/user/reports">
+	                        <i class="fas fa-list-alt nav-icon"></i>
+	                        Reports
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id="userDocumentsLink" class="nav-link" href="/user/documents">
+	                        <i class="fas fa-folder nav-icon"></i>
+	                        Documents
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id="reminderLink" class="nav-link" href="/user/ticketHistory">
+	                        <i class="fas fa-bell nav-icon"></i>
+	                        Reminder
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id="userFeedbackLink" class="nav-link" href="/user/feedback">
+	                        <i class="fas fa-comments nav-icon"></i>
+	                        Feedback
+	                        <span class="badge badge-soft-navy badge-pill nav-link-badge">new</span>
+	                      </a>
+	                    </li>
+	                  </ul>
+				</div> <!-- end of User Selection -->
+				
+				  <!-- ################################################################################## -->
+				  <!-- ################# A G E N T  / A D M I N      N A V I G A T I O N ################ -->
+				  <!-- ################################################################################## -->
+				  <div th:if="${session.USER_SESSION_OBJ_KEY.userRole == 'AGENT' OR session.USER_SESSION_OBJ_KEY.userRole == 'ADMIN'} ">	
+				  	<ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
+	                    <li class="nav-item">
+	                      <a id= "userHomeLink" class="nav-link" href="/admin/home">
+	                        <i class="fas fa-home nav-icon"></i>
+	                        Home
+	                      </a>
+	                    </li>
+					</ul>
+						
+	                  <h6 class="text-cap small" th:text="${(session.USER_SESSION_OBJ_KEY.userRole)} +' ACCOUNT'">Account</h6>
+	                  <!-- List -->
+	                  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
+	                    <li class="nav-item">
+	                      <a id= "userProfileLink" class="nav-link " href="/admin/profile">                      		
+	                        <i class="fa fa-user-circle nav-icon"></i>
+	                        Manage Profile
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "userLoginAndsecurityLink" class="nav-link" href="/user/loginAndsecurity">
+	                        <i class="fas fa-key nav-icon"></i>
+	                        Login &amp; security
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "addSubAgentLink" class="nav-link" href="/admin/addAgents">
+	                        <i class="fas fa-user-plus nav-icon"></i>
+	                        Add Sub Agents
+	                      </a>
+	                    </li>
+	                  </ul>
+	                  <!-- End List -->
+	                  
+	                  <!-- ============ AGENT Section ====================== -->
+	                  
+	                  <h6 class="text-cap small" th:text="${(session.USER_SESSION_OBJ_KEY.userRole)} +' Action'">Action</h6>	                  	                  <!-- List -->
+	                  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
+	                    <li class="nav-item">
+	                      <a id="manageServiceRequestLink" class="nav-link " href="/admin/viewTicketRequest">                      		
+	                        <i class="fas fa-sitemap nav-icon"></i>
+	                        Manage Service Requests
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "manageCustomerLink" class="nav-link" href="/user/xxx">
+	                        <i class="fas fa-address-book nav-icon"></i>
+	                        Manage Customer
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "manageServiceContactLink" class="nav-link" href="/admin/xxx">
+	                        <i class="fas fa-hashtag nav-icon"></i>
+	                        Manage Service Contact
+	                      </a>
+	                    </li>
+	                  </ul>
+	                  <!-- End List -->
+	                  
+	                  <!-- ============ Reporting ====================== -->
+	                  
+	                  <h6 class="text-cap small" th:text="${(session.USER_SESSION_OBJ_KEY.userRole)} +' Report'">Report</h6>	                  	                  <!-- List -->
+	                  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
+	                    <li class="nav-item">
+	                      <a id= "newServiceRequestReportLink" class="nav-link " href="/admin/xxx">                      		
+	                        <i class="fas fa-wrench nav-icon"></i>
+	                        	New Service Requests
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "newCustomerReportLink" class="nav-link" href="/user/xxx">
+	                        <i class="fas fa-users nav-icon"></i>
+	                           New Customer Report
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "customerGrowthReportLink" class="nav-link" href="/user/xxx">
+	                        <i class="fas fa-chart-line nav-icon"></i>
+	                           Customer Growth Report
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "eventAlertReportLink" class="nav-link" href="/admin/xxx">
+	                        <i class="fas fa-birthday-cake nav-icon"></i>
+	                           Event Alert Report
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "planExpiringReportLink" class="nav-link" href="/admin/xxx">
+	                        <i class="fas fa-flag nav-icon"></i>
+	                           Plan Expiring Report
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "alertNotificationReportLink" class="nav-link" href="/admin/xxx">
+	                        <i class="fas fa-bell nav-icon"></i>
+	                           Alert Notification
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "facebookReportLink" class="nav-link" href="/admin/xxx">
+	                        <i class="far fa-thumbs-up nav-icon"></i>
+	                           Feedback Report
+	                      </a>
+	                    </li>
+	                  </ul>
+	                  <!-- End List -->
+	                  
+	                  <!-- ============ Financial Section ====================== -->
+	                  
+	                  <h6 class="text-cap small" th:text="${(session.USER_SESSION_OBJ_KEY.userRole)} +' Financial'">Financial</h6>	                  	                  <!-- List -->
+	                  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
+	                    <li class="nav-item">
+	                      <a id= "customerPayDetailsLink" class="nav-link " href="/admin/xxx">                      		
+	                        <i class="fas fa-donate nav-icon"></i>
+	                        Customer Payment Details
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "myInvoiceLink" class="nav-link" href="/user/xxx">
+	                        <i class="fas fa-file nav-icon"></i>
+	                        My Invoice
+	                      </a>
+	                    </li>
+	                    <li class="nav-item">
+	                      <a id= "myPaymentLink" class="nav-link" href="/admin/xxx">
+	                        <i class="far fa-credit-card nav-icon"></i>
+	                        My Payments
+	                      </a>
+	                    </li>
+	                  </ul>
+	                  <!-- End List -->
+	                  
+	                  
+				  </div>
+				  <!-- ############################################################################## -->
+				  <!-- ################## O T H E R   U S E R   N A V I G A T I O N ################# -->
+				  <!-- ############################################################################## -->
+				
+				  <!-- End User Selection -->
+                  
+                  
+                  
                   <div class="d-lg-none">
                     <div class="dropdown-divider"></div>
 
@@ -254,116 +450,6 @@
 	</div>
 	
 	
-	
-	<!-- ========================= U S E R    N A V I G A T I O N ===================================== -->
-<!-- 	<div th:fragment = "user-navigation">
-		<ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
-                    <li class="nav-item">
-                      <a class="nav-link" href="index.html">
-                        <i class="fas fa-home nav-icon"></i>
-                        Home
-                      </a>
-                    </li>
-					</ul>
-					
-                  <h6 class="text-cap small">Account</h6>
-                  List
-                  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2 mb-4">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="index.html">
-                        <i class="fas fa-id-card nav-icon"></i>
-                        Personal info
-                      </a>
-                    </li>
-					<li class="nav-item">
-                      <a class="nav-link " href="index.html">
-                        <i class="fas fa-users nav-icon"></i>
-                        Beneficiary Details
-                      </a>
-                    </li>
-					<li class="nav-item">
-                      <a class="nav-link " href="index.html">
-                        <i class="fas fa-heartbeat nav-icon"></i>
-                        Emergency Contacts
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="login-and-security.html">
-                        <i class="fas fa-shield-alt nav-icon"></i>
-                        Login &amp; security
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="preferences.html">
-                        <i class="fas fa-sliders-h nav-icon"></i>
-                        Preferences
-                      </a>
-                    </li>
-                  </ul>
-                  End List
-
-				  <h6 class="text-cap small">Plan and Subscription</h6>
-				  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2">
-                    <li class="nav-item">
-                      <a class="nav-link" href="billing.html">
-                        <i class="fas fa-user-plus nav-icon"></i>
-                        Subscribe a Plan
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="address.html">
-                        <i class="fas fa-history nav-icon"></i>
-                        Purchase History
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="teams.html">
-                        <i class="fas fa-paper-plane nav-icon"></i>
-                        Request a Service
-                        <span class="badge badge-soft-navy badge-pill nav-link-badge">new</span>
-                      </a>
-                    </li>
-                  </ul>
-				  <BR>
-				  <h6 class="text-cap small">Others</h6>
-				  <ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2">
-                    <li class="nav-item">
-                      <a class="nav-link" href="billing.html">
-                        <i class="fas fa-list-alt nav-icon"></i>
-                        Reports
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="address.html">
-                        <i class="fas fa-folder nav-icon"></i>
-                        Upload Documents
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="teams.html">
-                        <i class="fas fa-comments nav-icon"></i>
-                        Feedback
-                        <span class="badge badge-soft-navy badge-pill nav-link-badge">new</span>
-                      </a>
-                    </li>
-                  </ul>
-		
-
-                  <div class="d-lg-none">
-                    <div class="dropdown-divider"></div>
-
-                    List
-					<ul class="nav nav-sub nav-sm nav-tabs nav-list-y-2">
-                      <li class="nav-item">
-                        <a class="nav-link text-primary" href="/">
-                          <i class="fas fa-sign-out-alt nav-icon"></i>
-                          Log out
-                        </a>
-                      </li>
-                    </ul>
-                    End List
-                  </div>
-		</div> -->
 	
 		<!-- ========================= U S E R    N A V I G A T I O N ===================================== -->
 	<div th:fragment = "user-logout">

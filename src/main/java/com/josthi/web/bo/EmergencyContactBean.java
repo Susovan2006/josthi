@@ -7,6 +7,7 @@ public class EmergencyContactBean {
 	private String primaryUid ;
 	private String benId ;
 	private String emergencyContactName ;
+	//private String emergencyContactNameInitials ;
 	private String emergencyContactNumber ;
 	private String emergencyContactStayLocation ;
 	private String relation ;
@@ -42,6 +43,8 @@ public class EmergencyContactBean {
 	public void setEmergencyContactName(String emergencyContactName){
 		this.emergencyContactName = emergencyContactName ;
 	}
+	
+	
 	public String getEmergencyContactNumber(){
 		return emergencyContactNumber ;
 	}

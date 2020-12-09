@@ -234,4 +234,10 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 		return userDetailsDao.getBloodGroup(bloodGroup);
 	}
 
+
+	@Override
+	public BeneficiaryDetailBean getBeneficiaryDetailToView(String userID) throws Exception {
+		return userDetailsDao.getBeneficiaryDetailToView(userID);
+	}
+
 }

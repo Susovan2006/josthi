@@ -17,16 +17,21 @@ import com.josthi.web.po.UserDetailsPO ;
 import com.josthi.web.utils.Utils;
 import com.josthi.web.dao.UserDetailsDao ;
 import com.josthi.web.dao.rowmapper.AgentAdminProfileDetailRowMapperOnCustID;
+import com.josthi.web.dao.rowmapper.AllUserDetailsToDisplayRowMaper;
 import com.josthi.web.dao.rowmapper.BeneficiaryDetailRowMapper;
 import com.josthi.web.dao.rowmapper.DropDownRowmapper;
 import com.josthi.web.dao.rowmapper.EmergencyContactDetailsRowMapper;
+import com.josthi.web.dao.rowmapper.ServiceRequestTableRowMapper;
 import com.josthi.web.dao.rowmapper.UserProfileDetailRowMapperOnCustID;
 import com.josthi.web.dao.rowmapper.ValidateAuthenticityRowMaper;
+import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.EmergencyContactBean;
+import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserDetailsBean ;
+import com.josthi.web.bo.UserDetailsBeanForProfile;
 import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.constants.Constant;
 
@@ -696,6 +701,70 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 				logger.error(ex.getMessage());
 				throw ex;
 				
+			}
+	}
+	
+	
+	
+	
+	public static final String SELECT_ALL_USER_DETAILS_FOR_PROFILE_ON_CUST_ID = "Select A.CUSTOMER_ID, "
+			+ " A.USERID_EMAIL, A.REGISTRATION_DATE_TIME, A.STATUS, A.LOGIN_STATUS, A.ROLE, A.VERIFIED_USER, " 
+			+ " B.FIRST_NAME, B.LAST_NAME, B.CITY_TOWN, B.STATE, B.COUNTRY, B.ZIP_PIN " 
+			+ " from user_auth_table A, user_detail B where A.CUSTOMER_ID = B.UID and B.UID = ?";
+	@Override
+	public UserDetailsBeanForProfile getProfileDisplayDetails(String userID) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<UserDetailsBeanForProfile> userDetailsBeanForProfileList = getJdbcTemplate().query(
+												 SELECT_ALL_USER_DETAILS_FOR_PROFILE_ON_CUST_ID,
+												 new Object[] {userID},
+												 new AllUserDetailsToDisplayRowMaper());
+				//return ;
+				
+				if ( userDetailsBeanForProfileList.isEmpty()){
+					logger.info("User details not Found");
+					return null;
+				}else if ( userDetailsBeanForProfileList.size() == 1 ) { // list contains exactly 1 element
+					return userDetailsBeanForProfileList.get(0);
+				}else{  // list contains more than 1 elements
+					throw new UserExceptionInvalidData("Invalid Data in the Database...");
+				}
+				
+				
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	
+	
+	public static final String SELECT_BENEFICIARY_DETAIL_TO_VIEW = "SELECT A.UID, A.FIRST_NAME, A.MIDDLE_NAME, A.LAST_NAME, A.GENDER, A.USER_ADDRESS_FIRST_LINE, "
+			+ "A.USER_ADDRESS_SECOND_LINE, A.ADDITIONAL_ADDRESS_LINE, A.NEAREST_LAND_MARK, A.CITY_TOWN, "
+			+ "A.STATE, A.COUNTY_DISTRICT, A.COUNTRY, A.ZIP_PIN, A.MOBILE_NO1, A.WHATSAPP_NO, A.SECONDARY_EMAIL, A.USER_STATUS, "
+			+ "B.TID, B.CUSTOMER_ID, B.BENEFICIARY_ID, B.RELATION_WITH_CUSTOMER, B.DATE_OF_BIRTH, B.AGE, B.HEIGHT, B.WEIGHT, B.BLOOD_GROUP, "
+			+ "B.PREFFERED_HOSPITAL, B.MEDICLAME_NAME, B.INSURANCE_NOTE, B.HEALTH_CONDITION, B.MEDICAL_CHALLENGES "
+			+ "FROM user_detail A, beneficiary_detail B where A.UID =  B.BENEFICIARY_ID and B.BENEFICIARY_ID = ?";
+	@Override
+	public BeneficiaryDetailBean getBeneficiaryDetailToView(String beneficiaryID) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<BeneficiaryDetailBean> beneficiaryDetailList = getJdbcTemplate().query(
+												 SELECT_BENEFICIARY_DETAIL_TO_VIEW,
+												 new Object[] {beneficiaryID},
+												 new BeneficiaryDetailRowMapper());
+				if ( beneficiaryDetailList.isEmpty() ){
+					return null;
+				}else if ( beneficiaryDetailList.size() == 1 ) { // list contains exactly 1 element
+					return beneficiaryDetailList.get(0);
+				}else{  // list contains more than 1 elements
+					//your wish, you can either throw the exception or return 1st element.   
+					throw new Exception("Invalid Data in the Database...");
+				}
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
 			}
 	}
 	

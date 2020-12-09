@@ -123,3 +123,14 @@ https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#keeping-iteratio
 ############## THYMELEAF String Operation ##############
 
 <p class="card-text" th:text="${#strings.capitalize(#strings.toLowerCase(session.USER_SESSION_OBJ_KEY.userRole))} +' Contact Details'">Contact Details</p>
+
+
+################### CARD BODY #####################
+
+<div class="card-body">
+        <ul class="list-checked list-checked-primary list-unstyled-py-2">
+          <li class="list-checked-item">100 GB storage</li>
+          <li class="list-checked-item">2 sources</li>
+          <li class="list-checked-item">100 integrations</li>
+        </ul>
+      </div>

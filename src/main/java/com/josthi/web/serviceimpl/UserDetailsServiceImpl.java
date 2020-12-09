@@ -8,6 +8,7 @@ import com.josthi.web.service.UserDetailService ;
 import com.josthi.web.dao.UserDetailsDao ;
 import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserDetailsBean ;
+import com.josthi.web.bo.UserDetailsBeanForProfile;
 
 @Service("userDetailService")
 public class UserDetailsServiceImpl implements UserDetailService{
@@ -126,6 +127,11 @@ public class UserDetailsServiceImpl implements UserDetailService{
 	@Override
 	public UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception {
 		return userDetailsDao.getAgentAdminProfileDetails(customerId);
+	}
+
+	@Override
+	public UserDetailsBeanForProfile getProfileDisplayDetails(String userID) throws Exception {
+		return userDetailsDao.getProfileDisplayDetails(userID);
 	}
 
 	

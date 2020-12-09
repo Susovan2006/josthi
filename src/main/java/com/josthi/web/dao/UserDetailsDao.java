@@ -5,6 +5,7 @@ import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserDetailsBean ;
+import com.josthi.web.bo.UserDetailsBeanForProfile;
 import com.josthi.web.bo.UserRegistrationBean;
 
 public interface UserDetailsDao {
@@ -42,4 +43,6 @@ public interface UserDetailsDao {
 	List<DropDownBean> getBloodGroup(String bloodGroup);
 	boolean updateAgentAdminProfile(UserDetailsBean userDetailsBean) throws Exception;
 	UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception;
+	UserDetailsBeanForProfile getProfileDisplayDetails(String userID) throws Exception;
+	BeneficiaryDetailBean getBeneficiaryDetailToView(String userID) throws Exception;
 }

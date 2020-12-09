@@ -3,6 +3,7 @@ import java.util.List;
 
 import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserDetailsBean ;
+import com.josthi.web.bo.UserDetailsBeanForProfile;
 
 
 public interface UserDetailService {
@@ -28,5 +29,7 @@ public interface UserDetailService {
 	boolean updateAgentAdminProfile(UserDetailsBean userDetailsBean) throws Exception;
 
 	UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception;
+
+	UserDetailsBeanForProfile getProfileDisplayDetails(String userID) throws Exception;
 	
 }

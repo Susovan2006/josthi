@@ -124,45 +124,7 @@ public class UserDetailsController{
 	}
     
 
-    /* ============================================================================================================================ */
-    /* ============================== U S E R    P R O F I L E   F O R     A G E N T   A N D   A D M I N ========================== */
-    /* ============================================================================================================================ */
     
-    @GetMapping("/common/viewProfileUser/{userID}")
-	public String viewProfile(Model model, @PathVariable(name = "userID") String userID,
-												UserDetailsBean userDetailsBean,
-												HttpServletRequest request) {
-		String actionStatus = "";
-		String message = "";
-    	try {
-    		
-    		ValidateSession.isValidSession(request);
-    		
-    		UserDetailsBean userDetailsfromDb = userDetailService.getUserDetails(userID);
-    		UserAuthBo userAuthBo = userAuthService.getProfileDisplayDetails(userID);
-    		model.addAttribute("userDetailsfromDb",userDetailsfromDb);
-    		model.addAttribute("userType","Josthi User");
-    		model.addAttribute("userAuthBo",userAuthBo);
-    		
-    		return "/common/user_profile_view_in_frame";
-    	}catch(UserExceptionInvalidData ex) {
-			logger.error(ex.getMessage(), ex);
-			actionStatus = MessageConstant.USER_FAILURE_STATUS;
-			message = ex.getMessage();
-			return "/common/user_profile_view_in_frame?status="+actionStatus+"&message="+message;
-		}catch(UserException ex) {
-			logger.error(ex.getMessage(), ex);
-			actionStatus = MessageConstant.USER_FAILURE_STATUS;
-			message = ex.getMessage();
-			return "redirect:/login?status="+actionStatus+"&message="+message;
-		}catch(Exception ex) {
-			logger.error("userID :"+userID, ex);
-			message = "Error Occured while Fetching the User details.";
-			return "/common/user_profile_view_in_frame?status="+MessageConstant.USER_FAILURE_STATUS+"&message="+message;
-		}
-    	
-			
-	}
     
     
     

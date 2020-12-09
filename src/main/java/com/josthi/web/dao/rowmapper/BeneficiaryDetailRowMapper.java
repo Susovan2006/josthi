@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.bo.UserDetailsBean;
 import com.josthi.web.po.UserDetailsPO ;
+import com.josthi.web.utils.Utils;
 public class BeneficiaryDetailRowMapper implements RowMapper<BeneficiaryDetailBean> {
 
 @Override
@@ -39,6 +40,7 @@ public BeneficiaryDetailBean mapRow(ResultSet resultSet,int arg1)throws SQLExcep
 		beneficiaryDetailBean.setBeneficiaryID(resultSet.getString("BENEFICIARY_ID"));
 		beneficiaryDetailBean.setRelationWithCustomer(resultSet.getString("RELATION_WITH_CUSTOMER"));
 		beneficiaryDetailBean.setDateOfBirthInTimeStamp(resultSet.getTimestamp("DATE_OF_BIRTH"));
+		beneficiaryDetailBean.setDateOfBirth(Utils.timestampToFormattedString(resultSet.getTimestamp("DATE_OF_BIRTH"), "d MMM yyyy"));
 		beneficiaryDetailBean.setAge(resultSet.getString("AGE"));
 		beneficiaryDetailBean.setHeight(resultSet.getString("HEIGHT"));
 		beneficiaryDetailBean.setWeight(resultSet.getString("WEIGHT"));

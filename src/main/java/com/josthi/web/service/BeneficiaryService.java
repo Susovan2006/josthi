@@ -27,4 +27,6 @@ public interface BeneficiaryService {
 
 	List<DropDownBean> getBloodGroup(String bloodGroup);
 
+	BeneficiaryDetailBean getBeneficiaryDetailToView(String userID) throws Exception;
+
 }

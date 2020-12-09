@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <!-- Title -->
-  <title>View Profile | Josthi.com</title>
+  <title>View Beneficiary Profile | Josthi.com</title>
 
   <!--  ======================== CSS INCLUDES ===================== -->	
   <div th:replace="user_common :: includes"></div>
@@ -144,12 +144,12 @@
 					<div class="text-center mb-5">
 					  <!-- Avatar -->
 					  <div class="avatar avatar-xxl avatar-circle avatar-border-lg profile-cover-avatar">
-						<img class="avatar-img" th:src="@{/getProfileImage/}+ ${userDetailsfromDb.uid}" alt="Image Description">
+						<img class="avatar-img" th:src="@{/getProfileImage/}+ ${userDetailsBeanForProfile.customerId}" alt="Image Description">
 						<span class="avatar-status avatar-status-success"></span>
 					  </div>
 					  <!-- End Avatar -->
 
-					  <h1 class="page-title" th:text="${userDetailsfromDb.firstName}+' '+${userDetailsfromDb.lastName}">name<i class="fa fa-certificate " style="font-size:24px;color:blue" data-toggle="tooltip" data-placement="top" title="Certified User"></i></h1>
+					  <h1 class="page-title" th:text="${userDetailsBeanForProfile.firstName}+' '+${userDetailsBeanForProfile.lastName}">name<i class="fa fa-certificate " style="font-size:24px;color:blue" data-toggle="tooltip" data-placement="top" title="Certified User"></i></h1>
 
 					  <!-- List -->
 					  <ul class="list-inline list-inline-m-1">
@@ -160,13 +160,13 @@
 
 						<li class="list-inline-item">
 						  <i class="fa fa-map-pin mr-1"></i>
-						  <a href="#" th:text="${userDetailsfromDb.cityTown}+','">city,</a>
-						  <a href="#" th:text="${userDetailsfromDb.country}">Country</a>
+						  <a href="#" th:text="${userDetailsBeanForProfile.cityTown}+','">city,</a>
+						  <a href="#" th:text="${userDetailsBeanForProfile.country}">Country</a>
 						</li>
 
 						<li class="list-inline-item">
 						  <i class="fa fa-calendar mr-1"></i>
-						  <span th:text="'Joined ' + ${userAuthBo.registrationDateTimeStr}"> March 2017</span>
+						  <span th:text="'Joined ' + ${userDetailsBeanForProfile.registrationDateTimeStr}"> March 2017</span>
 						</li>
 					  </ul>
 					  <!-- End List -->
@@ -189,16 +189,16 @@
 
 					  <ul class="nav nav-tabs align-items-center">
 						<li class="nav-item">
-						  <a class="nav-link active" th:href="@{'/common/viewProfileUser/' + ${userDetailsfromDb.uid}}">Profile</a>
+						  <a class="nav-link active" th:href="@{'/common/viewProfileUser/' + ${userDetailsBeanForProfile.customerId}}">Profile</a>
 						</li>
 						<li class="nav-item">
-						  <a class="nav-link " th:href="@{'/common/viewBeneficiaryList/' + ${userDetailsfromDb.uid}}">Beneficiary<span class="badge badge-soft-dark rounded-circle ml-1">2</span></a>
+						  <a class="nav-link " th:href="@{'/common/viewBeneficiaryList/' + ${userDetailsBeanForProfile.customerId}}">Beneficiary<span class="badge badge-soft-dark rounded-circle ml-1">2</span></a>
 						</li>
 						<li class="nav-item">
-						  <a class="nav-link " th:href="@{'/common/viewPlanDetails/' + ${userDetailsfromDb.uid}}">Plan Details</a>
+						  <a class="nav-link " th:href="@{'/common/viewPlanDetails/' + ${userDetailsBeanForProfile.customerId}}">Plan Details</a>
 						</li>
 						<li class="nav-item">
-						  <a class="nav-link " th:href="@{'/common/viewEmergencyContact/' + ${userDetailsfromDb.uid}}">Emergency Contact</a>
+						  <a class="nav-link " th:href="@{'/common/viewEmergencyContact/' + ${userDetailsBeanForProfile.customerId}}">Emergency Contact</a>
 						</li>
 
 					  </ul>
@@ -209,16 +209,18 @@
 					  <div class="col-lg-4">
 						<!-- Card -->
 						<div class="card card-body mb-3 mb-lg-5">
-						  <h5>Profile Completion</h5>
-
-						  <!-- Progress -->
-						  <div class="d-flex justify-content-between align-items-center">
-							<div class="progress flex-grow-1">
-							  <div class="progress-bar bg-primary" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
-							</div>
-							<span class="ml-4">82%</span>
-						  </div>
-						  <!-- End Progress -->
+						  <h5>Primary Host</h5>
+						  
+						  <a class="d-flex align-items-center" th:href="@{'/common/viewProfileUser/' + ${beneficiaryDetailBean.customerID}}">
+				              <div class="avatar avatar-circle">
+				                  <img class="avatar-img" th:src="@{/getProfileImage/}+ ${beneficiaryDetailBean.customerID}" alt="Image Description">
+				              </div>
+				              <div class="ml-3">
+				                  <span class="d-block h5 text-hover-primary mb-0" th:text="${hostUserFirstAndLastName}">Susovan</span>
+				                        		
+				                  <span class="d-block font-size-sm text-body" th:text="${beneficiaryDetailBean.customerID}">ID</span>
+				              </div>
+				          </a>
 						</div>
 						<!-- End Card -->
 
@@ -236,7 +238,7 @@
 							 }'>
 						  <!-- Header -->
 						  <div class="card-header">
-							<h5 class="card-header-title">Profile</h5>
+							<h5 class="card-header-title">Beneficiary Profile</h5>
 						  </div>
 						  <!-- End Header -->
 
@@ -249,15 +251,19 @@
 
 							  <li>
 								<i class="fa fa-user nav-icon"></i>
-								<span th:text="${userDetailsfromDb.firstName}+' '+${userDetailsfromDb.lastName}"></span>
+								<span th:text="${beneficiaryDetailBean.firstName}+' '+${beneficiaryDetailBean.lastName}"></span>
 							  </li>
 							  <li>
 								<i class="fa fa-tag nav-icon"></i>
-								<span th:text="${userDetailsfromDb.uid}"></span>
+								<span th:text="${beneficiaryDetailBean.uid}"></span>
 							  </li>
 							  <li>
 								<i class="fa fa-hashtag nav-icon"></i>
-								Registered User
+								Josthi Beneficiary
+							  </li>
+							  <li>
+								<i class="fas fa-mars-double nav-icon"></i>
+								<span th:text="${beneficiaryDetailBean.gender}"></span>
 							  </li>
 
 							  <li class="pt-2 pb-0">
@@ -266,35 +272,19 @@
 
 							  <li>
 								<i class="fa fa-at nav-icon" data-toggle="tooltip" data-placement="top" title="Primary Email ID."></i>
-								<span th:text="${userAuthBo.useridEmail}"></span>
+								<span th:text="${userDetailsBeanForProfile.useridEmail}"></span>
 							  </li>
 							  <li>
 								<i class="fa fa-at nav-icon" data-toggle="tooltip" data-placement="top" title="Secondary Email ID."></i>
-								<span th:text="${userDetailsfromDb.secondaryEmail}"></span>
+								<span th:text="${beneficiaryDetailBean.secondaryEmail}"></span>
 							  </li>
 							  <li>
 								<i class="fas fa-mobile nav-icon" data-toggle="tooltip" data-placement="top" title="Primary Mobile No."></i>
-								<span th:text="${userDetailsfromDb.mobileNo1}"></span>
-							  </li>
-							  <li>
-								<i class="fas fa-mobile nav-icon" data-toggle="tooltip" data-placement="top" title="Secondary Mobile No."></i>
-								<span th:text="${userDetailsfromDb.mobileNo2}"></span>
-							  </li>
-							  <li>
-								<i class="fas fa-phone nav-icon" data-toggle="tooltip" data-placement="top" title="Land line No."></i>
-								<span th:text="${userDetailsfromDb.landLineNo}"></span>
-							  </li>
-							  <li>
-								<i class="fas fa-fax nav-icon" data-toggle="tooltip" data-placement="top" title="Fax No."></i>
-								<span th:text="${userDetailsfromDb.faxNo}"></span>
-							  </li>	
-							  <li>
-								<i class="fas fa-building nav-icon" data-toggle="tooltip" data-placement="top" title="Office Ph No."></i>
-								<span th:text="${userDetailsfromDb.officePhNo}"></span>
-							  </li>						  
+								<span th:text="${beneficiaryDetailBean.mobileNo1}"></span>
+							  </li>					  
 							  <li>
 								<i class="fab fa-whatsapp nav-icon" data-toggle="tooltip" data-placement="top" title="Whatsapp No."></i>
-								<span th:text="${userDetailsfromDb.whatsappNo}"></span>
+								<span th:text="${beneficiaryDetailBean.whatsappNo}"></span>
 							  </li>
 							  
 							</ul>
@@ -309,79 +299,23 @@
 						<div class="card mb-3 mb-lg-5">
 						  <!-- Header -->
 						  <div class="card-header">
-							<h5 class="card-header-title">User Activity</h5>
+							<h5 class="card-header-title">User Health Details</h5>
 						  </div>
 						  <!-- End Header -->
 
 						  <!-- Body -->
 						  <div class="card-body card-body-height" style="height: 30rem;">
-							<!-- Step -->
-							<ul class="step step-icon-xs">
-							  <!-- Step Item -->
-							  <li class="step-item">
-								<div class="step-content-wrapper">
-								  <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
-
-								  <div class="step-content">
-									<h5 class="mb-1">
-									  <a class="text-dark" href="#">Task report - uploaded weekly reports</a>
-									</h5>
-
-									<p class="font-size-sm mb-1">Added 3 files to task <a class="text-uppercase" href="#"><i class="tio-folder-bookmarked"></i> Fd-7</a></p>
-
-									<small class="text-muted text-uppercase">Now</small>
-								  </div>
-								</div>
-							  </li>
-							  <!-- End Step Item -->
-
-							  <!-- Step Item -->
-							  <li class="step-item">
-								<div class="step-content-wrapper">
-								  <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
-
-								  <div class="step-content">
-									<h5 class="mb-1">
-									  <a class="text-dark" href="#">Project status updated</a>
-									</h5>
-
-									<p class="font-size-sm mb-1">Marked <a class="text-uppercase" href="#"><i class="tio-folder-bookmarked"></i> Fr-6</a> as <span class="badge badge-soft-success badge-pill"><span class="legend-indicator bg-success"></span>"Completed"</span></p>
-
-									<small class="text-muted text-uppercase">Today</small>
-								  </div>
-								</div>
-							  </li>
-							  <!-- End Step Item -->
-
-							  <!-- Step Item -->
-							  <li class="step-item">
-								<div class="step-content-wrapper">
-								  <span class="step-icon step-icon-pseudo step-icon-soft-dark"></span>
-
-								  <div class="step-content">
-									<h5 class="mb-1">
-									  <a class="text-dark" href="#">New card styles added</a>
-									</h5>
-
-									<p class="font-size-sm mb-1">Added 5 card to <a href="#">Payments</a></p>
-
-									
-
-									<small class="text-muted text-uppercase">May 12</small>
-								  </div>
-								</div>
-							  </li>
-							  <!-- End Step Item -->
-							  
-							</ul>
-							<!-- End Step -->
+							
+							
+							
+							
 						  </div>
 						  <!-- End Body -->
 
 						  <!-- Footer -->
 						  <!-- Footer -->
 							<a class="card-footer text-center" href="user-profile-connections.html">
-								View all user updates <i class="tio-chevron-right"></i>
+								More <i class="tio-chevron-right"></i>
 							</a>
 							<!-- End Footer -->
 						  <!-- End Footer -->
@@ -402,12 +336,13 @@
 							  <!-- Body -->
 							  <div class="card-body">
 							  	
-								<span class="wrap-text" th:utext="${userDetailsfromDb.userAddressFirstLine} +
-													  					' &#10 '+ ${userDetailsfromDb.userAddressSecondLine} +
-													  					' &#10 ' + ${userDetailsfromDb.cityTown} + ' , ' +
-													  					${userDetailsfromDb.countyDistrict} + ' , ' +
-													  					' &#10 ' + ${userDetailsfromDb.state} + ' , ' +
-													  					${userDetailsfromDb.zipPin} + ' , ' + ${userDetailsfromDb.country}"></span>
+								<span class="wrap-text" th:utext="${beneficiaryDetailBean.userAddressFirstLine} +
+													  					' &#10 '+ ${beneficiaryDetailBean.userAddressSecondLine} +
+													  					' &#10 '+ ${beneficiaryDetailBean.nearestLandMark} +
+													  					' &#10 ' + ${beneficiaryDetailBean.cityTown} + ' , ' +
+													  					${beneficiaryDetailBean.countyDistrict} + ' , ' +
+													  					' &#10 ' + ${beneficiaryDetailBean.state} + ' , ' +
+													  					${beneficiaryDetailBean.zipPin} + ' , ' + ${beneficiaryDetailBean.country}"></span>
 							  </div>
 							  <!-- End Body -->
 
@@ -420,16 +355,22 @@
 							<div class="card ">
 							  <!-- Header -->
 							  <div class="card-header">
-								<h5 class="card-header-title">Social Network</h5>
+								<h5 class="card-header-title">Other Details</h5>
 							  </div>
 							  <!-- End Header -->
 
 							  <!-- Body -->
 							        <div class="card-body">
-							        <i class="fab fa-facebook nav-icon"></i>
-									<span class="wrap-text" 
-									th:utext="${userDetailsfromDb.FacebookLink}"></span>
-									  </div>
+										<ul class="list-checked list-checked-primary list-unstyled-py-2">
+										  <li class="list-checked-item" th:text="'Birth Day :' + ${beneficiaryDetailBean.dateOfBirth}">Date Of Birth</li>
+										  <li class="list-checked-item" th:text="'Age :' + ${beneficiaryDetailBean.age}">Age</li>
+										  <li class="list-checked-item" th:text="'Height :' + ${beneficiaryDetailBean.height}">Height</li>
+										  <li class="list-checked-item" th:text="'Weight :' + ${beneficiaryDetailBean.weight}">Weight</li>
+										  <li class="list-checked-item" th:text="'BloodGroup :' + ${beneficiaryDetailBean.bloodGroup}">BloodGroup</li>
+										  <li class="list-checked-item" th:text="'Relation :' + ${beneficiaryDetailBean.relationWithCustomer}">RelationWithCustomer</li>
+										  
+										</ul>
+									</div>
 							  <!-- End Body -->
 
 							  <!-- Footer -->

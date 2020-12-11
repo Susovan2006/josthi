@@ -155,6 +155,19 @@ public class UserAuthDaoImpl implements UserAuthDao{
 		
 	}
 	
+	public static final String SELECT_EMAIL_ID =  "SELECT USERID_EMAIL FROM user_auth_table where CUSTOMER_ID=?";
+	@Override
+	public String getEmailId(String customerId) {
+		try {
+			String email = jdbcTemplate.queryForObject(SELECT_EMAIL_ID, new Object[]{customerId}, String.class);
+			return email;
+		}catch(Exception ex) {
+			logger.error("Couldn't find a name for :"+customerId);
+			return null;
+		}
+	}
+	
+	
 	public static final String UPDATE_USER_ID_GEN = "UPDATE userid_generation_table SET NEXTUSERID = 1";
 	@Override
 	public boolean resetUserIdGenTable() {
@@ -398,6 +411,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 				throw ex;
 			}
 	}
+
 	
 
 }

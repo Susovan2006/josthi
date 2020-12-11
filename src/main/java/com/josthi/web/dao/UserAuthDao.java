@@ -21,6 +21,8 @@ public interface UserAuthDao {
 	int getNextID();
 
 	String getUserFirstAndLastName(String customerId);
+	
+	String getEmailId(String customerId);
 
 	boolean resetUserIdGenTable();
 
@@ -45,5 +47,7 @@ public interface UserAuthDao {
 	void saveDeafultUserPref(String userId) throws Exception;
 
 	UserAuthBo getProfileDisplayDetails(String userID) throws Exception;
+
+	
 
 }

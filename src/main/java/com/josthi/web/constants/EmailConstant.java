@@ -19,6 +19,10 @@ public interface EmailConstant {
 	String EMAIL_FROM_FOR_SERVICE = "service@josthi.com";
 	String SUBJECT_FROM_FOR_SERVICE = "Josthi.com | serviceRequest";
 	
+	//AGENT ASSIGNMENT / UPDATE Request
+	String EMAIL_FROM_FOR_AGENT_UPDATE = "service@josthi.com";
+	String SUBJECT_FROM_FOR_AGENT_UPDATE = "Josthi.com | Agent Update";
+	
 	//Password Lock
 	String EMAIL_FROM_FOR_ACCOUNT_UN_LOCK = "welcome@josthi.com";
 	String SUBJECT_FROM_FOR_ACCOUNT_UN_LOCK = "Josthi.com | Account unlock";
@@ -40,6 +44,7 @@ public interface EmailConstant {
 	String TEMPLATE_FORM_FOR_OTP = "email_validate_account_otp";
 	//https://beefree.io/editor/?template=your-visit-to-the-spa-invoice# (open in Firefox)
 	String TEMPLATE_FORM_FOR_SERVICE_REQUEST_UPDATE = "email_ticket_update";
+	String TEMPLATE_FORM_FOR_AGENT_ASSIGNMENT_UPDATE = "email_Agent_Assignment";
 	
 	
 	

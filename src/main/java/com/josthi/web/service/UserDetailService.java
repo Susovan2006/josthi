@@ -1,9 +1,12 @@
 package com.josthi.web.service ;
 import java.util.List;
 
+import com.josthi.web.bo.AgentAssignmentBean;
+import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserDetailsBean ;
 import com.josthi.web.bo.UserDetailsBeanForProfile;
+
 
 
 public interface UserDetailService {
@@ -31,5 +34,14 @@ public interface UserDetailService {
 	UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception;
 
 	UserDetailsBeanForProfile getProfileDisplayDetails(String userID) throws Exception;
+
+	List<AgentAssignmentBean> getBeneficiaryAgentDetailsList() throws Exception;
+
+	boolean updateAgentForBeneficiary(String relationId, String newAgentId, String beneficiaryName, String hostUserId,
+			String adminId) throws Exception;
+
+	AgentAssignmentBean getBeneficiaryAgentDetail(String relationId) throws Exception;
+
+	List<DropDownBean> getAgentListForDropDown() throws Exception;
 	
 }

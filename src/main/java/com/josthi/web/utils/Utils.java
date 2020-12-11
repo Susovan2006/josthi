@@ -155,6 +155,20 @@ public static String getNextTicketID(String type,int nextCount) {
 		return emailDbBean;
 	}
 	
+	public static EmailDbBean getEmailBeanForAgentAssignment(String emailTo, String jsonValue) {
+		
+		EmailDbBean emailDbBean =  new EmailDbBean();
+		emailDbBean.setSentTo(emailTo);
+		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_AGENT_UPDATE);
+		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_AGENT_UPDATE);
+		emailDbBean.setJsonString(jsonValue);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_AGENT_ASSIGNMENT_UPDATE);
+		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
+		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
+		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
+		return emailDbBean;
+	}
+	
 	
 	/**
 	 * 

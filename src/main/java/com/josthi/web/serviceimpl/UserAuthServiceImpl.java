@@ -60,6 +60,11 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public String getUserDetails(String customerId) {
 		return Utils.convertToCamelCase(userAuthDao.getUserFirstAndLastName(customerId));
 	}
+	
+	@Override
+	public String getEmailId(String customerId) {
+		return userAuthDao.getEmailId(customerId);
+	}
 
 	@Override
 	public boolean resetUserIdGenTable() {

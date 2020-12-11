@@ -1,6 +1,7 @@
 package com.josthi.web.dao ;
 import java.util.List;
 import com.josthi.web.po.UserDetailsPO ;
+import com.josthi.web.bo.AgentAssignmentBean;
 import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.EmergencyContactBean;
@@ -45,4 +46,9 @@ public interface UserDetailsDao {
 	UserDetailsBean getAgentAdminProfileDetails(String customerId) throws Exception;
 	UserDetailsBeanForProfile getProfileDisplayDetails(String userID) throws Exception;
 	BeneficiaryDetailBean getBeneficiaryDetailToView(String userID) throws Exception;
+	List<AgentAssignmentBean> getBeneficiaryAgentDetailsList() throws Exception;
+	boolean updateAgentForBeneficiary(String relationId, String newAgentId, String beneficiaryName, String hostUserId,
+			String adminId) throws Exception;
+	AgentAssignmentBean getBeneficiaryAgentDetail(String relationId) throws Exception;
+	List<DropDownBean> getAgentListForDropDown() throws Exception;
 }

@@ -23,5 +23,6 @@ public interface MappingConstant {
 	String ADMIN_PROFILE = "admin/profile_admin";  //*profile_agent_admin";
 	String ADMIN_ACCOUNT_SETTINGS = "agentAdmin/account_settings";
 	String ADMIN_MANAGE_TICKET = "/admin/manage_service_request_admin";
+	String ADMIN_ASSIGN_AGENTS = "/admin/admin_action_assign_agent_simple";
 
 }

@@ -18,13 +18,17 @@ import com.josthi.web.utils.Utils;
 import com.josthi.web.dao.UserDetailsDao ;
 import com.josthi.web.dao.rowmapper.AgentAdminProfileDetailRowMapperOnCustID;
 import com.josthi.web.dao.rowmapper.AllUserDetailsToDisplayRowMaper;
+import com.josthi.web.dao.rowmapper.BeneficiaryAgentEmailRowMapper;
+import com.josthi.web.dao.rowmapper.BeneficiaryAgentRowMapper;
 import com.josthi.web.dao.rowmapper.BeneficiaryDetailRowMapper;
+import com.josthi.web.dao.rowmapper.DropDownAgentRowmapper;
 import com.josthi.web.dao.rowmapper.DropDownRowmapper;
 import com.josthi.web.dao.rowmapper.EmergencyContactDetailsRowMapper;
 import com.josthi.web.dao.rowmapper.ServiceRequestTableRowMapper;
 import com.josthi.web.dao.rowmapper.UserProfileDetailRowMapperOnCustID;
 import com.josthi.web.dao.rowmapper.ValidateAuthenticityRowMaper;
 import com.josthi.web.exception.UserExceptionInvalidData;
+import com.josthi.web.bo.AgentAssignmentBean;
 import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.EmergencyContactBean;
@@ -762,6 +766,98 @@ public class UserDetailsDaoImpl implements UserDetailsDao {
 					//your wish, you can either throw the exception or return 1st element.   
 					throw new Exception("Invalid Data in the Database...");
 				}
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	public static final String SELECT_AGENT_BENEFICIARY_LIST_FOR_ASSIGNMENT = "select RELATION_ID, " + 
+			"CUSTOMER_ID , (select CONCAT(FIRST_NAME,' ',LAST_NAME) from user_detail where UID = CUSTOMER_ID) as HOST_NAME, " + 
+			"BENEFICIARY_ID, (select CONCAT(FIRST_NAME,' ',LAST_NAME) from user_detail where UID = BENEFICIARY_ID) as BEN_NAME, " + 
+			"(select ZIP_PIN from user_detail where UID = BENEFICIARY_ID) as BEN_ZIP, " + 
+			"AGENT_ID , (select CONCAT(FIRST_NAME,' ',LAST_NAME) from user_detail where UID = AGENT_ID) as AGENT_NAME , " + 
+			"(select ZIP_PIN from user_detail where UID = AGENT_ID) as AGENT_ZIP, " + 
+			"UPDATE_DATE, INSERT_DATE from relation order by CUSTOMER_ID desc";
+	@Override
+	public List<AgentAssignmentBean> getBeneficiaryAgentDetailsList() throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<AgentAssignmentBean> beneficiaryAgentDetailsList = getJdbcTemplate().query(
+												 SELECT_AGENT_BENEFICIARY_LIST_FOR_ASSIGNMENT,
+												 new BeneficiaryAgentRowMapper());
+				return beneficiaryAgentDetailsList;
+			}catch(Exception ex){
+				logger.error(ex.getMessage(), ex);
+				throw ex;
+			}
+	}
+	
+	
+	public static final String UPDATE_RELATION_TAB_WITH_AGENT = "UPDATE relation " + 
+			"SET AGENT_ID= ? , UPDATE_DATE=CURRENT_TIMESTAMP " + 
+			"WHERE RELATION_ID= ?  and CUSTOMER_ID= ? ";
+	@Override
+	public boolean updateAgentForBeneficiary(String relationId, String newAgentId, String beneficiaryName,
+			String hostUserId, String adminId) throws Exception {
+			
+		try {
+			int result = jdbcTemplate.update(UPDATE_RELATION_TAB_WITH_AGENT, 
+													new Object[]{newAgentId,
+															relationId,
+															hostUserId});
+				return (result > 0 ? true : false);
+			}catch(Exception ex) {
+				logger.error(ex.getMessage(), ex);
+				throw ex;
+			}																               
+																		               
+	}
+	
+	
+	public static final String SELECT_AGENT_BENEFICIARY_FOR_EMAIL = "select RELATION_ID, " + 
+			"CUSTOMER_ID , (select CONCAT(FIRST_NAME,' ',LAST_NAME) from user_detail where UID = CUSTOMER_ID) as HOST_NAME, " + 
+			//" (select USERID_EMAIL from user_auth_table where CUSTOMER_ID = CUSTOMER_ID) as HOST_EMAIL,"+
+			"BENEFICIARY_ID, (select CONCAT(FIRST_NAME,' ',LAST_NAME) from user_detail where UID = BENEFICIARY_ID) as BEN_NAME, " + 
+			"(select ZIP_PIN from user_detail where UID = BENEFICIARY_ID) as BEN_ZIP, " + 
+			"AGENT_ID , (select CONCAT(FIRST_NAME,' ',LAST_NAME) from user_detail where UID = AGENT_ID) as AGENT_NAME , " + 
+			"(select ZIP_PIN from user_detail where UID = AGENT_ID) as AGENT_ZIP, " + 
+			"UPDATE_DATE, INSERT_DATE from relation Where RELATION_ID = ?";
+	
+	@Override
+	public AgentAssignmentBean getBeneficiaryAgentDetail(String relationId) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<AgentAssignmentBean> agentAssignmentBeanList = getJdbcTemplate().query(
+												 SELECT_AGENT_BENEFICIARY_FOR_EMAIL,
+												 new Object[] {relationId},
+												 new BeneficiaryAgentEmailRowMapper());
+				if ( agentAssignmentBeanList.isEmpty() ){
+					return null;
+				}else if ( agentAssignmentBeanList.size() == 1 ) { // list contains exactly 1 element
+					return agentAssignmentBeanList.get(0);
+				}else{  // list contains more than 1 elements
+					//your wish, you can either throw the exception or return 1st element.   
+					throw new Exception("Invalid Data in the Database...");
+				}
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	public static final String SELECT_DROPDOWN_AGENT_LIST = "select A.CUSTOMER_ID, B.FIRST_NAME, B.LAST_NAME, B.ZIP_PIN from user_auth_table A, user_detail B " + 
+			"where A.CUSTOMER_ID = B.UID and A.role = 'AGENT' and ZIP_PIN is not null";
+	@Override
+	public List<DropDownBean> getAgentListForDropDown() throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<DropDownBean> dropDownGroupList = getJdbcTemplate().query(
+												 SELECT_DROPDOWN_AGENT_LIST,
+												 new DropDownAgentRowmapper());
+				return dropDownGroupList;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());
 				throw ex;

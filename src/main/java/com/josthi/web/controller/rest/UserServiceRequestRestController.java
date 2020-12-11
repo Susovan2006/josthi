@@ -49,7 +49,7 @@ public class UserServiceRequestRestController {
 	ServiceRequestService serviceRequestService;
 	
 	
-	@CrossOrigin("*")
+	//@CrossOrigin("*")
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/addNotesToTicket", method = RequestMethod.POST)
     public ResponseEntity<String> addNotesToTicket(

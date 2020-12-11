@@ -657,19 +657,7 @@
 							<div id="beneficiary1BloodGroupDiv" class="form-group js-form-message">
 								<label class="input-label">Blood Group<span class="text-danger">*</span></label>								
 								 <div class="input-group js-masked-input">
-								  <select th:field="*{bloodGroup}" class="form-control show-tick" id="beneficiaryBloodGroup" name="beneficiaryBloodGroup" required data-msg="Required Field">
-											<!--  <option value="0">Select Blood Group</option>
-											<option th:value="O_N" th:text="O_Negative"></option>
-											<option th:value="O_P" th:text="O_Positive"></option>
-											<option th:value="A_N" th:text="A_Negative"></option>
-											<option th:value="A_P" th:text="A_Positive"></option>
-											<option th:value="B_N" th:text="B_Negative"></option>
-											<option th:value="B_P" th:text="B_Positive"></option>
-											<option th:value="AB_N" th:text="AB_Negative"></option>
-											<option th:value="AB_P" th:text="AB_Positive"></option>
-											<option th:value="others" th:text="others">others</option>
-											<option th:value="No_Idea" th:text="No_Idea">No_Idea</option>-->
-											
+								  <select th:field="*{bloodGroup}" class="form-control show-tick" id="beneficiaryBloodGroup" name="beneficiaryBloodGroup" required data-msg="Required Field">										
 											<option th:each="bloodGroup : ${bloodGroupList}"
                              					th:value="${bloodGroup.keyId}"
                              					th:text="${bloodGroup.value}" />

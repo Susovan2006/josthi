@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.josthi.web.service.UserDetailService ;
+import com.josthi.web.dao.HistoryDao;
 import com.josthi.web.dao.UserDetailsDao ;
+import com.josthi.web.bo.AgentAssignmentBean;
+import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.UserDetailsBean ;
 import com.josthi.web.bo.UserDetailsBeanForProfile;
@@ -15,6 +18,9 @@ public class UserDetailsServiceImpl implements UserDetailService{
 
 	@Autowired
 	private UserDetailsDao userDetailsDao;
+	
+	@Autowired
+	private HistoryDao historyDao;
 	
 	@Override
 	public UserDetailsBean getUserDetails(String customerId) {		
@@ -132,6 +138,36 @@ public class UserDetailsServiceImpl implements UserDetailService{
 	@Override
 	public UserDetailsBeanForProfile getProfileDisplayDetails(String userID) throws Exception {
 		return userDetailsDao.getProfileDisplayDetails(userID);
+	}
+
+	@Override
+	public List<AgentAssignmentBean> getBeneficiaryAgentDetailsList() throws Exception {
+		
+		return userDetailsDao.getBeneficiaryAgentDetailsList();
+	}
+
+	@Override
+	public boolean updateAgentForBeneficiary(String relationId, String newAgentId, String beneficiaryName,
+			String hostUserId, String adminId) throws Exception {
+		String activityFor = hostUserId;
+		String activityBy = adminId;
+		String activityNotes = "New Agent "+newAgentId+ " assigned to "+beneficiaryName;
+		try {
+			boolean logstatus = historyDao.logActivityHistory(activityFor, activityBy, activityNotes);
+		}catch(Exception ex) {
+			//nothing to do. just suppress.
+		}
+		return userDetailsDao.updateAgentForBeneficiary(relationId, newAgentId, beneficiaryName, hostUserId, adminId);
+	}
+
+	@Override
+	public AgentAssignmentBean getBeneficiaryAgentDetail(String relationId) throws Exception {
+		return userDetailsDao.getBeneficiaryAgentDetail(relationId);
+	}
+
+	@Override
+	public List<DropDownBean> getAgentListForDropDown() throws Exception {		
+		return userDetailsDao.getAgentListForDropDown();
 	}
 
 	

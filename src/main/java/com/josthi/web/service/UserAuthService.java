@@ -45,6 +45,8 @@ public interface UserAuthService {
 
 	public UserAuthBo getProfileDisplayDetails(String userID) throws Exception;
 
+	public String getEmailId(String hostUserId);
+
 	//public void updateSchedulerDetails(SchedulerTimerBean schedulerTimerBean);
 
 	//public boolean registerNewUser(UserRegistrationBean userRegistrationBean);

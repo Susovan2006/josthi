@@ -73,6 +73,12 @@ List<String> primaryBeneficiaryIdLst  = getJdbcTemplate().query(SELECT_BENEFICIA
 
 ############################### PASSING THYMELEAF VALUE TO JAVA SCRIPT ##################
 
+
+th:onclick="submitTicketNotes(this,[[${serviceRequestBean.ticketNo}]],
+													    	 [[${session.USER_SESSION_OBJ_KEY.customerId}]],
+													    	 [[${session.USER_SESSION_OBJ_KEY.userEmailId}]])"
+													    	 
+													    	 or
 <button class="btn btn-primary" th:data-id="${serviceRequestBean.ticketNo}" 
 	onclick="submitTicketNotes(this,this.getAttribute('data-id'))" type="button">Save changes
 </button>
@@ -98,6 +104,15 @@ function submitTicketNotes(val, ticketNo) {
 function isEmpty(value){
 	return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
 }
+function isStringContains (StringVal, SubStringVal){
+			var res = StringVal.match(SubStringVal);
+			
+			if( res == null){
+				return false;
+			}else{
+				return true;
+			}
+		}
 
 ################################# SCROLL to a Specific DIV #######################
 
@@ -134,3 +149,12 @@ https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#keeping-iteratio
           <li class="list-checked-item">100 integrations</li>
         </ul>
       </div>
+      
+      
+      
+###################### JQUERY - GET VALUE of the DropDown #################
+$('#Crd').val() --> Value
+$('#Crd option:selected').text(); --> Text
+
+################## ACTIVITY LOGS #################
+boolean logstatus = historyDao.logActivityHistory(activityFor, activityBy, activityNotes);

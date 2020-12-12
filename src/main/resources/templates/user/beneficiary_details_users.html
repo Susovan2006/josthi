@@ -48,6 +48,9 @@
 </head>
 <body>
   
+  <!--  ============= HIDDEN FIELDS ============= -->
+  <input type="hidden" value="beneficiary" id="hiddenCustomerID" />
+  <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.userEmailId}" id="hiddenEmailID" />
 
   <!-- ========== MAIN ========== -->
   <main id="content" role="main" class="bg-light">
@@ -120,18 +123,44 @@
 				  <thead class="thead-light">
 					<tr>
 					  <th scope="col">Beneficiary ID</th>
-					  <th scope="col">First Name</th>
-					  <th scope="col">Last Name</th>
-					  <th scope="col">Relation</th>
+					  <th scope="col">Profile</th>
+					  <th scope="col">Name/Relation</th>
 					  <th scope="col">Action</th>
 					</tr>
 				  </thead>				  
 					  <tbody>
 						    <tr th:each="beneficiaryDetailBean : ${beneficiaryDetailBeanList}">
-						      <td th:text="${beneficiaryDetailBean.beneficiaryID}">1</td>
-						      <td th:text="${beneficiaryDetailBean.firstName}">First Name</td>
-						      <td th:text="${beneficiaryDetailBean.lastName}">Last Name</td>
-						      <td th:text="${beneficiaryDetailBean.relationWithCustomer}">relation</td>
+						      <!-- Col 1 -->
+						      <td th:text="${beneficiaryDetailBean.beneficiaryID}" th:id="${beneficiaryDetailBean.beneficiaryID}">1</td>
+						      <!-- Col 2 -->
+						      <td>
+					          	  <div class="media align-items-center">
+			                      <label class="avatar avatar-circle mr-4" th:for="'avatarUploader'+${beneficiaryDetailBean.beneficiaryID}">
+			                        <img th:id="'avatarImg'+${beneficiaryDetailBean.beneficiaryID}" th:src="@{/getProfileImage/}+ ${beneficiaryDetailBean.beneficiaryID}" 
+			                        	class="avatar-img" src="../images/default_user.png" alt="Profile Image" th:onclick="setBeneficiaryId([[${beneficiaryDetailBean.beneficiaryID}]])">
+			                      </label>
+			
+			                      <div class="media-body">
+			                        <div class="file-attachment-btn mb-2 mb-sm-0 mr-2">
+			                          <input type="file" class="js-file-attach file-attachment-btn-label" th:id="'avatarUploader'+${beneficiaryDetailBean.beneficiaryID}"
+			                                 data-hs-file-attach-options='{
+			                                    "textTarget": "#avatarImg",
+			                                    "mode": "image",
+			                                    "targetAttr": "src",
+			                                    "maxFileSize": "infinity"
+			                                 }'>
+			                        </div>
+			                      </div>
+			                    </div>
+						      </td>
+						      <!-- Col 3 -->
+						      <td>
+							      <div class="ml-3">
+					                <span class="d-block h5 text-hover-primary mb-0" th:text="${beneficiaryDetailBean.firstName}+' '+${beneficiaryDetailBean.lastName}">YYYY</span>				                   
+					                <span class="d-block font-size-sm text-body" th:text="${beneficiaryDetailBean.relationWithCustomer}">20000</span>
+					              </div>
+				              </td>
+						      <!-- Col 4 -->
 						      <td>
 							      								  
 								  <!-- View Contact -->
@@ -775,6 +804,7 @@
 
   <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
   <div th:insert="user_common :: js-includes"></div>
+  <script th:src="@{/vendor/hs-file-attach/dist/hs-file-attach.min.js}"></script>
   <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
   
 
@@ -815,86 +845,6 @@
     return true;
 	}
 	
-	//$(document).on('change', '#beneficiary1AddressFirstLine', function(){
-    //    var total = $('#beneficiary1AddressFirstLine').val();
-    //    $('#beneficiary2AddressFirstLine').val(total);
-	//});
-	
-	
-	/* function sync()
-	{
-	  var n1 = document.getElementById('beneficiary1AddressFirstLine');
-	  var n2 = document.getElementById('beneficiary2AddressFirstLine');
-	  n2.value = n1.value;
-	  
-	  var adline2Ben1 = document.getElementById('beneficiary1AddressSecondLine');
-	  var adline2Ben2 = document.getElementById('beneficiary2AddressSecondLine');
-	  adline2Ben2.value = adline2Ben1.value;
-	  
-	  var cityBen1 = document.getElementById('beneficiary1cityTown');
-	  var cityBen2 = document.getElementById('beneficiary2cityTown');
-	  cityBen2.value = cityBen1.value;
-	  
-	  var stateBen1 = document.getElementById('beneficiary1state');
-	  var stateBen2 = document.getElementById('beneficiary2state');
-	  stateBen2.value = stateBen1.value;
-	  
-	  var distBen1 = document.getElementById('beneficiary1countyDistrict');
-	  var distBen2 = document.getElementById('beneficiary2countyDistrict');
-	  distBen2.value = distBen1.value;
-	  
-	  var landmarkBen1 = document.getElementById('beneficiary1landmark');
-	  var landmarkBen2 = document.getElementById('beneficiary2landmark');
-	  landmarkBen2.value = landmarkBen1.value;
-	  
-	  var pinBen1 = document.getElementById('beneficiary1zipPin');
-	  var pinBen2 = document.getElementById('beneficiary2zipPin');
-	  pinBen2.value = pinBen1.value;
-	  
-	} */
-	
-	/* $(document).on('change','#beneficiaryCount',function(){
-				var count = $('#beneficiaryCount').find(":selected").val();
-               			   
-			   
-			   if(count === '0'){
-					hidePrimary();
-					hideSecondary();
-					$('#beneficiary1Relation').attr("disabled", true);
-					$('#beneficiary2Relation').attr("disabled", true);
-			   }else if(count === '1'){
-					showPrimary();
-					hideSecondary();
-					$('#beneficiary1Relation').attr("disabled", false);
-					$('#beneficiary2Relation').attr("disabled", true);
-			   }else if(count === '2'){
-					showPrimary();
-					showSecondary();
-					$('#beneficiary1Relation').attr("disabled", false);
-					$('#beneficiary2Relation').attr("disabled", false);
-			   }
-          }); 
-	
-	
-	function hideSecondary() {
-		  var x = document.getElementById("secondaryBeneficiarySection");
-		  x.style.display = "none";
-   }
-   
-   function showSecondary() {
-		  var x = document.getElementById("secondaryBeneficiarySection");
-		  x.style.display = "block";
-   }
-   
-   function hidePrimary() {
-		  var x = document.getElementById("primaryBeneficiarySection");
-		  x.style.display = "none";
-   }
-   
-      function showPrimary() {
-		  var x = document.getElementById("primaryBeneficiarySection");
-		  x.style.display = "block";
-   }*/
 	
   </script>
 	
@@ -946,8 +896,24 @@
       //  $.HSCore.components.HSFlatpickr.init($(this));
       //});
       
-      
+   	  //JS File upload
+   	  $(".js-file-attach").on('change', function(){
+   				var custId = $('#hiddenCustomerID').val();
+				var singleFileUploadInput = document.querySelector('#avatarUploader'+custId);
+				console.log("singleFileUploadInput"+singleFileUploadInput);
+				    //alert(singleFileUploadInput);
+				    var files = singleFileUploadInput.files;
+					if(files.length === 0) {
+						singleFileUploadError.innerHTML = "Please select a file";
+						singleFileUploadError.style.display = "block";
+					}
+					
+					event.preventDefault();
+					fire_ajax_submit(files[0]);
+			});
    	  
+   	  
+   	  	  //Date of Birth Validation
 		 $("#beneficiarydob").keypress(function(){
 			var x = document.getElementById("beneficiarydob");
 			var val = x.value;
@@ -1080,6 +1046,82 @@
     });
     
   </script>
+  
+  
+<script>
+function setBeneficiaryId(id) {
+  document.getElementById("hiddenCustomerID").value = id;
+  alert(document.getElementById("hiddenCustomerID").value);
+}
+</script>
+
+
+  
+  <script>
+		function fire_ajax_submit(file) {
+			
+		//var emailId = $('#hiddenEmailID').val();
+		var custId = $('#hiddenCustomerID').val();
+		
+		var formData = new FormData();
+		formData.append('file',file);
+		formData.append('customerID',custId);
+		formData.append('emailID',"beneficiary@josthi.com");
+	
+		    $.ajax({
+		        type: "POST",
+				enctype: 'multipart/form-data',
+		        url: "/userProfilePic",
+		        data: formData,
+		        dataType: 'html', //Important , it has to be HTML
+		        cache: false,
+		        timeout: 600000,
+				contentType: false,
+		        processData: false, //it prevent jQuery form transforming the data into a query string
+		        success: function (data, status) {
+		            console.log("SUCCESS : ", data);
+		            showSuccessMsg(data);
+		            getProfileImage();
+
+		
+		        },
+		        error: function (xhr, status, error) {
+		            console.log("ERROR : ", xhr.status);
+					console.log("ERROR status: ", status);
+					console.log("ERROR error: ", error);
+					showError("Error Occured while Uploading the image, Please try again with a valid jpg/gif/png image, with in 1 MB.");
+		
+		        }
+		    });
+	
+		}
+		
+		
+		function getProfileImage(){
+			var custId = $('#hiddenCustomerID').val();			
+			var newSrc = "/getProfileImage/"+custId;;
+			 $('#avatarImg'+custId).attr('src', newSrc);
+			 //$('#profilePicture').attr('src', newSrc);
+		}
+	
+	
+		function showError(msg) {
+		  //var e1 = document.getElementById("uploadStatus");
+		  //e1.setAttribute("style", "display:block;background:#ffecec;border: 2px solid #f5aca6");
+		  //e1.innerHTML = "&nbsp;"+msg;
+		  alert(msg);
+
+		}
+		
+		function showSuccessMsg(msg) {
+		  //var e1 = document.getElementById("uploadStatus");
+		  //e1.setAttribute("style", "display:block;background:#c3f3cd;border: 2px solid #50ef72");
+		  //e1.innerHTML = "&nbsp;"+msg;
+		  alert(msg);
+
+		}
+		
+		</script>
   
 
    

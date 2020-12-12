@@ -45,7 +45,7 @@ public class ProfilePictureController {
     @Autowired
 	FileWikiService fileWikiService;
 
-    @CrossOrigin("*") //TODO : need to remove before prod deployment.
+    //@CrossOrigin("*") //TODO : need to remove before prod deployment.
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/userProfilePic", method = RequestMethod.POST)
     public ResponseEntity<String> userProfilePic(@RequestParam("file") MultipartFile file,

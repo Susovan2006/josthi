@@ -55,6 +55,8 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 			logger.info("Within transaction Block");
 			//Here we are encrypting the Password.
 			int getNextID = userAuthDao.getNextID();
+			
+			
 			String ticketId = Utils.getNextTicketID(Constant.REQUEST_TICKET,getNextID);
 			
 			//Tickt ID assigned.
@@ -93,8 +95,8 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 				throw new UserExceptionInvalidData("Invalid Request, Please re-login and try.");
 			}
 			
-			
-			
+			String getServiceAgentId = userAuthDao.getAgentBasedOnBeneficiaryId(serviceRequestBean.getBeneficiaryId().trim());
+			serviceRequestBean.setAssignedTo(getServiceAgentId);
 			
 			def = new DefaultTransactionDefinition();
 			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
@@ -135,15 +137,18 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 
 	@Override
 	public List<ServiceRequestBean> getServiceRequestList(String userId, String role) throws Exception {
-		if(role.equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {
-			return serviceRequestDao.getServiceRequestList(userId);
-		}else if(role.equalsIgnoreCase(Constant.USER_TYPE_ADMIN)) {
-			return serviceRequestDao.getServiceRequestList(userId);
-		}else if(role.equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
-			return serviceRequestDao.getServiceRequestList("RU200921008");
-		}else {
-			throw new UserExceptionInvalidData("Looks like the User Role is invalid, please contact the Customer Service");
-		}
+		/*
+		 * if(role.equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) { return
+		 * serviceRequestDao.getServiceRequestList(userId); }else
+		 * if(role.equalsIgnoreCase(Constant.USER_TYPE_ADMIN)) { return
+		 * serviceRequestDao.getServiceRequestList(userId); }else
+		 * if(role.equalsIgnoreCase(Constant.USER_TYPE_AGENT)) { return
+		 * serviceRequestDao.getServiceRequestList("RU200921008"); }else { throw new
+		 * UserExceptionInvalidData("Looks like the User Role is invalid, please contact the Customer Service"
+		 * ); }
+		 */
+		
+		return serviceRequestDao.getServiceRequestList(userId , role);
 	}
 
 	

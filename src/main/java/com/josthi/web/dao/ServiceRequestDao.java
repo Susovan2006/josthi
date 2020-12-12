@@ -11,7 +11,7 @@ public interface ServiceRequestDao {
 
 	boolean insertUserServiceHistoryTale(ServiceRequestBean serviceRequestBean) throws Exception;
 
-	List<ServiceRequestBean> getServiceRequestList(String userId)  throws Exception;
+	List<ServiceRequestBean> getServiceRequestList(String userId, String role)  throws Exception;
 
 	boolean updateServiceRequestTable(String customerID, String requesterName, String notes, String urgency,
 			String status, String ticketNo) throws Exception;

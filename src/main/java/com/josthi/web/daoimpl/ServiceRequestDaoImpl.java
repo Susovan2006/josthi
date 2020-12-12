@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.josthi.web.bo.BeneficiaryDetailBean;
 import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.bo.ServiceRequestHistoryBean;
+import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.ServiceRequestDao;
 import com.josthi.web.dao.rowmapper.BeneficiaryDetailRowMapper;
 import com.josthi.web.dao.rowmapper.ServiceRequestHistoryRowMapper;
@@ -87,20 +88,49 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 	}
 	
 	
-	public static final String SELECT_ACTIVE_TICKET_DETAILS_LIST = "SELECT UID, TICKET_NO, REQUESTED_BY, REQUESTER_ID, "
+	public static final String SELECT_ACTIVE_TICKET_DETAILS_LIST_HOST = "SELECT UID, TICKET_NO, REQUESTED_BY, REQUESTER_ID, "
 			+ "REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
 			+ "SERVICE_CATEGORY, SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
 			+ "FROM service_request_table WHERE REQUESTER_ID = ? and SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
 	
+	public static final String SELECT_ACTIVE_TICKET_DETAILS_LIST_AGENT = "SELECT UID, TICKET_NO, REQUESTED_BY, REQUESTER_ID, "
+			+ "REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
+			+ "SERVICE_CATEGORY, SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
+			+ "FROM service_request_table WHERE ASSIGNED_TO = ? and SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
+	
+	public static final String SELECT_ACTIVE_TICKET_DETAILS_LIST_ADMIN = "SELECT UID, TICKET_NO, REQUESTED_BY, REQUESTER_ID, "
+			+ "REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
+			+ "SERVICE_CATEGORY, SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
+			+ "FROM service_request_table WHERE SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
+	
 	@Override
-	public List<ServiceRequestBean> getServiceRequestList(String userId) throws Exception {
+	public List<ServiceRequestBean> getServiceRequestList(String userId, String role) throws Exception {
+		
+		
 		try{
-			@SuppressWarnings("unchecked")
-			List<ServiceRequestBean> serviceRequestBeanList = getJdbcTemplate().query(
-												 SELECT_ACTIVE_TICKET_DETAILS_LIST,
-												 new Object[] {userId},
-												 new ServiceRequestTableRowMapper());
-				return serviceRequestBeanList;
+			List<ServiceRequestBean> serviceRequestBeanList = null;
+			
+			if(role.equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {				
+				serviceRequestBeanList = getJdbcTemplate().query(
+						SELECT_ACTIVE_TICKET_DETAILS_LIST_HOST,
+						 new Object[] {userId},
+						 new ServiceRequestTableRowMapper());
+			}else if (role.equalsIgnoreCase(Constant.USER_TYPE_AGENT)){
+				serviceRequestBeanList = getJdbcTemplate().query(
+						SELECT_ACTIVE_TICKET_DETAILS_LIST_AGENT,
+						 new Object[] {userId},
+						 new ServiceRequestTableRowMapper());
+			}else if (role.equalsIgnoreCase(Constant.USER_TYPE_ADMIN)){
+				serviceRequestBeanList = getJdbcTemplate().query(
+							SELECT_ACTIVE_TICKET_DETAILS_LIST_ADMIN,
+							
+							new ServiceRequestTableRowMapper());
+			}else{
+				throw new UserExceptionInvalidData("Looks like the User Role is invalid, please contact the Customer Service");
+			}
+			
+			
+		  return serviceRequestBeanList;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());
 				throw ex;

@@ -411,6 +411,19 @@ public class UserAuthDaoImpl implements UserAuthDao{
 				throw ex;
 			}
 	}
+	
+	public static final String SELECT_AGENT_ID_BASED_ON_BENEFICIARYID = "SELECT AGENT_ID " + 
+			"FROM relation where BENEFICIARY_ID = ?";
+	@Override
+	public String getAgentBasedOnBeneficiaryId(String beneficiaryId) throws Exception {
+		try {
+			String agentId = jdbcTemplate.queryForObject(SELECT_AGENT_ID_BASED_ON_BENEFICIARYID, new Object[]{beneficiaryId}, String.class);
+			return agentId;
+		}catch(Exception ex) {
+			logger.error("Couldn't Agent name for :"+beneficiaryId, ex);
+			throw new UserExceptionInvalidData("Looks like as of now no Agent is setup to server the Beneficiary "+beneficiaryId+". Call the customer service, they can assign an Agent ASAP.");
+		}
+	}
 
 	
 

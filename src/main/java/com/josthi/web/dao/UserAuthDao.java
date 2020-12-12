@@ -48,6 +48,8 @@ public interface UserAuthDao {
 
 	UserAuthBo getProfileDisplayDetails(String userID) throws Exception;
 
+	String getAgentBasedOnBeneficiaryId(String beneficiaryId) throws Exception;
+
 	
 
 }

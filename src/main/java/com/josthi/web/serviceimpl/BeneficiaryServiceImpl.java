@@ -16,6 +16,7 @@ import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.UserDetailsBean;
 import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.constants.Constant;
+import com.josthi.web.dao.HistoryDao;
 import com.josthi.web.dao.UserDetailsDao;
 import com.josthi.web.dao.UserRegistrationDao;
 import com.josthi.web.service.BeneficiaryService;
@@ -41,6 +42,9 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 	
 	@Autowired
 	private UserRegistrationDao userRegistrationDao;
+	
+	@Autowired
+	private HistoryDao historyDao;
 	
 	
 
@@ -105,6 +109,11 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 				status = userDetailsDao.insertIntoRelationDetail(beneficiaryDetailBean);
 				logger.info("Relation Table Updated Successfully!!");
 				
+				//--> Add the details in the Activity Table.
+				String activityNotes = "User added beneficiary "+beneficiaryDetailBean.getFirstName()+" "
+										+beneficiaryDetailBean.getLastName()+". Beneficiary ID:"+beneficiaryDetailBean.getBeneficiaryID();
+				status = historyDao.logActivityHistory(beneficiaryDetailBean.getBeneficiaryID(), custId, activityNotes);
+				
 				//--> Increment the next ID +1
 				status = userRegistrationDao.updateNextUid(nextId+1);
 				
@@ -121,7 +130,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 	}
 
 	@Override
-	public void deleteBeneficiaryDetail(String beneficiaryID) throws Exception {
+	public void deleteBeneficiaryDetail(String beneficiaryID, String sessionCustomerId) throws Exception {
 		TransactionStatus txnStatus = null;
 		DefaultTransactionDefinition def = null;
 		try {
@@ -153,6 +162,10 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 				//--> Insert into Relation Table'
 				status = userDetailsDao.deleteBeneficiaryFromRelationDetail(beneficiaryID);
 				logger.info(beneficiaryID + "Removed from Relation Table");
+				
+				//--> Add the details in the Activity Table.
+				String activityNotes = "User deleted a beneficiary with Beneficiary ID:"+beneficiaryID;
+				status = historyDao.logActivityHistory(beneficiaryID, sessionCustomerId, activityNotes);
 				
 				platformTransactionManager.commit(txnStatus);
 				//return status;
@@ -186,7 +199,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 
 
 	@Override
-	public boolean updateBeneficiaryDetails(BeneficiaryDetailBean beneficiaryDetailBean) throws Exception {
+	public boolean updateBeneficiaryDetails(BeneficiaryDetailBean beneficiaryDetailBean, String custId) throws Exception {
 		TransactionStatus txnStatus = null;
 		DefaultTransactionDefinition def = null;
 		try {
@@ -213,6 +226,11 @@ public class BeneficiaryServiceImpl implements BeneficiaryService{
 				//--> Update in to beneficiary detail Table
 				status = userDetailsDao.updateBeneficiaryFromBeneficiaryDetail(beneficiaryDetailBean);
 				logger.info(beneficiaryDetailBean.getBeneficiaryID()  + "Updated Beneficiary Detail Table");
+				
+				//--> Add the details in the Activity Table.
+				String activityNotes = "User updated beneficiary details for "+beneficiaryDetailBean.getFirstName()+" "
+										+beneficiaryDetailBean.getLastName()+". Beneficiary ID:"+beneficiaryDetailBean.getBeneficiaryID();
+				status = historyDao.logActivityHistory(beneficiaryDetailBean.getBeneficiaryID(), custId, activityNotes);
 						
 				
 				platformTransactionManager.commit(txnStatus);

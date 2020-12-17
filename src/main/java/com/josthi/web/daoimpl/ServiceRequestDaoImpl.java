@@ -87,21 +87,24 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 		}
 	}
 	
-	
+	//BAD SQL : Need Correction.
 	public static final String SELECT_ACTIVE_TICKET_DETAILS_LIST_HOST = "SELECT UID, TICKET_NO, REQUESTED_BY, REQUESTER_ID, "
-			+ "REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
-			+ "SERVICE_CATEGORY, SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
-			+ "FROM service_request_table WHERE REQUESTER_ID = ? and SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
+			+ " REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
+			+ " (select SERVICE_NAME from Service where SERVICE_CODE = SERVICE_CATEGORY) as SERVICE_CATEGORY, "
+			+ " SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
+			+ " FROM service_request_table WHERE REQUESTER_ID = ? and SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
 	
 	public static final String SELECT_ACTIVE_TICKET_DETAILS_LIST_AGENT = "SELECT UID, TICKET_NO, REQUESTED_BY, REQUESTER_ID, "
-			+ "REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
-			+ "SERVICE_CATEGORY, SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
-			+ "FROM service_request_table WHERE ASSIGNED_TO = ? and SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
+			+ " REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
+			+ " (select SERVICE_NAME from Service where SERVICE_CODE = SERVICE_CATEGORY) as SERVICE_CATEGORY, "
+			+ " SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
+			+ " FROM service_request_table WHERE ASSIGNED_TO = ? and SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
 	
 	public static final String SELECT_ACTIVE_TICKET_DETAILS_LIST_ADMIN = "SELECT UID, TICKET_NO, REQUESTED_BY, REQUESTER_ID, "
-			+ "REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
-			+ "SERVICE_CATEGORY, SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
-			+ "FROM service_request_table WHERE SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
+			+ " REQUESTED_FOR, BENEFICIARY_ID, REQUESTED_VIA, ASSIGNED_TO, REQUESTED_ON, TO_BE_COMPLETED_BY, SERVICE_TYPE, "
+			+ " (select SERVICE_NAME from Service where SERVICE_CODE = SERVICE_CATEGORY) as SERVICE_CATEGORY, "
+			+ " SERVICE_REQ_DESCRIPTION, SERVICE_URGENCY, SERVICE_STATUS, LAST_UPDATE, COMMENTS, LAST_UPDATE_COMMENTS, LAST_UPDATE_USER " 
+			+ " FROM service_request_table WHERE SERVICE_STATUS <> 'CLOSED' ORDER by LAST_UPDATE DESC;" ;
 	
 	@Override
 	public List<ServiceRequestBean> getServiceRequestList(String userId, String role) throws Exception {
@@ -122,8 +125,7 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 						 new ServiceRequestTableRowMapper());
 			}else if (role.equalsIgnoreCase(Constant.USER_TYPE_ADMIN)){
 				serviceRequestBeanList = getJdbcTemplate().query(
-							SELECT_ACTIVE_TICKET_DETAILS_LIST_ADMIN,
-							
+							SELECT_ACTIVE_TICKET_DETAILS_LIST_ADMIN,							
 							new ServiceRequestTableRowMapper());
 			}else{
 				throw new UserExceptionInvalidData("Looks like the User Role is invalid, please contact the Customer Service");
@@ -254,5 +256,42 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 				logger.error(ex.getMessage());
 				throw ex;
 			}
+	}
+	
+	public static final String SELECT_SERVICE_TYPE_ON_SERVICE_CODE = "SELECT TYPE_DESCRIPTION " + 
+			"FROM service_type where TYPE_KEY = ?";
+	@Override
+	public String getServiceTypeOnServiceCode(String serviceCode) throws Exception {
+		try {
+			String name = jdbcTemplate.queryForObject(SELECT_SERVICE_TYPE_ON_SERVICE_CODE, new Object[]{serviceCode}, String.class);
+			return name;
+		}catch(Exception ex) {
+			logger.error("Couldn't find serviceType for :"+serviceCode);
+			return serviceCode;
+		}
+	}
+	
+	
+	public static final String INSERT_INTO_PURCHASE_HISTORY = "INSERT INTO purchase_history " + 
+			"(PURCHASE_ID_TKT, PURCHASE_ITEM, PURCHASE_DETAILS, PURCHASE_DATE, PAYMENT_STATUS, PAYMENT_INVOICE_ID, PRICE_IN_USD, PRICE_IN_INR) " + 
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+	@Override
+	public boolean insertIntoPurchaseHistory(String ticketId, String purchaseItem, String purchaseDetails,
+			String paymentStatus, String paymentInvoiceId, String priceInUsd, String priceInInr) throws Exception {
+		try {
+			int result = jdbcTemplate.update(INSERT_INTO_PURCHASE_HISTORY, new Object[]{ticketId,
+																						purchaseItem,
+																						purchaseDetails,
+																						new Timestamp(System.currentTimeMillis()),
+																						paymentStatus,
+																						paymentInvoiceId,
+																						priceInUsd,
+																						priceInInr
+																					  });	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
 	}
 }

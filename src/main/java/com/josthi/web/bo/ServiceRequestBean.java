@@ -26,6 +26,19 @@ public class ServiceRequestBean {
 	private String lastCommentsNotes ;
 	private String lastUpdatedBy ;
 	
+	//Purchase Details
+	private int purchaseId;
+	private String purchaseItem;
+	private String purchaseDetails;
+	private String paymentStatus;
+	private String paymentInvoiceId;
+	private String priceInUsd;
+	private String priceInInr;
+	private Timestamp purchaseDate;
+	private String purchaseDateStr;
+	
+	
+	
 	
 
 	public String getBeneficiaryId() {
@@ -164,6 +177,65 @@ public class ServiceRequestBean {
 	public void setLastUpdatedBy(String lastUpdatedBy) {
 		this.lastUpdatedBy = lastUpdatedBy;
 	}
+	
+	
+	
+	//Purchase Details
+	
+	public int getPurchaseId() {
+		return purchaseId;
+	}
+	public void setPurchaseId(int purchaseId) {
+		this.purchaseId = purchaseId;
+	}
+	public String getPurchaseItem() {
+		return purchaseItem;
+	}
+	public void setPurchaseItem(String purchaseItem) {
+		this.purchaseItem = purchaseItem;
+	}
+	public String getPurchaseDetails() {
+		return purchaseDetails;
+	}
+	public void setPurchaseDetails(String purchaseDetails) {
+		this.purchaseDetails = purchaseDetails;
+	}
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+	public String getPaymentInvoiceId() {
+		return paymentInvoiceId;
+	}
+	public void setPaymentInvoiceId(String paymentInvoiceId) {
+		this.paymentInvoiceId = paymentInvoiceId;
+	}
+	public String getPriceInUsd() {
+		return priceInUsd;
+	}
+	public void setPriceInUsd(String priceInUsd) {
+		this.priceInUsd = priceInUsd;
+	}
+	public String getPriceInInr() {
+		return priceInInr;
+	}
+	public void setPriceInInr(String priceInInr) {
+		this.priceInInr = priceInInr;
+	}
+	public Timestamp getPurchaseDate() {
+		return purchaseDate;
+	}
+	public void setPurchaseDate(Timestamp purchaseDate) {
+		this.purchaseDate = purchaseDate;
+	}
+	public String getPurchaseDateStr() {
+		return purchaseDateStr;
+	}
+	public void setPurchaseDateStr(String purchaseDateStr) {
+		this.purchaseDateStr = purchaseDateStr;
+	}
 	@Override
 	public String toString() {
 		return "ServiceRequestBean [uid=" + uid + ", ticketNo=" + ticketNo + ", requestedBy=" + requestedBy
@@ -174,11 +246,11 @@ public class ServiceRequestBean {
 				+ ", serviceReqDescription=" + serviceReqDescription + ", serviceUrgency=" + serviceUrgency
 				+ ", serviceStatus=" + serviceStatus + ", lastUpdate=" + lastUpdate + ", formattedLastUpdate="
 				+ formattedLastUpdate + ", comments=" + comments + ", lastCommentsNotes=" + lastCommentsNotes
-				+ ", lastUpdatedBy=" + lastUpdatedBy + "]";
+				+ ", lastUpdatedBy=" + lastUpdatedBy + ", purchaseId=" + purchaseId + ", purchaseItem=" + purchaseItem
+				+ ", purchaseDetails=" + purchaseDetails + ", paymentStatus=" + paymentStatus + ", PaymentInvoiceId="
+				+ paymentInvoiceId + ", priceInUsd=" + priceInUsd + ", priceInInr=" + priceInInr + ", purchaseDate="
+				+ purchaseDate + ", purchaseDateStr=" + purchaseDateStr + "]";
 	}
-	
-	
-	
 	
 	
 

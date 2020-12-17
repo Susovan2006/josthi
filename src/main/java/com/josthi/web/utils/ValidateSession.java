@@ -3,11 +3,17 @@ package com.josthi.web.utils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.exception.UserException;
 
 public class ValidateSession {
+	
+	
+	private static final Logger logger = LoggerFactory.getLogger(ValidateSession.class);
 	
 	public static String getUserId(HttpServletRequest request) throws Exception{
 		try {
@@ -92,6 +98,8 @@ public class ValidateSession {
 			if(isValidSession(request)) {
 				UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY); 
 				String sessionCustomerId = userSessionBean.getCustomerId();
+				logger.info("sessionCustomerId :"+ sessionCustomerId);
+				
 				if(uid.equalsIgnoreCase(sessionCustomerId)) {
 					return true;
 				}else {

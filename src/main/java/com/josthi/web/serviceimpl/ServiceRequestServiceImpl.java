@@ -14,6 +14,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.bo.ServiceRequestHistoryBean;
 import com.josthi.web.constants.Constant;
+import com.josthi.web.dao.HistoryDao;
 import com.josthi.web.dao.ServiceRequestDao;
 import com.josthi.web.dao.UserAuthDao;
 import com.josthi.web.dao.UserRegistrationDao;
@@ -45,6 +46,9 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 	
 	@Autowired
 	UserRegistrationDao userRegistrationDao;
+	
+	@Autowired
+	private HistoryDao historyDao;
 	
 	@Override
 	public String createTicket(ServiceRequestBean serviceRequestBean, String trim) throws Exception {
@@ -95,6 +99,25 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 				throw new UserExceptionInvalidData("Invalid Request, Please re-login and try.");
 			}
 			
+			//Setting the Service Type. From UI we are getting the ServiceTypeCode. like ODBASIC/ODEMERGENCY/PLANBASIC etc.
+			String serviceTypeCode = serviceRequestDao.getServiceTypeOnServiceCode(serviceRequestBean.getServiceType());
+			serviceRequestBean.setServiceType(serviceTypeCode);
+			
+			//Here we are building the Data for inserting into the PurchaseHistory Table.
+			String priceInUsd = serviceRequestBean.getPriceInUsd();
+			String priceInInr = serviceRequestBean.getPriceInInr();
+			String purchaseItem = serviceRequestBean.getServiceCategory();
+			String paymentStatus = "";
+			String purchaseDetails = "";
+			if(priceInUsd.equalsIgnoreCase("0.00") || priceInInr.equalsIgnoreCase("0.00")) {				
+				purchaseDetails = "Service Covered by Plan. Service ID :"+serviceRequestBean.getServiceCategory();
+				paymentStatus = "Covered by Plan";
+			}else {
+				purchaseDetails = "On Demand Service. Service ID :"+serviceRequestBean.getServiceCategory();
+				paymentStatus = Constant.TICKET_STATUS_PENDING_PAYMENT;
+				serviceRequestBean.setServiceStatus(Constant.TICKET_STATUS_PENDING_PAYMENT); //TODO: need to change based on Payment gateway.
+			}
+			
 			String getServiceAgentId = userAuthDao.getAgentBasedOnBeneficiaryId(serviceRequestBean.getBeneficiaryId().trim());
 			serviceRequestBean.setAssignedTo(getServiceAgentId);
 			
@@ -111,6 +134,20 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 					//Insert in the Service History table.
 					status = serviceRequestDao.insertUserServiceHistoryTale(serviceRequestBean);
 					
+					status = serviceRequestDao.insertIntoPurchaseHistory(ticketId,
+																		 purchaseItem,
+																		 purchaseDetails,
+																		 paymentStatus,
+																		 "",
+																		 priceInUsd,
+																		 priceInInr);
+					
+					//Insert into Activity History.
+					String activityNotes = "User "+serviceRequestBean.getRequestedBy() + " Created a ticket "
+										 +ticketId+" for "+serviceRequestBean.getRequestedFor()+".";
+					status = historyDao.logActivityHistory(serviceRequestBean.getBeneficiaryId(),
+														   serviceRequestBean.getRequesterId(), 
+														   activityNotes);
 					
 					//--> Increment the next ID +1
 					status = userRegistrationDao.updateNextUid(getNextID+1);
@@ -136,18 +173,7 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 	}
 
 	@Override
-	public List<ServiceRequestBean> getServiceRequestList(String userId, String role) throws Exception {
-		/*
-		 * if(role.equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) { return
-		 * serviceRequestDao.getServiceRequestList(userId); }else
-		 * if(role.equalsIgnoreCase(Constant.USER_TYPE_ADMIN)) { return
-		 * serviceRequestDao.getServiceRequestList(userId); }else
-		 * if(role.equalsIgnoreCase(Constant.USER_TYPE_AGENT)) { return
-		 * serviceRequestDao.getServiceRequestList("RU200921008"); }else { throw new
-		 * UserExceptionInvalidData("Looks like the User Role is invalid, please contact the Customer Service"
-		 * ); }
-		 */
-		
+	public List<ServiceRequestBean> getServiceRequestList(String userId, String role) throws Exception {	
 		return serviceRequestDao.getServiceRequestList(userId , role);
 	}
 

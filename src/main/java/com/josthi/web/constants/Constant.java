@@ -40,6 +40,7 @@ public interface Constant {
 	
 	//TICKET STATUS
 	//These status should be in sync in the database
+	String TICKET_STATUS_PENDING_PAYMENT = "PENDING PAYMENT";
 	String TICKET_STATUS_INITIATED = "INITIATED";   			//00AAS
 	String TICKET_STATUS_INPROGRESS = "WORK_IN_PROGRESS"; 		//00AAS
 	String TICKET_STATUS_RESOLVED = "RESOLVED";			  		//00AAS
@@ -63,12 +64,39 @@ public interface Constant {
 	String LANGUAGE = "Language";
 	String TIME_ZONE = "TimeZone";
 	
-	String SERVICE_TYPE = "ServiceType";
+	String SERVICE_TYPE = "ServiceTypeOnDemand";
 	String PAID_SERVICE = "PaidServicaCategory";
 	String ON_DEMAND_SERVICE = "OnDemandServicaCategory";
 	String URGENCY_TYPE = "UrgencyType";
 	
 	
+	//AJAX MESSAGE
 	
+	String AJAX_SUCCESS = "SUCCESS";
+	String AJAX_EXCEPTION = "EXCEPTION";
+	String AJAX_ERROR = "ERROR";
+	String AJAX_WARNING = "WARNING";
+	String AJAX_INFO = "INFO";
+	
+	//SERVICE TYPE
+	String SERVICE_DEFAILT = "Default";
+	String SERVICE_BASIC_SERVICE = "BasicService";
+	String SERVICE_EMERGENCY_SERVICE = "EmergencyService";
+	String SERVICE_GENERAL_SERVICE = "GeneralService";
+	
+	//PLAN OFFERED
+	String PLAN_BASIC = "Basic";
+	String PLAN_SILVER = "Silver";
+	String PLAN_GOLD = "Gold";
+	
+	//These variable are used to match the String we are getting in the Ajax Call
+	// This is only used when the user select the service Type and based on that 
+	//Service dropdown is populated.
+	String PLAN_MATCH_BASIC = "PLANBASIC";
+	String PLAN_MATCH_SILVER = "PLANSILVER";
+	String PLAN_MATCH_GOLD = "PLANGOLD";
+	String SERVICE_MATCH_BASIC ="ODBASIC";
+	String SERVICE_MATCH_EMERGENCY ="ODEMERGENCY";
+	String SERVICE_MATCH_GENERAL ="ODGENERAL";
 
 }

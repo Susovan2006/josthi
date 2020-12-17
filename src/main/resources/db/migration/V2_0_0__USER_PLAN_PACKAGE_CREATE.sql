@@ -368,7 +368,9 @@ CREATE TABLE service_request_table (
   
 INSERT INTO dropdown_metadata (DROPDOWN_TYPE, KEY_ID, DROPDOWN_VALUE, ACTIVE, UPDATE_DATE)
 VALUES('ServiceType', 'Pre-Paid Service', 'Pre-Paid Service', 'Y', CURRENT_TIMESTAMP),
-('ServiceType', 'On Demand Service', 'On Demand Service', 'Y', CURRENT_TIMESTAMP),
+('ServiceType', 'On Demand Basic Service', 'On Demand Basic Service', 'Y', CURRENT_TIMESTAMP),
+('ServiceType', 'On Demand Emergency Service', 'On Demand Emergency Service', 'Y', CURRENT_TIMESTAMP),
+('ServiceType', 'On Demand General Service', 'On Demand General Service', 'Y', CURRENT_TIMESTAMP),
 ('PaidServicaCategory', 'Doctor Appointments', 'Doctor Appointments', 'Y', CURRENT_TIMESTAMP),
 ('PaidServicaCategory', 'Medical Diagnostics', 'Medical Diagnostics', 'Y', CURRENT_TIMESTAMP),
 ('PaidServicaCategory', 'Arranging Nursing Services', 'Arranging Nursing Services', 'Y', CURRENT_TIMESTAMP),
@@ -409,7 +411,7 @@ ADD COLUMN LAST_UPDATE_USER VARCHAR(200) NULL AFTER LAST_UPDATE_COMMENTS;
 ALTER TABLE service_request_table 
 CHANGE COLUMN REQUESTED_BY REQUESTED_BY VARCHAR(200) NOT NULL DEFAULT 'CUSTOMER' ;
   
- --########################## NEXT RELEASE ####################################### 
+ 
   
   CREATE TABLE agency_details (
   AID INT NOT NULL AUTO_INCREMENT,
@@ -438,3 +440,131 @@ CREATE TABLE activity_history_table (
   ACTIVITY_DATE_TIME DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   ACTIVITY_NOTE VARCHAR(300) NULL,
   PRIMARY KEY (ACTIVITY_ID));
+
+  
+   --########################## NEXT RELEASE #######################################
+
+delete from dropdown_metadata where DROPDOWN_TYPE = 'ServiceType';
+  
+INSERT INTO dropdown_metadata (DROPDOWN_TYPE, KEY_ID, DROPDOWN_VALUE, ACTIVE, UPDATE_DATE)
+VALUES
+('ServiceTypeOnDemand', 'On Demand Basic Service', 'On Demand Basic Service', 'Y', CURRENT_TIMESTAMP),
+('ServiceTypeOnDemand', 'On Demand Emergency Service', 'On Demand Emergency Service', 'Y', CURRENT_TIMESTAMP),
+('ServiceTypeOnDemand', 'On Demand General Service', 'On Demand General Service', 'Y', CURRENT_TIMESTAMP),
+('ServiceTypePlanGold', 'Pre-Paid Gold Plan', 'Pre-Paid Gold Plan', 'Y', CURRENT_TIMESTAMP),
+('ServiceTypePlanSilver', 'Pre-Paid Silver Plan', 'Pre-Paid Silver Plan', 'Y', CURRENT_TIMESTAMP),
+('ServiceTypePlanBasic', 'Pre-Paid Basic Plan', 'Pre-Paid Basic Plan', 'Y', CURRENT_TIMESTAMP);
+
+
+
+ALTER TABLE relation
+ADD COLUMN PLAN_NAME VARCHAR(200) NULL AFTER UPDATE_DATE,
+ADD COLUMN CUSTOMER_PLAN_ID INT NULL AFTER PLAN_NAME,
+ADD COLUMN PLAN_EXPIRE_DATE DATETIME NULL AFTER CUSTOMER_PLAN_ID;
+
+create table josthi_db.PLAN_TO_OFFER (
+PLAN_NAME VARCHAR(100) NOT NULL,
+DESCRIPTION VARCHAR(255) default null,
+ACTIVE CHAR(1) default 'Y',
+primary key (PLAN_NAME)
+)COMMENT='List of plans to be offered';
+
+
+insert into PLAN_TO_OFFER (PLAN_NAME, DESCRIPTION)
+VALUES('Basic','Economic Plan, covering just the basic service.'),
+('Silver','Plan with essential Services preferred by many customer.'),
+('Gold','Plan to fulfill all your needs, Best plan preferred by customers.')
+
+
+create table SERVICE_TYPE (
+ID INT NOT NULL auto_increment,
+TYPE_NAME VARCHAR(100) NOT NULL,
+DESCRIPTION VARCHAR(255) default null,
+ACTIVE CHAR(1) default 'Y',
+primary key (ID)
+)COMMENT='List of service types (Medical/general/Misc)';
+
+CREATE TABLE `service` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `SERVICE_CODE` varchar(20) NOT NULL,
+  `SERVICE_NAME` varchar(400) NOT NULL,
+  `DESCRIPTION` varchar(2000) DEFAULT NULL,
+  `ACTIVE` char(1) DEFAULT 'Y',
+  `SERVICE_TYPE` varchar(100) NOT NULL,
+  `INCLUDED_IN_PLAN` varchar(6) DEFAULT 'NNNNNN',
+  `ON_DEMAND_FLAG` char(1) DEFAULT 'Y',
+  `ON_DEMANT_PRICE_INR` decimal(10,2) DEFAULT '0.00',
+  `ON_DEMANT_PRICE_USD` decimal(10,2) DEFAULT '0.00',
+  `DISCLAIMER` varchar(1000) DEFAULT NULL,
+  `SORT_ORDER` int DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `SERVICE_CODE_UNIQUE` (`SERVICE_CODE`),
+  KEY `IX_SERVICE_NAME` (`SERVICE_NAME`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Master table of all services to be offered';
+
+
+CREATE TABLE `purchase_history` (
+  `PURCHASE_ID_TKT` varchar(20) NOT NULL,
+  `PURCHASE_ITEM` varchar(100) DEFAULT NULL,
+  `PURCHASE_DETAILS` varchar(200) DEFAULT NULL,
+  `PURCHASE_DATE` datetime DEFAULT NULL,
+  `PAYMENT_STATUS` varchar(45) DEFAULT NULL,
+  `PAYMENT_INVOICE_ID` varchar(45) DEFAULT NULL,
+  `PRICE_IN_USD` varchar(45) DEFAULT NULL,
+  `PRICE_IN_INR` varchar(45) DEFAULT NULL,
+  UNIQUE KEY `PURCHASE_ID_UNIQUE` (`PURCHASE_ID_TKT`),
+  KEY `PURCHASE_ID_TKT_INDX` (`PURCHASE_ID_TKT`)
+) 
+  
+CREATE TABLE service_type (
+  ID int NOT NULL AUTO_INCREMENT,
+  TYPE_KEY varchar(100) NOT NULL,
+  TYPE_DESCRIPTION varchar(255) DEFAULT NULL,
+  ACTIVE char(1) DEFAULT 'Y',
+  CATEGORY varchar(45) DEFAULT NULL,
+  PRIMARY KEY (ID),
+  UNIQUE KEY TYPE_KEY_UNIQUE (TYPE_KEY)
+)COMMENT='List of service types (Medical/general/Misc)';
+
+INSERT INTO josthi_db.service_type
+(TYPE_KEY, TYPE_DESCRIPTION, ACTIVE, CATEGORY)
+VALUES('ODBASIC', 'On Demand - Basic', 'Y', 'OnDemand'),
+('ODEMERGENCY', 'On Demand - Emergency', 'Y', 'OnDemand'),
+('ODGENERAL', 'On Demand - General', 'Y', 'OnDemand'),
+('PLANBASIC', 'Pre-Paid Basic Plan', 'Y', 'PlanBasic'),
+('PLANSILVER', 'Pre-Paid Silver Plan', 'Y', 'PlanSilver'),
+('PLANGOLD', 'Pre-Paid Gold Plan', 'Y', 'PlanGold');
+
+
+INSERT INTO service
+(SERVICE_CODE, SERVICE_NAME, DESCRIPTION, ACTIVE, SERVICE_TYPE, INCLUDED_IN_PLAN, ON_DEMAND_FLAG, ON_DEMANT_PRICE_INR, ON_DEMANT_PRICE_USD, DISCLAIMER, SORT_ORDER)
+VALUES
+('BS001','Doctor Appointments', 'It`s a pain to schedule a Dr appointment, we will arrange it for you and send reminder.', 'Y', 'BasicService', 'YYYNNN', 'Y', 500.00, 10.00,'NB: The price inclused only setting the appointment, The Doctor`s fee has to be paid by the customer.' , 10),
+('BS001','Medical Diagnostics', 'We will arrange a preferred lab or nearby lab who can conduct the Medical Diagnostic. Also we will deliver the results at your door step', 'Y', 'BasicService', 'YYYNNN', 'Y', 500.00, 10.00,'The price includes setting up an appointment and deliver the report at door step. Lab fee and tax are not included.', 20),
+('BS001','Arranging Nursing Services', 'In case of illness nursing service is very essential, we can contact the nearest nursing center and arrange a nursing facility.', 'Y', 'BasicService', 'YYYNNN', 'Y', 200.00, 3.00,'The price includes just arranging a nurse, the charge for the service will have to be paid by the customer.' ,30),
+('BS001','24X7 Oncall Support', 'Health Emergency don`t have any time, it`s required any time. We are always there to help. just a single call and we will help you out.', 'Y', 'BasicService', 'YYYNNN', 'N', 0.00, 0.00,'We are happy to help during emergency, but there has to be some relatives/friends for hospitalization, This is just for security and safety.', 40),
+('BS001','Arranging Physiotherapy', 'Sometimes Physiotherapy is needed for speedy recovery. we can arrange one for you.', 'Y', 'BasicService', 'NYYNNN', 'Y', 200.00, 3.00,'The price includes only arranging the Physiotherapist, physiotherapy fee has to be paid by the customer.', 50),
+('BS001','Medicines Delivery', 'We can order the Medicines for you, and it will be delivered at your door step.', 'Y', 'BasicService', 'NYYNNN', 'Y', 200.00, 3.00,'The price includes only', 60),
+('ES001','Ambulance Assistance', 'Emergency has no time, it can happen any time, we will provide our best support and arrange ambulance.', 'Y', 'EmergencyService', 'YYYNNN', 'N', 200.00, 3.00,'The price includes only', 70),
+('ES001','Non Medical Emergency', 'Non Medical Emergency need also needs special attention, we will provide service like door lockout, calling fire dept ', 'Y', 'EmergencyService', 'NYYNNN', 'N', 200.00, 3.00,'The price includes only', 80),
+('ES001','Arranging Hospitalization', 'it`s difficult get a hospital bed in the time of emergency, we are connected with many hospital and nursing homes. We can arrange a bed for you.', 'Y', 'EmergencyService', 'YYYNNN', 'N', 200.00, 3.00,'The price includes only', 90),
+('ES001','Status Update', 'We all care for our near and dear ones, we will provide regular status update of the patient to the close relatives.', 'Y', 'EmergencyService', 'NNNNNN', 'N', 200.00, 3.00,'The price includes only', 100),
+('ES001','Providing necessary Contact', 'During an emergency there are so many things to take case, like medicine, blood bank etc. we can provide all the necessary contacts. We have also on demand services.', 'Y', 'EmergencyService', 'NNNNNN', 'N', 200.00, 3.00,'The price includes only', 110),
+('GS001','Sending Notifications', 'Now no need to remember your Dr appointments, We will send you notification before hand.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 120),
+('GS001','Hearing aids & Vision aids', 'Having problem hearing or with vision, we will have some one to help with the hearing and vision aids', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 130),
+('GS001','Cooked Food Delivery', 'Not able to cook everyday, Don`t worry, we will arrange home delivery service for you.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 140),
+('GS001','Cook Service at Home', 'Don`t like outside food, and waiting for some homely meals, we can arrange cook for your home.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 150),
+('GS001','Transportation Arrangement', 'Want to go for a outing, but not able to arrange a transportation facility, we can arrange a transportation for you.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00, 'The price includes only', 160),
+('GS001','Plumbing, Electrician, carpenter Services', 'Home Appliances out of order!, the kitchen cabinet needs maintenance? , now we can help you arranging some one to help you out.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 170),
+('GS001','Grocery Delivery', 'Not able to shop your Grocery regularly, we can help you with the delivery once a week.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 180),
+('GS001','Helping with electronic Devices', 'Don`t know how to setup your whatsapp, don`t know how to setup your wifi on phone? we can help you arranging the service.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 190),
+('GS001','Utility Bills', 'Unable to pay your electric bill in time, don`t to stand in the long queue, we can help you with your bill payments.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 200),
+('GS001','Visa & Passport Assistance', 'Want to visit you son or daughter in US, but don`t know how to get the Visa done? he can help you arranging the Visa & Passport, we can arrange for Flight ticket booking as well', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 210),
+('GS001','Laundry Services', 'Don`t like to iron your clothe, We can arrange local Laundry service for you.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 220),
+('GS001','Insurance Services', 'Car insurance expiring soon, don`t know how to renew it? we can arrange an agent who can help you.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 230),
+('GS001','Assisted day Outing', 'Want assistance for Doctor`s visit, we can arrange an associate on hourly basis, they can take care of you and safely drop home.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 240),
+('GS001','BirthDay Celebration', 'Birthday is a special moment in everyones`s life. We can arrange a small celebration to make it memorable. ', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 250),
+('GS001','Annual Picnic', 'To bring back the smile, we will arrange a paid picnic once a year. let make every year memorable.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 260),
+('GS001','Puja Services', 'We know your parents always pray for all, but there are situations where they might not be able to go to temple physically, we can help and offer puja on behalf of them.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 270),
+('GS001','Postal Service', 'Want to parcel something, but not able to go physically. We can help with these postal services.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 280),
+('GS001','Event Arrahgement', 'Want to have a small party? we can arrange a party for you.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 290);

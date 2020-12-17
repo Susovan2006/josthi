@@ -111,7 +111,7 @@ public class UserBeneficiaryController {
 									@PathVariable String custId,
 									HttpServletRequest request) {
 		
-    		logger.info("Save Beneficiary valled by :"+custId);
+    		logger.info("Save Beneficiary called by :"+custId);
     		
 
     		String actionStatus = "";
@@ -125,7 +125,7 @@ public class UserBeneficiaryController {
     		    if(beneficiaryDetailBean.getBeneficiaryID() != null && 
     		    					beneficiaryService.isValidBeneficiaryID(beneficiaryDetailBean.getBeneficiaryID())) {
     				logger.info("Update Request!!");
-    				boolean status = beneficiaryService.updateBeneficiaryDetails(beneficiaryDetailBean);
+    				boolean status = beneficiaryService.updateBeneficiaryDetails(beneficiaryDetailBean, custId.trim());
     				return "redirect:/user/getBeneficiaryList?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
     																+MessageConstant.USER_BENEFECIARY_UPDATE_SUCCESS_MESSAGE;    			
     			//Save Logic
@@ -163,12 +163,22 @@ public class UserBeneficiaryController {
 	
 	
 	@RequestMapping("/user/deleteBeneficiaryDetail/{beneficiaryID}")
-	public String deleteProduct(Model model, @PathVariable(name = "beneficiaryID") String beneficiaryID) {
+	public String deleteProduct(Model model, @PathVariable(name = "beneficiaryID") String beneficiaryID,
+																		HttpServletRequest request) {
 		try {
-			beneficiaryService.deleteBeneficiaryDetail(beneficiaryID);
+			ValidateSession.isValidSession(request);
+			UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY); 
+			String sessionCustomerId = userSessionBean.getCustomerId();
+			
+			beneficiaryService.deleteBeneficiaryDetail(beneficiaryID, sessionCustomerId);
 			logger.info("beneficiaryID :"+beneficiaryID+" deleted Successfully..");
 			return "redirect:/user/getBeneficiaryList?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="
 																+MessageConstant.USER_BENEFECIARY_DELETE_SUCCESS_MESSAGE;
+		}catch(UserException ex) {
+			logger.error(ex.getMessage(), ex);
+			String actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			String message = ex.getMessage();
+			return "redirect:/login?status="+actionStatus+"&message="+message;
 		}catch(Exception ex) {
 			logger.error("beneficiaryID :"+beneficiaryID, ex);
 			model.addAttribute("status", MessageConstant.USER_FAILURE_STATUS);

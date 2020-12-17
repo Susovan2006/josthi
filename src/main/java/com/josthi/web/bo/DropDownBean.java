@@ -7,6 +7,16 @@ public class DropDownBean {
 	private String value;
 	private String active;
 	
+	
+	public DropDownBean() {
+		super();
+	}
+	
+	public DropDownBean(String keyId, String value) {
+		super();
+		this.keyId = keyId;
+		this.value = value;
+	}
 	public int getTid() {
 		return tid;
 	}

@@ -25,4 +25,9 @@ public interface ServiceRequestDao {
 
 	List<ServiceRequestHistoryBean> getServiceRequestHistoryBeanList(String ticket) throws Exception;
 
+	String getServiceTypeOnServiceCode(String serviceType) throws Exception;
+
+	boolean insertIntoPurchaseHistory(String ticketId, String purchaseItem, String purchaseDetails,
+			String paymentStatus, String paymentInvoiceId, String priceInUsd, String priceInInr) throws Exception;
+
 }

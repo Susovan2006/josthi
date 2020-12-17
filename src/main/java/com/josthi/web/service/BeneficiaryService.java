@@ -17,13 +17,13 @@ public interface BeneficiaryService {
 
 	boolean saveBeneficiaryDetails(BeneficiaryDetailBean beneficiaryDetailBean, String custId, int nextId) throws Exception;
 
-	void deleteBeneficiaryDetail(String beneficiaryID) throws Exception;
+	void deleteBeneficiaryDetail(String beneficiaryID, String sessionCustomerId) throws Exception;
 
 	BeneficiaryDetailBean getBeneficiaryDetailToEdit(String beneficiaryID, String customerId) throws Exception;
 
 	boolean isValidBeneficiaryID(String beneficiaryID) throws Exception;
 
-	boolean updateBeneficiaryDetails(BeneficiaryDetailBean beneficiaryDetailBean) throws Exception;
+	boolean updateBeneficiaryDetails(BeneficiaryDetailBean beneficiaryDetailBean, String custId) throws Exception;
 
 	List<DropDownBean> getBloodGroup(String bloodGroup);
 

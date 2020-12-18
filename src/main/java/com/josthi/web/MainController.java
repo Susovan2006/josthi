@@ -211,10 +211,10 @@ public class MainController {
 	 */
 	
 	//Subscribe a Plan
-	@GetMapping("/user/subscribePlan")
-	public String userSubscribePlan(Model model) {
-			return "user/subscribe_a_plan_user";
-	}
+	/*
+	 * @GetMapping("/user/subscribePlan") public String userSubscribePlan(Model
+	 * model) { return "user/subscribe_a_plan_user"; }
+	 */
 	
 	//Purchase History
 	@GetMapping("/user/purchaseHistory")

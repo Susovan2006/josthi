@@ -21,6 +21,10 @@
 	.price {
 		font-size: 1.5em;
 	}
+	
+	.border-top-table{
+		border-top: 0.0625rem solid #1e2022;
+	}
   </Style>
   
 </head>
@@ -203,31 +207,97 @@
 					  
 					<!-- Pricing Section -->
 					<div class="container space-0">
-					  <h4 class="mb-3">Available plans</h4>
-
+					  <h4 class="mb-3">Available plans, Select one of them</h4>
+					  
+					  <div th:if="${not #lists.isEmpty(planSelectionForUserBeanList)}" class="table_wrapper">
+					  
 					  <!-- Pricing -->
-					  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
-						<input type="radio" id="pricingRadio1" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input" checked>
-						<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-2" for="pricingRadio1">
+					  <div th:each="planSelectionForUserBean : ${planSelectionForUserBeanList}" 
+					  					class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
+					  					
+						<input type="radio"  th:id="'pricingRadio'+${planSelectionForUserBean.planId}"
+							name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
+						<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-2" th:attr="for='pricingRadio'+${planSelectionForUserBean.planId}">
 						  <span class="row">
 							<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
 							  <span class="d-block mb-2">
-								<span class="text-primary font-weight-bold align-top">$</span>
-								<span class="font-size-3 text-primary font-weight-bold">25</span>
+								<span class="text-primary font-weight-bold align-top"></span>
+								<span class="font-size-2 text-primary font-weight-bold" th:text="${planSelectionForUserBean.planActualPriceOneMonthSingle}+'&#8377'">25</span>
 								<span class="font-size-1">/ mo</span>
 							  </span>
 							</span>
 							<span class="col-sm-9 order-sm-1">
-							  <span class="d-block h3 mb-1">Basic</span>
+							  <span class="d-block h3 mb-1" th:text="${planSelectionForUserBean.planName}">Basic</span>
 							  
 							  <div>
-									  <span class="d-block font-size-1">Plan for single Beneficiary, Stater Plan.</span>	
+									  <span class="d-block font-size-1" th:text="${planSelectionForUserBean.planDesc}">Plan Desc</span>	
 
-									  <div class="collapse" id="collapseLinkBasic">
+									  <!-- <div class="collapse" id="collapseLinkBasic">
 										<span class="d-block font-size-1">Monthly Charge.</span>
+									  </div> -->
+									  
+									  <div class="collapse" th:id="'collapseLink'+${planSelectionForUserBean.planId}">
+										<BR>
+										<span class="d-block font-size-1 text-success">Plan Charge.</span>
+										<table>
+										  <thead class="thead-light">
+											<tr>											  
+											  <th scope="col" class="font-size-1">Duration</th>
+											  <th scope="col" class="font-size-1">Price</th>
+											  <th scope="col" class="font-size-1"></th>
+											  
+											</tr>
+										  </thead>
+										  <tbody>
+											<tr>
+											  <td class="border-top-table">
+												<span class="font-size-sm" style="padding-right:50px;">30 Days Plan</span>
+											  </td>
+											  <td class="border-top-table">												
+													<span class="font-size-sm text-body" th:text="${planSelectionForUserBean.planActualPriceOneMonthSingle}+'&#8377'">1000</span>
+											  </td >
+											  <td class="border-top-table">
+												<span class="font-size-sm text-body" ></span>
+											  </td>									 
+											</tr>
+											<tr>
+											  <td class="border-top-table">
+												<span class="font-size-sm" style="padding-right:50px;">90 Days Plan</span>
+											  </td>
+											  <td class="border-top-table">												
+													<del class="text-danger"><span class="font-size-sm text-danger" th:text="${planSelectionForUserBean.planActualPriceThreeMonthSingle}+'&#8377'"></span></del>
+											  </td>
+											  <td class="border-top-table">
+												<span class="font-size-sm text-body" th:text="${planSelectionForUserBean.planDiscountedPriceThreeMonthSingle}+'&#8377'">700/-</span>
+											  </td>									 
+											</tr>
+											<tr>
+											  <td class="border-top-table">
+												<span class="font-size-sm" style="padding-right:50px;">180 Days Plan</span>
+											  </td>
+											  <td class="border-top-table">												
+													<del class="text-danger"><span class="font-size-sm text-danger" th:text="${planSelectionForUserBean.planActualPriceSixMonthSingle}+'&#8377'">1000/-</span></del>
+											  </td>
+											  <td class="border-top-table">
+												<span class="font-size-sm text-body" th:text="${planSelectionForUserBean.planDiscountedPriceSixMonthSingle}+'&#8377'">700/-</span>
+											  </td>									 
+											</tr>
+											<tr>
+											  <td class="border-top-table">
+												<span class="font-size-sm" style="padding-right:50px;">1 Year Plan</span>
+											  </td>
+											  <td class="border-top-table">												
+													<del class="text-danger"><span class="font-size-sm text-danger" th:text="${planSelectionForUserBean.planActualPriceTwelveMonthSingle}+'&#8377'">1000/-</span></del>
+											  </td>
+											  <td class="border-top-table">
+												<span class="font-size-sm text-body" th:text="${planSelectionForUserBean.planDiscountedPriceTwelveMonthSingle}+'&#8377'">700/-</span>
+											  </td>									 
+											</tr>											
+										  </tbody>
+										</table>
 									  </div>
-
-									  <a class="link-collapse" data-toggle="collapse" href="#collapseLinkBasic" role="button" aria-expanded="false" aria-controls="collapseLinkExample">
+									  <a class="link-collapse" data-toggle="collapse" th:attr="href='#collapseLink'+${planSelectionForUserBean.planId}" role="button" 
+									      aria-expanded="false"  aria-controls="collapseLinkExample">
 										<span class="link-collapse-default font-size-1">View Price breakup</span>
 										<span class="link-collapse-active font-size-1">Hide</span>
 									  </a>
@@ -235,11 +305,16 @@
 							</span>
 						  </span>
 						</label>
+						</div>
+						<!-- ELSE BLOCK IN CASE NO BENEFECIARY SELECTED -->
+						<div th:unless="${not #lists.isEmpty(planSelectionForUserBeanList)}">
+							<p class="card-text">Exception Occurred while pulling the data, please logout and re-login.</p>
+						</div>
 					  </div>
 					  <!-- End Pricing -->
 
 					  <!-- Pricing -->
-					  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
+					  <!-- <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
 						<input type="radio" id="pricingRadio2" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
 						<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-2" for="pricingRadio2">
 						  <span class="row">
@@ -267,11 +342,11 @@
 							</span>
 						  </span>
 						</label>
-					  </div>
+					  </div> -->
 					  <!-- End Pricing -->
 
 					  <!-- Pricing -->
-					  <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
+					  <!-- <div class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
 						<input type="radio" id="pricingRadio3" name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
 						<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-2" for="pricingRadio3">
 						  <span class="row">
@@ -299,7 +374,7 @@
 							</span>
 						  </span>
 						</label>
-					  </div>
+					  </div> -->
 					  <!-- End Pricing -->
 
 					  <div class="text-center mt-5">
@@ -328,9 +403,12 @@
 								<select id="selectedPlanFor" class="form-control" name="selectedPlanFor"  
 												required data-msg="Select beneficiary type, the plice will vary based on the selection.">										
 									
-									<option>Single Beneficiary</option>
+									<!-- <option>Single Beneficiary</option>
 									<option>family Plan (2 Pserson)</option>
-									<option>family Plan (3 Pserson)</option>
+									<option>family Plan (3 Pserson)</option> -->
+									<option th:each="planType : ${planTypeList}"
+                             					th:value="${planType.keyId}"
+                             					th:text="${planType.value}" />
 								</select>
 							
 							</div>
@@ -345,10 +423,14 @@
 							<div class="input-group input-group-sm">
 							  <select id="planDuration" class="form-control" name="planDuration"  
 												required data-msg="Select the duration of the Plan, Better to go with yearly Plan and save more!!.">										
-									<option>Monthly (30 Days)</option>
+									<!-- <option>Monthly (30 Days)</option>
 									<option>For 3 Months (60 Days)</option>
 									<option>For 6 Months (180 Days)</option>
-									<option>For 1 Year (365 Days)</option>
+									<option>For 1 Year (365 Days)</option> -->
+									<option th:each="planDuration : ${planDurationList}"
+                             					th:value="${planDuration.keyId}"
+                             					th:text="${planDuration.value}" />
+									
 								</select>
 							</div>
 						</div>
@@ -386,11 +468,16 @@
 					  <!-- Input Group -->
 					  <div class="row"> 
 							<div class="subject-info-box-1 col-sm-5">
-							  <select multiple="multiple" id='lstBox1' class="form-control">
-								<option value="Susovan Gumtya">Susovan Gumtya</option>
+							   <select multiple="multiple" id='lstBox1' class="form-control">
+								<!-- <option value="Susovan Gumtya">Susovan Gumtya</option>
 								<option value="Sayani Gumtya">Sayani Gumtya</option>
-								<option value="Bhabani Gumtya">Bhabani Gumtya</option>
-							  </select>
+								<option value="Bhabani Gumtya">Bhabani Gumtya</option> -->
+								
+								<option th:each="beneficiary : ${beneficiaryList}"
+                             					th:value="${beneficiary.keyId}"
+                             					th:text="${beneficiary.value}" />
+							  </select> 
+							  
 							</div>
 
 							<div class="subject-info-arrows text-center col-sm-2">
@@ -599,73 +686,53 @@
 						<td colspan="4" align="left" style="padding-left:20px;" class="active"><b>Service and Features</b></td>
 					  </tr>
 					  <tr>
-						<td>Beneficiaries</td>
-						<td>Single</td>
-						<td>Double</td>
-						<td>Double</td>
+						<td>Plan available for</td>
+						<td>Single/Family</td>
+						<td>Single/Family</td>
+						<td>Single/Family</td>
 
 					  </tr>
-					  <tr>
-						<td>24X7 Contact Centre</td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					  <tr>
-						<td>Doctor Appointments </td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					 <tr>
-						<td>Arranging Physiotherapy</td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					  <tr>
-						<td> Ambulance Assistance</td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					  <tr>
-						<td>Non Medical Emergency</td>
-						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					 <tr>
-						<td>Hospitilization 24X7 </td>
-						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					  <tr>
-						<td>Regular Status update</td>
-						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					  <tr>
-						<td>Arranging Home repair/Cleaning</td>
-						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
-						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					  <tr>
-						<td>Arranging Plumbing services </td>
-						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
-						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					 <tr>
-						<td>Arranging Electrician </td>
-						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
-						<td><i style="color:red" class="fa fa-ban fa-lg"></i></td>
-						<td><i style="color:limegreen" class="fa fa-check fa-lg"></i></td>
-					  </tr>
-					  
+					 <div th:if="${not #lists.isEmpty(planAndBenefitBeanList)}">
+						 <tr th:each="planAndBenefitBean : ${planAndBenefitBeanList}">
+						 
+							<td th:text="${planAndBenefitBean.serviceName}" th:id="${planAndBenefitBean.serviceCode}"
+							data-toggle="tooltip" data-placement="left" th:attr="title=${planAndBenefitBean.serviceDescription}" title="Service Details">Service</td>
+							<!-- Basic Plan -->
+							<td>
+								<div th:if="${planAndBenefitBean.serviceCoveredByBasic == 'Y'} ">									
+									<i style="color:limegreen" class="fa fa-check fa-lg" 
+									data-toggle="tooltip" data-placement="top" th:attr="title='Disclaimer : '+${planAndBenefitBean.serviceDisclaimer}" 
+									title="Service Disclaimer"></i>
+								</div>
+								<div th:unless="${planAndBenefitBean.serviceCoveredByBasic == 'Y'}">
+									<i style="color:red" class="fa fa-ban fa-lg"></i>
+								</div>
+							</td>
+							<!-- Silver Plan -->
+							<td>
+								<div th:if="${planAndBenefitBean.serviceCoveredBySilver == 'Y'} ">									
+									<i style="color:limegreen" class="fa fa-check fa-lg" 
+									data-toggle="tooltip" data-placement="top" th:attr="title='Disclaimer : '+${planAndBenefitBean.serviceDisclaimer}" 
+									title="Service Disclaimer"></i>
+								</div>
+								<div th:unless="${planAndBenefitBean.serviceCoveredBySilver == 'Y'}">
+									<i style="color:red" class="fa fa-ban fa-lg"></i>
+								</div>
+							</td>
+							
+							<!-- Gold Plan -->
+							<td>
+								<div th:if="${planAndBenefitBean.serviceCoveredByGold == 'Y'} ">									
+									<i style="color:limegreen" class="fa fa-check fa-lg" 
+									data-toggle="tooltip" data-placement="top" th:attr="title='Disclaimer : '+${planAndBenefitBean.serviceDisclaimer}" 
+									title="Service Disclaimer"></i>
+								</div>
+								<div th:unless="${planAndBenefitBean.serviceCoveredByGold == 'Y'}">
+									<i style="color:red" class="fa fa-ban fa-lg"></i>
+								</div>
+							</td>
+						  </tr>
+					  </div>
 					  <tr>
 						<td>Customer Rating</td>
 						<td>A</td>
@@ -774,6 +841,7 @@
   </script>
   
     <!-- Script to move Beneficiary to Plan -->
+    <!-- https://stackoverflow.com/questions/14001924/jquery-moving-all-items-in-listbox-at-once -->
     <Script>
 
 	  (function () {

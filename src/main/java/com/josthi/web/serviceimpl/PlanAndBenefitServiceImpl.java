@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.josthi.web.bo.AjaxResponsePrice;
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.PlanAndBenefitBean;
+import com.josthi.web.bo.PlanSelectionForUserBean;
 import com.josthi.web.bo.RelationBean;
 import com.josthi.web.dao.PlanDetailsDao;
 import com.josthi.web.exception.UserExceptionInvalidData;
@@ -84,6 +86,32 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			return true;
 		}
 		
+	}
+
+	/**
+	 * This method is to fetch the Plan and Service Details in Tabular format.
+	 */
+	@Override
+	public List<PlanAndBenefitBean> getServiceAndPlanToDisplay() throws Exception {
+		return planDetailsDao.getServiceAndPlanToDisplay();
+	}
+
+
+	@Override
+	public List<PlanSelectionForUserBean> getPlanDetailsToDisplay() throws Exception {
+		return planDetailsDao.getPlanDetailsToDisplay();
+	}
+
+
+	@Override
+	public List<DropDownBean> getPlanDurationList() throws Exception {	
+		return planDetailsDao.getPlanDurationList();
+	}
+
+
+	@Override
+	public List<DropDownBean> getBeneficiaryListForPlan(String hostCustomerId) throws Exception {
+		return planDetailsDao.getBeneficiaryListForPlan(hostCustomerId);
 	}
 
 }

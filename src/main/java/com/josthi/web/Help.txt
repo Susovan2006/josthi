@@ -9,6 +9,10 @@ Numeric field in HTML : pattern="^[0-9]*$"
 for a line in HTML --> <hr class="my-3">
 
 
+################### INR ASCHII ##########################
+&#8377
+
+
 ################### SLOW ECLIPSE ######################
 
 C:\Users\susov\workspace\.metadata\.plugins\org.eclipse.ui.workbench rename workbench.xml.bak
@@ -158,3 +162,9 @@ $('#Crd option:selected').text(); --> Text
 
 ################## ACTIVITY LOGS #################
 boolean logstatus = historyDao.logActivityHistory(activityFor, activityBy, activityNotes);
+
+
+#################### THYMELEAF setting CSS/js attributes ########################
+<i style="color:limegreen" class="fa fa-check fa-lg" 
+									data-toggle="tooltip" data-placement="left" th:attr="title=${planAndBenefitBean.serviceDisclaimer}" 
+									title="Service Disclaimer"></i>

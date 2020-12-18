@@ -453,7 +453,10 @@ VALUES
 ('ServiceTypeOnDemand', 'On Demand General Service', 'On Demand General Service', 'Y', CURRENT_TIMESTAMP),
 ('ServiceTypePlanGold', 'Pre-Paid Gold Plan', 'Pre-Paid Gold Plan', 'Y', CURRENT_TIMESTAMP),
 ('ServiceTypePlanSilver', 'Pre-Paid Silver Plan', 'Pre-Paid Silver Plan', 'Y', CURRENT_TIMESTAMP),
-('ServiceTypePlanBasic', 'Pre-Paid Basic Plan', 'Pre-Paid Basic Plan', 'Y', CURRENT_TIMESTAMP);
+('ServiceTypePlanBasic', 'Pre-Paid Basic Plan', 'Pre-Paid Basic Plan', 'Y', CURRENT_TIMESTAMP),
+('FamailyPlanType', '1BEN', 'Single Beneficiary', 'Y', CURRENT_TIMESTAMP),
+('FamailyPlanType', '2BEN', 'Family Plan (2 Beneficiary)', 'Y', CURRENT_TIMESTAMP),
+('FamailyPlanType', '3BEN', 'Family Plan (3 Beneficiary)', 'Y', CURRENT_TIMESTAMP);
 
 
 
@@ -462,6 +465,8 @@ ADD COLUMN PLAN_NAME VARCHAR(200) NULL AFTER UPDATE_DATE,
 ADD COLUMN CUSTOMER_PLAN_ID INT NULL AFTER PLAN_NAME,
 ADD COLUMN PLAN_EXPIRE_DATE DATETIME NULL AFTER CUSTOMER_PLAN_ID;
 
+
+--Not in use
 create table josthi_db.PLAN_TO_OFFER (
 PLAN_NAME VARCHAR(100) NOT NULL,
 DESCRIPTION VARCHAR(255) default null,
@@ -469,7 +474,7 @@ ACTIVE CHAR(1) default 'Y',
 primary key (PLAN_NAME)
 )COMMENT='List of plans to be offered';
 
-
+--not in use
 insert into PLAN_TO_OFFER (PLAN_NAME, DESCRIPTION)
 VALUES('Basic','Economic Plan, covering just the basic service.'),
 ('Silver','Plan with essential Services preferred by many customer.'),
@@ -568,3 +573,43 @@ VALUES
 ('GS001','Puja Services', 'We know your parents always pray for all, but there are situations where they might not be able to go to temple physically, we can help and offer puja on behalf of them.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 270),
 ('GS001','Postal Service', 'Want to parcel something, but not able to go physically. We can help with these postal services.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 280),
 ('GS001','Event Arrahgement', 'Want to have a small party? we can arrange a party for you.', 'Y', 'GeneralService', 'NNNNNN', 'Y', 200.00, 3.00,'The price includes only', 290);
+
+
+
+--XXXXXXXXXXXXXXXXXXXXX P L A N XXXXXXXXXXXXXXXXXXXXX
+
+
+create table PLAN_TYPE (
+ID INT NOT NULL auto_increment,
+PLAN_TYPE_ID VARCHAR(10) NOT null,
+PLAN_NAME VARCHAR(100) NOT NULL,
+DESCRIPTION VARCHAR(255) default null,
+ACTIVE CHAR(1) default 'Y',
+primary key (PLAN_TYPE_ID),
+key `IX_PLAN_NAME` (PLAN_NAME),
+UNIQUE KEY `ID_UNIQUE` (`ID`)
+)COMMENT='List of plans to be offered';
+
+create table PLAN_DISCOUNT_ON_DURATION (
+ID INT NOT NULL auto_increment,
+DISCOUNT_ID VARCHAR(10) NOT null,
+DURATION_NAME VARCHAR(50) NOT null,
+MULTIPLICATION_FACTOR INT NOT null,
+DICSOUNT_PERCENTAGE INT NOT null,
+primary key (DISCOUNT_ID),
+UNIQUE KEY `DISCOUNT_ID_UNIQUE` (`ID`)
+)COMMENT='Multiplication Factor is the base Price, Discount in Percent.';
+
+
+create table PLAN_PRICE_DETAIL (
+ID INT NOT NULL auto_increment,
+PLAN_TYPE_ID VARCHAR(10) NOT null,
+PRICE_FOR_1_PERSON DECIMAL(10,2) default null,
+PRICE_FOR_2_PERSON DECIMAL(10,2) default null,
+PRICE_FOR_3_PERSON DECIMAL(10,2) default null,
+CURRENCY VARCHAR(3) default null, -- INR/USD/GBP
+ACTIVE CHAR(1) default 'Y', -- Needed only if you want to maintain offered price history. Earlier pricing entry will be set inactive and new entry will be made for any pricing update
+PRICE_UPDATED_ON datetime DEFAULT CURRENT_TIMESTAMP, -- Needed only if you want to maintain pricing history
+primary key (ID),
+constraint `FK_PLAN_PRICE_ID` foreign key (PLAN_TYPE_ID) references PLAN_TYPE (PLAN_TYPE_ID)
+)COMMENT='Pricing master table for plans';

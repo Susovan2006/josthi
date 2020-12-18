@@ -146,6 +146,16 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 		return DropDownList;
 	}
 
+	@Override
+	public List<DropDownBean> getPLanType(String dropdownPlanType) throws Exception {
+		try {
+			return cacheConfigDao.getDropDownForGroupID(dropdownPlanType);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the on urgency values from the Server. Please try later");
+		}
+	}
+
 	/*
 	 * public void setCacheConfigDao(CacheConfigDaoImpl cacheConfigDaoImpl) {
 	 * this.cacheConfigDao = cacheConfigDaoImpl; }

@@ -8,14 +8,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.josthi.web.bo.AgentAssignmentBean;
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.PlanAndBenefitBean;
+import com.josthi.web.bo.PlanSelectionForUserBean;
 import com.josthi.web.bo.RelationBean;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.PlanDetailsDao;
 import com.josthi.web.dao.rowmapper.BeneficiaryAgentEmailRowMapper;
+import com.josthi.web.dao.rowmapper.BeneficiaryDropDownRowmapper;
+import com.josthi.web.dao.rowmapper.BeneficiaryDropForPlanDownRowmapper;
+import com.josthi.web.dao.rowmapper.DropDownPlanDurationRowmapper;
 import com.josthi.web.dao.rowmapper.DropDownRowmapper;
 import com.josthi.web.dao.rowmapper.DropDownServiceDetailsRowmapper;
 import com.josthi.web.dao.rowmapper.DropDownServiceTypeRowmapper;
+import com.josthi.web.dao.rowmapper.PlanAndBenefitDetailRowMapper;
+import com.josthi.web.dao.rowmapper.PlanAndPriceDetailToDisplayRowMapper;
 import com.josthi.web.dao.rowmapper.RelationRowmapper;
 import com.josthi.web.dao.rowmapper.ServicePriceDetailRowMapper;
 import com.josthi.web.exception.UserExceptionInvalidData;
@@ -164,18 +171,6 @@ private static final Logger logger = LoggerFactory.getLogger(PlanDetailsDaoImpl.
 	public List<DropDownBean> getServiceTypeListBasedOnPlan(String planType) throws Exception {
 		try{
 				 String whereClause = "";
-					/*
-					 * if(planType.equalsIgnoreCase(Constant.SERVICE_DEFAILT)) { whereClause =
-					 * "('ServiceTypePlanBasic','ServiceTypeOnDemand') order by DROPDOWN_TYPE  desc"
-					 * ; }else if(planType.equalsIgnoreCase(Constant.PLAN_BASIC)) { whereClause =
-					 * "('ServiceTypePlanBasic','ServiceTypeOnDemand') order by DROPDOWN_TYPE  desc"
-					 * ; }else if(planType.equalsIgnoreCase(Constant.PLAN_SILVER)) { whereClause =
-					 * "('ServiceTypePlanSilver','ServiceTypeOnDemand') order by DROPDOWN_TYPE  desc"
-					 * ; }else if(planType.equalsIgnoreCase(Constant.PLAN_GOLD)) { whereClause =
-					 * "('ServiceTypePlanGold','ServiceTypeOnDemand') order by DROPDOWN_TYPE  desc";
-					 * }else { throw new UserExceptionInvalidData("Invalid Plan Name :"
-					 * +planType+" Please contact the Customer Service"); }
-					 */
 				 if(planType.equalsIgnoreCase(Constant.SERVICE_DEFAILT)) {
 					whereClause = "('OnDemand') order by CATEGORY  desc";
 				}else if(planType.equalsIgnoreCase(Constant.PLAN_BASIC)) {
@@ -268,6 +263,95 @@ private static final Logger logger = LoggerFactory.getLogger(PlanDetailsDaoImpl.
 				logger.error(ex.getMessage());
 				throw ex;
 			}
+	}
+	
+	
+	public static final String SELECT_PLAN_AND_SERVICE_TO_DISPLAY = "SELECT SERVICE_CODE, SERVICE_NAME, "
+			+ " DESCRIPTION, SERVICE_TYPE, INCLUDED_IN_PLAN, ON_DEMAND_FLAG, DISCLAIMER "
+			+ " FROM service where ACTIVE='Y' order by SORT_ORDER asc";
+	@Override
+	public List<PlanAndBenefitBean> getServiceAndPlanToDisplay() throws Exception {
+		try {
+			
+			List<PlanAndBenefitBean> planAndBenefitBeanList = getJdbcTemplate().query(
+											 SELECT_PLAN_AND_SERVICE_TO_DISPLAY,
+											 new PlanAndBenefitDetailRowMapper());
+			return planAndBenefitBeanList;
+			
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	public static final String SELECT_PLAN_AND_PRICE_TO_DISPLAY = "select A.PLAN_TYPE_ID, A.PLAN_NAME, A.DESCRIPTION, " + 
+			"B.PRICE_FOR_1_PERSON as ONE_MONTH_ACTUAL, " + 
+			"B.PRICE_FOR_1_PERSON as ONE_MONTH_DISCOUNT, " + 
+			" 3*B.PRICE_FOR_1_PERSON as THREE_MONTH_ACTUAL, " + 
+			"(B.PRICE_FOR_1_PERSON * 3) - ((select (DICSOUNT_PERCENTAGE/100) from PLAN_DISCOUNT_ON_DURATION where DISCOUNT_ID = '90DAY')*(B.PRICE_FOR_1_PERSON * 3)) as THREE_MONTH_DISCOUNT, " + 
+			" 6*B.PRICE_FOR_1_PERSON as SIX_MONTH_ACTUAL, " + 
+			"(B.PRICE_FOR_1_PERSON * 6) - ((select (DICSOUNT_PERCENTAGE/100) from PLAN_DISCOUNT_ON_DURATION where DISCOUNT_ID = '180DAY')*(B.PRICE_FOR_1_PERSON * 6)) as SIX_MONTH_DISCOUNT, " + 
+			" 12*B.PRICE_FOR_1_PERSON as TWELVE_MONTH_ACTUAL, " + 
+			"(B.PRICE_FOR_1_PERSON * 12) - ((select (DICSOUNT_PERCENTAGE/100) from PLAN_DISCOUNT_ON_DURATION where DISCOUNT_ID = '365DAY')*(B.PRICE_FOR_1_PERSON * 12)) as TWELVE_MONTH_DISCOUNT " + 
+			"from PLAN_TYPE A, PLAN_PRICE_DETAIL B where A.PLAN_TYPE_ID = B.PLAN_TYPE_ID and B.CURRENCY = 'INR';";
+	
+	
+	
+
+	@Override
+	public List<PlanSelectionForUserBean> getPlanDetailsToDisplay() throws Exception {
+		try {
+			
+			List<PlanSelectionForUserBean> planSelectionForUserBeanList = getJdbcTemplate().query(
+											 SELECT_PLAN_AND_PRICE_TO_DISPLAY,
+											 new PlanAndPriceDetailToDisplayRowMapper());
+			return planSelectionForUserBeanList;
+			
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	
+	public static final String SELECT_PLAN_DURATION_KEY_VALUE_FOR_DROPDOWN = "SELECT DISCOUNT_ID, DURATION_NAME FROM plan_discount_on_duration order by ID asc;";
+	@Override
+	public List<DropDownBean> getPlanDurationList() throws Exception {
+		// TODO Auto-generated method stub
+		try{   
+			
+			List<DropDownBean> planDurationList = getJdbcTemplate().query(
+							SELECT_PLAN_DURATION_KEY_VALUE_FOR_DROPDOWN,														 
+							new DropDownPlanDurationRowmapper());
+			return planDurationList;
+		}catch(Exception ex){
+			logger.error(ex.getMessage());
+			throw ex;
+		}
+
+	}
+	
+	
+	//Bad SQL need tuning.
+	public static final String SELECT_BENEFICIARY_FOR_PLAN_SELECTION = "select A.BENEFICIARY_ID, B.FIRST_NAME, B.LAST_NAME FROM  " + 
+			" beneficiary_detail A, user_detail B , relation C " + 
+			" where A.BENEFICIARY_ID =  B.UID and A.CUSTOMER_ID = ? " + 
+			" and A.BENEFICIARY_ID = C.BENEFICIARY_ID and " + 
+			" (C.PLAN_NAME = '' or C.PLAN_NAME is null or C.PLAN_EXPIRE_DATE < CURDATE())";
+	@Override
+	public List<DropDownBean> getBeneficiaryListForPlan(String hostCustomerId) throws Exception {
+		try{   
+			
+			List<DropDownBean> planDurationList = getJdbcTemplate().query(
+							SELECT_BENEFICIARY_FOR_PLAN_SELECTION,	
+							new Object[] {hostCustomerId},
+							new BeneficiaryDropForPlanDownRowmapper());
+			return planDurationList;
+		}catch(Exception ex){
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
 	}
 	
 	

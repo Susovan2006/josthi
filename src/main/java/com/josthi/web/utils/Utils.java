@@ -414,6 +414,15 @@ public static String getNextTicketID(String type,int nextCount) {
 	        return false;
 
 	}
+	
+	
+	public static String formattedCurrency(String value) {		
+		Float returnValue=Float.parseFloat(value);
+		DecimalFormat df = new DecimalFormat("#,###.00");
+		df.setMaximumFractionDigits(2);
+		return df.format(returnValue);
+		
+	}
 
 	
 

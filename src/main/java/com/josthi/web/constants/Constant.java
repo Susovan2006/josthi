@@ -68,6 +68,7 @@ public interface Constant {
 	String PAID_SERVICE = "PaidServicaCategory";
 	String ON_DEMAND_SERVICE = "OnDemandServicaCategory";
 	String URGENCY_TYPE = "UrgencyType";
+	String PLAN_TYPE = "FamailyPlanType";
 	
 	
 	//AJAX MESSAGE

@@ -94,6 +94,9 @@ public class AssignAgentByAdminController {
         	        EmailDbBean emailDbBeanForService = Utils.getEmailBeanForAgentAssignment(email, 
         	        																		Utils.mapToString(agentAssignmentEmailMap));
         	        boolean otpQueueStatus = emailService.queueEmail(emailDbBeanForService);
+        	        if(otpQueueStatus) {
+        	        	EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
+        	        }
     			}
 
     			

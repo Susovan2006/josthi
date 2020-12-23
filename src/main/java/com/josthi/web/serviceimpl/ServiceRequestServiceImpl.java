@@ -57,7 +57,7 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 		DefaultTransactionDefinition def = null;
 		try {
 			logger.info("Within transaction Block");
-			//Here we are encrypting the Password.
+			
 			int getNextID = userAuthDao.getNextID();
 			
 			

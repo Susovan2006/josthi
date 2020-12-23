@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -48,7 +49,7 @@ public class Utils {
 			custId.append("BE");
 		}	
 		custId.append(formatter.format(new Date()));		
-		custId.append(String.format("%03d", nextCount));
+		custId.append(String.format("%04d", nextCount));
 		
 		return custId.toString();
 		
@@ -58,21 +59,44 @@ public class Utils {
 	
 public static String getNextTicketID(String type,int nextCount) {
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("MMdd");
-		StringBuffer custId = new StringBuffer();
+		SimpleDateFormat formatter = new SimpleDateFormat("YYMMdd");
+		StringBuffer txtId = new StringBuffer();
 		if(type.equalsIgnoreCase(Constant.REQUEST_TICKET)) {
-			custId.append("TKT");
+			txtId.append("TKT");
 		}else if(type.equalsIgnoreCase(Constant.REQUEST_INCIDENT)) {
-			custId.append("INC");
+			txtId.append("INC");
 		}
-		custId.append(formatter.format(new Date()));
-		custId.append(String.format("%05d", nextCount));
+		txtId.append(formatter.format(new Date()));
+		txtId.append(String.format("%04d", nextCount));
 				
 		
 		
-		return custId.toString();
+		return txtId.toString();
 		
 	}
+
+public static String getNextPlanInvoiceID(String type, String plan,int nextCount) {
+	
+	SimpleDateFormat formatter = new SimpleDateFormat("YYMMdd");
+	StringBuffer planId = new StringBuffer();
+	if(type.equalsIgnoreCase(Constant.REQUEST_PLAN)) {
+		planId.append("P");
+	}
+	
+	if(plan.equalsIgnoreCase(Constant.PLAN_BASIC)) {
+		planId.append("BAS");
+	}else if(plan.equalsIgnoreCase(Constant.PLAN_SILVER)) {
+		planId.append("SLV");
+	}else if(plan.equalsIgnoreCase(Constant.PLAN_GOLD)) {
+		planId.append("GLD");
+	}
+	planId.append(formatter.format(new Date()));
+	planId.append(String.format("%04d", nextCount));
+
+	return planId.toString();
+	
+}
+
 
 	
 	/**
@@ -163,6 +187,21 @@ public static String getNextTicketID(String type,int nextCount) {
 		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_AGENT_UPDATE);
 		emailDbBean.setJsonString(jsonValue);
 		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_AGENT_ASSIGNMENT_UPDATE);
+		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
+		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
+		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
+		return emailDbBean;
+	}
+	
+	
+    public static EmailDbBean getEmailBeanForPlanInvoive(String emailTo, String invoiveNo, String jsonValue) {
+		
+		EmailDbBean emailDbBean =  new EmailDbBean();
+		emailDbBean.setSentTo(emailTo);
+		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_PLAN);
+		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_PLAN_INVOIVE + " : "+invoiveNo);
+		emailDbBean.setJsonString(jsonValue);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_PURCHASE_INVOICE);
 		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
 		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
 		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
@@ -289,9 +328,14 @@ public static String getNextTicketID(String type,int nextCount) {
 		
 	}
 	
+	//public static Timestamp getDateAdditionValue(int daysToAdd) throws ParseException {		
+		//return new Timestamp(System.currentTimeMillis() + daysToAdd * 86400000);
+	//}
+	
 	public static Timestamp getDateAdditionValue(int daysToAdd) throws ParseException {		
-		return new Timestamp(System.currentTimeMillis() + daysToAdd * 86400000);
-
+		LocalDateTime newDate = LocalDateTime.now().plusDays(daysToAdd);
+		Timestamp newTimestamp = Timestamp.valueOf(newDate);
+		return newTimestamp;
 	}
 
 
@@ -422,6 +466,25 @@ public static String getNextTicketID(String type,int nextCount) {
 		df.setMaximumFractionDigits(2);
 		return df.format(returnValue);
 		
+	}
+
+
+	//1BEN, 2BEN, 3BEN --> 1, 2, 3
+	public static int getBeneficiaryCountFromDropdownVal(String beneficiaryCount) {
+		if(StringUtils.isEmpty(beneficiaryCount)) {
+			return 0;
+		}
+		
+		int count = Integer.parseInt(StringUtils.substring(beneficiaryCount, 0, 1));
+		return count;
+		
+	}
+
+
+
+	public static double getDoubleValue(String priceStr) {
+		double f = Double.parseDouble(priceStr.replace(",",""));
+		return f;
 	}
 
 	

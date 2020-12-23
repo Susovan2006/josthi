@@ -19,6 +19,7 @@ public interface Constant {
 	String USER_TYPE_SUB_AGENT = "SUBAGENT";
 	String USER_TYPE_BENEFICIARY ="BENUSER";
 	String REQUEST_TICKET = "TICKET";
+	String REQUEST_PLAN = "PLAN";
 	String REQUEST_INCIDENT = "INCIDENT";
 	String USER_TEMPORARY_LOCK_YES = "YES";
 	String USER_TEMPORARY_LOCK_NO = "NO";
@@ -99,5 +100,25 @@ public interface Constant {
 	String SERVICE_MATCH_BASIC ="ODBASIC";
 	String SERVICE_MATCH_EMERGENCY ="ODEMERGENCY";
 	String SERVICE_MATCH_GENERAL ="ODGENERAL";
+	
+	String ONE_MONTH = "30DAY";
+	String THREE_MONTH = "90DAY";
+	String SIX_MONTH = "180DAY";
+	String ONE_YEAR = "365DAY";
+	
+	String ONE_BENEFICIARY = "1BEN";
+	String TWO_BENEFICIARY = "2BEN";
+	String THREE_BENEFICIARY = "3BEN";
+	
+	
+	//JOSTHI Address
+	String JOSTHI_ADDRESS_LINE_1 = "15C/1 Anupama Housing";
+	String JOSTHI_ADDRESS_LINE_2 = "VIP ROAD";
+	String JOSTHI_CITY = "Kolkata";
+	String JOSTHI_PIN = "700052";
+	String JOSTHI_EMAIL = "MyJosthi@gmail.com";
+	String JOSTHI_CONTACT ="+91 9836548561";
+	
+	
 
 }

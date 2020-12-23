@@ -128,6 +128,26 @@
 
             <!-- Body -->
             <div class="card-body">
+            
+            
+                <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.customerId}"  id="sessionCustomerId">
+            
+
+            	<!-- ################################################################################################################ -->
+				<!-- #######################				A L E R T   S E C T I O N 		 				######################### -->
+				<!-- ################################################################################################################ -->
+	            <div th:if="${status ne null}">
+		            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+					  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+					      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+					    </svg>
+					  </button>
+					</div>
+				</div>
+				<!-- Alert Section End-->
+				
 				<!-- ################################################################################################################ -->
 				<!-- #######################					S T E P     F O R M			 				######################### -->
 				<!-- ################################################################################################################ -->
@@ -137,7 +157,13 @@
 						"progressSelector": "#advancedFormStepFormProgress",
 						"stepsSelector": "#advancedFormStepFormContent",
 						"isValidate": true
-					  }'>
+					  }' id= "buyAPlanForm" th:action="@{/user/buyPlan/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
+			  											              				th:object="${planSubscriptionForUserBean}"  method="post">
+			  											              				
+			  	 <!-- These fields will be populated by JavaScript / Ajax -->
+				<input type="hidden" th:field="*{calculatedPrice}"  id="hiddenPrice">
+				<input type="hidden" th:field="*{offerId}"  id="hiddenOfferId">
+				
 				<div class="row">
 				<div class="col-lg-3">
 				  <!-- Step -->
@@ -170,7 +196,7 @@
 							<i class="fas fa-users"></i>
 						</span>
 						<div class="step-content">
-						  <span class="step-inline-title">Benefetiary</span>
+						  <span class="step-inline-title">Beneficiary</span>
 						</div>
 					  </div>
 					</li>
@@ -215,8 +241,9 @@
 					  <div th:each="planSelectionForUserBean : ${planSelectionForUserBeanList}" 
 					  					class="custom-control custom-radio custom-control-inline checkbox-outline checkbox-icon w-100">
 					  					
-						<input type="radio"  th:id="'pricingRadio'+${planSelectionForUserBean.planId}"
-							name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input">
+						<input type="radio"  th:field="*{planID}" th:value="${planSelectionForUserBean.planId}" th:id="'pricingRadio'+${planSelectionForUserBean.planId}"
+							name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input"
+							required data-msg="This is a required field">
 						<label class="checkbox-outline-label checkbox-icon-label w-100 rounded p-2" th:attr="for='pricingRadio'+${planSelectionForUserBean.planId}">
 						  <span class="row">
 							<span class="col-sm-3 order-sm-2 text-sm-right mb-3 mb-sm-0">
@@ -400,7 +427,7 @@
 						  <div class="form-group js-form-message">
 							<label class="input-label" for="selectedPlanFor">Is this Plan for a Single beneficiary or a Family (Max 3 Person)</label>
 							<div class="input-group input-group-sm">						  
-								<select id="selectedPlanFor" class="form-control" name="selectedPlanFor"  
+								<select th:field="*{beneficiaryCount}" id="selectedPlanFor" class="form-control" name="selectedPlanFor"  
 												required data-msg="Select beneficiary type, the plice will vary based on the selection.">										
 									
 									<!-- <option>Single Beneficiary</option>
@@ -421,7 +448,7 @@
 						<div class="form-group js-form-message">
 							<label class="input-label" for="planDuration">Last name</label>
 							<div class="input-group input-group-sm">
-							  <select id="planDuration" class="form-control" name="planDuration"  
+							  <select th:field="*{planDuration}" id="planDuration" class="form-control" name="planDuration"  
 												required data-msg="Select the duration of the Plan, Better to go with yearly Plan and save more!!.">										
 									<!-- <option>Monthly (30 Days)</option>
 									<option>For 3 Months (60 Days)</option>
@@ -481,10 +508,11 @@
 							</div>
 
 							<div class="subject-info-arrows text-center col-sm-2">
-							  <button type="button" id='btnAllRight' class="btn btn-soft-primary btn-icon btn-xs">
+							  <!-- There will be max 3 Beneficiary, so no need to have Move all Option -->
+							  <!-- <button type="button" id='btnAllRight' class="btn btn-soft-primary btn-icon btn-xs">
 							  <i class="fas fa-forward"></i>
 							  </button>
-							  </br>
+							  </br> -->
 							  <button type="button" id='btnRight' class="btn btn-soft-primary btn-icon btn-xs">
 							  <i class="fas fa-chevron-right"></i>
 							  </button>
@@ -493,15 +521,19 @@
 							  <i class="fas fa-chevron-left"></i>
 							  </button>
 							  </br>
-							  <button type="button" id='btnAllLeft' class="btn btn-soft-primary btn-icon btn-xs">
+							  <!-- Removing this Button just to reduce Confusion -->
+							  <!-- <button type="button" id='btnAllLeft' class="btn btn-soft-primary btn-icon btn-xs">
 								<i class="fas fa-backward"></i>
-							  </button>
+							  </button> -->
 							</div>
 
 							<div class="subject-info-box-2 col-sm-5">
-							  <select multiple="multiple" id='lstBox2' class="form-control">
+								<div class="form-group js-form-message">
+							  <select th:field="*{beneficiaryIdArr}" multiple="multiple" id='lstBox2' class="form-control"
+							  	required data-msg="You can't proceed without any Beneficiary, Please select the Beneficiary.">
 								<!-- Initially This is Blank-->
 							  </select>
+							  </div>
 							</div>
 
 							
@@ -515,7 +547,7 @@
 						   data-hs-step-form-prev-options='{
 							 "targetSelector": "#advancedFormSelectStepTwo"
 						   }'>Back</a>
-						<button type="button" class="btn btn-sm btn-primary transition-3d-hover"
+						<button type="button" onclick="reviewPlanData();" class="btn btn-sm btn-primary transition-3d-hover"
 								data-hs-step-form-next-options='{
 								  "targetSelector": "#advancedFormSelectStepFour"
 								}'>Next</button>
@@ -529,21 +561,21 @@
 							<div class="col-sm-4">
 								<div class="form-group js-form-message">
 								  <label id="serviceCategoryLbl" class="input-label">Plan Name:</label>
-								  <p id="benefetiaryId" class="font-size-1 text-primary">Gold</p>
+								  <p id="divPlanNameToReview" class="font-size-1 text-primary">Gold</p>
 								</div>
 							</div>
 							
 							<div class="col-sm-5">
 								<div class="form-group js-form-message">
-								  <label class="input-label">Plan Type:</label>
-								  <p id="requestTypeId" class="font-size-1 text-primary">Family Plan(2) Members</p>
+								  <label class="input-label">Plan Covers:</label>
+								  <p class="font-size-1 text-primary" id="divPlanTypeOnBeneficiaryCount">Family Plan(2) Members</p>
 								</div>
 							</div>
 							
 							<div class="col-sm-3">
 								<div class="form-group js-form-message">
-								  <label class="input-label">Plan For:</label>
-								  <p id="serviceDateId" class="font-size-1 text-primary">90 days</p>
+								  <label class="input-label">Plan Valid For:</label>
+								  <p  class="font-size-1 text-primary" id="divPlanDurationToReview">90 days</p>
 								</div>
 							</div>
 							
@@ -554,21 +586,21 @@
 							<div class="col-sm-4">
 								<div class="form-group js-form-message">
 								  <label class="input-label">Plan Start Date:</label>
-								  <p id="serviceTitleId" class="font-size-1 text-primary">Jan 1 2021</p>
+								  <p class="font-size-1 text-primary" id="divPlanStartDate">Jan 1 2021</p>
 								</div>
 							</div>
 							
 							<div class="col-sm-5">
 								<div class="form-group js-form-message">
 								  <label class="input-label">Plan Expire Date:</label>
-								  <p id="chargeId" class="font-size-1 text-primary">March 30 2021</p>
+								  <p class="font-size-1 text-primary" id="divPlanExpireDate">March 30 2021</p>
 								</div>
 							</div>
 							
 							<div class="col-sm-3">
 								<div class="form-group js-form-message">
 								  <label class="input-label">Plan Price:</label>
-								  <p id="statusId" class="font-size-1 text-primary">90$</p>
+								  <p class="font-size-1 text-primary" id="divFinalPriceToPay">90$</p>
 								</div>
 							</div>
 						</div>
@@ -576,22 +608,22 @@
 						<div class="row"> 
 							<div class="col-sm-4">
 								<div class="form-group js-form-message">
-								  <label class="input-label">Primary Benefetiary:</label>
-								  <p id="serviceTitleId" class="font-size-1 text-primary">Susovan Gumtya</p>
+								  <label class="input-label">Primary Beneficiary:</label>
+								  <p id="firstBeneficiary" class="font-size-1 text-primary">Susovan Gumtya</p>
 								</div>
 							</div>
 							
 							<div class="col-sm-4">
 								<div class="form-group js-form-message">
-								  <label class="input-label">Secondary Benefetiary:</label>
-								  <p id="chargeId" class="font-size-1 text-primary">Sayani Gumtya</p>
+								  <label class="input-label">Secondary Beneficiary:</label>
+								  <p id="secondBeneficiary" class="font-size-1 text-primary">Sayani Gumtya</p>
 								</div>
 							</div>
 							
 							<div class="col-sm-4">
 								<div class="form-group js-form-message">
-								  <label class="input-label">Additional Benefetiary :</label>
-								  <p id="statusId" class="font-size-1 text-primary">NA</p>
+								  <label class="input-label">Additional Beneficiary :</label>
+								  <p id="thirdBeneficiary" class="font-size-1 text-primary">NA</p>
 								</div>
 							</div>
 						</div>
@@ -602,6 +634,65 @@
 							<div class="form-group js-form-message">
 							  <label class="input-label">Price Breakup</label>
 							  <p id="descriptionId" class="font-size-1 text-primary"></p>
+							  
+							  		<table>
+										  <thead class="thead-light">
+											<tr>											  
+											  <th scope="col" class="font-size-1">Duration</th>
+											  <th scope="col" class="font-size-1">Price</th>
+											  <th scope="col" class="font-size-1"></th>
+											  
+											</tr>
+										  </thead>
+										  <tbody>
+											<tr>
+											  <td class="border-top-table">
+												<span id="divPlanName" class="font-size-sm" style="padding-right:50px;">Plan Name</span>
+											  </td>
+											  <td class="border-top-table">												
+													<span id="divUnitPrice" class="font-size-sm text-body">Price Per Person , Per Month (Unit Price)</span>
+											  </td >
+											  <td class="border-top-table">
+												<span class="font-size-sm text-body" ></span>
+											  </td>									 
+											</tr>
+											<tr>
+											  <td class="border-top-table">
+												<span id="divBeneficiaryCount" class="font-size-sm" style="padding-right:50px;">No of Beneficiary</span>
+											  </td>
+											  <td class="border-top-table">												
+													<del class="text-danger"><span id="divBasePriceForTotalBeneficiary" class="font-size-sm text-danger">(Unit Price) X Beneficiary Count</span></del>
+											  </td>
+											  <td class="border-top-table">
+												<span class="font-size-sm text-body" id="divDiscountedPriceForTotalBeneficiary">Beneficiary Count Discount</span>
+											  </td>									 
+											</tr>
+											<tr>
+											  <td class="border-top-table">
+												<span class="font-size-sm" style="padding-right:50px;" id="divPlanDuration">Discounted on Duration</span>
+											  </td>
+											  <td class="border-top-table">												
+													<del class="text-danger"><span class="font-size-sm text-danger" id= "divBasePriceForSelectedDuration">Beneficiary Discounted X no of months</span></del>
+											  </td>
+											  <td class="border-top-table">
+												<span class="font-size-sm text-body" id="divDiscountedPriceForSelectedDuration">Final Discounted Price</span>
+											  </td>									 
+											</tr>
+											<tr>
+											  <td class="border-top-table">
+												<span class="font-size-sm" style="padding-right:50px;">Savings</span>
+											  </td>
+											  <td class="border-top-table">												
+													<del class="text-danger"><span class="font-size-sm text-danger" id="divActualPlanPrice">Actual Price</span></del>
+											  </td>
+											  <td class="border-top-table">
+												<span class="font-size-sm text-body" id="divTotalGain">Final Discounted Price (XXX% Off!!)</span>
+											  </td>									 
+											</tr>											
+										  </tbody>
+										</table>
+							  
+							  
 							  
 							</div>
 						  </div>
@@ -614,7 +705,7 @@
 						   data-hs-step-form-prev-options='{
 							 "targetSelector": "#advancedFormSelectStepThree"
 						   }'>Back</a>
-						<button type="button" class="btn btn-sm btn-primary transition-3d-hover"
+						<button type="button" onclick="submitRequestForm()" class="btn btn-sm btn-primary transition-3d-hover"
 								data-hs-step-form-next-options='{
 								  "targetSelector": "#advancedFormSelectStepFive"
 								}'>Confirm And Pay</button>
@@ -845,10 +936,25 @@
     <Script>
 
 	  (function () {
-	  $("#btnRight").click(function (e) {
+		  
+	 /* Working
+	 $("#btnRight").click(function (e) {
+			    $('option[value="' + $('#lstBox2').val() + '"]').prop('selected','');
+			    $("#lstBox2").append('<option value="' + $('#lstBox1').val() + '" selected>' + $('#lstBox1').val() + '</option>');
+			    $("#lstBox1 option[value=" + $('#lstBox1').val() + "]").remove();
+			}); */
+		  
+	  
+		$("#btnRight").click(function (e) {		  
+		var availableOpts = $("#lstBox1 option");
+			if (availableOpts.length == 0) {
+			  alert("No Beneficiary available to move to Plan.");
+			  e.preventDefault();
+		}
+		  
 		var selectedOpts = $("#lstBox1 option:selected");
 		if (selectedOpts.length == 0) {
-		  alert("Nothing to move.");
+		  alert("Please Select atleast one Beneficiary to be added to Plan.");
 		  e.preventDefault();
 		}
 
@@ -856,11 +962,37 @@
 		$(selectedOpts).remove();
 		e.preventDefault();
 	  });
+		
+	 // Make Sure all the Beneficiaries are selected.
+	 $('#btnRight').click(function() {
+			    $('#lstBox2 option').prop('selected', true);
+	  });
+	  
+	  $("#btnLeft").click(function (e) {
+		  
+		    var selectedOpts = $("#lstBox2 option");
+			if (selectedOpts.length == 0) {
+			  alert("nothing to remove.");
+			  e.preventDefault();
+			}		  
+		  
+			var selectedOpts = $("#lstBox2 option:selected");
+			if (selectedOpts.length == 0) {
+			  alert("Please Select atleast one Beneficiary to be removed to Plan.");
+			  e.preventDefault();
+			}
 
+			$("#lstBox1").append($(selectedOpts).clone());
+			$(selectedOpts).remove();
+			e.preventDefault();
+	   });
+	  
+
+	  //This Method is No longer Needed, the button is commented out.
 	  $("#btnAllRight").click(function (e) {
 		var selectedOpts = $("#lstBox1 option");
 		if (selectedOpts.length == 0) {
-		  alert("Nothing to move.");
+		  alert("No Beneficiary available to move to Plan.");
 		  e.preventDefault();
 		}
 
@@ -869,22 +1001,12 @@
 		e.preventDefault();
 	  });
 
-	  $("#btnLeft").click(function (e) {
-		var selectedOpts = $("#lstBox2 option:selected");
-		if (selectedOpts.length == 0) {
-		  alert("Nothing to move.");
-		  e.preventDefault();
-		}
 
-		$("#lstBox1").append($(selectedOpts).clone());
-		$(selectedOpts).remove();
-		e.preventDefault();
-	  });
-
+	  //This Method is No longer Needed, the button is commented out.
 	  $("#btnAllLeft").click(function (e) {
 		var selectedOpts = $("#lstBox2 option");
 		if (selectedOpts.length == 0) {
-		  alert("Nothing to move.");
+		  alert("No Beneficiary added to Plan.. so nothing to remove.");
 		  e.preventDefault();
 		}
 
@@ -892,11 +1014,132 @@
 		$(selectedOpts).remove();
 		e.preventDefault();
 	  });
+	  
 	})(jQuery);
   
   </script>
   
+  <!-- ###################### CUSTOM JAVA SCRIPT ####################### -->
   
+  <Script>
+	function submitRequestForm() {
+		  document.getElementById("buyAPlanForm").submit();
+		}
+	
+	function reviewPlanData() {
+		$('#lstBox2 option').prop('selected', true);
+		
+		$('#firstBeneficiary').text('Not Assigned');
+		$('#secondBeneficiary').text('Not Assigned');
+		$('#thirdBeneficiary').text('Not Assigned');
+		
+		//Variables to be Passed
+		var customerId = $( "#sessionCustomerId" ).val();
+		var beneficiary1 = "";
+		var beneficiary2 = "";
+		var beneficiary3 = "";
+		var selectedPlan = $("input[name='planID']:checked").val();
+		var planDuration = $( "#planDuration option:selected" ).val();
+		var beneficiaryCount = $( "#selectedPlanFor option:selected" ).val();
+		
+		var select = document.getElementById("lstBox2");
+		  for (var i = 0; i < select.length; i++){
+		    var option = select.options[i];
+		    // now have option.text, option.value
+		    if(i==0 && (beneficiaryCount == '1BEN' || beneficiaryCount == '2BEN' || beneficiaryCount == '3BEN')){
+		    	$('#firstBeneficiary').text(option.text);
+		    	beneficiary1 = option.value;
+		    }
+		    if(i==1 && (beneficiaryCount == '2BEN' || beneficiaryCount == '3BEN')){
+		    	$('#secondBeneficiary').text(option.text);
+		    	beneficiary2 = option.value;
+		    }
+		    if(i==2 && beneficiaryCount == '3BEN'){
+		    	$('#thirdBeneficiary').text(option.text);
+		    	beneficiary3 = option.value;
+		    }
+		  }
+		 
+		  console.log ("selectedPlan :"+selectedPlan);
+		  console.log ("planDuration :"+planDuration);
+		  console.log ("beneficiaryCount :"+beneficiaryCount);
+		  
+		  var formData = {
+				    customerId : customerId,
+				  	beneficiary1 : beneficiary1,
+				  	beneficiary2 : beneficiary2,
+				  	beneficiary3 : beneficiary3,
+				  	selectedPlan : selectedPlan,
+				  	planDuration : planDuration,
+				  	beneficiaryCount : beneficiaryCount
+			      }
+	
+			$.ajax({
+				type: "POST",
+				contentType : "application/json",
+				url: "/getPlanAndPriceBreakupOnSelectedCriteria",
+				data : JSON.stringify(formData),
+				dataType: 'json', //Important , it has to be Json to get Json String Back
+				cache: false,
+				timeout: 600000,
+				
+				success: function (data, status) {
+					console.log("SUCCESS : ", data);
+											
+					if(data.status == 'SUCCESS'){
+						
+						//document.getElementById("disclaimerId").innerHTML = data.disclaimer;
+						
+						//Setting the Hidden Field Values
+						//document.getElementById("hiddenPriceInUsd").value = data.priceInUsd;
+						
+						$('#divPlanName').text(data.planName);
+						$('#divUnitPrice').html(data.planPricePerPersonPerMonth+' &#8377/Head');
+						$('#divBeneficiaryCount').html(data.beneficiaryCount);
+						$('#divBasePriceForTotalBeneficiary').html(data.basePriceForTotalBeneficiary+'&#8377 ');
+						$('#divDiscountedPriceForTotalBeneficiary').html(data.discountedPriceForTotalBeneficiary+'&#8377 ');
+						$('#divPlanDuration').html(data.planDuration);
+						$('#divBasePriceForSelectedDuration').html(data.basePriceForSelectedDuration+'&#8377 ');
+						$('#divDiscountedPriceForSelectedDuration').html(data.discountedPriceForSelectedDuration+'&#8377 ');
+						$('#divActualPlanPrice').html(data.actualPlanPrice+'&#8377 ');
+						$('#divTotalGain').html(data.discountedPriceForSelectedDuration+'&#8377 '+data.totalGain);
+						
+						//Review Section
+						$('#divPlanNameToReview').text(data.planName);
+						$('#divPlanTypeOnBeneficiaryCount').text(data.beneficiaryCount);
+						$('#divPlanDurationToReview').text(data.planDuration);
+						$('#divPlanStartDate').text(data.planStartDateStr);
+						$('#divPlanExpireDate').text(data.planEndDateStr)
+						$('#divFinalPriceToPay').html(data.planFinalPrice +'&#8377 ')
+						
+						//Setting the Servlet Fields...
+						$("#hiddenPrice").val(data.planFinalPrice);
+						$("#hiddenOfferId").val(data.offerId);
+						//alert(data.status);
+							
+					}else{
+						console.log("ERROR : ", data.status + data.message);
+						document.getElementById("chargeId").innerHTML = "Error Occured";
+						document.getElementById("disclaimerId").innerHTML = "Processing Error Occured, Please try Later.";
+						showErrorAlert("Error :"+data.message);
+					}
+				},
+				error: function (xhr, status, error) {
+					console.log("ERROR : ", xhr.status);
+					console.log("ERROR status: ", status);
+					console.log("ERROR error: ", error);
+					document.getElementById("disclaimerId").innerHTML = "Processing Error Occured, Please try Later.";
+					showErrorAlert("Error : Exception occured while getting the service Price details, if you still see the error, contact the customer service. Details:"+error);
+					
+
+				}
+			});
+		  
+	}
+  
+  </Script>
+  
+
   
 
   <!-- IE Support -->

@@ -28,6 +28,7 @@ import com.josthi.web.constants.MessageConstant;
 import com.josthi.web.exception.UserException;
 import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.po.EmailDbBean;
+import com.josthi.web.scheduler.EmailScheduler;
 import com.josthi.web.service.CacheConfigService;
 import com.josthi.web.service.EmailService;
 import com.josthi.web.service.ServiceRequestService;
@@ -203,6 +204,9 @@ public class UserServiceRequestController {
 	        	        
 	        	        EmailDbBean emailDbBeanForService = Utils.getEmailBeanForServiceTicket(sessionEmailId, serviceRequestBeanForEmail.getTicketNo(), Utils.mapToString(serviceEmailMap));
 	        	        boolean serviceQueueStatus = emailService.queueEmail(emailDbBeanForService);
+	        	        if(serviceQueueStatus) {
+	        	        	EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
+	        	        }
 	    			}
 				}else{
 					actionStatus = MessageConstant.USER_FAILURE_STATUS;

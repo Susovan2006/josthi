@@ -117,6 +117,9 @@ public class UserServiceRequestRestController {
         	        
         	        EmailDbBean emailDbBeanForService = Utils.getEmailBeanForServiceTicket(emailId, serviceRequestBean.getTicketNo(), Utils.mapToString(serviceEmailMap));
         	        boolean otpQueueStatus = emailService.queueEmail(emailDbBeanForService);
+        	        if(otpQueueStatus) {
+        	        	EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
+        	        }
     			}
 
     			

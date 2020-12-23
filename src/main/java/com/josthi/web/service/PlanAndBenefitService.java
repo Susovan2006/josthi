@@ -1,11 +1,15 @@
 package com.josthi.web.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.josthi.web.bo.AjaxResponsePrice;
+import com.josthi.web.bo.AjaxRestResponseForPriceCalculation;
 import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.PlanAndBenefitBean;
+import com.josthi.web.bo.PlanInvoiceEmailBean;
 import com.josthi.web.bo.PlanSelectionForUserBean;
+import com.josthi.web.bo.PlanSubscriptionForUserBean;
 import com.josthi.web.bo.ServiceDetailsBean;
 
 
@@ -28,5 +32,17 @@ public interface PlanAndBenefitService {
 	List<DropDownBean> getPlanDurationList() throws Exception;
 
 	List<DropDownBean> getBeneficiaryListForPlan(String hostCustomerId) throws Exception;
+
+	AjaxRestResponseForPriceCalculation getPriceBreakup(String customerId, String selectedPlan, String planDuration,
+			String beneficiaryCount) throws Exception;
+
+	int saveOfferDetails(AjaxRestResponseForPriceCalculation ajaxRestResponseForPriceCalculation, String customerId,
+			String beneficiary1, String beneficiary2, String beneficiary3, String planDurationCode, String beneficiaryCountCode) throws Exception;
+
+	String savePlanDetails(PlanSubscriptionForUserBean planSubscriptionForUserBean, String custId) throws Exception;
+
+	PlanInvoiceEmailBean getPlanInvoiceDetailsForEmail(String trim,String[] beneficiaryArray, String customerPlanInvoiveId, String offerId, String customerEmail) throws Exception;
+
+	Map<String, String> getMapForInvoiceEmail(PlanInvoiceEmailBean planInvoiceEmailBean) throws Exception;
 
 }

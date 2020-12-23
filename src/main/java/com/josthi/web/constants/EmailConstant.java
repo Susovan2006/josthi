@@ -28,6 +28,10 @@ public interface EmailConstant {
 	String SUBJECT_FROM_FOR_ACCOUNT_UN_LOCK = "Josthi.com | Account unlock";
 	String ACCOUNT_UNLOCK_MESSAGE = "Looks like you exceeded the max number of retry, so your Password is locked. Please click the below link to unlock your Account.";
 	
+	//PLAN INVOIVE
+	String EMAIL_FROM_FOR_PLAN = "invoice@josthi.com";
+	String SUBJECT_FROM_FOR_PLAN_INVOIVE = "Josthi.com | purchase invoice";
+	
 	
 	//Generic Status
 	String LOAD_STATUS = "LOADED";
@@ -45,6 +49,7 @@ public interface EmailConstant {
 	//https://beefree.io/editor/?template=your-visit-to-the-spa-invoice# (open in Firefox)
 	String TEMPLATE_FORM_FOR_SERVICE_REQUEST_UPDATE = "email_ticket_update";
 	String TEMPLATE_FORM_FOR_AGENT_ASSIGNMENT_UPDATE = "email_Agent_Assignment";
+	String TEMPLATE_FORM_FOR_PURCHASE_INVOICE = "email_invoice";
 	
 	
 	

@@ -35,6 +35,7 @@ import com.josthi.web.mail.EmailSenderService;
 import com.josthi.web.security.SecurityConfig;
 import com.josthi.web.serviceimpl.BeneficiaryServiceImpl;
 import com.josthi.web.serviceimpl.CacheConfigServiceImpl;
+import com.josthi.web.serviceimpl.PlanAndBenefitServiceImpl;
 import com.josthi.web.serviceimpl.ServiceRequestServiceImpl;
 import com.josthi.web.serviceimpl.UserRegistrationServiceImpl;
 import com.josthi.web.utils.HostNamePropertyPlaceHolderConfig;
@@ -290,6 +291,14 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	 ServiceRequestServiceImpl serviceRequestServiceImpl = new ServiceRequestServiceImpl();
 	 serviceRequestServiceImpl.setPlatformTransactionManager(txnManager);
 	 return serviceRequestServiceImpl;
+ }
+ 
+
+ @Bean("planAndBenefitService")
+ public PlanAndBenefitServiceImpl planAndBenefitServiceImpl(PlatformTransactionManager txnManager) {
+	 PlanAndBenefitServiceImpl planAndBenefitServiceImpl = new PlanAndBenefitServiceImpl();
+	 planAndBenefitServiceImpl.setPlatformTransactionManager(txnManager);
+	 return planAndBenefitServiceImpl;
  }
  
  @Bean("txnManager")

@@ -43,6 +43,21 @@ public class CoreTest {
 		}
 		
 		System.out.println(priceDiscountForLongTerm);
+		
+		
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("Susovan");
+		sb.append(", ");
+		sb.append("Susovan");
+		sb.append(", ");
+		sb.append("Susovan");
+		sb.append(", ");
+		
+		String beneficiaryNamesToDisplay = sb.toString();
+		beneficiaryNamesToDisplay =	StringUtils.substring(beneficiaryNamesToDisplay, 0, beneficiaryNamesToDisplay.length() - 2);
+	
+		System.out.println(beneficiaryNamesToDisplay);
 	}
 
 }

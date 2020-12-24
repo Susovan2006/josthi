@@ -28,6 +28,7 @@ import com.josthi.web.bo.PlanSelectionForUserBean;
 import com.josthi.web.bo.PlanSubscriptionForUserBean;
 import com.josthi.web.bo.PriceBreakupAndOfferBean;
 import com.josthi.web.bo.PriceDiscountBean;
+import com.josthi.web.bo.PurchaseHistoryBean;
 import com.josthi.web.bo.RelationBean;
 import com.josthi.web.dao.HistoryDao;
 import com.josthi.web.dao.PlanDetailsDao;
@@ -169,6 +170,124 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 	}
 
 
+	//"selectedPlan":"Gold",
+	//"planDuration":"365DAY",
+	//"beneficiaryCount":"3BEN"}
+	@Override
+	public AjaxRestResponseForPriceCalculation getCleanPriceBreakup(String customerId, String selectedPlan,
+			String planDuration, String beneficiaryCount) throws Exception {
+		
+		UnitFamilyPlanPrice unitFamilyPlanPrice = planDetailsDao.getPlanPriceForOneMonth(selectedPlan);
+		
+		double unitPriceOneBen = unitFamilyPlanPrice.getPriceForOneBeneficiary();
+		double unitPriceTwoBen = unitFamilyPlanPrice.getPriceForTwoBeneficiary();
+		double unitPriceThreeBen = unitFamilyPlanPrice.getPriceForThreeBeneficiary();
+		
+		AjaxRestResponseForPriceCalculation ajaxRestResponseForPriceCalculation = new AjaxRestResponseForPriceCalculation();
+		ajaxRestResponseForPriceCalculation.setPlanName(selectedPlan + " Plan");
+		ajaxRestResponseForPriceCalculation.setPlanPricePerPersonPerMonth(Utils.formattedCurrency(unitPriceOneBen+"")); 
+		ajaxRestResponseForPriceCalculation.setPlanStartDate(new Timestamp(System.currentTimeMillis()));
+		ajaxRestResponseForPriceCalculation.setPlanStartDateStr(Utils.timestampToFormattedString(new Timestamp(System.currentTimeMillis()), "d MMM yyyy hh:mm aaa"));
+		
+		int monthsToMultiply =  1;
+		int benefeciaryToMultiply = 1;
+		//planDuration
+		double basePriceOnDuration = 0.0f;
+		double finalDiscountedPrice =0.0f;
+		double finalActualPrice = 0.0f;
+		float percentage = 0.0f;
+		float percentageFactor = 0.0f;
+		
+		//Duration
+		if(planDuration.equalsIgnoreCase(Constant.ONE_MONTH)) {
+			ajaxRestResponseForPriceCalculation.setPlanDuration("30 Days");
+			ajaxRestResponseForPriceCalculation.setPlanEndDate(Utils.getDateAdditionValue(30));
+			ajaxRestResponseForPriceCalculation.setPlanEndDateStr(Utils.timestampToFormattedString(Utils.getDateAdditionValue(30), "d MMM yyyy hh:mm aaa"));
+			monthsToMultiply =1;
+		}else if(planDuration.equalsIgnoreCase(Constant.THREE_MONTH)) {
+			ajaxRestResponseForPriceCalculation.setPlanDuration("90 Days");
+			ajaxRestResponseForPriceCalculation.setPlanEndDate(Utils.getDateAdditionValue(90));
+			ajaxRestResponseForPriceCalculation.setPlanEndDateStr(Utils.timestampToFormattedString(Utils.getDateAdditionValue(90), "d MMM yyyy hh:mm aaa"));
+			monthsToMultiply =3;
+		}else if(planDuration.equalsIgnoreCase(Constant.SIX_MONTH)) {
+			ajaxRestResponseForPriceCalculation.setPlanDuration("180 Days");
+			ajaxRestResponseForPriceCalculation.setPlanEndDate(Utils.getDateAdditionValue(180));
+			ajaxRestResponseForPriceCalculation.setPlanEndDateStr(Utils.timestampToFormattedString(Utils.getDateAdditionValue(180), "d MMM yyyy hh:mm aaa"));
+			monthsToMultiply =6;
+		}else if(planDuration.equalsIgnoreCase(Constant.ONE_YEAR)) {
+			ajaxRestResponseForPriceCalculation.setPlanDuration("365 Days");
+			ajaxRestResponseForPriceCalculation.setPlanEndDate(Utils.getDateAdditionValue(365));
+			ajaxRestResponseForPriceCalculation.setPlanEndDateStr(Utils.timestampToFormattedString(Utils.getDateAdditionValue(365), "d MMM yyyy hh:mm aaa"));
+			monthsToMultiply =12;
+		}
+		
+		//Beneficiary Count
+		//String beneficiaryCode = priceBreakupAndOfferBean.getPlanBeneficiaryCountCode();
+		if(beneficiaryCount.equalsIgnoreCase(Constant.ONE_BENEFICIARY)) {
+			ajaxRestResponseForPriceCalculation.setBeneficiaryCount("1 Beneficiary");
+			ajaxRestResponseForPriceCalculation.setDiscountedPriceForTotalBeneficiaryDouble(unitPriceOneBen);
+			ajaxRestResponseForPriceCalculation.setDiscountedPriceForTotalBeneficiary(Utils.formattedCurrency(unitPriceOneBen+""));
+			benefeciaryToMultiply =1;
+		}else if(beneficiaryCount.equalsIgnoreCase(Constant.TWO_BENEFICIARY)) {
+			ajaxRestResponseForPriceCalculation.setBeneficiaryCount("2 Beneficiaries");
+			ajaxRestResponseForPriceCalculation.setDiscountedPriceForTotalBeneficiaryDouble(unitPriceTwoBen); //2700 instead of 3000 (Silver)
+			ajaxRestResponseForPriceCalculation.setDiscountedPriceForTotalBeneficiary(Utils.formattedCurrency(unitPriceTwoBen+""));
+			benefeciaryToMultiply =2;
+		}else if(beneficiaryCount.equalsIgnoreCase(Constant.THREE_BENEFICIARY)) {
+			ajaxRestResponseForPriceCalculation.setBeneficiaryCount("3 Beneficiaries");
+			ajaxRestResponseForPriceCalculation.setDiscountedPriceForTotalBeneficiaryDouble(unitPriceThreeBen);   //3700 instead of 4500 (Silver)
+			ajaxRestResponseForPriceCalculation.setDiscountedPriceForTotalBeneficiary(Utils.formattedCurrency(unitPriceThreeBen+""));
+			benefeciaryToMultiply =3;
+		}
+		
+		
+		
+		double longTermPlanDiscountForEmail = 0.00f;
+		double familyDiscountForEmail = 0.0f;
+		double familyDiscountperMonth = 0.0f;
+		//Generic Block
+		ajaxRestResponseForPriceCalculation.setBasePriceForTotalBeneficiary(Utils.formattedCurrency((unitPriceOneBen * benefeciaryToMultiply)+"")); //3000 0r 4500
+		ajaxRestResponseForPriceCalculation.setBasePriceForTotalBeneficiaryDouble((unitPriceOneBen * benefeciaryToMultiply)); //3000 0r 4500
+		
+		basePriceOnDuration = ajaxRestResponseForPriceCalculation.getDiscountedPriceForTotalBeneficiaryDouble()*monthsToMultiply; //3700 X 6 || 2700 X 6
+		ajaxRestResponseForPriceCalculation.setBasePriceForSelectedDuration(Utils.formattedCurrency(basePriceOnDuration+"")); // with ,
+		
+		//for email
+		familyDiscountperMonth = ((unitPriceOneBen * benefeciaryToMultiply) - ajaxRestResponseForPriceCalculation.getDiscountedPriceForTotalBeneficiaryDouble()) ;
+		familyDiscountForEmail = familyDiscountperMonth * monthsToMultiply;
+		logger.info("familyDiscountperMonth :"+ familyDiscountperMonth);
+		logger.info("familyDiscountForEmail :"+ familyDiscountForEmail);
+		//Added for Email.
+		ajaxRestResponseForPriceCalculation.setFamilyDiscountForEmailDouble(familyDiscountForEmail);
+		
+		//Now calculate Discount for Beneficiary Count.
+		int percentageOfffromDb = planDetailsDao.getDiscountInPercentage(planDuration); //0% , 5% , 10% , 20%
+		if(percentageOfffromDb != 0) {
+		  percentageFactor = ((float) percentageOfffromDb )/100;
+		}
+		ajaxRestResponseForPriceCalculation.setDiscountPercentageForFamilyPlan(percentageOfffromDb+"%");
+		
+		finalDiscountedPrice = basePriceOnDuration - (basePriceOnDuration*percentageFactor); //eg for 10% percentageFactor = 10/100 = 0.1;
+		
+		longTermPlanDiscountForEmail = basePriceOnDuration - finalDiscountedPrice;
+		logger.info("durationDiscountForEmail :"+ longTermPlanDiscountForEmail);
+		
+		ajaxRestResponseForPriceCalculation.setLongTermPlanDiscountForEmailDouble(longTermPlanDiscountForEmail);
+		
+		ajaxRestResponseForPriceCalculation.setDiscountedPriceForSelectedDuration(Utils.formattedCurrency(finalDiscountedPrice+""));
+		ajaxRestResponseForPriceCalculation.setFinalDiscountedPrice(Utils.formattedCurrency(finalDiscountedPrice+""));
+		
+		finalActualPrice = ajaxRestResponseForPriceCalculation.getBasePriceForTotalBeneficiaryDouble()*monthsToMultiply;
+		ajaxRestResponseForPriceCalculation.setActualPlanPrice(Utils.formattedCurrency(finalActualPrice+""));
+		ajaxRestResponseForPriceCalculation.setActualPlanPriceDouble(finalActualPrice);
+		
+		percentage = (float)(100 - (((float)finalDiscountedPrice / (float)finalActualPrice) * 100));
+		ajaxRestResponseForPriceCalculation.setTotalGain(Math.round(percentage)+"% Off !!");
+		
+		
+		return ajaxRestResponseForPriceCalculation;
+		
+	}
 	
 	//"selectedPlan":"Gold",
 	//"planDuration":"365DAY",
@@ -176,6 +295,7 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 	@Override
 	public AjaxRestResponseForPriceCalculation getPriceBreakup(String customerId, String selectedPlan,
 			String planDuration, String beneficiaryCount) throws Exception {
+		
 		UnitFamilyPlanPrice unitFamilyPlanPrice = planDetailsDao.getPlanPriceForOneMonth(selectedPlan);
 		
 		double unitPriceOneBen = unitFamilyPlanPrice.getPriceForOneBeneficiary();
@@ -207,7 +327,7 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			setValueOnBeneficiary(ajaxRestResponseForPriceCalculation, beneficiaryCount, unitPriceOneBen, unitPriceTwoBen, unitPriceThreeBen);
 			
 			basePriceOnDuration = ajaxRestResponseForPriceCalculation.getDiscountedPriceForTotalBeneficiaryDouble()*1;
-			ajaxRestResponseForPriceCalculation.setBasePriceForSelectedDuration(Utils.formattedCurrency(basePriceOnDuration+""));
+			ajaxRestResponseForPriceCalculation.setBasePriceForSelectedDuration(Utils.formattedCurrency(basePriceOnDuration+""));			
 			ajaxRestResponseForPriceCalculation.setDiscountedPriceForSelectedDuration(Utils.formattedCurrency(basePriceOnDuration+""));
 			ajaxRestResponseForPriceCalculation.setActualPlanPrice(Utils.formattedCurrency((ajaxRestResponseForPriceCalculation.getBasePriceForTotalBeneficiaryDouble()*1)+""));
 			ajaxRestResponseForPriceCalculation.setFinalDiscountedPrice(Utils.formattedCurrency(basePriceOnDuration+""));
@@ -218,6 +338,7 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			ajaxRestResponseForPriceCalculation.setPlanEndDateStr(Utils.timestampToFormattedString(Utils.getDateAdditionValue(30), "d MMM yyyy hh:mm aaa"));
 
 			finalActualPrice = ajaxRestResponseForPriceCalculation.getBasePriceForTotalBeneficiaryDouble()*1;
+			ajaxRestResponseForPriceCalculation.setActualPlanPriceDouble(finalActualPrice);
 			finalDiscountedPrice = basePriceOnDuration;
 			percentage = (float)(100 - (((float)finalDiscountedPrice / (float)finalActualPrice) * 100));
 			ajaxRestResponseForPriceCalculation.setTotalGain(Math.round(percentage)+"% Off !!");
@@ -240,6 +361,7 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			
 			finalActualPrice = ajaxRestResponseForPriceCalculation.getBasePriceForTotalBeneficiaryDouble()*3;
 			ajaxRestResponseForPriceCalculation.setActualPlanPrice(Utils.formattedCurrency(finalActualPrice+""));
+			ajaxRestResponseForPriceCalculation.setActualPlanPriceDouble(finalActualPrice);
 			
 			percentage = (float)(100 - (((float)finalDiscountedPrice / (float)finalActualPrice) * 100));
 			ajaxRestResponseForPriceCalculation.setTotalGain(Math.round(percentage)+"% Off !!");
@@ -264,6 +386,7 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			
 			finalActualPrice = ajaxRestResponseForPriceCalculation.getBasePriceForTotalBeneficiaryDouble()*6;
 			ajaxRestResponseForPriceCalculation.setActualPlanPrice(Utils.formattedCurrency(finalActualPrice+""));
+			ajaxRestResponseForPriceCalculation.setActualPlanPriceDouble(finalActualPrice);
 			
 			percentage = (float)(100 - (((float)finalDiscountedPrice / (float)finalActualPrice) * 100));
 			ajaxRestResponseForPriceCalculation.setTotalGain(Math.round(percentage)+"% Off !!");
@@ -288,6 +411,7 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			
 			finalActualPrice = ajaxRestResponseForPriceCalculation.getBasePriceForTotalBeneficiaryDouble()*12;
 			ajaxRestResponseForPriceCalculation.setActualPlanPrice(Utils.formattedCurrency(finalActualPrice+""));
+			ajaxRestResponseForPriceCalculation.setActualPlanPriceDouble(finalActualPrice);
 			
 			percentage = (float)(100 - (((float)finalDiscountedPrice / (float)finalActualPrice) * 100));
 			ajaxRestResponseForPriceCalculation.setTotalGain(Math.round(percentage)+"% Off !!");
@@ -361,7 +485,10 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 														ajaxRestResponseForPriceCalculation.getBasePriceForSelectedDuration(),     //BASE_PRICE_FOR_SELECTED_DURATION
 														ajaxRestResponseForPriceCalculation.getDiscountedPriceForSelectedDuration(), //DISCOUNTED_PRICE_FOR_SELECTED_DURATION
 														ajaxRestResponseForPriceCalculation.getFinalDiscountedPrice(),         //FINAL_DISCOUNTED_PRICE
-														ajaxRestResponseForPriceCalculation.getTotalGain());
+														ajaxRestResponseForPriceCalculation.getTotalGain(),
+														ajaxRestResponseForPriceCalculation.getFamilyDiscountForEmailDouble(),
+														ajaxRestResponseForPriceCalculation.getLongTermPlanDiscountForEmailDouble(),
+														ajaxRestResponseForPriceCalculation.getActualPlanPriceDouble());
 		
 		return offerId;
 	}
@@ -384,7 +511,7 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 		TransactionStatus txnStatus = null;
 		DefaultTransactionDefinition def = null;
 		boolean status = false;
-		boolean rollbackNeeded = true;
+		boolean rollbackNeeded = false;
 		
 		try {
 			int getNextID = userAuthDao.getNextID();
@@ -392,7 +519,7 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			String customerPlanInvoiceId = Utils.getNextPlanInvoiceID(Constant.REQUEST_PLAN,userSelectedPlan, getNextID);
 			logger.info(userSelectedPlan +"/" + customerPlanInvoiceId);
 			//Validate the offerID, it shouldn't be blank.
-			if(StringUtils.isEmpty(planSubscriptionForUserBean.getOfferId())) {
+			/*if(StringUtils.isEmpty(planSubscriptionForUserBean.getOfferId())) {
 				rollbackNeeded = false;
 				throw new UserExceptionInvalidData("Exception Occured while processing the plan purchase. Please call the Customer Service");
 			}
@@ -412,13 +539,26 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			//The Selected Beneficiary Names and the Slected Count Should Match.
 			int beneficiaryCount = Utils.getBeneficiaryCountFromDropdownVal(planSubscriptionForUserBean.getBeneficiaryCount());
 			int beneficiaryIdArrayCount = planSubscriptionForUserBean.getBeneficiaryIdArr().length;
+			
+			String[] beneficiaryList = planSubscriptionForUserBean.getBeneficiaryIdArr();
+			String[] filteredBeneficiaryList = new String[beneficiaryCount];
 			//User selected 3BEN but selected only one Beneficiary.
 			if(beneficiaryCount > beneficiaryIdArrayCount) {
 				rollbackNeeded = false;
 				throw new UserExceptionInvalidData("Can proceed with the Purchase, You selected "+beneficiaryCount+ " beneficiary Plan, but only selected "+ beneficiaryIdArrayCount +" Beneficiary Name."
 						+ " Make the necessary correction and try again.");
+			//Incase the user Selected 4 Beneficiary but selected plan for 2, the new Array will have top 2 Names.
+			}else if (beneficiaryCount < beneficiaryIdArrayCount){
+				
+				for (int i = 0; i < beneficiaryCount ; i++) {
+					filteredBeneficiaryList[i] = beneficiaryList[i];
+			      }
+				
+				planSubscriptionForUserBean.setBeneficiaryIdArr(filteredBeneficiaryList);
+				logger.info("The array is trimmed. "+beneficiaryCount +" > "+beneficiaryIdArrayCount);
+				
 			}
-			logger.info("Validation Successful!!");
+			logger.info("Validation Successful!!");*/
 			//------------------- V A L I D A T I O N    E N D   -------------------------
 			
 			String purchaseDetails = planSubscriptionForUserBean.getBeneficiaryCount()
@@ -429,7 +569,8 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 			def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
 			{
-					txnStatus = platformTransactionManager.getTransaction(def);
+					rollbackNeeded = true;
+				    txnStatus = platformTransactionManager.getTransaction(def);
 					
 					//1. First we will Insert PURCHASE_HISTORY TABLE
 					status = serviceRequestDao.insertIntoPurchaseHistory(customerPlanInvoiceId,
@@ -438,7 +579,8 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 																		 paymentStatus,
 																		 "",
 																		 "",
-																		 planSubscriptionForUserBean.getCalculatedPrice()
+																		 planSubscriptionForUserBean.getCalculatedPrice(),
+																		 custId
 																		 );
 					//2. Price Breakup Table.
 					status = planDetailsDao.updatePriceBreakupOfferTable(planSubscriptionForUserBean.getOfferId());
@@ -479,7 +621,6 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			}
 			
 		}catch(UserExceptionInvalidData ex) {
-			//logger.error(ex.getMessage());
 			if(rollbackNeeded) {
 				platformTransactionManager.rollback(txnStatus);
 				logger.info("Plan save - txn rolled back due to user exception");
@@ -492,6 +633,113 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			throw ex;
 		}
 	}
+	
+	public PlanInvoiceEmailBean getCleanPlanInvoiceDetailsForEmail(String customerId, String[] beneficiaryArray, String customerPlanInvoiveId, String offerId, String customerEmail)
+			throws Exception {
+		
+			PriceBreakupAndOfferBean priceBreakupAndOfferBean = planDetailsDao.getDetailsFromPriceBreakupTable(offerId);
+			logger.info("**Clean**** Data from Database for "+offerId +"-->"+priceBreakupAndOfferBean);
+			UserDetailsBean userDetailBean = userDetailsDao.getUserDetails(customerId);
+			
+			PlanInvoiceEmailBean planInvoiceEmailBean = new PlanInvoiceEmailBean();
+			planInvoiceEmailBean.setInvoiceId(customerPlanInvoiveId);
+			planInvoiceEmailBean.setInvoiceCreationDate(new SimpleDateFormat("MMMMM d, yyyy").format(new Date()));			
+			planInvoiceEmailBean.setPlanStartDate(Utils.timestampToFormattedString(priceBreakupAndOfferBean.getPlanStartDate(), "MMMMM d, yyyy"));
+			planInvoiceEmailBean.setPlanEndDate(Utils.timestampToFormattedString(priceBreakupAndOfferBean.getPlanEndDate(), "MMMMM d, yyyy"));
+			planInvoiceEmailBean.setPlanName(priceBreakupAndOfferBean.getPlanName()); //Gold Plan
+			
+			int monthsToMultiply = 1;
+			int benefeciaryToMultiply = 1;
+			
+			//Duration
+			String durationCode = priceBreakupAndOfferBean.getPlanDurationCode();
+			if(durationCode.equalsIgnoreCase(Constant.ONE_MONTH)) {
+				planInvoiceEmailBean.setPlanDuration("30 Days");
+				monthsToMultiply =1;
+			}else if(durationCode.equalsIgnoreCase(Constant.THREE_MONTH)) {
+				planInvoiceEmailBean.setPlanDuration("90 Days");
+				monthsToMultiply =3;
+			}else if(durationCode.equalsIgnoreCase(Constant.SIX_MONTH)) {
+				planInvoiceEmailBean.setPlanDuration("180 Days");
+				monthsToMultiply =6;
+			}else if(durationCode.equalsIgnoreCase(Constant.ONE_YEAR)) {
+				planInvoiceEmailBean.setPlanDuration("365 Days");
+				monthsToMultiply =12;
+			}
+			
+			//Beneficiary Count
+			String beneficiaryCode = priceBreakupAndOfferBean.getPlanBeneficiaryCountCode();
+			if(beneficiaryCode.equalsIgnoreCase(Constant.ONE_BENEFICIARY)) {
+				planInvoiceEmailBean.setBeneficiaryCount("1 Beneficiary");
+				benefeciaryToMultiply =1;
+			}else if(beneficiaryCode.equalsIgnoreCase(Constant.TWO_BENEFICIARY)) {
+				planInvoiceEmailBean.setBeneficiaryCount("2 Beneficiaries");
+				benefeciaryToMultiply =2;
+			}else if(beneficiaryCode.equalsIgnoreCase(Constant.THREE_BENEFICIARY)) {
+				planInvoiceEmailBean.setBeneficiaryCount("3 Beneficiaries");
+				benefeciaryToMultiply =3;
+			}
+			
+			
+			//Josthi Address
+			planInvoiceEmailBean.setJosthiAddressLine1(Constant.JOSTHI_ADDRESS_LINE_1);
+			planInvoiceEmailBean.setJosthiAddressLine2(Constant.JOSTHI_ADDRESS_LINE_2);
+			planInvoiceEmailBean.setJosthiCity(Constant.JOSTHI_CITY);
+			planInvoiceEmailBean.setJosthiPin(Constant.JOSTHI_PIN);
+			planInvoiceEmailBean.setJosthiState("West Bengal");
+			planInvoiceEmailBean.setJosthiEmail(Constant.JOSTHI_EMAIL);
+			planInvoiceEmailBean.setJosthiContactNumber(Constant.JOSTHI_CONTACT);
+			
+			//Host Customer Details
+			planInvoiceEmailBean.setHostCustomerName(userDetailBean.getFirstName()+" "+userDetailBean.getLastName());
+			planInvoiceEmailBean.setHostCustomerAddressLine1(userDetailBean.getUserAddressFirstLine());
+			planInvoiceEmailBean.setHostCustomerAddressLine2(userDetailBean.getUserAddressSecondLine());
+			planInvoiceEmailBean.setHostCustomerState(userDetailBean.getState());
+			planInvoiceEmailBean.setHostCustomerCityTown(userDetailBean.getCityTown());
+			planInvoiceEmailBean.setHostCustomerZipPin(userDetailBean.getZipPin());
+			planInvoiceEmailBean.setHostCustomerCountry(userDetailBean.getCountry());
+			planInvoiceEmailBean.setHostCustomerEmail(customerEmail);
+			
+			//Payment Details
+			planInvoiceEmailBean.setPaymentMethod("Online");
+			planInvoiceEmailBean.setPaymentId("1234567890");
+			planInvoiceEmailBean.setPaymentStatus("Completed");
+			
+			//Beneficiary Names.
+			StringBuffer beneficiaryNames = new StringBuffer();
+			for(String beneficiaryId : beneficiaryArray) {
+				beneficiaryNames.append(userAuthDao.getUserFirstAndLastName(beneficiaryId));
+				beneficiaryNames.append(", ");
+			}
+			
+			String beneficiaryNamesToDisplay = beneficiaryNames.toString();
+			beneficiaryNamesToDisplay =	StringUtils.substring(beneficiaryNamesToDisplay, 0, beneficiaryNamesToDisplay.length() - 2); //remove , and Space
+			planInvoiceEmailBean.setBeneficiaryNames(beneficiaryNamesToDisplay);
+			planInvoiceEmailBean.setBeneficiaryIds(priceBreakupAndOfferBean.getBreakupRequestedFor());
+			
+			
+			//Plan Details
+			String planDetails = "("+priceBreakupAndOfferBean.getPlanName()+"/"+planInvoiceEmailBean.getBeneficiaryCount()+"/"+planInvoiceEmailBean.getPlanDuration()+" )";
+			planInvoiceEmailBean.setPlanDetails(planDetails);
+			
+			planInvoiceEmailBean.setActualPlanPrice(priceBreakupAndOfferBean.getNonDiscountedPrice());
+			
+			//Family Discount for
+			planInvoiceEmailBean.setFamilyDiscountfor("Family Plan Discount(for "+benefeciaryToMultiply+" Beneficiary)");
+			planInvoiceEmailBean.setFamilyDiscountPrice(priceBreakupAndOfferBean.getFamilyDiscount());
+			
+			//Discount for LongTerm Plan
+			planInvoiceEmailBean.setLongTermDiscountFor("Long Term '"+planInvoiceEmailBean.getPlanDuration()+"' Plan Discount ("+priceBreakupAndOfferBean.getDiscountPercentageForFamilyPlan()+")");
+			planInvoiceEmailBean.setLongTermDiscountPrice(priceBreakupAndOfferBean.getLongTermDiscount());
+			
+			//Final Discounted Price.
+			planInvoiceEmailBean.setFinalPrice(priceBreakupAndOfferBean.getFinalDiscountedPrice());
+			planInvoiceEmailBean.setFinalDiscount(priceBreakupAndOfferBean.getTotalGain());
+			
+			return planInvoiceEmailBean;
+	}
+	
+	
 
 	@Override
 	public PlanInvoiceEmailBean getPlanInvoiceDetailsForEmail(String customerId, String[] beneficiaryArray, String customerPlanInvoiveId, String offerId, String customerEmail)
@@ -568,11 +816,11 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			StringBuffer beneficiaryNames = new StringBuffer();
 			for(String beneficiaryId : beneficiaryArray) {
 				beneficiaryNames.append(userAuthDao.getUserFirstAndLastName(beneficiaryId));
-				beneficiaryNames.append(" , ");
+				beneficiaryNames.append(", ");
 			}
 			
 			String beneficiaryNamesToDisplay = beneficiaryNames.toString();
-			beneficiaryNamesToDisplay =	StringUtils.substring(beneficiaryNamesToDisplay, 0, beneficiaryNamesToDisplay.length() - 1);
+			beneficiaryNamesToDisplay =	StringUtils.substring(beneficiaryNamesToDisplay, 0, beneficiaryNamesToDisplay.length() - 2); //remove , and Space
 			planInvoiceEmailBean.setBeneficiaryNames(beneficiaryNamesToDisplay);
 			planInvoiceEmailBean.setBeneficiaryIds(priceBreakupAndOfferBean.getBreakupRequestedFor());
 			
@@ -684,6 +932,67 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
         serviceEmailMap.put("finalDiscount",planInvoiceEmailBean.getFinalDiscount());
         
         return serviceEmailMap;
+	}
+
+	@Override
+	public PlanSubscriptionForUserBean validateIncomingData(PlanSubscriptionForUserBean planSubscriptionForUserBean)
+			throws Exception {
+		try {
+			
+			if(StringUtils.isEmpty(planSubscriptionForUserBean.getOfferId())) {
+				//rollbackNeeded = false;
+				throw new UserExceptionInvalidData("Exception Occured while processing the plan purchase. Please call the Customer Service");
+			}
+			
+			//Validate the selected Beneficiary is Matching with the BeneficiaryCount.
+			if(StringUtils.isEmpty(planSubscriptionForUserBean.getBeneficiaryCount())) {
+				//rollbackNeeded = false;
+				throw new UserExceptionInvalidData("Exception Occured while processing the plan purchase. Possible error, beneficiary count is blank. Logout and try again.");
+			}
+			
+			//Validate the Beneficiary ID list is not blank.
+			if(ArrayUtils.isEmpty(planSubscriptionForUserBean.getBeneficiaryIdArr())) {
+				//rollbackNeeded = false;
+				throw new UserExceptionInvalidData("Exception Occured while processing the plan purchase. The Beneficiary name list might be blank, Logout and try again.");
+			}
+			
+			//The Selected Beneficiary Names and the Slected Count Should Match.
+			int beneficiaryCount = Utils.getBeneficiaryCountFromDropdownVal(planSubscriptionForUserBean.getBeneficiaryCount());
+			int beneficiaryIdArrayCount = planSubscriptionForUserBean.getBeneficiaryIdArr().length;
+			
+			String[] beneficiaryList = planSubscriptionForUserBean.getBeneficiaryIdArr();
+			String[] filteredBeneficiaryList = new String[beneficiaryCount];
+			//User selected 3BEN but selected only one Beneficiary.
+			if(beneficiaryCount > beneficiaryIdArrayCount) {
+				//rollbackNeeded = false;
+				throw new UserExceptionInvalidData("Can proceed with the Purchase, You selected "+beneficiaryCount+ " beneficiary Plan, but only selected "+ beneficiaryIdArrayCount +" Beneficiary Name."
+						+ " Make the necessary correction and try again.");
+			//Incase the user Selected 4 Beneficiary but selected plan for 2, the new Array will have top 2 Names.
+			}else if (beneficiaryCount < beneficiaryIdArrayCount){
+				
+				for (int i = 0; i < beneficiaryCount ; i++) {
+					filteredBeneficiaryList[i] = beneficiaryList[i];
+			      }
+				
+				planSubscriptionForUserBean.setBeneficiaryIdArr(filteredBeneficiaryList);
+				logger.info("The array is trimmed. "+beneficiaryCount +" > "+beneficiaryIdArrayCount);
+				
+			}
+			logger.info("Validation Successful!!");
+			
+			return planSubscriptionForUserBean;
+		}catch(Exception ex) {
+			throw ex;
+		}
+	}
+
+	
+	
+	
+	@Override
+	public List<PurchaseHistoryBean> getPurchaseDoneByCustomer(String customerId, String purchaseType) throws Exception {
+		
+		return planDetailsDao.PurchaseDoneByCustomer(customerId, purchaseType);
 	}
 
 }

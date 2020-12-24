@@ -217,10 +217,10 @@ public class MainController {
 	 */
 	
 	//Purchase History
-	@GetMapping("/user/purchaseHistory")
+	/*@GetMapping("/user/purchaseHistory")
 	public String userPurchaseHistory(Model model) {
 			return "user/purchase_history_user";
-	}
+	}*/
 	
 	//RequestService
 	/*

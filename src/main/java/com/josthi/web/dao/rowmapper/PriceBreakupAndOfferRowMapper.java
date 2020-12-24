@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.josthi.web.bo.PriceBreakupAndOfferBean;
+import com.josthi.web.utils.Utils;
 public class PriceBreakupAndOfferRowMapper implements RowMapper<PriceBreakupAndOfferBean> {
 	@Override
 public PriceBreakupAndOfferBean mapRow(ResultSet resultSet,int arg1)throws SQLException {
@@ -26,7 +27,10 @@ public PriceBreakupAndOfferBean mapRow(ResultSet resultSet,int arg1)throws SQLEx
 		priceBreakupAndOfferPO.setDiscountedPriceForSelectedDuration(resultSet.getString("DISCOUNTED_PRICE_FOR_SELECTED_DURATION"));
 		priceBreakupAndOfferPO.setFinalDiscountedPrice(resultSet.getString("FINAL_DISCOUNTED_PRICE"));
 		priceBreakupAndOfferPO.setTotalGain(resultSet.getString("TOTAL_GAIN"));
-		priceBreakupAndOfferPO.setBreakupCreatedOn(resultSet.getTimestamp("BREAKUP_CREATED_ON"));
+		
+		priceBreakupAndOfferPO.setFamilyDiscount(Utils.formattedCurrency(resultSet.getBigDecimal("FAMILY_DISCOUNT")+""));
+		priceBreakupAndOfferPO.setLongTermDiscount(Utils.formattedCurrency(resultSet.getBigDecimal("LONG_TERM_DISCOUNT")+""));
+		priceBreakupAndOfferPO.setNonDiscountedPrice(Utils.formattedCurrency(resultSet.getBigDecimal("NON_DISCOUNTED_PRICE")+""));
 		return priceBreakupAndOfferPO;
 		}
 	}

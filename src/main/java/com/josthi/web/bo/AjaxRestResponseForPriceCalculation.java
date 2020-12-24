@@ -30,10 +30,13 @@ public class AjaxRestResponseForPriceCalculation {
 	  private String discountedPriceForSelectedDuration;
 	  
 	  private String actualPlanPrice;
+	  private double actualPlanPriceDouble;
 	  private String finalDiscountedPrice;	  
 	  private String totalGain;
 	  
 	  private int offerId;
+	  private double longTermPlanDiscountForEmailDouble;
+	  private double familyDiscountForEmailDouble;
 	  
 	  
 	  
@@ -357,6 +360,40 @@ public class AjaxRestResponseForPriceCalculation {
 
 	public void setOfferId(int offerId) {
 		this.offerId = offerId;
+	}
+	
+	
+
+
+	public double getLongTermPlanDiscountForEmailDouble() {
+		return longTermPlanDiscountForEmailDouble;
+	}
+
+
+	public void setLongTermPlanDiscountForEmailDouble(double longTermPlanDiscountForEmailDouble) {
+		this.longTermPlanDiscountForEmailDouble = longTermPlanDiscountForEmailDouble;
+	}
+
+
+	public double getFamilyDiscountForEmailDouble() {
+		return familyDiscountForEmailDouble;
+	}
+
+
+	public void setFamilyDiscountForEmailDouble(double familyDiscountForEmailDouble) {
+		this.familyDiscountForEmailDouble = familyDiscountForEmailDouble;
+	}
+	
+	
+
+
+	public double getActualPlanPriceDouble() {
+		return actualPlanPriceDouble;
+	}
+
+
+	public void setActualPlanPriceDouble(double actualPlanPriceDouble) {
+		this.actualPlanPriceDouble = actualPlanPriceDouble;
 	}
 
 

@@ -139,37 +139,43 @@ public class UserPlanSelectionController {
 			ValidateSession.isValidSession(request);
 			ValidateSession.isValidUser(request, custId.trim());
 			
+			PlanSubscriptionForUserBean validatedPlanBean = planAndBenefitService.validateIncomingData(planSubscriptionForUserBean);
 			
-			String customerPlanInvoiveId = planAndBenefitService.savePlanDetails(planSubscriptionForUserBean, custId.trim());
-					
-				//String ticketNumber = serviceRequestService.createTicket(serviceRequestBean, custId.trim());
-				
+			String customerPlanInvoiveId = planAndBenefitService.savePlanDetails(validatedPlanBean, custId.trim());
+								
 			
 				if(customerPlanInvoiveId!=null && customerPlanInvoiveId.length() > 0) {
 					actionStatus = MessageConstant.USER_SUCCESS_STATUS;
 					message = "Plan Purchase Successful, here is your Ack ID/ Invoice ID :"+customerPlanInvoiveId;
 					
 					String sessionEmailId = ValidateSession.getUserEmail(request);
-					PlanInvoiceEmailBean planInvoiceEmailBean = planAndBenefitService.getPlanInvoiceDetailsForEmail(custId.trim(),
-																													planSubscriptionForUserBean.getBeneficiaryIdArr(),
-																													customerPlanInvoiveId,
-																													planSubscriptionForUserBean.getOfferId(),
-																													sessionEmailId);
 					
-																													
-					logger.info("############ Data to print email :"+planInvoiceEmailBean.toString());																								
-					logger.info("############ EMAIL Sent to :" +sessionEmailId);
-					if(planInvoiceEmailBean!=null) {
-	                	//Service email 
-	        	        
-	        	        Map<String, String> serviceEmailMap = planAndBenefitService.getMapForInvoiceEmail(planInvoiceEmailBean);
-	        	        
-	        	        EmailDbBean emailDbBeanForService = Utils.getEmailBeanForPlanInvoive(sessionEmailId, customerPlanInvoiveId, Utils.mapToString(serviceEmailMap));
-	        	        boolean buyPlanQueueStatus = emailService.queueEmail(emailDbBeanForService);
-	        	        if(buyPlanQueueStatus) {
-	        	        	EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
-	        	        }
-	    			}
+					try {
+						PlanInvoiceEmailBean planInvoiceEmailBean = planAndBenefitService.getCleanPlanInvoiceDetailsForEmail(custId.trim(),
+																														planSubscriptionForUserBean.getBeneficiaryIdArr(),
+																														customerPlanInvoiveId,
+																														planSubscriptionForUserBean.getOfferId(),
+																														sessionEmailId);
+						
+																														
+						logger.debug("############ Data to print email :"+planInvoiceEmailBean.toString());																								
+						logger.debug("############ EMAIL Sent to :" +sessionEmailId);
+						if(planInvoiceEmailBean!=null) {
+		                	//Service email 
+		        	        
+		        	        Map<String, String> serviceEmailMap = planAndBenefitService.getMapForInvoiceEmail(planInvoiceEmailBean);
+		        	        
+		        	        EmailDbBean emailDbBeanForService = Utils.getEmailBeanForPlanInvoive(sessionEmailId, customerPlanInvoiveId, Utils.mapToString(serviceEmailMap));
+		        	        boolean buyPlanQueueStatus = emailService.queueEmail(emailDbBeanForService);
+		        	        if(buyPlanQueueStatus) {
+		        	        	EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
+		        	        }
+		    			}
+					}catch(Exception ex) { // Here we are supressing the Email failure. so that the customer is not cofused.
+						logger.error("Email Generation error for Invoive",ex);
+						actionStatus = MessageConstant.USER_SUCCESS_STATUS;
+						message = "Plan Purchase Successful, here is your Ack ID/ Invoice ID :"+customerPlanInvoiveId +". Please Note, the Invoice email failed. but you can view the invoice from the above link.";
+					}
 				}else{
 					actionStatus = MessageConstant.USER_FAILURE_STATUS;
 					message = "Ticket creation Failed.";

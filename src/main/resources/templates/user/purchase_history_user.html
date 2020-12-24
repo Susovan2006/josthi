@@ -53,37 +53,63 @@
         </div>
 
         <div class="col-lg-9">
+        
           <!-- Card -->
-          <div class="card">
+          <div class="card mb-3 mb-lg-5">
             <!-- Header -->
             <div class="card-header">
-              <h5 class="card-header-title">Order history</h5>
+              <h5 class="card-header-title">Plan Purchase history</h5>
             </div>
             <!-- End Header -->
-
+			
+			<!-- Alert Section Start-->
+            <div th:if="${status ne null}">
+	            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+				  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+				      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+				    </svg>
+				  </button>
+				</div>
+			</div>
+			<!-- Alert Section End-->
+			
+			
+			
+			<!-- Body -->
+            <div class="card-body">
+            	<div th:if="${not #lists.isEmpty(purchaseHistoryPlanList)}" class="table_wrapper">
+            		<p class="card-text">Here are the Plans you recently purchased, Click on the Invoice for billing and Payment Details</p>
+            	</div>
+			<BR>
+			
             <!-- Table -->
-            <div class="table-responsive">
+            <div th:if="${not #lists.isEmpty(purchaseHistoryPlanList)}" class="table_wrapper">
+             <div class="table-responsive">
               <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle">
                 <thead class="thead-light">
                   <tr>
-                    <th>Reference</th>
+                    <th>Ref ID</th>
+                    <th>Item</th>
                     <th>Status</th>
                     <th>Amount</th>
-                    <th>Updated</th>
+                    <th>Purchased On</th>
                     <th>Invoice</th>
                     <th style="width: 5%;"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><a href="#">#3682303</a></td>
-                    <td><span class="badge badge-soft-warning">Pending</span></td>
-                    <td>$264</td>
-                    <td>22/04/2020</td>
+                  <tr th:each="purchaseHistoryPlan : ${purchaseHistoryPlanList}">
+                    <td class="font-size-1" th:text="${purchaseHistoryPlan.purchaseId}" th:id="${purchaseHistoryPlan.purchaseId}"><a href="#">#3682303</a></td>
+                    <td class="font-size-1" th:text="${purchaseHistoryPlan.purchaseItem}"></td>
+                    <td class="font-size-1" th:text="${purchaseHistoryPlan.paymentStatus}"></td>
+                    <td class="font-size-1" th:text="${purchaseHistoryPlan.priceInInr} + '&#8377'"></td>
+                    <td class="font-size-1" th:text="${purchaseHistoryPlan.purchaseDate}"></td>
                     <td><a class="btn btn-xs btn-white" href="../pages/invoice.html"><i class="fas fa-file-download mr-1"></i> PDF</a></td>
                     <td><a class="btn btn-xs btn-white" href="javascript:;" data-toggle="modal" data-target="#invoiceReceiptModal"><i class="fas fa-eye mr-1"></i> Quick view</a></td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <td><a href="#">#2333234</a></td>
                     <td><span class="badge badge-soft-success">Successful</span></td>
                     <td>$264</td>
@@ -98,14 +124,97 @@
                     <td>22/04/2018</td>
                     <td><a class="btn btn-xs btn-white" href="../pages/invoice.html"><i class="fas fa-file-download mr-1"></i> PDF</a></td>
                     <td><a class="btn btn-xs btn-white" href="javascript:;" data-toggle="modal" data-target="#invoiceReceiptModal"><i class="fas fa-eye mr-1"></i> Quick view</a></td>
+                  </tr> -->
+                </tbody>
+              </table>
+            </div>
+            </div> <!-- End If Check -->
+            
+            <!-- Else Block -->
+            <div th:unless="${not #lists.isEmpty(purchaseHistoryPlanList)}">
+					<p class="card-text text-danger">You are yet to purchase any Plan. Please purchase a plan from here.</p>
+			</div>
+            <!-- End Table -->
+            </div>
+            <!-- End Body -->
+            
+            
+          </div>
+          <!-- End Card -->
+          
+          
+        <!-- ************************************CARD 2******************************** -->  
+          
+         <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <!-- Header -->
+            <div class="card-header">
+              <h5 class="card-header-title">Service Purchase history</h5>
+            </div>
+            <!-- End Header -->
+			
+			<!-- Alert Section Start-->
+            <div th:if="${status2 ne null}">
+	            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status2 == 'Success'} ? alert-success : alert-warning">
+				  <strong><span th:text="${status2}"></span>:</strong> <span th:text="${message2}"></span>
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+				      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+				    </svg>
+				  </button>
+				</div>
+			</div>
+			<!-- Alert Section End-->
+			
+			
+			
+			<!-- Body -->
+            <div class="card-body">
+            <div th:if="${not #lists.isEmpty(purchaseHistoryServiceList)}">
+            	<p class="card-text">Here are the Services you recently purchased, Click on the Invoice for billing and Payment Details</p>
+            </div>
+			<BR>
+			
+            <!-- Table -->
+            <div th:if="${not #lists.isEmpty(purchaseHistoryServiceList)}">
+             <div class="table-responsive">
+              <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Ref ID</th>
+                    <th>Item</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                    <th>Purchased On</th>
+                    <th>Invoice</th>
+                    <th style="width: 5%;"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="purchaseHistoryService : ${purchaseHistoryServiceList}">
+                    <td class="font-size-1" th:text="${purchaseHistoryService.purchaseId}" th:id="${purchaseHistoryService.purchaseId}"><a href="#">#3682303</a></td>
+                    <td class="font-size-1" th:text="${purchaseHistoryService.purchaseItem}"></td>
+                    <td class="font-size-1" th:text="${purchaseHistoryService.paymentStatus}"></td>
+                    <td class="font-size-1" th:text="${purchaseHistoryService.priceInInr} + '&#8377'"></td>
+                    <td class="font-size-1" th:text="${purchaseHistoryService.purchaseDate}"></td>
+                    <td><a class="btn btn-xs btn-white" href="../pages/invoice.html"><i class="fas fa-file-download mr-1"></i> PDF</a></td>
+                    <td><a class="btn btn-xs btn-white" href="javascript:;" data-toggle="modal" data-target="#invoiceReceiptModal"><i class="fas fa-eye mr-1"></i> Quick view</a></td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            </div> <!-- End If Check -->
+            
+            <!-- Else Block -->
+            <div th:unless="${not #lists.isEmpty(purchaseHistoryServiceList)}">
+					<p class="card-text text-danger">As of now you don't have any Purchased services.</p>
+			</div>
             <!-- End Table -->
+            </div>
+            <!-- End Body -->
+            
+            
           </div>
-          <!-- End Card -->
-          <!-- End Card -->
 
 
         </div>

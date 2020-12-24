@@ -13,6 +13,7 @@ public interface MappingConstant {
 	String USER_LOGIN_AND_SECURITY = "user/login_and_security_user";
 	String USER_SUBSCRIBE_PLAN = "user/subscribe_a_plan_user";
 	String USER_SUBSCRIBE_PLAN_REDIRECT = "redirect:/user/subscribePlan";
+	String USER_PURCHASE_HISTORY = "user/purchase_history_user";
 	
 	String VERBIAGE_HTML_PLAN_DETAILS = "service_details.html";
 	

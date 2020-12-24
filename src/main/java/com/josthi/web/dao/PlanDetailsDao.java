@@ -8,6 +8,7 @@ import com.josthi.web.bo.PlanAndBenefitBean;
 import com.josthi.web.bo.PlanSelectionForUserBean;
 import com.josthi.web.bo.PriceBreakupAndOfferBean;
 import com.josthi.web.bo.PriceDiscountBean;
+import com.josthi.web.bo.PurchaseHistoryBean;
 import com.josthi.web.bo.RelationBean;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.bo.UnitFamilyPlanPrice;
@@ -44,7 +45,8 @@ public interface PlanDetailsDao {
 			String beneficiaryCountCode, String customerId, String string, String planPricePerPersonPerMonth,
 			String beneficiaryCount, String basePriceForTotalBeneficiary, String discountedPriceForTotalBeneficiary,
 			String planDuration, String discountPercentageForFamilyPlan, String basePriceForSelectedDuration,
-			String discountedPriceForSelectedDuration, String finalDiscountedPrice, String totalGain) throws Exception;
+			String discountedPriceForSelectedDuration, String finalDiscountedPrice, String totalGain,
+			double familyDiscount, double longTermDiscount, double nonDiscountedPlanPrice) throws Exception;
 
 	boolean updatePriceBreakupOfferTable(String offerId) throws Exception;
 
@@ -54,5 +56,9 @@ public interface PlanDetailsDao {
 			Timestamp planExpireDate, String customerPlanInvoiceId) throws Exception;
 
 	PriceBreakupAndOfferBean getDetailsFromPriceBreakupTable(String offerId) throws Exception;
+
+	//List<PurchaseHistoryBean> PurchaseDoneByCustomer(String customerId) throws Exception;
+
+	List<PurchaseHistoryBean> PurchaseDoneByCustomer(String customerId, String purchaseType)throws Exception;
 
 }

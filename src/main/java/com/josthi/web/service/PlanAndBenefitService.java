@@ -10,6 +10,7 @@ import com.josthi.web.bo.PlanAndBenefitBean;
 import com.josthi.web.bo.PlanInvoiceEmailBean;
 import com.josthi.web.bo.PlanSelectionForUserBean;
 import com.josthi.web.bo.PlanSubscriptionForUserBean;
+import com.josthi.web.bo.PurchaseHistoryBean;
 import com.josthi.web.bo.ServiceDetailsBean;
 
 
@@ -35,6 +36,9 @@ public interface PlanAndBenefitService {
 
 	AjaxRestResponseForPriceCalculation getPriceBreakup(String customerId, String selectedPlan, String planDuration,
 			String beneficiaryCount) throws Exception;
+	
+	AjaxRestResponseForPriceCalculation getCleanPriceBreakup(String customerId, String selectedPlan, String planDuration,
+			String beneficiaryCount) throws Exception;
 
 	int saveOfferDetails(AjaxRestResponseForPriceCalculation ajaxRestResponseForPriceCalculation, String customerId,
 			String beneficiary1, String beneficiary2, String beneficiary3, String planDurationCode, String beneficiaryCountCode) throws Exception;
@@ -43,6 +47,12 @@ public interface PlanAndBenefitService {
 
 	PlanInvoiceEmailBean getPlanInvoiceDetailsForEmail(String trim,String[] beneficiaryArray, String customerPlanInvoiveId, String offerId, String customerEmail) throws Exception;
 
+	PlanInvoiceEmailBean getCleanPlanInvoiceDetailsForEmail(String trim,String[] beneficiaryArray, String customerPlanInvoiveId, String offerId, String customerEmail) throws Exception;
+
 	Map<String, String> getMapForInvoiceEmail(PlanInvoiceEmailBean planInvoiceEmailBean) throws Exception;
+
+	PlanSubscriptionForUserBean validateIncomingData(PlanSubscriptionForUserBean planSubscriptionForUserBean) throws Exception;
+
+	List<PurchaseHistoryBean> getPurchaseDoneByCustomer(String hostCustomerId, String purchaseType) throws Exception ;
 
 }

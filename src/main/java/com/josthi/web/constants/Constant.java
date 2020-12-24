@@ -119,6 +119,10 @@ public interface Constant {
 	String JOSTHI_EMAIL = "MyJosthi@gmail.com";
 	String JOSTHI_CONTACT ="+91 9836548561";
 	
+	//PURCHASE TYPE
+	String PURCHASE_TYPE_PLAN = "PLAN";
+	String PURCHASE_TYPE_SERVICE = "SERVICE";
+	
 	
 
 }

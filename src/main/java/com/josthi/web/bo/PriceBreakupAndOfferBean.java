@@ -23,6 +23,9 @@ public class PriceBreakupAndOfferBean {
 	private String finalDiscountedPrice ;
 	private String totalGain ;
 	private Timestamp breakupCreatedOn ;
+	private String familyDiscount ;
+	private String longTermDiscount ;
+	private String nonDiscountedPrice;
 
 
 	public Integer getOfferId(){
@@ -139,6 +142,26 @@ public class PriceBreakupAndOfferBean {
 	public void setBreakupCreatedOn(Timestamp breakupCreatedOn){
 		this.breakupCreatedOn = breakupCreatedOn ;
 	}
+	
+	
+	public String getFamilyDiscount() {
+		return familyDiscount;
+	}
+	public void setFamilyDiscount(String familyDiscount) {
+		this.familyDiscount = familyDiscount;
+	}
+	public String getLongTermDiscount() {
+		return longTermDiscount;
+	}
+	public void setLongTermDiscount(String longTermDiscount) {
+		this.longTermDiscount = longTermDiscount;
+	}
+	public String getNonDiscountedPrice() {
+		return nonDiscountedPrice;
+	}
+	public void setNonDiscountedPrice(String nonDiscountedPrice) {
+		this.nonDiscountedPrice = nonDiscountedPrice;
+	}
 	@Override
 	public String toString() {
 		return "PriceBreakupAndOfferBean [offerId=" + offerId + ", planStartDate=" + planStartDate + ", planEndDate="
@@ -152,8 +175,12 @@ public class PriceBreakupAndOfferBean {
 				+ discountPercentageForFamilyPlan + ", basePriceForSelectedDuration=" + basePriceForSelectedDuration
 				+ ", discountedPriceForSelectedDuration=" + discountedPriceForSelectedDuration
 				+ ", finalDiscountedPrice=" + finalDiscountedPrice + ", totalGain=" + totalGain + ", breakupCreatedOn="
-				+ breakupCreatedOn + "]";
+				+ breakupCreatedOn + ", familyDiscount=" + familyDiscount + ", longTermDiscount=" + longTermDiscount
+				+ ", nonDiscountedPrice=" + nonDiscountedPrice + "]";
 	}
+	
+	
+	
 	
 	
 	

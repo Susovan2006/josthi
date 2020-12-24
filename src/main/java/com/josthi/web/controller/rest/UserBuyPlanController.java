@@ -64,8 +64,8 @@ public class UserBuyPlanController {
 		logger.info("---> Ajax request for :"+jsonString);
 		try {
 			
-			Gson gson = new Gson(); JsonObject jsonObject = gson.fromJson( jsonString,
-			JsonObject.class);
+			Gson gson = new Gson(); 
+			JsonObject jsonObject = gson.fromJson( jsonString,JsonObject.class);
 			
 			
 			String customerId = (jsonObject.get("customerId").toString()).replace("\"","");
@@ -97,7 +97,7 @@ public class UserBuyPlanController {
 			//"planDuration":"365DAY",
 			//"beneficiaryCount":"3BEN"}
 
-			AjaxRestResponseForPriceCalculation ajaxRestResponseForPriceCalculation = planAndBenefitService.getPriceBreakup(customerId, selectedPlan, planDuration, beneficiaryCount);
+			AjaxRestResponseForPriceCalculation ajaxRestResponseForPriceCalculation = planAndBenefitService.getCleanPriceBreakup(customerId, selectedPlan, planDuration, beneficiaryCount);
 			ajaxRestResponseForPriceCalculation.setStatus(Constant.AJAX_SUCCESS);
 			
 			

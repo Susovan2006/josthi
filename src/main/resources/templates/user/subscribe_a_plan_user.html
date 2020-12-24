@@ -1110,10 +1110,10 @@
 						$('#divPlanDurationToReview').text(data.planDuration);
 						$('#divPlanStartDate').text(data.planStartDateStr);
 						$('#divPlanExpireDate').text(data.planEndDateStr)
-						$('#divFinalPriceToPay').html(data.planFinalPrice +'&#8377 ')
+						$('#divFinalPriceToPay').html(data.finalDiscountedPrice +'&#8377 ')
 						
 						//Setting the Servlet Fields...
-						$("#hiddenPrice").val(data.planFinalPrice);
+						$("#hiddenPrice").val(data.finalDiscountedPrice);
 						$("#hiddenOfferId").val(data.offerId);
 						//alert(data.status);
 							

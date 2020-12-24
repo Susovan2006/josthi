@@ -140,7 +140,8 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 																		 paymentStatus,
 																		 "",
 																		 priceInUsd,
-																		 priceInInr);
+																		 priceInInr,
+																		 serviceRequestBean.getRequesterId());
 					
 					//Insert into Activity History.
 					String activityNotes = "User "+serviceRequestBean.getRequestedBy() + " Created a ticket "

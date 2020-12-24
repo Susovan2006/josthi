@@ -20,6 +20,7 @@ import com.josthi.web.bo.PlanAndBenefitBean;
 import com.josthi.web.bo.PlanSelectionForUserBean;
 import com.josthi.web.bo.PriceBreakupAndOfferBean;
 import com.josthi.web.bo.PriceDiscountBean;
+import com.josthi.web.bo.PurchaseHistoryBean;
 import com.josthi.web.bo.RelationBean;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.bo.UnitFamilyPlanPrice;
@@ -35,6 +36,7 @@ import com.josthi.web.dao.rowmapper.DropDownServiceTypeRowmapper;
 import com.josthi.web.dao.rowmapper.PlanAndBenefitDetailRowMapper;
 import com.josthi.web.dao.rowmapper.PlanAndPriceDetailToDisplayRowMapper;
 import com.josthi.web.dao.rowmapper.PriceBreakupAndOfferRowMapper;
+import com.josthi.web.dao.rowmapper.PurchaseHistoryRowmapper;
 import com.josthi.web.dao.rowmapper.RelationRowmapper;
 import com.josthi.web.dao.rowmapper.ServicePriceDetailRowMapper;
 import com.josthi.web.exception.UserExceptionInvalidData;
@@ -436,15 +438,15 @@ private static final Logger logger = LoggerFactory.getLogger(PlanDetailsDaoImpl.
 			"DISCOUNT_PERCENTAGE_FOR_FAMILY_PLAN, " + 
 			"BASE_PRICE_FOR_SELECTED_DURATION, " + 
 			"DISCOUNTED_PRICE_FOR_SELECTED_DURATION, " + 
-			"FINAL_DISCOUNTED_PRICE, TOTAL_GAIN) " + 
-			"VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			"FINAL_DISCOUNTED_PRICE, TOTAL_GAIN, FAMILY_DISCOUNT, LONG_TERM_DISCOUNT, NON_DISCOUNTED_PRICE) " + 
+			"VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	@Override
 	public int saveOfferDetails(Timestamp planStartDate, Timestamp planEndDate, String planName,
 			String planDurationCode, String beneficiaryCountCode, String customerId, String requestFor,
 			String planPricePerPersonPerMonth, String beneficiaryCount, String basePriceForTotalBeneficiary,
 			String discountedPriceForTotalBeneficiary, String planDuration, String discountPercentageForFamilyPlan,
 			String basePriceForSelectedDuration, String discountedPriceForSelectedDuration, String finalDiscountedPrice,
-			String totalGain) throws Exception {
+			String totalGain, double familyDiscount, double longTermDiscount,double nonDiscountedPlanPrice) throws Exception {
 		try {
 			
 			//logger.info("PLAN_START_DATE :"+planStartDate +"formatted :"+ Date.valueOf(planStartDate.toLocalDateTime().toLocalDate()));
@@ -473,6 +475,9 @@ private static final Logger logger = LoggerFactory.getLogger(PlanDetailsDaoImpl.
 				ps.setString(15, discountedPriceForSelectedDuration);
 				ps.setString(16, finalDiscountedPrice);
 				ps.setString(17, totalGain);
+				ps.setDouble(18, familyDiscount);
+				ps.setDouble(19, longTermDiscount);
+				ps.setDouble(20, nonDiscountedPlanPrice);
 
 				return ps;
 
@@ -566,7 +571,8 @@ private static final Logger logger = LoggerFactory.getLogger(PlanDetailsDaoImpl.
 			+ " PLAN_DURATION_CODE, PLAN_BENEFICIARY_COUNT_CODE, BREAKUP_REQUESTED_BY, BREAKUP_REQUESTED_FOR, "
 			+ " PLAN_PRICE_PER_PERSON_PER_MONTH, BENEFECICIARY_COUNT_TO_DISPLAY, BASE_PRICE_FOR_TOTAL_BENEFECIARY, "
 			+ " DISCOUNTED_PRICE_FOR_TOTAL_BENEFECIARY, PLAN_DURATION_TO_DISPLAY, DISCOUNT_PERCENTAGE_FOR_FAMILY_PLAN, "
-			+ " BASE_PRICE_FOR_SELECTED_DURATION, DISCOUNTED_PRICE_FOR_SELECTED_DURATION, FINAL_DISCOUNTED_PRICE, TOTAL_GAIN, BREAKUP_CREATED_ON "
+			+ " BASE_PRICE_FOR_SELECTED_DURATION, DISCOUNTED_PRICE_FOR_SELECTED_DURATION, FINAL_DISCOUNTED_PRICE, TOTAL_GAIN, BREAKUP_CREATED_ON, "
+			+ " FAMILY_DISCOUNT, LONG_TERM_DISCOUNT, NON_DISCOUNTED_PRICE "
 			+ " FROM price_breakup_offer where OFFER_ID = ? and IS_PLAN_PURCHASED = 'Y'";
 	@Override
 	public PriceBreakupAndOfferBean getDetailsFromPriceBreakupTable(String offerId)
@@ -592,6 +598,37 @@ private static final Logger logger = LoggerFactory.getLogger(PlanDetailsDaoImpl.
 			throw ex;
 		}
 			
+	}
+	
+	public static final String SELECT_ALL_PURCHASE =  "";
+	public static final String SELECT_PLAN_PURCHASE =  "SELECT PURCHASE_ID_TKT, PURCHASE_ITEM, PURCHASE_DETAILS, PURCHASE_DATE, "
+			+ "PAYMENT_STATUS, PAYMENT_INVOICE_ID, PRICE_IN_USD, PRICE_IN_INR, TX_BY "  
+			+ "FROM purchase_history WHERE TX_BY = ? and SUBSTR(PURCHASE_ID_TKT, 1, 1) = 'P' order by PURCHASE_DATE desc";
+	public static final String SELECT_TICKET_PURCHASE =  "SELECT PURCHASE_ID_TKT, PURCHASE_ITEM, PURCHASE_DETAILS, PURCHASE_DATE, "
+			+ "PAYMENT_STATUS, PAYMENT_INVOICE_ID, PRICE_IN_USD, PRICE_IN_INR, TX_BY "  
+			+ "FROM purchase_history WHERE TX_BY = ? and SUBSTR(PURCHASE_ID_TKT, 1, 1) = 'T' order by PURCHASE_DATE desc";
+	
+	@Override
+	public List<PurchaseHistoryBean> PurchaseDoneByCustomer(String customerId, String purchaseType) throws Exception {
+		
+		String SQL = "";
+			if(purchaseType.equalsIgnoreCase(Constant.PURCHASE_TYPE_PLAN)) {
+				SQL = SELECT_PLAN_PURCHASE;
+			}else if(purchaseType.equalsIgnoreCase(Constant.PURCHASE_TYPE_SERVICE)) {
+				SQL = SELECT_TICKET_PURCHASE;
+			}
+			
+			try {
+				List<PurchaseHistoryBean> purchaseHistoryBeanList = getJdbcTemplate().query(
+															 SQL,
+															 new Object[] {customerId},
+															 new PurchaseHistoryRowmapper()
+															 );
+			return purchaseHistoryBeanList;
+		}catch(Exception ex){
+			logger.error(ex.getMessage());
+			throw ex;
+		}
 	}
 	
 	

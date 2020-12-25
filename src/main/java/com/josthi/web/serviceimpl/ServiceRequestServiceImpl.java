@@ -1,5 +1,7 @@
 package com.josthi.web.serviceimpl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,12 +13,15 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import com.josthi.web.bo.ServiceInvoiceBean;
 import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.bo.ServiceRequestHistoryBean;
+import com.josthi.web.bo.UserDetailsBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.HistoryDao;
 import com.josthi.web.dao.ServiceRequestDao;
 import com.josthi.web.dao.UserAuthDao;
+import com.josthi.web.dao.UserDetailsDao;
 import com.josthi.web.dao.UserRegistrationDao;
 import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.service.ServiceRequestService;
@@ -49,6 +54,9 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 	
 	@Autowired
 	private HistoryDao historyDao;
+	
+	@Autowired
+	private	UserDetailsDao userDetailsDao;
 	
 	@Override
 	public String createTicket(ServiceRequestBean serviceRequestBean, String trim) throws Exception {
@@ -255,8 +263,64 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
 
 	@Override
 	public List<ServiceRequestHistoryBean> getServiceRequestHistoryBeanList(String ticket) throws Exception {
-		// TODO Auto-generated method stub
 		return serviceRequestDao.getServiceRequestHistoryBeanList(ticket);
+	}
+
+	@Override
+	public ServiceInvoiceBean getDataForServiceInvoice(String hostCustomerId, String hostCustomerEmail, String ticketId)
+			throws Exception {
+		
+		UserDetailsBean userDetailBean = userDetailsDao.getUserDetails(hostCustomerId);
+		
+		ServiceInvoiceBean ticketDetails = serviceRequestDao.getInvoiceDetails(hostCustomerId, ticketId);
+		
+		ServiceInvoiceBean serviceInvoiceBean = new ServiceInvoiceBean();
+		serviceInvoiceBean.setInvoiceId(ticketId);
+		serviceInvoiceBean.setInvoiceCreationDate(new SimpleDateFormat("MMMMM d, yyyy").format(new Date()));
+		
+		//Josthi Address
+		serviceInvoiceBean.setJosthiAddressLine1(Constant.JOSTHI_ADDRESS_LINE_1);
+		serviceInvoiceBean.setJosthiAddressLine2(Constant.JOSTHI_ADDRESS_LINE_2);
+		serviceInvoiceBean.setJosthiCity(Constant.JOSTHI_CITY);
+		serviceInvoiceBean.setJosthiPin(Constant.JOSTHI_PIN);
+		serviceInvoiceBean.setJosthiState("West Bengal");
+		serviceInvoiceBean.setJosthiEmail(Constant.JOSTHI_EMAIL);
+		serviceInvoiceBean.setJosthiContactNumber(Constant.JOSTHI_CONTACT);
+		
+		//Host Customer Details
+		serviceInvoiceBean.setHostCustomerName(userDetailBean.getFirstName()+" "+userDetailBean.getLastName());
+		serviceInvoiceBean.setHostCustomerAddressLine1(userDetailBean.getUserAddressFirstLine());
+		serviceInvoiceBean.setHostCustomerAddressLine2(userDetailBean.getUserAddressSecondLine());
+		serviceInvoiceBean.setHostCustomerState(userDetailBean.getState());
+		serviceInvoiceBean.setHostCustomerCityTown(userDetailBean.getCityTown());
+		serviceInvoiceBean.setHostCustomerZipPin(userDetailBean.getZipPin());
+		serviceInvoiceBean.setHostCustomerCountry(userDetailBean.getCountry());
+		serviceInvoiceBean.setHostCustomerEmail(hostCustomerEmail);
+		
+		//Payment Details
+		serviceInvoiceBean.setPaymentMethod(ticketDetails.getPaymentMethod());
+		serviceInvoiceBean.setPaymentId(ticketDetails.getPaymentId());
+		serviceInvoiceBean.setPaymentStatus(ticketDetails.getPaymentStatus());
+		
+		//Service Details
+		serviceInvoiceBean.setFinalPrice(ticketDetails.getFinalPrice());
+		serviceInvoiceBean.setServiceRequestedBy(ticketDetails.getServiceRequestedBy());
+		serviceInvoiceBean.setServiceRequestedFor(ticketDetails.getServiceRequestedFor());
+		serviceInvoiceBean.setServiceRequestedOn(ticketDetails.getServiceRequestedOn());
+		serviceInvoiceBean.setServiceType(ticketDetails.getServiceType());
+		
+		//We are getting the AgentName from ID.
+		String agentName = userAuthDao.getUserFirstAndLastName(ticketDetails.getServiceAssignedTo());
+		serviceInvoiceBean.setServiceAssignedTo(agentName);
+		
+		String serviceCode = ticketDetails.getServiceCode();
+		String serviceDescOnCode = serviceRequestDao.getServiceDesc(serviceCode);
+		
+		serviceInvoiceBean.setServiceCode(serviceCode);
+		serviceInvoiceBean.setServiceDescription(serviceDescOnCode+" : "+ticketDetails.getServiceDescription());
+			
+		
+		return serviceInvoiceBean;
 	}
 	
 }

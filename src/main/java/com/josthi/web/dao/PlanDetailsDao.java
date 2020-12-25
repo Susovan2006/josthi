@@ -59,6 +59,10 @@ public interface PlanDetailsDao {
 
 	//List<PurchaseHistoryBean> PurchaseDoneByCustomer(String customerId) throws Exception;
 
-	List<PurchaseHistoryBean> PurchaseDoneByCustomer(String customerId, String purchaseType)throws Exception;
+	List<PurchaseHistoryBean> PurchaseDoneByCustomer(String customerId, String purchaseType) throws Exception;
+
+	boolean isValidPlanId(String planId) throws Exception;
+
+	int getPriceBreakUpId(String hostCustomerId, String planId) throws Exception;
 
 }

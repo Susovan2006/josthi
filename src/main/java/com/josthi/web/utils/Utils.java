@@ -487,6 +487,24 @@ public static String getNextPlanInvoiceID(String type, String plan,int nextCount
 		return f;
 	}
 
+
+
+	public static Object getInvoiceIdFromPlan(String planId) {
+
+		if(!(StringUtils.isEmpty(planId)) && planId.length() > 4) {
+			planId = planId.substring(4);
+		}
+		return planId;
+	}
+	
+	public static Object getInvoiceIdFromTicket(String ticketId) {
+
+		if(!(StringUtils.isEmpty(ticketId)) && ticketId.length() > 3) {
+			ticketId = ticketId.substring(3);
+		}
+		return ticketId;
+	}
+
 	
 
 }

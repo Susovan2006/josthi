@@ -29,6 +29,7 @@ import com.josthi.web.utils.Utils;
 
  */
 
+//TODO Change the percentage : PlanAndPriceDetailToDisplayRowMapper
 public class PlanAndPriceDetailToDisplayRowMapper implements RowMapper<PlanSelectionForUserBean> {
 	@Override
 public PlanSelectionForUserBean mapRow(ResultSet resultSet,int arg1)throws SQLException {

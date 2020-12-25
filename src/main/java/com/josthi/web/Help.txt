@@ -208,3 +208,34 @@ KeyHolder keyHolder = new GeneratedKeyHolder();
 //Setting the Servlet Fields...
 $("#hiddenPrice").val(data.planFinalPrice);
 $("#hiddenOfferId").val(data.offerId);
+
+
+
+#################### THYMELEAF GOTO a specific Div ###################
+In Calling JSP
+-------------------
+<button class="btn btn-primary" th:onclick="window.open('/user/purchaseHistory?gotoPoint=[[${planInvoiceBean.invoiceId}]]','_self')">
+<i class="fas fa-history mr-2"></i>Back</button>
+
+In Service Class
+--------------------
+if(gotoPoint!=null && gotoPoint.length()>0) {
+					model.addAttribute("gotoPoint",gotoPoint);
+				}
+
+Target JSP
+-------------------
+  <script th:inline="javascript">   
+       $(document).ready(function() {
+	       var focus = /*[[${gotoPoint}]]*/'null';
+	       if(!(isEmpty(focus))){
+	    	   document.getElementById(focus).scrollIntoView();
+	       }else{
+	    	   document.getElementById('card1').scrollIntoView();
+	       }
+       });
+</script>
+
+
+################## FORMATTING DATE in ROWMAPPER ################
+Utils.timestampToFormattedString(resultSet.getTimestamp("PURCHASE_DATE"), "MMMMM d, yyyy")

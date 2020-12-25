@@ -8,11 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.josthi.web.bo.BeneficiaryDetailBean;
+import com.josthi.web.bo.ServiceInvoiceBean;
 import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.bo.ServiceRequestHistoryBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.ServiceRequestDao;
 import com.josthi.web.dao.rowmapper.BeneficiaryDetailRowMapper;
+import com.josthi.web.dao.rowmapper.ServiceInvoiceDetailRowMapper;
 import com.josthi.web.dao.rowmapper.ServiceRequestHistoryRowMapper;
 import com.josthi.web.dao.rowmapper.ServiceRequestTableRowMapper;
 import com.josthi.web.exception.UserExceptionInvalidData;
@@ -295,4 +297,50 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 			throw ex;
 		}
 	}
+	
+	
+	
+	
+	public static final String SELECT_SERVICE_INVOICE_DETAILS = "SELECT A.TICKET_NO, A.REQUESTED_BY, A.REQUESTED_FOR, A.ASSIGNED_TO, "
+			+ " A.REQUESTED_ON, A.SERVICE_TYPE, A.SERVICE_CATEGORY, A.SERVICE_REQ_DESCRIPTION, B.PURCHASE_DATE, B.PAYMENT_STATUS, "
+			+ " B.PAYMENT_INVOICE_ID, B.PRICE_IN_INR FROM service_request_table A, purchase_history B "
+			+ " where A.TICKET_NO = B.PURCHASE_ID_TKT and A.TICKET_NO = ? and A.REQUESTER_ID = ?;";
+	@Override
+	public ServiceInvoiceBean getInvoiceDetails(String hostCustomerId, String ticketId) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<ServiceInvoiceBean> serviceInvoiceBean = getJdbcTemplate().query(
+												 SELECT_SERVICE_INVOICE_DETAILS,
+												 new Object[] {ticketId, hostCustomerId},
+												 new ServiceInvoiceDetailRowMapper());
+				//return ;
+				
+				if ( serviceInvoiceBean.isEmpty()){
+					logger.info("No Ticket Found");
+					throw new UserExceptionInvalidData("Data not found in the database.");
+				}else if ( serviceInvoiceBean.size() == 1 ) { // list contains exactly 1 element
+					return serviceInvoiceBean.get(0);
+				}else{  // list contains more than 1 elements
+					throw new UserExceptionInvalidData("Invalid Data in the Database...");
+				}
+				
+				
+			}catch(Exception ex){
+				logger.error(ex.getMessage(), ex);
+				throw ex;
+			}
+	}
+	
+	public static final String SELECT_SERVICE_DESC = "Select SERVICE_NAME from service where SERVICE_CODE = ?";
+	@Override
+	public String getServiceDesc(String serviceCode) throws Exception {
+		try {
+			String name = jdbcTemplate.queryForObject(SELECT_SERVICE_DESC, new Object[]{serviceCode}, String.class);
+			return name;
+		}catch(Exception ex) {
+			logger.error("Couldn't find desc for :"+serviceCode);
+			return serviceCode;
+		}
+	}
+	
 }

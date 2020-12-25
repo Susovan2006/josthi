@@ -231,7 +231,8 @@ public class MainController {
 	//Reports
 	@GetMapping("/user/reports")
 	public String userReports(Model model) {
-			return "user/report_user";
+			//return "user/report_user";
+			return "user/purchase_invoice_Plan";
 	}
 	
 	//Documents

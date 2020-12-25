@@ -633,4 +633,32 @@ private static final Logger logger = LoggerFactory.getLogger(PlanDetailsDaoImpl.
 	
 	
 	
+	public static final String SELECT_PLAN_COUNT_FROM_RELATION = "SELECT COUNT(*) from relation WHERE PLAN_INVOICE_ID = ?";
+	public static final String SELECT_PLAN_COUNT_FROM_PURCHASE_HISTORY = "SELECT COUNT(*) from purchase_history WHERE PURCHASE_ID_TKT = ?";
+	@Override
+	public boolean isValidPlanId(String planId) throws Exception {
+		int relationCount = getJdbcTemplate().queryForObject(SELECT_PLAN_COUNT_FROM_RELATION, new Object[] { planId }, Integer.class);
+		int purchaseHistoryCount = getJdbcTemplate().queryForObject(SELECT_PLAN_COUNT_FROM_PURCHASE_HISTORY, new Object[] { planId }, Integer.class);
+		if(purchaseHistoryCount ==  1 && relationCount >0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	
+	public static final String SELECT_PLAN_PRICE_ID_FROM_RELATION ="select distinct PLAN_PRICE_BREAKUP_ID from relation where CUSTOMER_ID = ? and  PLAN_INVOICE_ID = ?";
+	@Override
+	public int getPriceBreakUpId(String hostCustomerId, String planId) throws Exception {
+		try {
+			int planPriceId = getJdbcTemplate().queryForObject(SELECT_PLAN_PRICE_ID_FROM_RELATION, new Object[] {hostCustomerId, planId }, Integer.class);
+			return planPriceId;
+		}catch(Exception ex) {
+			logger.error("hostCustomerId :"+ hostCustomerId +"/ planId :"+planId +" not found.", ex);
+			return 0;
+		}
+	}
+	
+	
+	
 }

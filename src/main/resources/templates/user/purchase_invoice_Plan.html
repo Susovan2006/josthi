@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Purchase History | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  
+  
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Purchase History</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Plan and Service</li>
+              <li class="breadcrumb-item active" aria-current="page">Invoice</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+           <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+        			
+            
+            <!-- **************************** INVOICE SECTION START********************** -->
+            
+            
+		      <div class="card border bg-img-hero" style="background-image: url(../vendor/svg/components/abstract-shapes-18.svg);">
+		        <div class="card-body p-5 p-md-7 p-lg-11">
+		          <div class="row justify-content-lg-between align-items-sm-center mb-11">
+		            <div class="col-sm-6 col-lg-4 order-sm-2 text-sm-right mb-5 mb-sm-0">
+		              <h1 class="h3 mb-0">
+		                Invoice #
+		                <small class="d-block" th:text="${invoiceId}"></small>
+		              </h1>
+		            </div>
+		
+		            <div class="col-sm-6 col-lg-4 order-sm-1">
+		              <!-- Logo -->
+		              <img class="mb-2" th:src="@{/josthiLogoFooter}" alt="Logo">
+		              <!--<h2 class="h3 text-primary">Josthi</h2>
+		               End Logo -->
+		
+		              <!-- Address -->
+		              <address th:text="${planInvoiceBean.josthiAddressLine1} + ', '+
+		              				${planInvoiceBean.josthiAddressLine2} + ', ' +
+		              				${planInvoiceBean.josthiCity} + ', ' +
+		              				${planInvoiceBean.josthiState} + ', '+
+		              				${planInvoiceBean.josthiPin}">
+		              </address>
+		              <small class="d-block text-muted" th:text="'email : ' + ${planInvoiceBean.josthiEmail}"></small>
+		              <small class="d-block text-muted" th:text="'Contact : ' + ${planInvoiceBean.josthiContactNumber}"></small>
+		              <!-- End Address -->
+		            </div>
+		          </div>
+		
+		          <!-- Bill To -->
+		          <div class="row justify-content-md-between mb-7">
+		            <div class="col-md-5 col-lg-4">
+		              <h3>Bill to:</h3>
+		              <span class="d-block text-dark font-weight-bold" th:text="${planInvoiceBean.hostCustomerName}">MR XXX YYYY</span>
+		              <address class="text-body mb-0" th:text="${planInvoiceBean.hostCustomerAddressLine1} + ', '+
+		              									${planInvoiceBean.hostCustomerAddressLine2} + ', '+
+		              									${planInvoiceBean.hostCustomerCityTown} + ', '+
+		              									${planInvoiceBean.hostCustomerState} + ', '+
+		              									${planInvoiceBean.hostCustomerCountry} + ', '+
+		              									${planInvoiceBean.hostCustomerZipPin}"> 
+		                
+		              </address>
+		              <span class="d-block text-muted" th:text="'email : '+${planInvoiceBean.hostCustomerEmail}"></span>
+		            </div>
+		
+		            <div class="col-md-7 col-lg-6 mt-6">
+		              <dl class="row mb-0">
+		                <dt class="col-5 col-md-6 text-body font-size-1">Invoice date:</dt>
+		                <dd class="col-7 col-md-6 text-dark font-weight-bold font-size-1" th:text="${planInvoiceBean.invoiceCreationDate}">xx/xx/xxxx</dd>
+		              </dl>
+		              <dl class="row mb-0">
+		                <dt class="col-5 col-md-6 text-body font-size-1">Plan Start date:</dt>
+		                <dd class="col-7 col-md-6 text-dark font-weight-bold font-size-1" th:text="${planInvoiceBean.planStartDate}">xx/xx/xxxx</dd>
+		              </dl>
+		              <dl class="row mb-0">
+		                <dt class="col-5 col-md-6 text-body font-size-1">Plan End date:</dt>
+		                <dd class="col-7 col-md-6 text-dark font-weight-bold font-size-1" th:text="${planInvoiceBean.planEndDate}">xx/xx/xxxx</dd>
+		              </dl>
+		              <dl class="row mb-0">
+		              	<small class="d-block text-muted" th:text="'Beneficiary Included In Plan : ' + ${planInvoiceBean.beneficiaryNames}"></small>
+							
+		              </dl>
+		            </div>
+		          </div>
+		          <!-- End Bill To -->
+		          
+		          
+		          <!-- Table -->
+		          <div class="table-responsive-lg">
+		            <table class="table table-heighlighted font-size-1 mb-0">
+		              <thead>
+		                <tr class="text-uppercase text-body">
+		                  <th scope="col" class="font-weight-bold">Payment Status</th>
+		                  <th scope="col" class="font-weight-bold"></th>
+		                  <th scope="col" class="font-weight-bold"></th>
+		                  <th scope="col" class="font-weight-bold text-right"></th>
+		                </tr>
+		              </thead>
+		              <tbody class="text-dark">
+		                <tr>
+		                  <th colspan="3" scope="row" th:text="'Payment Via : ' + ${planInvoiceBean.paymentMethod}"></th>
+		                  <td class="text-right" th:text="${planInvoiceBean.paymentStatus}">xxxxxx</td>
+		                </tr>
+		                <tr>
+		                  <th colspan="3" scope="row"></th>
+		                  <td class="text-right"></td>
+		                </tr>
+		              </tbody>
+		            </table>
+		          </div>
+					<BR>
+					<BR>
+		          <!-- Table -->
+		          <div class="table-responsive-lg">
+		            <table class="table table-heighlighted font-size-1 mb-0">
+		              <thead>
+		                <tr class="text-uppercase text-body">
+		                  <th scope="col" class="font-weight-bold">Description</th>
+		                  <th scope="col" class="font-weight-bold">Beneficiaries</th>
+		                  <th scope="col" class="font-weight-bold">Duration</th>
+		                  <th scope="col" class="font-weight-bold text-right">Price</th>
+		                </tr>
+		              </thead>
+		              <tbody class="text-dark">
+		                <tr>
+		                  <th scope="row" th:text="${planInvoiceBean.planName}">Gold Package</th>
+		                  <td th:text="${planInvoiceBean.beneficiaryCount}">2</td>
+		                  <td th:text="${planInvoiceBean.planDuration}">1</td>
+		                  <td class="text-right" th:text="${planInvoiceBean.actualPlanPrice} + '&#8377'">INR</td>
+		                </tr>
+		                <tr>
+		                  <th colspan="3" scope="row" th:text="${planInvoiceBean.familyDiscountfor}">Family Discount</th>
+		                  <td class="text-right" th:text="'- ' +${planInvoiceBean.familyDiscountPrice} + '&#8377'">INR</td>
+		                </tr>
+		                <tr>
+		                  <th colspan="3" scope="row" th:text="${planInvoiceBean.longTermDiscountFor}">Long Term Discount</th>
+		                  <td class="text-right" th:text="'- ' + ${planInvoiceBean.longTermDiscountPrice} + '&#8377'">INR</td>
+		                </tr>
+		                <tr>
+		                  <th scope="row">Tax</th>
+		                  <td></td>
+		                  <td></td>
+		                  <td class="text-right">0.00 &#8377</td>
+		                </tr>
+		              </tbody>
+		            </table>
+		          </div>
+		          <!-- End Table -->
+		
+		          <!-- Total -->
+		          <div class="border-top border-dark pt-2 mb-9">
+		            <div class="row">
+		              <div class="col-6">
+		                <div class="text-dark pl-2">
+		                  Total Price
+		                </div>
+		                <div class="text-dark pl-2">
+		                  Total Savings
+		                </div>
+		              </div>
+		              <div class="col-6 text-right">
+		                <div class="text-dark pr-2" th:text="${planInvoiceBean.finalPrice} + '&#8377'">
+		                  $520
+		                </div>
+		                <div class="text-dark pr-2" th:text="${planInvoiceBean.finalDiscount}">
+		                  $520
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+		          <!-- End Total -->
+		
+		          <!-- Contacts -->
+		          <div class="row justify-content-lg-between">
+		            <div class="col-md-8 col-lg-7 order-md-2 mb-5 mb-md-0">
+		              <h4>Thank you!</h4>
+		              <p class="font-size-1">If you have any questions concerning this invoice, use the following contact information:</p>
+		
+		              <span class="d-block">
+		                <small class="text-dark font-weight-bold">email:</small>
+		                <small class="text-muted">MyJosthi@gmail.com</small>
+		              </span>
+		              <small class="text-dark font-weight-bold">telephone:</small>
+		              <small class="text-muted">+1 (240) 527-3518</small>
+		            </div>
+		
+		            <div class="col-md-4 col-lg-3 order-md-1 align-self-end">
+		              <p class="small text-muted mb-0">&copy; 2020 Josthi.com</p>
+		            </div>
+		          </div>
+		          <!-- End Contacts -->
+		        </div>
+		      </div>
+		
+		      <div class="text-right mt-5">
+		      	<button class="btn btn-primary" th:onclick="window.open('/user/purchaseHistory?gotoPoint=[[${planInvoiceBean.invoiceId}]]','_self')"><i class="fas fa-history mr-2"></i>Back</button>
+		        <button type="button" class="btn btn-primary transition-3d-hover" onclick="window.print();return false;">
+		          <i class="fas fa-print mr-2"></i>
+		          Print
+		        </button>
+		      </div>
+		    <!-- End Invoice Section -->
+            
+
+			<!-- **************************** INVOICE SECTION END ********************** -->
+         
+
+        </div>
+        <!--end Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+  
+  
+  <!-- ========== FOOTER ========== -->
+  <div th:replace="user_common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+  
+
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+    <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  	<div th:insert="user_common :: js-includes"></div>
+  	<!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+  
+  <script>
+    $(document).on('ready', function () {
+    	
+    var element = document.getElementById("userPurchaseHistoryLink");
+    element.classList.add("active");
+    	
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

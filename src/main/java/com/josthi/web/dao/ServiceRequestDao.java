@@ -2,6 +2,7 @@ package com.josthi.web.dao;
 
 import java.util.List;
 
+import com.josthi.web.bo.ServiceInvoiceBean;
 import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.bo.ServiceRequestHistoryBean;
 
@@ -29,5 +30,9 @@ public interface ServiceRequestDao {
 
 	boolean insertIntoPurchaseHistory(String ticketId, String purchaseItem, String purchaseDetails,
 			String paymentStatus, String paymentInvoiceId, String priceInUsd, String priceInInr, String txBy) throws Exception;
+
+	ServiceInvoiceBean getInvoiceDetails(String hostCustomerId, String ticketId) throws Exception;
+
+	String getServiceDesc(String serviceCode) throws Exception;
 
 }

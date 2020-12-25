@@ -707,9 +707,13 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			
 			//Beneficiary Names.
 			StringBuffer beneficiaryNames = new StringBuffer();
-			for(String beneficiaryId : beneficiaryArray) {
-				beneficiaryNames.append(userAuthDao.getUserFirstAndLastName(beneficiaryId));
-				beneficiaryNames.append(", ");
+			if(beneficiaryArray != null) {
+				for(String beneficiaryId : beneficiaryArray) {
+					beneficiaryNames.append(userAuthDao.getUserFirstAndLastName(beneficiaryId));
+					beneficiaryNames.append(", ");
+				}
+			}else {
+				beneficiaryNames.append(priceBreakupAndOfferBean.getBreakupRequestedFor());
 			}
 			
 			String beneficiaryNamesToDisplay = beneficiaryNames.toString();
@@ -993,6 +997,21 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 	public List<PurchaseHistoryBean> getPurchaseDoneByCustomer(String customerId, String purchaseType) throws Exception {
 		
 		return planDetailsDao.PurchaseDoneByCustomer(customerId, purchaseType);
+	}
+
+	@Override
+	public boolean isValidPlanId(String planId) throws Exception {
+		try {
+			return planDetailsDao.isValidPlanId(planId);
+		}catch(Exception ex) {
+			logger.error("no Plan Found with :"+planId, ex);
+			return false;
+		}
+	}
+
+	@Override
+	public int getPriceBreakUpId(String hostCustomerId, String planId) throws Exception {		
+		return planDetailsDao.getPriceBreakUpId(hostCustomerId, planId);
 	}
 
 }

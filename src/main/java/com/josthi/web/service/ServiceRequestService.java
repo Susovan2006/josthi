@@ -2,6 +2,7 @@ package com.josthi.web.service;
 
 import java.util.List;
 
+import com.josthi.web.bo.ServiceInvoiceBean;
 import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.bo.ServiceRequestHistoryBean;
 
@@ -18,5 +19,7 @@ public interface ServiceRequestService {
 	boolean isValidTicket(String ticket);
 
 	List<ServiceRequestHistoryBean> getServiceRequestHistoryBeanList(String ticket) throws Exception;
+
+	ServiceInvoiceBean getDataForServiceInvoice(String hostCustomerId, String hostCustomerEmail, String ticketId) throws Exception;
 
 }

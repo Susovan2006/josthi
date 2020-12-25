@@ -55,4 +55,8 @@ public interface PlanAndBenefitService {
 
 	List<PurchaseHistoryBean> getPurchaseDoneByCustomer(String hostCustomerId, String purchaseType) throws Exception ;
 
+	boolean isValidPlanId(String planId) throws Exception;
+
+	int getPriceBreakUpId(String hostCustomerId, String planId) throws Exception;
+
 }

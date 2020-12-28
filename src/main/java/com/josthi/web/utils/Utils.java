@@ -376,6 +376,40 @@ public static String getNextPlanInvoiceID(String type, String plan,int nextCount
 	}
 	
 	
+	public static long getDayDiff(java.sql.Timestamp currentTime, java.sql.Timestamp oldTime)
+	{
+	  long milliseconds1 = oldTime.getTime();
+	  long milliseconds2 = currentTime.getTime();
+	  long diff = milliseconds2 - milliseconds1;
+	  long diffDays = diff / (24 * 60 * 60 * 1000);
+	    return diffDays;
+	}
+	
+	public static long getDaysRemainingForPlanToExpire(java.sql.Timestamp expiteDate)
+	{
+	  Timestamp nowTimestamp = new Timestamp(System.currentTimeMillis());
+	  long milliseconds1 = nowTimestamp.getTime(); //Today
+	  long milliseconds2 = expiteDate.getTime();
+	  long diff = milliseconds2 - milliseconds1;
+	  long diffDays = diff / (24 * 60 * 60 * 1000);
+	    return diffDays;
+	}
+	
+	public static boolean isPlanExpired(java.sql.Timestamp expiteDate) {
+		
+		  Timestamp nowTimestamp = new Timestamp(System.currentTimeMillis());
+		  long milliseconds1 = nowTimestamp.getTime(); //Today
+		  long milliseconds2 = expiteDate.getTime(); //Future date
+		  long diff = milliseconds2 - milliseconds1;
+		  long diffDays = diff / (24 * 60 * 60 * 1000);
+		  if(diffDays <=0) {
+			  return true;
+		  }else {
+			  return false;
+		  }
+	}
+	
+	
 	public static String timestampToFormattedString(Timestamp ts , String format) {
 		Date date = new Date();
 		date.setTime(ts.getTime());

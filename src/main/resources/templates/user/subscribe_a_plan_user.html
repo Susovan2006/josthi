@@ -84,29 +84,39 @@
 
             <!-- Body -->
             <div class="card-body">
-              <div class="row">
-                <div class="col-md-7 mb-4 mb-md-0">
-                  <div class="mb-4">
-                    <small class="text-cap">Your plan Name:</small>
-                    <h5>Gold Plan</h5>
-                  </div>
-				  
-				  <div class="mb-4">
-                    <small class="text-cap">Your plan (billed yearly):</small>
-                    <h5>Starter - April 2020</h5>
-                  </div>
-
-                  <div>
-                    <small class="text-cap">Total per year</small>
-                    <h3 class="text-primary">$264 USD</h3>
-                  </div>
-                </div>
-
-                <div class="col-md-5 text-md-right">
-                  <a class="btn btn-sm btn-white mr-1 mb-0 mb-md-2" href="#">Cancel subscription</a>
-                  <a class="btn btn-sm btn-primary transition-3d-hover mb-0 mb-md-2" href="../pages/pricing.html">Update plan</a>
-                </div>
+              <div class="row" th:if="${not #lists.isEmpty(registeredPlanList)}">
+                <div class="col-md-4" th:each="registeredPlan : ${registeredPlanList}">
+                    <div class="card">
+                    	<div th:if="${registeredPlan.planName == 'Gold Plan'} ">
+                    		<img class="card-img-top" src="/goldPlan" alt="Plan Type">
+						</div>
+						<div th:if="${registeredPlan.planName == 'Silver Plan'} ">
+							<img class="card-img-top" src="/silverPlan" alt="Plan Type">
+						</div>
+						<div th:if="${registeredPlan.planName == 'Basic Plan'} ">
+							<img class="card-img-top" src="/basicPlan" alt="Plan Type">
+						</div>
+				      
+				      <div class="card-body">
+				         <h5 class="card-title" th:text="${registeredPlan.planName}">Silver Plan</h5>
+				            <ul class="list-checked list-checked-primary list-unstyled-py-2">
+							  <li class="list-checked-item font-size-1 text-navy" th:text="${registeredPlan.breakupRequestedFor}">Sayani Gumtya, Aarish Gumtya</li>
+							  <li class="list-checked-item font-size-1 text-navy" th:text="'Start :'+${registeredPlan.planStartDateStr}">Start : 1st Jan 2020</li>
+							  <li class="list-checked-item font-size-1 text-navy" th:text="'Expires : '+${registeredPlan.planEndDateStr}">End : 1st Jan 2022</li>
+							  <li class="list-checked-item font-size-1 text-navy" th:text="'Paid : '+${registeredPlan.finalDiscountedPrice} +'&#8377'">End : 1st Jan 2022</li>
+							</ul>
+				        <p class="card-text"><small th:text="${registeredPlan.planComments}"
+				        			th:classappend="${registeredPlan.planActive == 'Y'} ? text-muted : text-danger">Plan is still valid for 30 Days.</small></p>
+				      </div>
+				    </div>
+				 </div>                
               </div>
+              
+              <!-- In case User is yet to Subscribe a Plan  -->
+              <div th:unless="${not #lists.isEmpty(registeredPlanList)}">
+					<p class="text-danger">You are yet to Subscribe any Plan, please go to the below section and select a proper Plan.</p>
+			  </div>
+              
             </div>
             <!-- End Body -->
           </div>

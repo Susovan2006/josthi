@@ -22,6 +22,8 @@ import com.josthi.web.bo.PlanAndBenefitBean;
 import com.josthi.web.bo.PlanInvoiceEmailBean;
 import com.josthi.web.bo.PlanSelectionForUserBean;
 import com.josthi.web.bo.PlanSubscriptionForUserBean;
+import com.josthi.web.bo.PriceBreakupAndOfferBean;
+import com.josthi.web.bo.PurchasedPlanToDisplay;
 import com.josthi.web.bo.ServiceRequestBean;
 import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
@@ -72,6 +74,11 @@ public class UserPlanSelectionController {
 		    	 model.addAttribute("status", status);
 				 model.addAttribute("message", message);
 	   	 	}
+			
+			//Here we are displaying the plan the user already purchased.
+			List<PurchasedPlanToDisplay> registeredPlanList = planAndBenefitService.getPreviousPurchasedPlan(hostCustomerId);
+			model.addAttribute("registeredPlanList",registeredPlanList);
+			
 			
 			//Logic to fetch the Plan details from Database.
 			List<PlanAndBenefitBean> planAndBenefitBeanList = planAndBenefitService.getServiceAndPlanToDisplay();

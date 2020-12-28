@@ -29,6 +29,7 @@ import com.josthi.web.bo.PlanSubscriptionForUserBean;
 import com.josthi.web.bo.PriceBreakupAndOfferBean;
 import com.josthi.web.bo.PriceDiscountBean;
 import com.josthi.web.bo.PurchaseHistoryBean;
+import com.josthi.web.bo.PurchasedPlanToDisplay;
 import com.josthi.web.bo.RelationBean;
 import com.josthi.web.dao.HistoryDao;
 import com.josthi.web.dao.PlanDetailsDao;
@@ -1012,6 +1013,11 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 	@Override
 	public int getPriceBreakUpId(String hostCustomerId, String planId) throws Exception {		
 		return planDetailsDao.getPriceBreakUpId(hostCustomerId, planId);
+	}
+
+	@Override
+	public List<PurchasedPlanToDisplay> getPreviousPurchasedPlan(String hostCustomerId) throws Exception {
+		return planDetailsDao.getPreviousPurchasedPlan(hostCustomerId);
 	}
 
 }

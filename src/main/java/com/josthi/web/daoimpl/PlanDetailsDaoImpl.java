@@ -21,6 +21,7 @@ import com.josthi.web.bo.PlanSelectionForUserBean;
 import com.josthi.web.bo.PriceBreakupAndOfferBean;
 import com.josthi.web.bo.PriceDiscountBean;
 import com.josthi.web.bo.PurchaseHistoryBean;
+import com.josthi.web.bo.PurchasedPlanToDisplay;
 import com.josthi.web.bo.RelationBean;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.bo.UnitFamilyPlanPrice;
@@ -37,6 +38,7 @@ import com.josthi.web.dao.rowmapper.PlanAndBenefitDetailRowMapper;
 import com.josthi.web.dao.rowmapper.PlanAndPriceDetailToDisplayRowMapper;
 import com.josthi.web.dao.rowmapper.PriceBreakupAndOfferRowMapper;
 import com.josthi.web.dao.rowmapper.PurchaseHistoryRowmapper;
+import com.josthi.web.dao.rowmapper.PurchasedPlanToDisplayRowMapper;
 import com.josthi.web.dao.rowmapper.RelationRowmapper;
 import com.josthi.web.dao.rowmapper.ServicePriceDetailRowMapper;
 import com.josthi.web.exception.UserExceptionInvalidData;
@@ -657,6 +659,27 @@ private static final Logger logger = LoggerFactory.getLogger(PlanDetailsDaoImpl.
 			logger.error("hostCustomerId :"+ hostCustomerId +"/ planId :"+planId +" not found.", ex);
 			return 0;
 		}
+	}
+	
+	
+	
+	public static final String SELECT_CURRENT_PLAN ="Select PLAN_START_DATE,PLAN_END_DATE,PLAN_NAME, PLAN_DURATION_CODE, "
+			+ "BREAKUP_REQUESTED_FOR, FINAL_DISCOUNTED_PRICE  from price_breakup_offer where OFFER_ID in "
+			+ "(select  distinct PLAN_PRICE_BREAKUP_ID from relation where " 
+			+ " CUSTOMER_ID = ? and PLAN_PRICE_BREAKUP_ID is not null)  order by PLAN_END_DATE asc";
+	@Override
+	public List<PurchasedPlanToDisplay> getPreviousPurchasedPlan(String userId) throws Exception {
+		try {
+			List<PurchasedPlanToDisplay> purchasedPlanToDisplayList = getJdbcTemplate().query(
+														 SELECT_CURRENT_PLAN,
+														 new Object[] {userId},
+														 new PurchasedPlanToDisplayRowMapper()
+														 );
+				return purchasedPlanToDisplayList;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
 	}
 	
 	

@@ -67,6 +67,34 @@ public class WebPageImageController {
         StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
     }
 	
+			//**********************************************************************************
+			//************************ P L A N    I M A G E ************************************
+			//**********************************************************************************
+			
+			@RequestMapping(value = "/basicPlan", method = RequestMethod.GET,
+			         produces = MediaType.IMAGE_JPEG_VALUE)
+			   public void basicPlan(HttpServletResponse response) throws IOException {
+							ClassPathResource imgFile = new ClassPathResource("/static/images/josthi/plans/blue-1.jpg");
+					        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+					        StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
+			   }
+			
+			@RequestMapping(value = "/silverPlan", method = RequestMethod.GET,
+			         produces = MediaType.IMAGE_JPEG_VALUE)
+			   public void silverPlan(HttpServletResponse response) throws IOException {
+							ClassPathResource imgFile = new ClassPathResource("/static/images/josthi/plans/silver-1.jpg");
+					        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+					        StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
+			   }
+			
+			@RequestMapping(value = "/goldPlan", method = RequestMethod.GET,
+			         produces = MediaType.IMAGE_JPEG_VALUE)
+			   public void goldPlan(HttpServletResponse response) throws IOException {
+							ClassPathResource imgFile = new ClassPathResource("/static/images/josthi/plans/gold-1.jpg");
+					        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+					        StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
+			   }
+	
 	
 
 }

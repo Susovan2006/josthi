@@ -10,7 +10,9 @@ import com.josthi.web.bo.PlanAndBenefitBean;
 import com.josthi.web.bo.PlanInvoiceEmailBean;
 import com.josthi.web.bo.PlanSelectionForUserBean;
 import com.josthi.web.bo.PlanSubscriptionForUserBean;
+import com.josthi.web.bo.PriceBreakupAndOfferBean;
 import com.josthi.web.bo.PurchaseHistoryBean;
+import com.josthi.web.bo.PurchasedPlanToDisplay;
 import com.josthi.web.bo.ServiceDetailsBean;
 
 
@@ -58,5 +60,7 @@ public interface PlanAndBenefitService {
 	boolean isValidPlanId(String planId) throws Exception;
 
 	int getPriceBreakUpId(String hostCustomerId, String planId) throws Exception;
+
+	List<PurchasedPlanToDisplay> getPreviousPurchasedPlan(String hostCustomerId) throws Exception;
 
 }

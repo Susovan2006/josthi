@@ -239,3 +239,67 @@ Target JSP
 
 ################## FORMATTING DATE in ROWMAPPER ################
 Utils.timestampToFormattedString(resultSet.getTimestamp("PURCHASE_DATE"), "MMMMM d, yyyy")
+
+
+
+##################### Setting Alert from Jquery ############################
+See Example in authentication-two-step.html
+
+				<div class="alert alert-dismissible fade" role="alert" id="divAlertForServiceRequest" style="display: none">
+					<span class="text-primary" id="spanAlertForServiceRequest"></span>
+					<button type="button" class="close"  onclick="$('#divAlertForServiceRequest').hide()" aria-label="Close">
+						<svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						   <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+						</svg>
+					</button>
+				</div>
+
+
+
+			function showErrorAlert(msg) {
+				$('#spanAlertForServiceRequest').text(msg); 
+				//$('#divAlertForServiceRequest').show();
+				$('#divAlertForServiceRequest').show();
+				//$('#divAlertForServiceRequest').addClass("show");
+				$('#divAlertForServiceRequest').addClass("alert-soft-danger");
+	
+		   }
+				
+			function showInfoAlert(msg) {
+				//alert(msg);
+				$('#spanAlertForServiceRequest').text(msg);					
+				//$('#divAlertForServiceRequest').addClass("show");
+				$('#divAlertForServiceRequest').show();
+				$('#divAlertForServiceRequest').addClass("alert-soft-primary");
+				//$('#divAlertForServiceRequest').show();
+	
+			}
+				
+			function showSuccessAlert(msg) {
+				//$('#divAlertForServiceRequest').show();
+				$('#spanAlertForServiceRequest').text(msg);				
+				$('#divAlertForServiceRequest').addClass("show");
+				$('#divAlertForServiceRequest').addClass("alert-soft-success");
+				
+	
+			}
+			
+			
+###################### Allow only numeric values in TextBox #########################
+
+You could subscribe for the onkeypress event:
+
+<input type="text" class="textfield" value="" id="extra7" name="extra7" onkeypress="return isNumber(event)" />
+
+
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
+
+

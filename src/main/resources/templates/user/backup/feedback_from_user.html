@@ -78,43 +78,9 @@
                 <span class="badge badge-soft-danger ml-2"></span>
               </div>
             </div>
-            
-            <!-- Alert Section Start-->
-            <div th:if="${status ne null}">
-	            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
-				  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-				      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
-				    </svg>
-				  </button>
-				</div>
-			</div>
-			<!-- Alert Section End-->
 
             <!-- Body -->
             <div class="card-body">
-            <form id="insert_emergency_details" class="js-validate" th:action="@{/user/saveFeedbackForAgent/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
-			  											              th:object="${agentFeedbackBean}"  method="post">
-			
-			<!-- ROW 0 -->
-			<div class="row form-group">
-				<div class="col-md-6">
-					<h5 class="card-title">Select an Agent</h5>
-					<p class="card-text">Here are the list of Agents providing services.</p>
-				</div>
-				<div class="col-md-6 input-group-sm js-form-message">
-					<div class="input-group ">
-						<select th:field="*{feedbackFor}" id="selectedAgentName" class="form-control show-tick" required data-msg="This is a required field. In case this is blank, that means, as of now there is no agent assigned to you." >                            
-							<option th:each="agent : ${agentList}"
-                             					th:value="${agent.keyId}"
-                             					th:text="${agent.value}" />
-										
-						</select>
-					</div>					
-				</div>
-			</div>
-			
 			<!-- ROW 1 -->
 			<div class="row form-group">
 				<div class="col-md-8">
@@ -122,7 +88,7 @@
 					<p class="card-text">When you give a request, how proactive is your agent?</p>
 				</div>
 				<div class="col-md-4">
-					<div id="proactivenessDiv" class="rate2"></div><input id="proactivenessTxt" type="hidden" th:field="*{proactiveness}">
+					<div id="proactivenessDiv" class="rate2"></div><input id="proactivenessTxt" type="hidden">
 				</div>
 			</div>
 			
@@ -133,7 +99,7 @@
 					<p class="card-text">How responsible is your agent in handling your beneficiary?</p>
 				</div>
 				<div class="col-md-4">
-					<div id="responsibleDiv" class="rate2"></div><input id="responsibleTxt" type="hidden" th:field="*{responsibility}">
+					<div id="responsibleDiv" class="rate2"></div><input id="responsibleTxt" type="hidden">
 				</div>
 			</div>
 			
@@ -144,7 +110,7 @@
 					<p class="card-text">How much would you rate the Agent on the resources availability?</p>
 				</div>
 				<div class="col-md-4">
-					<div id= "availabilityDiv" class="rate2"></div><input id="availabilityTxt" type="hidden" th:field="*{availability}">
+					<div id= "availabilityDiv" class="rate2"></div><input id="availabilityTxt" type="hidden">
 				</div>
 			</div>
 			
@@ -155,7 +121,7 @@
 					<p class="card-text">What is your view on the Agent's behavior and attitude. How much would you rate?</p>
 				</div>
 				<div class="col-md-4">
-					<div id="behaviourDiv" class="rate2"></div><input id="behaviourTxt" type="hidden" th:field="*{behavior}">
+					<div id="behaviourDiv" class="rate2"></div><input id="behaviourTxt" type="hidden">
 				</div>
 			</div>
 			
@@ -166,7 +132,7 @@
 					<p class="card-text">How is the Agent taking care your beneficiary?</p>
 				</div>
 				<div class="col-md-4">
-					<div id="careAndHandlingDiv" class="rate2"></div><input id="careAndHandlingTxt" type="hidden" th:field="*{careAndHandling}">
+					<div id="careAndHandlingDiv" class="rate2"></div><input id="careAndHandlingTxt" type="hidden">
 				</div>
 			</div>
 			
@@ -193,8 +159,8 @@
 							<div class="form-group">
 								<label class="input-label">Provide your suggestion how the Agent can improve.</label>
 					  
-								<textarea th:field="*{areaOfImprovement}" cols="30" rows="5" class="form-control no-resize" id="agentFeedbackText" name="agentFeedbackText" placeholder="Your suggestion will help us to provide better service." 
-								maxlength="900"></textarea>
+								<textarea cols="30" rows="5" class="form-control no-resize" id="agentFeedbackText" name="agentFeedbackText" placeholder="Your suggestion will help us to provide better service." 
+								maxlength="200"></textarea>
 							</div>
 						  </div>
 						</div>
@@ -204,7 +170,7 @@
 				<div class="d-flex justify-content-end">
                   <button type="submit" class="btn btn-primary">Submit Feedback</button>
                 </div>
-				</form>
+
             </div>
             <!-- End Body -->
           </div>

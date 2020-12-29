@@ -85,11 +85,10 @@ public class MainController {
 	
 	
 	//form-layouts-filters
-	@GetMapping("/test")
-	public String test(Model model) {
-			model.addAttribute("message","HelloWorld");
-			return "form-layouts-filters";
-	}
+	/*
+	 * @GetMapping("/test") public String test(Model model) {
+	 * model.addAttribute("message","HelloWorld"); return "form-layouts-filters"; }
+	 */
 	
 	//josthi_pricing
 	@GetMapping("/pricing")
@@ -237,8 +236,8 @@ public class MainController {
 	//Reports
 	@GetMapping("/user/reports")
 	public String userReports(Model model) {
-			//return "user/report_user";
-			return "user/purchase_invoice_Plan";
+			return "user/report_user";
+			//return "user/purchase_invoice_Plan";
 	}
 	
 	//Documents
@@ -248,10 +247,10 @@ public class MainController {
 	}
 	
 	//Feedback
-	@GetMapping("/user/feedback")
+	/*@GetMapping("/user/feedback")
 	public String userFeedback(Model model) {
 			return "user/feedback_from_user";
-	}
+	}*/
 	
 	@GetMapping("/user/ticketHistory")
 	public String ticketHistory(Model model) {

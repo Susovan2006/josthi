@@ -69,7 +69,9 @@
                     <!-- Form Group -->
                     
                     <div class="form-group">
-                      <input type="text" th:field="*{firstByte}" class="js-masked-input form-control form-control-single-number" name="code1" id="twoStepVerificationSrCodeInput1" placeholder="" aria-label="" maxlength="1" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus
+                      <input type="text" th:field="*{firstByte}" class="js-masked-input form-control form-control-single-number" 
+                      name="code1" id="twoStepVerificationSrCodeInput1" placeholder="" aria-label="" maxlength="1"  onkeypress="return isNumber(event)"
+                      autocomplete="off" autocapitalize="off" spellcheck="false" autofocus
                              required data-hs-mask-options='{
                                "template": "0"
                              }'>
@@ -80,7 +82,9 @@
                   <div class="col">
                     <!-- Form Group -->
                     <div class="form-group">
-                      <input type="text" th:field="*{secondByte}" class="js-masked-input form-control form-control-single-number" name="code2" id="twoStepVerificationSrCodeInput2" placeholder="" aria-label="" maxlength="1" autocomplete="off" autocapitalize="off" spellcheck="false"
+                      <input type="text" th:field="*{secondByte}" class="js-masked-input form-control form-control-single-number" 
+                      name="code2" id="twoStepVerificationSrCodeInput2" placeholder="" aria-label="" maxlength="1" onkeypress="return isNumber(event)"
+                      autocomplete="off" autocapitalize="off" spellcheck="false"
                              required data-hs-mask-options='{
                                "template": "0"
                              }'>
@@ -91,7 +95,9 @@
                   <div class="col">
                     <!-- Form Group -->
                     <div class="form-group">
-                      <input type="text" th:field="*{thirdByte}" class="js-masked-input form-control form-control-single-number" name="code3" id="twoStepVerificationSrCodeInput3" placeholder="" aria-label="" maxlength="1" autocomplete="off" autocapitalize="off" spellcheck="false"
+                      <input type="text" th:field="*{thirdByte}" class="js-masked-input form-control form-control-single-number"
+                       name="code3" id="twoStepVerificationSrCodeInput3" placeholder="" aria-label="" maxlength="1" onkeypress="return isNumber(event)"
+                       autocomplete="off" autocapitalize="off" spellcheck="false"
                              required data-hs-mask-options='{
                                "template": "0"
                              }'>
@@ -102,7 +108,9 @@
                   <div class="col">
                     <!-- Form Group -->
                     <div class="form-group">
-                      <input type="text" th:field="*{forthByte}" class="js-masked-input form-control form-control-single-number" name="code4" id="twoStepVerificationSrCodeInput4" placeholder="" aria-label="" maxlength="1" autocomplete="off" autocapitalize="off" spellcheck="false"
+                      <input type="text" th:field="*{forthByte}" class="js-masked-input form-control form-control-single-number" 
+                      name="code4" id="twoStepVerificationSrCodeInput4" placeholder="" aria-label="" maxlength="1" autocomplete="off" onkeypress="return isNumber(event)"
+                      autocapitalize="off" spellcheck="false"
                              required data-hs-mask-options='{
                                "template": "0"
                              }'>
@@ -172,21 +180,48 @@
         $('.js-masked-input').each(function () {
           var mask = $.HSCore.components.HSMask.init($(this));
         });
-        
-        
-        
       });
+    </script>
+    
+    <!-- Used to Focus the next textr box -->
+    <script type="text/javascript">
+    /* $(document).ready(function(){
+        $('input').keyup(function(){
+            if(this.value.length==$(this).attr("maxlength")){
+                $(this).next().focus();
+            }
+        });
+    }); */
+    
+    
+    var a = document.getElementById("twoStepVerificationSrCodeInput1"),
+    b = document.getElementById("twoStepVerificationSrCodeInput2"),
+    c = document.getElementById("twoStepVerificationSrCodeInput3");
+    d = document.getElementById("twoStepVerificationSrCodeInput4");
+
+	a.onkeyup = function() {
+	    if (this.value.length === parseInt(this.attributes["maxlength"].value)) {
+	        b.focus(function() { $(this).select(); } );
+	    }
+	}
+	
+	b.onkeyup = function() {
+	    if (this.value.length === parseInt(this.attributes["maxlength"].value)) {
+	        c.focus(function() { $(this).select(); } );
+	    }
+	}
+	
+	c.onkeyup = function() {
+	    if (this.value.length === parseInt(this.attributes["maxlength"].value)) {
+	        d.focus(function() { $(this).select(); } );
+	    }
+	}
+    
     </script>
     
     
     <Script>
-		
-/* 	    $(function(){
-	        $("[data-hide]").on("click", function(){
-	            $(this).closest("." + $(this).attr("data-hide")).hide();
-	        });
-	    }); */
-				
+					
 		
 		//Ajax Call for New OTP.
 		function resendOTP(){
@@ -272,6 +307,16 @@
 				}else{
 					return true;
 				}
+			}
+			
+			
+			function isNumber(evt) {
+			    evt = (evt) ? evt : window.event;
+			    var charCode = (evt.which) ? evt.which : evt.keyCode;
+			    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+			        return false;
+			    }
+			    return true;
 			}
 
 

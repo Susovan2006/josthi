@@ -14,6 +14,7 @@ public interface MappingConstant {
 	String USER_SUBSCRIBE_PLAN = "user/subscribe_a_plan_user";
 	String USER_SUBSCRIBE_PLAN_REDIRECT = "redirect:/user/subscribePlan";
 	String USER_PURCHASE_HISTORY = "user/purchase_history_user";
+	String USER_FEEDBACK ="user/feedback_from_user";
 	
 	String VERBIAGE_HTML_PLAN_DETAILS = "service_details.html";
 	

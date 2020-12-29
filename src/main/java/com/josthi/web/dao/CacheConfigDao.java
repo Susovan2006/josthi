@@ -16,6 +16,8 @@ public interface CacheConfigDao {
 
 	List<DropDownBean> getBeneficiaryList(String userId) throws Exception;
 
+	List<DropDownBean> getAgentList(String customerId) throws Exception;
+
 
 
 }

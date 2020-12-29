@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.CacheConfigDao;
+import com.josthi.web.dao.rowmapper.AgentDropDownRowmapper;
 import com.josthi.web.dao.rowmapper.BeneficiaryDropDownRowmapper;
 import com.josthi.web.dao.rowmapper.CacheConfigRowMapper;
 import com.josthi.web.dao.rowmapper.DropDownRowmapper;
@@ -98,6 +99,25 @@ private static final Logger logger = LoggerFactory.getLogger(CacheConfigDaoImpl.
 												 new Object[] {userId},
 												 new BeneficiaryDropDownRowmapper());
 				return dropDownGroupList;
+			}catch(Exception ex){
+				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	public static final String SELECT_SELECT_AGENT = "select distinct A.AGENT_ID, B.FIRST_NAME, B.LAST_NAME " + 
+			"from relation A, user_detail B where A.AGENT_ID is not null and A.AGENT_ID <> '' " + 
+			"and A.CUSTOMER_ID =? and A.AGENT_ID = B.UID ;";
+	@Override
+	public List<DropDownBean> getAgentList(String customerId) throws Exception {
+		try{
+			@SuppressWarnings("unchecked")
+			List<DropDownBean> agentList = getJdbcTemplate().query(
+												 SELECT_SELECT_AGENT,
+												 new Object[] {customerId},
+												 new AgentDropDownRowmapper());
+				return agentList;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());
 				throw ex;

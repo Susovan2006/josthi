@@ -156,6 +156,22 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 		}
 	}
 
+	
+	
+	//============================================================================================
+	//========================== S E R V I C E    R E Q E S T ====================================
+	//============================================================================================
+	
+	@Override
+	public List<DropDownBean> getAgentList(String customerId) throws Exception {
+		try {
+			return cacheConfigDao.getAgentList(customerId);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the Agent details from the Server. Please try later");
+		}
+	}
+
 	/*
 	 * public void setCacheConfigDao(CacheConfigDaoImpl cacheConfigDaoImpl) {
 	 * this.cacheConfigDao = cacheConfigDaoImpl; }

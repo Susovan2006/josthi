@@ -58,10 +58,10 @@ public class UserBeneficiaryController {
 									HttpSession session) {
 		
 		 try {
-			 ValidateSession.isValidSession(request);
-			 UserSessionBean userSessionBean = (UserSessionBean)request.getSession().getAttribute(Constant.USER_SESSION_OBJ_KEY);    	
-	    	 
-			 List<BeneficiaryDetailBean> beneficiaryDetailBeanList= beneficiaryService.getBeneficiaryList(userSessionBean.getCustomerId());
+			 ValidateSession.isValidSession(request);   	
+	    	 String customerId = ValidateSession.getUserId(request);
+			 
+			 List<BeneficiaryDetailBean> beneficiaryDetailBeanList= beneficiaryService.getBeneficiaryList(customerId);
 			
 			 //Initially this bean Class will be Blank. So that the user can populate the fields from UI.
 			 BeneficiaryDetailBean beneficiaryDetailBean = new BeneficiaryDetailBean();

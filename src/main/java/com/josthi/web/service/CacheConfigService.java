@@ -29,6 +29,8 @@ public interface CacheConfigService {
 	List<DropDownBean> getDefaultList() throws Exception;
 
 	List<DropDownBean> getPLanType(String dropdownPlanType) throws Exception;
+
+	List<DropDownBean> getAgentList(String customerId) throws Exception;
 	
 	
 }

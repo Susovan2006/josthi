@@ -23,6 +23,7 @@ import com.josthi.web.controller.CacheConfigDataController;
 import com.josthi.web.daoimpl.BaseDaoImpl;
 import com.josthi.web.daoimpl.CacheConfigDaoImpl;
 import com.josthi.web.daoimpl.EmailDaoImpl;
+import com.josthi.web.daoimpl.FeedbackDaoImpl;
 import com.josthi.web.daoimpl.FileWikiDaoImpl;
 import com.josthi.web.daoimpl.HistoryDaoImpl;
 import com.josthi.web.daoimpl.PlanDetailsDaoImpl;
@@ -238,6 +239,15 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
 	 planDetailsDaoImpl.setJdbcTemplate(jdbcTemplate);
 	 return planDetailsDaoImpl;
+ }
+ 
+ 
+ @Bean("feedbackDao")
+ public FeedbackDaoImpl feedbackDaoImpl(DataSource josthiDataSource) {
+	 FeedbackDaoImpl feedbackDaoImpl = new FeedbackDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 feedbackDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return feedbackDaoImpl;
  }
  
  /* ==========================================================================

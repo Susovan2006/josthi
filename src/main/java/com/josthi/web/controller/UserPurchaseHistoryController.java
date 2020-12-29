@@ -161,7 +161,7 @@ public class UserPurchaseHistoryController {
 			return "redirect:/user/purchaseHistory?status="+actionStatus+"&message="+message;
 		}catch(UserException ex) {
 			logger.error(ex.getMessage(), ex);
-			return "redirect:/login";
+			return "redirect:/login?status="+actionStatus+"&message="+message;
 		}catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
 			actionStatus = MessageConstant.USER_FAILURE_STATUS;

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,9 @@ public class ReSendOtpEmail {
         try { 
         	ValidateSession.isValidSession(request);
 			ValidateSession.isValidUser(request, customerID);
+			if(StringUtils.isEmpty(emailId.trim())) {
+				emailId = ValidateSession.getUserEmail(request);
+			}
         	        	
         	if(isValidUserIDOnly(emailId.trim())) {
     			
@@ -69,7 +73,7 @@ public class ReSendOtpEmail {
     				throw new UserExceptionInvalidData("Info : OTP already sent few moments back, please wait for atleast 2 min.");
     			}
     			
-    			String otp = OTPGen.generateRandomNumber(6);
+    			String otp = OTPGen.generateRandomNumber(4);
     			
     			//Database Update
     			userAuthService.updateOtp(customerID,emailId, otp);

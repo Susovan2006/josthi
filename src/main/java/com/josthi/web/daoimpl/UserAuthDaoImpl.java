@@ -40,7 +40,9 @@ public class UserAuthDaoImpl implements UserAuthDao{
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public static final String SELECT_VALIDATE_LOGIN_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED, VERIFIED_USER FROM user_auth_table where USERID_EMAIL = ? and WORDAPP = ?;";
+	public static final String SELECT_VALIDATE_LOGIN_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, "
+			+ " TEMPORARY_LOCK_ENABLED, VERIFIED_USER, OTP, VALID_EMAIL FROM "
+			+ " user_auth_table where USERID_EMAIL = ? and WORDAPP = ?;";
 	@Override
 	public UserAuthBo getValidUser(String uid, String password) throws Exception {
 		try{
@@ -67,6 +69,34 @@ public class UserAuthDaoImpl implements UserAuthDao{
 	}
 	
 	
+	public static final String SELECT_VALID_USER_ON_OTP = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, "
+			+ "TEMPORARY_LOCK_ENABLED, VERIFIED_USER, OTP, VALID_EMAIL FROM user_auth_table "
+			+ "where CUSTOMER_ID= ? and USERID_EMAIL = ? and OTP = ?;";
+	@Override
+	public UserAuthBo getValidUserWithOtp(String userId, String userEmail, String otp) throws Exception {
+		try {
+			
+			logger.info(userId+"/"+userEmail+"/"+otp);
+			@SuppressWarnings("unchecked")
+			List<UserAuthBo> userAuthBoList = getJdbcTemplate().query(
+										 SELECT_VALID_USER_ON_OTP,
+										 new Object[] { userId, userEmail, otp },
+										 new ValidateAuthenticityRowMaper());
+			if ( userAuthBoList.isEmpty()){
+				logger.info("User not Found");
+				return null;
+			}else if ( userAuthBoList.size() == 1 ) { // list contains exactly 1 element
+				return userAuthBoList.get(0);
+			}else{  // list contains more than 1 elements
+				throw new UserExceptionInvalidData("Invalid Data in the system. Contact Service desk.");
+			}
+		}catch(Exception ex){
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
 	public static final String SELECT_COUNT_LOGIN_ON_UID_SQL = "SELECT COUNT(*) FROM user_auth_table where USERID_EMAIL = ?;";
 	@Override
 	public int getValidUserCount(String emailID) {
@@ -78,9 +108,10 @@ public class UserAuthDaoImpl implements UserAuthDao{
 	/**
 	 * Here we are checking if the User gave a proper UserID or not. The Password might be incorrect.
 	 */
-	public static final String SELECT_VALIDATE_LOGIN_ON_UID_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED, VERIFIED_USER FROM user_auth_table where USERID_EMAIL = ?;";
+	public static final String SELECT_VALIDATE_LOGIN_ON_UID_SQL = "SELECT CUSTOMER_ID, USERID_EMAIL, WORDAPP, STATUS, ROLE, "
+			+ "LOGIN_RETRY_COUNT, TEMPORARY_LOCK_ENABLED, OTP, VERIFIED_USER,  VALID_EMAIL FROM user_auth_table where USERID_EMAIL = ?;";
 	@Override
-	public UserAuthBo getValidUser(String emailID) {
+	public UserAuthBo getValidUser(String emailID) throws Exception {
 		try{
 			@SuppressWarnings("unchecked")
 			UserAuthBo userAuthBo = (UserAuthBo) getJdbcTemplate().queryForObject(
@@ -90,7 +121,8 @@ public class UserAuthDaoImpl implements UserAuthDao{
 				return userAuthBo;
 			}catch(Exception ex){
 				logger.error(ex.getMessage(), ex);
-				return new UserAuthBo();
+				throw new UserExceptionInvalidData("Error Occured while validating the user, if you still face the issue, contact the Customer Service.");
+				//return new UserAuthBo();
 			}
 	}
 
@@ -424,6 +456,7 @@ public class UserAuthDaoImpl implements UserAuthDao{
 			throw new UserExceptionInvalidData("Looks like as of now no Agent is setup to server the Beneficiary "+beneficiaryId+". Call the customer service, they can assign an Agent ASAP.");
 		}
 	}
+
 
 	
 

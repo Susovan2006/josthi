@@ -4,8 +4,10 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.josthi.web.bo.OtpFourByteBean;
 import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.EmailConstant;
 import com.josthi.web.constants.MessageConstant;
+import com.josthi.web.exception.UserException;
 import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.mail.EmailController;
 import com.josthi.web.po.EmailDbBean;
@@ -32,8 +36,10 @@ import com.josthi.web.service.EmailService;
 //import com.josthi.web.mail.SendEmailTrigger;
 import com.josthi.web.service.UserAuthService;
 import com.josthi.web.springconfig.SpringConfig;
+import com.josthi.web.utils.OTPGen;
 import com.josthi.web.utils.Security;
 import com.josthi.web.utils.Utils;
+import com.josthi.web.utils.ValidateSession;
 
 @Controller
 public class UserAuthController {
@@ -130,18 +136,51 @@ public class UserAuthController {
 						session.setAttribute(Constant.USER_SESSION_OBJ_KEY, userSessionBean);
 						session.setAttribute(Constant.USER_SESSION_PROFILE_PICTURE_KEY, Constant.DEFAULT_PROFILE_PICTURE);
 						
-						
-						if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {		
-							logger.info("User LOGIN Successful");
-							return "user/home_user";
-						}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
-							logger.info("Agent LOGIN Successful");
-							return "admin/home_admin";
-						}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_ADMIN)) {
-							logger.info("Admin LOGIN Successful");
-							return "admin/home_admin";
+						//************* LOGIC TO VALIDATE OTP***********************
+						//In case the OTP is not generated and isValidEmail field is no.
+						//We will send the email and redirect to the Auth Page.
+						if(StringUtils.isBlank(userDetails.getOtp()) && (userDetails.getValidEmail().equalsIgnoreCase("NO") ||
+															StringUtils.isEmpty(userDetails.getValidEmail()))) {
+							//need to generate an OTP and Update the database.
+							String otp = OTPGen.generateRandomNumber(4);
+							String userEmailId= userAuthBo.getUseridEmail().trim();
+							String userId = userDetails.getCustomerId();
+							
+							userAuthService.updateOtp(userId , userEmailId , otp);
+							logger.info("OTP Generated.");
+							userAuthService.sendOtpEmail(userFirstAndLastName, otp, userEmailId, userId );
+							logger.info("OTP email Sent, Validation Pending");
+							
+							model.addAttribute("otpBean",new OtpFourByteBean());							
+							return "authentication-two-step-verification-basic";
+							
+						//Incase the OTP is present, no need to send email, the user can directly put the OTP from email.	
+						}else if(!(StringUtils.isBlank(userDetails.getOtp())) && (userDetails.getValidEmail().equalsIgnoreCase("NO") 
+								                                     || StringUtils.isEmpty(userDetails.getValidEmail()))) {
+							
+							logger.info("OTP generated in Past, yet to validate.");
+							
+							model.addAttribute("otpBean",new OtpFourByteBean());
+							return "authentication-two-step-verification-basic";
+						//In case the isValidEmail is Yes, that means the email is already validated and no need to show the 
+						//OTP Page, user can directly login to the app.
+						}else if(userDetails.getValidEmail().equalsIgnoreCase("YES")) {							
+							
+							if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {		
+								logger.info("User LOGIN Successful");
+								return "user/home_user";
+							}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
+								logger.info("Agent LOGIN Successful");
+								return "admin/home_admin";
+							}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_ADMIN)) {
+								logger.info("Admin LOGIN Successful");
+								return "admin/home_admin";
+							}else {
+								model.addAttribute("errorMessage", "Invalid User Role. Contact Customer Service.");
+								return "login_simple";
+							}
 						}else {
-							model.addAttribute("errorMessage", "Invalid User Role. Contact Customer Service.");
+							model.addAttribute("errorMessage", "Unable to find the user in the system, please try again with valid email, For first time login, OTP will be sent to the respective email ID.");
 							return "login_simple";
 						}
 					}else {
@@ -233,6 +272,65 @@ public class UserAuthController {
 		}
 		
 	}
+	
+	
+	
+	@RequestMapping(path ="/validateOtp", method = RequestMethod.POST)
+	public String validateOtp(OtpFourByteBean otpFourByteBean,HttpServletRequest request, Model model) {
+		String actionStatus = "";
+		String message = "";
+		try {					
+			ValidateSession.isValidSession(request);
+			String userId = ValidateSession.getUserId(request);
+			String userEmail = ValidateSession.getUserEmail(request);
+			String otp = otpFourByteBean.getFirstByte()+otpFourByteBean.getSecondByte()+otpFourByteBean.getThirdByte()+otpFourByteBean.getForthByte();
+			
+			UserAuthBo userDetails = userAuthService.getValidUserWithOtp(userId, userEmail, otp);
+			
+			if(userDetails!=null && userDetails.getOtp().equals(otp) 
+					&& userDetails.getCustomerId().equalsIgnoreCase(userId) 
+					&& !StringUtils.isEmpty(userDetails.getRole())) {
+				if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {		
+					logger.info("User LOGIN Successful");
+					userAuthService.updateOtpValidationStatus(userId);
+					return "user/home_user";
+				}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
+					logger.info("Agent LOGIN Successful");
+					userAuthService.updateOtpValidationStatus(userId);
+					return "admin/home_admin";
+				}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_ADMIN)) {
+					logger.info("Admin LOGIN Successful");
+					userAuthService.updateOtpValidationStatus(userId);
+					return "admin/home_admin";
+				}else {
+					throw new UserExceptionInvalidData("Invalid Role in the System, Contact System Amdin.");
+				}
+			}else {
+				//logger.info("############3"+otpFourByteBean.toString());
+				model.addAttribute("otpBean",new OtpFourByteBean());
+				model.addAttribute("status",MessageConstant.USER_FAILURE_STATUS);
+				model.addAttribute("message", "Invalid OTP, Please check the Email for the recent OTP, else generate the OTP once again and try.");
+				return "authentication-two-step-verification-basic";
+			}
+			
+		}catch(UserExceptionInvalidData ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message = ex.getMessage();
+			return "redirect:/login?status="+actionStatus+"&message="+message;
+		}catch(UserException ex) {
+			logger.error(ex.getMessage(), ex);
+			message = ex.getMessage();
+			return "redirect:/login?status="+actionStatus+"&message="+message;
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			message = "System Error Occured while login. Call Customer Service.";
+			return "redirect:/login?status="+actionStatus+"&message="+message;
+		}
+		
+	}
+	
 
 	/**
 	 * Account Unlock

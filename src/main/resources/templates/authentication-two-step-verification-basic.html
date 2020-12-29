@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required Meta Tags Always Come First -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>Basic 2-step Verification | josthi</title>
+
+	<div th:replace="Common :: includes"></div>
+	
+	
+  </head>
+
+  <body>
+  
+	  <!-- ========== HEADER ========== -->
+	  <div th:insert="Common :: nav-menu"></div>
+	  <!-- ========== END HEADER ========== --> 
+	  
+    <!-- ========== MAIN CONTENT ========== -->
+    <main id="content" role="main" class="main">
+
+		<BR>
+        <BR>
+        <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.customerId}" id="hiddenCustomerID" />
+      <!-- Content -->
+      <div class="container py-5 py-sm-7">
+
+
+        <div class="row justify-content-center">
+          <div class="col-md-7 col-lg-5">
+            <!-- Card -->
+            	<!-- Alert Section Start-->
+	            <div th:if="${status ne null}">
+		            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+					  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+					      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+					    </svg>
+					  </button>
+					</div>
+				</div>
+								
+				
+				<!-- Alert Section End-->
+            
+            <div class="card card-lg mb-5 shadow-lg">
+                        
+            
+             <form class="js-validate" action="#" th:action="@{/validateOtp}" th:object="${otpBean}" method="post">
+              <div class="card-body text-center">
+                <div class="mb-4">
+                  <img class="avatar avatar-xxl avatar-4by3" src="vendor/svg/illustrations/unlock.svg" alt="Image Description">
+                </div>
+
+                <div class="mb-5">
+                  <h3 class="display-6">2-step Verification</h3>
+
+                  <p class="mb-0">We sent a verification code to your email.</p>
+
+                  <p>Enter the code from the email in the field below.</p>
+                </div>
+
+                <div class="row gx-2 gx-sm-3">
+                  <div class="col">
+                    <!-- Form Group -->
+                    
+                    <div class="form-group">
+                      <input type="text" th:field="*{firstByte}" class="js-masked-input form-control form-control-single-number" name="code1" id="twoStepVerificationSrCodeInput1" placeholder="" aria-label="" maxlength="1" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus
+                             required data-hs-mask-options='{
+                               "template": "0"
+                             }'>
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col">
+                    <!-- Form Group -->
+                    <div class="form-group">
+                      <input type="text" th:field="*{secondByte}" class="js-masked-input form-control form-control-single-number" name="code2" id="twoStepVerificationSrCodeInput2" placeholder="" aria-label="" maxlength="1" autocomplete="off" autocapitalize="off" spellcheck="false"
+                             required data-hs-mask-options='{
+                               "template": "0"
+                             }'>
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col">
+                    <!-- Form Group -->
+                    <div class="form-group">
+                      <input type="text" th:field="*{thirdByte}" class="js-masked-input form-control form-control-single-number" name="code3" id="twoStepVerificationSrCodeInput3" placeholder="" aria-label="" maxlength="1" autocomplete="off" autocapitalize="off" spellcheck="false"
+                             required data-hs-mask-options='{
+                               "template": "0"
+                             }'>
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+
+                  <div class="col">
+                    <!-- Form Group -->
+                    <div class="form-group">
+                      <input type="text" th:field="*{forthByte}" class="js-masked-input form-control form-control-single-number" name="code4" id="twoStepVerificationSrCodeInput4" placeholder="" aria-label="" maxlength="1" autocomplete="off" autocapitalize="off" spellcheck="false"
+                             required data-hs-mask-options='{
+                               "template": "0"
+                             }'>
+                    </div>
+                    <!-- End Form Group -->
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-lg btn-block btn-primary">Verify my account</button>
+				
+				<!--  ======================== Alert =============================== -->
+				<!-- <div class="alert alert-dismissible fade" role="alert" id="divAlertForOtpRequest">
+					<span id="spanAlertForOtpRequest"></span>
+					<button type="button" class="close" onclick="$('#divAlertForServiceRequest').hide()" data-dismiss="alert" aria-label="Close">
+						<svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						   <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+						</svg>
+					</button>
+				</div> -->
+				<div class="alert alert-dismissible fade" role="alert" id="divAlertForServiceRequest" style="display: none">
+					<span class="text-primary" id="spanAlertForServiceRequest"></span>
+					<button type="button" class="close"  onclick="$('#divAlertForServiceRequest').hide()" aria-label="Close">
+						<svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+						   <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+						</svg>
+					</button>
+				</div>
+				<!--  ======================== Alert =============================== -->
+                <div class="text-center mt-3">
+                  <p>Haven't received it? <a href="javascript:resendOTP();">Resend a new code.</a></p>
+                </div>
+              </div>
+              </form>
+              
+            </div>
+            <!-- End Card -->
+
+            
+          </div>
+        </div>
+      </div>
+      <!-- End Content -->
+    </main>
+    <!-- ========== END MAIN CONTENT ========== -->
+    
+  	<!-- ========== FOOTER ========== -->
+  	<div th:insert="Common :: site-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+    <!-- JS Global Compulsory  -->
+<!--     <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="./assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+    <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    JS Implementing Plugins
+    <script src="./assets/vendor/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+
+    JS Front
+    <script src="./assets/js/theme.min.js"></script> -->
+    
+    <div th:insert="Common :: js-includes"></div>
+
+    <!-- JS Plugins Init. -->
+    <script>
+      $(document).on('ready', function () {
+        // initialization of masked input
+        $('.js-masked-input').each(function () {
+          var mask = $.HSCore.components.HSMask.init($(this));
+        });
+        
+        
+        
+      });
+    </script>
+    
+    
+    <Script>
+		
+/* 	    $(function(){
+	        $("[data-hide]").on("click", function(){
+	            $(this).closest("." + $(this).attr("data-hide")).hide();
+	        });
+	    }); */
+				
+		
+		//Ajax Call for New OTP.
+		function resendOTP(){
+			var custId = $('#hiddenCustomerID').val();
+			
+			
+			var formData = new FormData();
+			formData.append('customerID',custId);
+			formData.append('emailId',"");
+			
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "/resendOTP",
+				data: formData,
+				dataType: 'html', //Important , it has to be HTML to get HTML String Back
+				cache: false,
+				timeout: 600000,
+				contentType: false,
+				processData: false, //it prevent jQuery form transforming the data into a query string
+				success: function (data, status) {
+					console.log("SUCCESS : ", data);
+					
+					if(isStringContains(data, 'Success')){
+						showSuccessAlert(data);
+					}else if(isStringContains(data, 'Info')){
+						showInfoAlert(data);
+					}else{
+						showErrorAlert(data);
+					}
+						
+					//alert("Success :"+data);
+		
+				},
+				error: function (xhr, status, error) {
+					console.log("ERROR : ", xhr.status);
+					console.log("ERROR status: ", status);
+					console.log("ERROR error: ", error);
+					showErrorAlert("Error : Exception occured while sending the OTP email, try again, if you still see the error, contact the customer service.");
+		
+				}
+			});
+		}
+
+
+		
+		
+			function showErrorAlert(msg) {
+				$('#spanAlertForServiceRequest').text(msg); 
+				//$('#divAlertForServiceRequest').show();
+				$('#divAlertForServiceRequest').show();
+				//$('#divAlertForServiceRequest').addClass("show");
+				$('#divAlertForServiceRequest').addClass("alert-soft-danger");
+	
+		   }
+				
+			function showInfoAlert(msg) {
+				//alert(msg);
+				$('#spanAlertForServiceRequest').text(msg);					
+				//$('#divAlertForServiceRequest').addClass("show");
+				$('#divAlertForServiceRequest').show();
+				$('#divAlertForServiceRequest').addClass("alert-soft-primary");
+				//$('#divAlertForServiceRequest').show();
+	
+			}
+				
+			function showSuccessAlert(msg) {
+				//$('#divAlertForServiceRequest').show();
+				$('#spanAlertForServiceRequest').text(msg);				
+				$('#divAlertForServiceRequest').addClass("show");
+				$('#divAlertForServiceRequest').addClass("alert-soft-success");
+				
+	
+			}
+			
+			
+			
+			function isStringContains (StringVal, SubStringVal){
+				var res = StringVal.match(SubStringVal);
+				
+				if( res == null){
+					return false;
+				}else{
+					return true;
+				}
+			}
+
+
+</Script>
+    
+    
+    
+    
+    
+
+    <!-- IE Support -->
+    <script>
+      if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="./assets/vendor/babel-polyfill/polyfill.min.js"><\/script>');
+    </script>
+  </body>
+</html>

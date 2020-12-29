@@ -33,6 +33,12 @@ public class MainController {
 	}
 	
 	
+	@GetMapping("/otp")
+	public String testHtml(Model model) {
+		//model.addAttribute("message","HelloWorld");
+		return "authentication-two-step-verification-basic";
+	}
+	
 	
 	/*@GetMapping("/forAgents")
 	public String forAgents(Model model) {

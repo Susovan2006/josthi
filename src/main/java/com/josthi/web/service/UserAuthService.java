@@ -13,7 +13,7 @@ public interface UserAuthService {
 
 	public int isValidUserID(String emailID);
 
-	public UserAuthBo getValidUser(String emailID);
+	public UserAuthBo getValidUser(String emailID) throws Exception;
 
 	public boolean updateLoginStatus(UserAuthBo userDetailsOnUid);
 
@@ -46,6 +46,12 @@ public interface UserAuthService {
 	public UserAuthBo getProfileDisplayDetails(String userID) throws Exception;
 
 	public String getEmailId(String hostUserId);
+
+	public void sendOtpEmail(String userFirstAndLastName, String otp, String userEmailId, String userId) throws Exception;
+
+	public UserAuthBo getValidUserWithOtp(String userId, String userEmail, String otp) throws Exception;
+
+	public void updateOtpValidationStatus(String userId) throws Exception;
 
 	//public void updateSchedulerDetails(SchedulerTimerBean schedulerTimerBean);
 

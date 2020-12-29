@@ -10,7 +10,7 @@ public interface UserAuthDao {
 
 	UserAuthBo getValidUser(String uid, String password) throws Exception;
 
-	UserAuthBo getValidUser(String emailID);
+	UserAuthBo getValidUser(String emailID) throws Exception;
 
 	int getValidUserCount(String emailID);
 
@@ -49,6 +49,8 @@ public interface UserAuthDao {
 	UserAuthBo getProfileDisplayDetails(String userID) throws Exception;
 
 	String getAgentBasedOnBeneficiaryId(String beneficiaryId) throws Exception;
+
+	UserAuthBo getValidUserWithOtp(String userId, String userEmail, String otp) throws Exception;
 
 	
 

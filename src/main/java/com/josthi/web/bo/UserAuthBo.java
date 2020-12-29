@@ -22,6 +22,8 @@ public class UserAuthBo {
 	private int loginRetryCount;
 	private String temporaryLockEnabled;
 	private String verifiedUser;
+	private String otp;
+	private String validEmail;
 	
 
 	
@@ -131,15 +133,33 @@ public class UserAuthBo {
 	public void setVerifiedUser(String verifiedUser) {
 		this.verifiedUser = verifiedUser;
 	}
+	
+	
+	public String getOtp() {
+		return otp;
+	}
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+	
+	
+	public String getValidEmail() {
+		return validEmail;
+	}
+	public void setValidEmail(String validEmail) {
+		this.validEmail = validEmail;
+	}
 	@Override
 	public String toString() {
 		return "UserAuthBo [customerId=" + customerId + ", useridEmail=" + useridEmail + ", wordapp=" + wordapp
-				+ ", registrationDateTime=" + registrationDateTime + ", status=" + status + ", loginTime=" + loginTime
-				+ ", loginStatus=" + loginStatus + ", securityQuestion1=" + securityQuestion1 + ", securityQuestion2="
-				+ securityQuestion2 + ", securityAnswer1=" + securityAnswer1 + ", securityAnswer2=" + securityAnswer2
-				+ ", role=" + role + ", comments=" + comments + ", loginRetryCount=" + loginRetryCount
-				+ ", temporaryLockEnabled=" + temporaryLockEnabled + "]";
+				+ ", registrationDateTime=" + registrationDateTime + ", registrationDateTimeStr="
+				+ registrationDateTimeStr + ", status=" + status + ", loginTime=" + loginTime + ", loginStatus="
+				+ loginStatus + ", securityQuestion1=" + securityQuestion1 + ", securityQuestion2=" + securityQuestion2
+				+ ", securityAnswer1=" + securityAnswer1 + ", securityAnswer2=" + securityAnswer2 + ", role=" + role
+				+ ", comments=" + comments + ", loginRetryCount=" + loginRetryCount + ", temporaryLockEnabled="
+				+ temporaryLockEnabled + ", verifiedUser=" + verifiedUser + ", otp=" + otp + "]";
 	}
+	
 	
 	
 	

@@ -2,10 +2,14 @@ package com.josthi.web.serviceimpl;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.josthi.web.bo.PasswordResetBean;
@@ -13,6 +17,9 @@ import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserPreferencesBean;
 import com.josthi.web.dao.UserAuthDao;
 import com.josthi.web.exception.UserExceptionInvalidData;
+import com.josthi.web.po.EmailDbBean;
+import com.josthi.web.scheduler.EmailScheduler;
+import com.josthi.web.service.EmailService;
 import com.josthi.web.service.UserAuthService;
 import com.josthi.web.utils.Security;
 import com.josthi.web.utils.Utils;
@@ -25,9 +32,18 @@ public class UserAuthServiceImpl implements UserAuthService{
 	@Autowired
 	public UserAuthDao userAuthDao;
 	
+	@Autowired
+	public EmailService emailService;
+	
 	@Override
 	public UserAuthBo getValidUser(String uid, String password) throws Exception{
 		UserAuthBo userAuthBo = userAuthDao.getValidUser(uid,password);		
+		return userAuthBo;
+	}
+	
+	@Override
+	public UserAuthBo getValidUserWithOtp(String userId, String userEmail, String otp) throws Exception {
+		UserAuthBo userAuthBo = userAuthDao.getValidUserWithOtp(userId,userEmail, otp);		
 		return userAuthBo;
 	}
 
@@ -37,7 +53,7 @@ public class UserAuthServiceImpl implements UserAuthService{
 	}
 
 	@Override
-	public UserAuthBo getValidUser(String emailID) {
+	public UserAuthBo getValidUser(String emailID) throws Exception {
 		return userAuthDao.getValidUser(emailID);
 	}
 
@@ -200,6 +216,33 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public UserAuthBo getProfileDisplayDetails(String userID) throws Exception {
 		return userAuthDao.getProfileDisplayDetails(userID);
 	}
+
+	@Override
+	public void sendOtpEmail(String userFirstAndLastName, String otp, String userEmailId, String userId)
+			throws Exception {
+		//OTP email 
+        Map<String, String> otpMap = new HashMap<String, String>();
+        otpMap.put("name", userFirstAndLastName);
+        otpMap.put("otp",otp);
+        EmailDbBean emailDbBeanForOtp = Utils.getEmailBeanForOTP(userEmailId, Utils.mapToString(otpMap));
+        boolean otpQueueStatus = emailService.queueEmail(emailDbBeanForOtp);
+		
+		if(otpQueueStatus) {
+			EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
+        	String status = "Success : OTP mailed to "+userEmailId+ ". Please check your email and enter the OTP here. You should get the email in 1-2 min.";        	    	 
+        	logger.info(status);
+		}else{
+			throw new UserExceptionInvalidData("Error : Error Occured while triggering the email, please re-login and try");
+		}
+		
+	}
+
+	@Override
+	public void updateOtpValidationStatus(String userId) throws Exception {
+		userAuthDao.updateUserValidationStatus(userId);		
+	}
+
+
 	
 	
 	/*

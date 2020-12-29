@@ -137,6 +137,11 @@ function isStringContains (StringVal, SubStringVal){
        });
 </script>
 
+  <script>
+  function isEmpty(value){
+		return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+	}
+  </script>
 
 ################## ITARATOR in Thymeleaf ################
 https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#keeping-iteration-status

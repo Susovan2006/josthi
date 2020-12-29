@@ -99,20 +99,21 @@
               </div>
               <!-- End Header -->
 
-              <!-- Body -->
+              <!-- Body Basic Plan-->
               <div class="card-body">
-                
-                <div class="media font-size-1 text-body mb-3" th:each="planAndBenefitBean : ${planAndBenefitBeanList}" th:if="${planAndBenefitBean.serviceCoveredByBasic == 'Y'}">
-                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
-                  <div class="media-body" th:text="${planAndBenefitBean.serviceName}" th:id="${planAndBenefitBean.serviceCode}">
-                    1 User
-                  </div>
+                <!-- ************** BASIC PLAN STARTS HERE ***************** -->
+                <div th:each="planAndBenefitBean : ${planAndBenefitBeanList}">
+	                <div class="media font-size-1 text-body mb-3" th:if="${planAndBenefitBean.serviceCoveredByBasic == 'Y'}">
+	                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+	                  <div class="media-body" th:text="${planAndBenefitBean.serviceName}" th:id="${planAndBenefitBean.serviceCode}">
+	                    1 User
+	                  </div>
+	                </div>
                 </div>
-
+                <!-- ************** BASIC PLAN ENDS HERE ***************** -->
 				
 				<div class="card-footer border-0">
-					<!-- <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button> -->
-					<a class="btn btn-soft-primary btn-block transition-3d-hover" href="/userSignup">Get Started</a>
+					<button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
 				</div>
 				
               </div>
@@ -124,6 +125,11 @@
             </div>
             <!-- End Pricing -->
           </div>
+
+
+
+
+
 
           <div class="col-sm-6 col-lg-4 px-lg-5 mb-5">
             <!-- Pricing -->
@@ -148,22 +154,20 @@
 
                 <!-- Body -->
                 <div class="card-body">
-                  <div class="media font-size-1 mb-3" th:each="planAndBenefitBean : ${planAndBenefitBeanList}" th:if="${planAndBenefitBean.serviceCoveredBySilver == 'Y'}">
+                <!-- ************** SILVER PLAN STARTS HERE ***************** -->
+                <div th:each="planAndBenefitBean : ${planAndBenefitBeanList}">
+                  <div class="media font-size-1 mb-3" th:if="${planAndBenefitBean.serviceCoveredBySilver == 'Y'}">
                     <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
                     <div class="media-body" th:text="${planAndBenefitBean.serviceName}" th:id="${planAndBenefitBean.serviceCode}">
                       2 User
                     </div>
                   </div>
-                  
-
-
-                </div>
+                 </div> 
+                  <!-- ************** SILVER PLAN ENDS HERE ***************** -->
                 <!-- End Body -->
 
                 <div class="card-footer border-0">
-                  <!-- <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button> -->
-                  
-                 <a class="btn btn-soft-primary btn-block transition-3d-hover" href="/userSignup">Get Started</a>
+                  <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
                 </div>
               </div>
 
@@ -208,18 +212,20 @@
 
               <!-- Body -->
               <div class="card-body">
-                <div class="media font-size-1 text-body mb-3" th:each="planAndBenefitBean : ${planAndBenefitBeanList}" th:if="${planAndBenefitBean.serviceCoveredByGold == 'Y'}">
+              <!-- ************** GOLD PLAN STARTS HERE ***************** -->
+              <div th:each="planAndBenefitBean : ${planAndBenefitBeanList}">
+                <div class="media font-size-1 text-body mb-3" th:if="${planAndBenefitBean.serviceCoveredByGold == 'Y'}">
                   <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
                   <div class="media-body" th:text="${planAndBenefitBean.serviceName}" th:id="${planAndBenefitBean.serviceCode}">
                     2 User
                   </div>
                 </div>
-              </div>
+               </div> 
+                <!-- ************** GOLD PLAN ENDS HERE ***************** -->
               <!-- End Body -->
 
               <div class="card-footer border-0">
-                <!-- <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button> -->
-                <a class="btn btn-soft-primary btn-block transition-3d-hover" href="/userSignup">Get Started</a>
+                <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
               </div>
             </div>
             <!-- End Pricing -->

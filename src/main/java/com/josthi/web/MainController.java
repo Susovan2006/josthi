@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.josthi.web.bo.ServiceDetailsBean;
+import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.MappingConstant;
 import com.josthi.web.controller.CacheConfigDataController;
 import com.josthi.web.po.CacheConfigPO;
@@ -94,6 +96,9 @@ public class MainController {
 	@GetMapping("/pricing")
 	public String pricing(Model model) {
 			model.addAttribute("message","HelloWorld");
+			
+			
+			model.addAttribute("planAndBenefitBeanList",CacheConfigDataController.planAndBenefitBeanList);
 			return "josthi_pricing";
 	}
 	
@@ -103,6 +108,28 @@ public class MainController {
 	//service_details.html
 	@GetMapping("/planDetails")
 	public String planDetails(Model model) {
+		
+		
+		List<ServiceDetailsBean> serviceDetailListToDisplay = CacheConfigDataController.planListtoDisplay;
+		
+		List<ServiceDetailsBean> basicServiceListToDisplay = new ArrayList<ServiceDetailsBean>();
+		List<ServiceDetailsBean> emergencyServiceListToDisplay = new ArrayList<ServiceDetailsBean>();
+		List<ServiceDetailsBean> generalServiceListToDisplay = new ArrayList<ServiceDetailsBean>();
+		
+		for( ServiceDetailsBean serviceDetailsBean : serviceDetailListToDisplay) {
+			if(serviceDetailsBean.getServiceType().equalsIgnoreCase(Constant.SERVICE_BASIC_SERVICE)) {
+				basicServiceListToDisplay.add(serviceDetailsBean);
+			}else if(serviceDetailsBean.getServiceType().equalsIgnoreCase(Constant.SERVICE_EMERGENCY_SERVICE)) {
+				emergencyServiceListToDisplay.add(serviceDetailsBean);
+			}else if(serviceDetailsBean.getServiceType().equalsIgnoreCase(Constant.SERVICE_GENERAL_SERVICE)) {
+				generalServiceListToDisplay.add(serviceDetailsBean);
+			}
+		}
+		model.addAttribute("basicServiceListToDisplay", basicServiceListToDisplay);
+		model.addAttribute("emergencyServiceListToDisplay", emergencyServiceListToDisplay);
+		model.addAttribute("generalServiceListToDisplay", generalServiceListToDisplay);
+		
+		
 			
 		//Here we are getting the section to be displayed on html Screen.
 	    //The Value is coming from the Static Variable that we fetch from the database.

@@ -111,11 +111,68 @@
         </div>
 
         <div class="col-lg-9">
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Validate your email.</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+            
+            	<!-- Alert Section Start-->
+	            <div th:if="${statusOtp ne null}">
+		            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${statusOtp == 'Success'} ? alert-success : alert-warning">
+					  <strong><span th:text="${statusOtp}"></span>:</strong> <span th:text="${messageOtp}"></span>
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+					      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+					    </svg>
+					  </button>
+					</div>
+				</div>
+				<!-- Alert Section End-->
+
+            <!-- Body -->
+            <div class="card-body">
+              <p class="card-text">This is a first time setup to validate your email.</p>
+
+              <form class="js-validate" id="otpValidate" th:action="@{/user/validateOtp}" th:object="${passwordResetBean}"  method="post">
+              
+              	<!-- These Values are populated from session -->
+              	 <input type="hidden" th:field="*{emailId}"  id="userEmailIdOtp">
+			     <input type="hidden" th:field="*{role}"  id="userRoleOtp">
+			     <input type="hidden" th:field="*{userID}"  id="userIdOtp">
+                <!-- Form Group -->
+                <div class="row form-group">
+                  <label for="accountPasswordLabel" class="col-sm-3 col-form-label input-label">One Time password</label>
+
+                  <div class="col-sm-9 js-form-message">
+                    <input type="text" th:field="*{otp}" class="form-control" name="otp" id="otp" placeholder="Enter the OTP (the session will expire in 20 min)" aria-label="Enter the OTP (the session will expire in 20 min)" required maxlength="6">
+                    <small class="form-text">Please enter the OTP you received in email.</small>
+                  </div>
+                </div>
+                <!-- End Form Group -->
+
+                <div class="d-flex justify-content-end">
+                  <a class="btn btn-white" href="javascript:resendOTP();">Re-send OTP</a>
+                  <span class="mx-2"></span>
+                  <button type="submit" class="btn btn-primary">Set up</button>
+                </div>
+                
+                <div class="row">
+					<label  id="otpStatus"></label>
+				</div>
+              </form>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
 
           <!-- Card -->
           <div class="card mb-3 mb-lg-5">
             <div class="card-header">
-              <h5 class="card-title">Password Reset</h5>
+              <h5 class="card-title">Password</h5>
             </div>
 
 
@@ -148,8 +205,7 @@
                   <label for="currentPasswordLabel" class="col-sm-3 col-form-label input-label">Current password</label>
 
                   <div class="col-sm-9 js-form-message">
-                    <input type="password" th:field="*{oldPassword}" class="form-control" name="currentPassword" 
-                    id="currentPassword" placeholder="Enter current password" aria-label="Enter current password" required autocomplete="off" autocapitalize="off">
+                    <input type="password" th:field="*{oldPassword}" class="form-control" name="currentPassword" id="currentPassword" placeholder="Enter current password" aria-label="Enter current password" required>
                   </div>
                 </div>
                 <!-- End Form Group -->
@@ -159,8 +215,7 @@
                   <label for="newPassword" class="col-sm-3 col-form-label input-label">New password</label>
 
                   <div class="col-sm-9 js-form-message">
-                    <input type="password" th:field="*{newPassword}" class="form-control" name="newPassword" 
-                    id="newPassword" placeholder="Enter new password" aria-label="Enter new password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required autocomplete="off" autocapitalize="off">
+                    <input type="password" th:field="*{newPassword}" class="form-control" name="newPassword" id="newPassword" placeholder="Enter new password" aria-label="Enter new password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
                   </div>
                 </div>
                 <!-- End Form Group -->
@@ -171,8 +226,7 @@
 
                   <div class="col-sm-9 ">
                     <div class="mb-3 js-form-message">
-                      <input type="password" th:field="*{newConfirmPassword}" class="form-control" name="confirmNewPassword" 
-                      id="confirmNewPassword" placeholder="Confirm your new password" aria-label="Confirm your new password" required autocomplete="off" autocapitalize="off">
+                      <input type="password" th:field="*{newConfirmPassword}" class="form-control" name="confirmNewPassword" id="confirmNewPassword" placeholder="Confirm your new password" aria-label="Confirm your new password" required>
                     </div>
 
 
@@ -398,6 +452,10 @@
 	       $("#userEmailId").val(email);
 	       $("#userRole").val(role);
 	       $("#userId").val(id);
+	       
+	       $("#userEmailIdOtp").val(email);
+	       $("#userRoleOtp").val(role);
+	       $("#userIdOtp").val(id);  
        });
 </script>
 
@@ -408,6 +466,77 @@
 			document.getElementById('newPassword').value = '';
 			document.getElementById('confirmNewPassword').value = '';
 		}
+		
+		
+		
+		//Ajax Call for New OTP.
+		function resendOTP(){
+			var custId = $('#hiddenCustomerID').val();
+			var emailId = $('#hiddenEmailID').val();
+			
+			var formData = new FormData();
+			formData.append('customerID',custId);
+			formData.append('emailId',emailId);
+			
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "/resendOTP",
+				data: formData,
+				dataType: 'html', //Important , it has to be HTML to get HTML String Back
+				cache: false,
+				timeout: 600000,
+				contentType: false,
+				processData: false, //it prevent jQuery form transforming the data into a query string
+				success: function (data, status) {
+					console.log("SUCCESS : ", data);
+					
+					if(isStringContains(data, 'Success :')){
+						showSuccessMsg(data);
+					}else{
+						showError(data);
+					}
+						
+					//alert("Success :"+data);
+		
+				},
+				error: function (xhr, status, error) {
+					console.log("ERROR : ", xhr.status);
+					console.log("ERROR status: ", status);
+					console.log("ERROR error: ", error);
+					showError("Error : Exception occured while sending the OTP email, try again, if you still see the error, contact the customer service.");
+					//alert("Error :"+error);
+		
+				}
+			});
+		}
+
+
+		
+		   function showError(msg) {
+			  var e1 = document.getElementById("otpStatus");
+			  e1.setAttribute("style", "display:block;background:#ffecec;border: 2px solid #f5aca6");
+			  e1.innerHTML = "&nbsp;"+msg;
+
+			}
+			
+			function showSuccessMsg(msg) {
+			  var e1 = document.getElementById("otpStatus");
+			  e1.setAttribute("style", "display:block;background:#c3f3cd;border: 2px solid #50ef72");
+			  e1.innerHTML = "&nbsp;"+msg;
+
+			}
+			
+			function isStringContains (StringVal, SubStringVal){
+				var res = StringVal.match(SubStringVal);
+				
+				if( res == null){
+					return false;
+				}else{
+					return true;
+				}
+			}
+
 
 </Script>
 

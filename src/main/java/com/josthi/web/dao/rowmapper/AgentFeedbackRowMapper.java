@@ -10,12 +10,12 @@ public AgentFeedbackBean mapRow(ResultSet resultSet,int arg1)throws SQLException
 		agentFeedbackBean.setFid(resultSet.getInt("FID"));
 		agentFeedbackBean.setFeedbackFor(resultSet.getString("FEEDBACK_FOR"));
 		agentFeedbackBean.setFeedbackBy(resultSet.getString("FEEDBACK_BY"));
-		agentFeedbackBean.setProactiveness(resultSet.getBigDecimal("PROACTIVENESS"));
-		agentFeedbackBean.setResponsibility(resultSet.getBigDecimal("RESPONSIBILITY"));
-		agentFeedbackBean.setAvailability(resultSet.getBigDecimal("AVAILABILITY"));
-		agentFeedbackBean.setBehavior(resultSet.getBigDecimal("BEHAVIOR"));
-		agentFeedbackBean.setCareAndHandling(resultSet.getBigDecimal("CARE_AND_HANDLING"));
-		agentFeedbackBean.setOverallRating(resultSet.getBigDecimal("OVERALL_RATING"));
+		agentFeedbackBean.setProactiveness(resultSet.getDouble("PROACTIVENESS"));
+		agentFeedbackBean.setResponsibility(resultSet.getDouble("RESPONSIBILITY"));
+		agentFeedbackBean.setAvailability(resultSet.getDouble("AVAILABILITY"));
+		agentFeedbackBean.setBehavior(resultSet.getDouble("BEHAVIOR"));
+		agentFeedbackBean.setCareAndHandling(resultSet.getDouble("CARE_AND_HANDLING"));
+		agentFeedbackBean.setOverallRating(resultSet.getDouble("OVERALL_RATING"));
 		agentFeedbackBean.setAreaOfImprovement(resultSet.getString("AREA_OF_IMPROVEMENT"));
 		agentFeedbackBean.setOtherComments(resultSet.getString("OTHER_COMMENTS"));
 		agentFeedbackBean.setFeedbackDate(resultSet.getTimestamp("FEEDBACK_DATE"));

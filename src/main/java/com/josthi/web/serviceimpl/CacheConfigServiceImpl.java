@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.josthi.web.service.CacheConfigService ;
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.CacheConfigDao ;
 import com.josthi.web.daoimpl.CacheConfigDaoImpl;
@@ -169,6 +170,16 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 		}catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
 			throw new UserExceptionInvalidData("Error Occured while fetching the Agent details from the Server. Please try later");
+		}
+	}
+
+	@Override
+	public List<ServiceDetailsBean> getServiceListToDisplayInMainScreen() throws Exception {
+		try {
+			return cacheConfigDao.getServiceListToDisplayInMainScreen();
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the Service details from the Server. Please try later");
 		}
 	}
 

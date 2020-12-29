@@ -10,12 +10,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.CacheConfigDao;
 import com.josthi.web.dao.rowmapper.AgentDropDownRowmapper;
 import com.josthi.web.dao.rowmapper.BeneficiaryDropDownRowmapper;
 import com.josthi.web.dao.rowmapper.CacheConfigRowMapper;
 import com.josthi.web.dao.rowmapper.DropDownRowmapper;
+import com.josthi.web.dao.rowmapper.ServiceDetailRowMapper;
 import com.josthi.web.po.CacheConfigPO;
 import com.josthi.web.utils.Utils;
 
@@ -120,6 +122,29 @@ private static final Logger logger = LoggerFactory.getLogger(CacheConfigDaoImpl.
 				return agentList;
 			}catch(Exception ex){
 				logger.error(ex.getMessage());
+				throw ex;
+			}
+	}
+	
+	
+	/**
+	 * This will be used on Startup. to show all the Service details.
+	 */
+	
+	public static final String SELECT_SERVICE_DETAILS_TO_DISPLAY = "Select ID, SERVICE_CODE, SERVICE_NAME, DESCRIPTION, ACTIVE, "
+			+ " SERVICE_TYPE, INCLUDED_IN_PLAN, ON_DEMAND_FLAG, ON_DEMANT_PRICE_INR, "
+			+ " ON_DEMANT_PRICE_USD, DISCLAIMER, SORT_ORDER, ICON " 
+			+ " FROM service where ACTIVE = 'Y'";
+	@Override
+	public List<ServiceDetailsBean> getServiceListToDisplayInMainScreen() throws Exception {
+		try{	
+			
+			List<ServiceDetailsBean> serviceDetailsBeanList = getJdbcTemplate().query(
+														 SELECT_SERVICE_DETAILS_TO_DISPLAY,														 
+														 new ServiceDetailRowMapper());			
+				return serviceDetailsBeanList;
+			}catch(Exception ex){
+				logger.error(ex.getMessage(), ex);
 				throw ex;
 			}
 	}

@@ -241,6 +241,7 @@ public class UserBeneficiaryController {
 	    	 //This Param is just to change the name of the Button.
 	    	 model.addAttribute("action","Update");
 	    	 model.addAttribute("header","Update");
+	    	 model.addAttribute("gotoPoint","card2");
 				
 	    	 return MappingConstant.USER_BENEFICIARY_DETAILS;
 		

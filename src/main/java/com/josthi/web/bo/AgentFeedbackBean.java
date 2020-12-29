@@ -6,12 +6,12 @@ public class AgentFeedbackBean {
 	private Integer fid ;
 	private String feedbackFor ;
 	private String feedbackBy ;
-	private BigDecimal proactiveness ;
-	private BigDecimal responsibility ;
-	private BigDecimal availability ;
-	private BigDecimal behavior ;
-	private BigDecimal careAndHandling ;
-	private BigDecimal overallRating ;
+	private double proactiveness ;
+	private double responsibility ;
+	private double availability ;
+	private double behavior ;
+	private double careAndHandling ;
+	private double overallRating ;
 	private String areaOfImprovement ;
 	private String otherComments ;
 	private Timestamp feedbackDate ;
@@ -34,59 +34,59 @@ public class AgentFeedbackBean {
 	public void setFeedbackBy(String feedbackBy){
 		this.feedbackBy = feedbackBy ;
 	}
-	public BigDecimal getProactiveness(){
-		return proactiveness ;
+	public double getProactiveness() {
+		return proactiveness;
 	}
-	public void setProactiveness(BigDecimal proactiveness){
-		this.proactiveness = proactiveness ;
+	public void setProactiveness(double proactiveness) {
+		this.proactiveness = proactiveness;
 	}
-	public BigDecimal getResponsibility(){
-		return responsibility ;
+	public double getResponsibility() {
+		return responsibility;
 	}
-	public void setResponsibility(BigDecimal responsibility){
-		this.responsibility = responsibility ;
+	public void setResponsibility(double responsibility) {
+		this.responsibility = responsibility;
 	}
-	public BigDecimal getAvailability(){
-		return availability ;
+	public double getAvailability() {
+		return availability;
 	}
-	public void setAvailability(BigDecimal availability){
-		this.availability = availability ;
+	public void setAvailability(double availability) {
+		this.availability = availability;
 	}
-	public BigDecimal getBehavior(){
-		return behavior ;
+	public double getBehavior() {
+		return behavior;
 	}
-	public void setBehavior(BigDecimal behavior){
-		this.behavior = behavior ;
+	public void setBehavior(double behavior) {
+		this.behavior = behavior;
 	}
-	public BigDecimal getCareAndHandling(){
-		return careAndHandling ;
+	public double getCareAndHandling() {
+		return careAndHandling;
 	}
-	public void setCareAndHandling(BigDecimal careAndHandling){
-		this.careAndHandling = careAndHandling ;
+	public void setCareAndHandling(double careAndHandling) {
+		this.careAndHandling = careAndHandling;
 	}
-	public BigDecimal getOverallRating(){
-		return overallRating ;
+	public double getOverallRating() {
+		return overallRating;
 	}
-	public void setOverallRating(BigDecimal overallRating){
-		this.overallRating = overallRating ;
+	public void setOverallRating(double overallRating) {
+		this.overallRating = overallRating;
 	}
-	public String getAreaOfImprovement(){
-		return areaOfImprovement ;
+	public String getAreaOfImprovement() {
+		return areaOfImprovement;
 	}
-	public void setAreaOfImprovement(String areaOfImprovement){
-		this.areaOfImprovement = areaOfImprovement ;
+	public void setAreaOfImprovement(String areaOfImprovement) {
+		this.areaOfImprovement = areaOfImprovement;
 	}
-	public String getOtherComments(){
-		return otherComments ;
+	public String getOtherComments() {
+		return otherComments;
 	}
-	public void setOtherComments(String otherComments){
-		this.otherComments = otherComments ;
+	public void setOtherComments(String otherComments) {
+		this.otherComments = otherComments;
 	}
-	public Timestamp getFeedbackDate(){
-		return feedbackDate ;
+	public Timestamp getFeedbackDate() {
+		return feedbackDate;
 	}
-	public void setFeedbackDate(Timestamp feedbackDate){
-		this.feedbackDate = feedbackDate ;
+	public void setFeedbackDate(Timestamp feedbackDate) {
+		this.feedbackDate = feedbackDate;
 	}
 	@Override
 	public String toString() {
@@ -96,6 +96,8 @@ public class AgentFeedbackBean {
 				+ overallRating + ", areaOfImprovement=" + areaOfImprovement + ", otherComments=" + otherComments
 				+ ", feedbackDate=" + feedbackDate + "]";
 	}
+	
+	
 	
 	
 	

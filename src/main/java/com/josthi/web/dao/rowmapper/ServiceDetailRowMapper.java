@@ -22,6 +22,7 @@ public ServiceDetailsBean mapRow(ResultSet resultSet,int arg1)throws SQLExceptio
 		serviceDetailsBean.setOnDemantPriceUsd(resultSet.getBigDecimal("ON_DEMANT_PRICE_USD"));
 		serviceDetailsBean.setDisclaimer(resultSet.getString("DISCLAIMER"));
 		serviceDetailsBean.setSortOrder(resultSet.getInt("SORT_ORDER"));
+		serviceDetailsBean.setIcon(resultSet.getString("ICON"));
 		return serviceDetailsBean;
 		}
 	}

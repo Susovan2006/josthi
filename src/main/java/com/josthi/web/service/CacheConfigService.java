@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.po.CacheConfigPO;
 
 public interface CacheConfigService {
@@ -31,6 +32,8 @@ public interface CacheConfigService {
 	List<DropDownBean> getPLanType(String dropdownPlanType) throws Exception;
 
 	List<DropDownBean> getAgentList(String customerId) throws Exception;
+
+	List<ServiceDetailsBean> getServiceListToDisplayInMainScreen() throws Exception;
 	
 	
 }

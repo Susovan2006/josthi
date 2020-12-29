@@ -431,9 +431,9 @@
 		
 	    <!-- ************************ CARD 2 START*************************************-->
         <!-- Card 2-->
-			<div id= "primaryBeneficiarySection" class="card mb-3 mb-lg-5">
+			<div id="primaryBeneficiarySection" class="card mb-3 mb-lg-5">
 			  
-				<div class="card-header">
+				<div class="card-header" id="card2">
 				  <div class="d-flex align-items-center">
 					<h5 class="card-title" th:text="${header} + ' Beneficiary Details'">Add/Update Beneficiary </h5>
 					<span class="badge badge-soft-danger ml-2"></span>
@@ -1124,6 +1124,22 @@ function setBeneficiaryId(id) {
 		</script>
   
 
+
+   <script th:inline="javascript">   
+       $(document).ready(function() {
+    	   var focus;
+	       focus = /*[[${gotoPoint}]]*/'null';
+	       if(!(isEmpty(focus))){
+	    	   document.getElementById(focus).scrollIntoView();
+	       }        
+       });
+	</script>
+  
+    <script>
+ 	 function isEmpty(value){
+		return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+	}
+  </script>
    
 
   <!-- IE Support -->

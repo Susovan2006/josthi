@@ -101,18 +101,39 @@
 
               <!-- Body -->
               <div class="card-body">
-                
-                <div class="media font-size-1 text-body mb-3" th:each="planAndBenefitBean : ${planAndBenefitBeanList}" th:if="${planAndBenefitBean.serviceCoveredByBasic == 'Y'}">
+                <div class="media font-size-1 text-body mb-3">
                   <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
-                  <div class="media-body" th:text="${planAndBenefitBean.serviceName}" th:id="${planAndBenefitBean.serviceCode}">
+                  <div class="media-body">
                     1 User
                   </div>
                 </div>
-
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Doctor Appointments
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    24X7 Contact Centre
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Physiotherapy
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Ambulance Assistance
+                  </div>
+                </div>
 				
 				<div class="card-footer border-0">
-					<!-- <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button> -->
-					<a class="btn btn-soft-primary btn-block transition-3d-hover" href="/userSignup">Get Started</a>
+					<button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
 				</div>
 				
               </div>
@@ -148,22 +169,59 @@
 
                 <!-- Body -->
                 <div class="card-body">
-                  <div class="media font-size-1 mb-3" th:each="planAndBenefitBean : ${planAndBenefitBeanList}" th:if="${planAndBenefitBean.serviceCoveredBySilver == 'Y'}">
+                  <div class="media font-size-1 mb-3">
                     <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
-                    <div class="media-body" th:text="${planAndBenefitBean.serviceName}" th:id="${planAndBenefitBean.serviceCode}">
+                    <div class="media-body">
                       2 User
                     </div>
                   </div>
-                  
-
-
+                  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Doctor Appointments
+                    </div>
+                  </div>
+                  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      24X7 Contact Centre
+                    </div>
+                  </div>
+                  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Arranging Physiotherapy
+                    </div>
+                  </div>
+                  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Ambulance Assistance
+                    </div>
+                  </div>
+				  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Non Medical Emergency
+                    </div>
+                  </div>
+				  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Hospitilization 24X7
+                    </div>
+                  </div>
+				  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Regular Status update
+                    </div>
+                  </div>
                 </div>
                 <!-- End Body -->
 
                 <div class="card-footer border-0">
-                  <!-- <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button> -->
-                  
-                 <a class="btn btn-soft-primary btn-block transition-3d-hover" href="/userSignup">Get Started</a>
+                  <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
                 </div>
               </div>
 
@@ -208,18 +266,101 @@
 
               <!-- Body -->
               <div class="card-body">
-                <div class="media font-size-1 text-body mb-3" th:each="planAndBenefitBean : ${planAndBenefitBeanList}" th:if="${planAndBenefitBean.serviceCoveredByGold == 'Y'}">
+                <div class="media font-size-1 text-body mb-3">
                   <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
-                  <div class="media-body" th:text="${planAndBenefitBean.serviceName}" th:id="${planAndBenefitBean.serviceCode}">
+                  <div class="media-body">
                     2 User
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Doctor Appointments
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    24X7 Contact Centre
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                   Arranging Physiotherapy
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Ambulance Assistance
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Non Medical Emergency
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Hospitilization 24X7
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Regular Status update
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Home repair/Cleaning
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Plumbing services
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Electrician
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging transportation
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranding Home Cook Service
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Internet/Wifi Service
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging carpenter Service
                   </div>
                 </div>
               </div>
               <!-- End Body -->
 
               <div class="card-footer border-0">
-                <!-- <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button> -->
-                <a class="btn btn-soft-primary btn-block transition-3d-hover" href="/userSignup">Get Started</a>
+                <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
               </div>
             </div>
             <!-- End Pricing -->

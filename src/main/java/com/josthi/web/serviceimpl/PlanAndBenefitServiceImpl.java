@@ -970,7 +970,7 @@ public class PlanAndBenefitServiceImpl implements PlanAndBenefitService{
 			//User selected 3BEN but selected only one Beneficiary.
 			if(beneficiaryCount > beneficiaryIdArrayCount) {
 				//rollbackNeeded = false;
-				throw new UserExceptionInvalidData("Can proceed with the Purchase, You selected "+beneficiaryCount+ " beneficiary Plan, but only selected "+ beneficiaryIdArrayCount +" Beneficiary Name."
+				throw new UserExceptionInvalidData("Can't proceed with the Purchase, You selected "+beneficiaryCount+ " beneficiary Plan, but only selected "+ beneficiaryIdArrayCount +" Beneficiary Name."
 						+ " Make the necessary correction and try again.");
 			//Incase the user Selected 4 Beneficiary but selected plan for 2, the new Array will have top 2 Names.
 			}else if (beneficiaryCount < beneficiaryIdArrayCount){

@@ -58,6 +58,7 @@ public class UserPlanSelectionController {
 	public String userSubscribePlan(Model model,
 				@RequestParam (name="status", required = false, defaultValue = "") String status,
 				@RequestParam (name="message", required = false, defaultValue = "") String message,
+				@RequestParam (name="gotoPoint", required = false, defaultValue = "") String gotoPoint,
 				HttpServletRequest request) {
 		
 		
@@ -74,6 +75,11 @@ public class UserPlanSelectionController {
 		    	 model.addAttribute("status", status);
 				 model.addAttribute("message", message);
 	   	 	}
+			
+			if(gotoPoint!=null && gotoPoint.length()>0) {
+				logger.info("GOTO -->"+gotoPoint);
+				model.addAttribute("gotoPoint",gotoPoint);
+			}
 			
 			//Here we are displaying the plan the user already purchased.
 			List<PurchasedPlanToDisplay> registeredPlanList = planAndBenefitService.getPreviousPurchasedPlan(hostCustomerId);
@@ -190,14 +196,14 @@ public class UserPlanSelectionController {
 				
 				
 				
-				return MappingConstant.USER_SUBSCRIBE_PLAN_REDIRECT+"?status="+actionStatus+"&message="+message;
+				return MappingConstant.USER_SUBSCRIBE_PLAN_REDIRECT+"?status="+actionStatus+"&message="+message+"&gotoPoint=card2";
 			
 			
 		}catch(UserExceptionInvalidData ex) {
 			logger.error(ex.getMessage(), ex);
 			actionStatus = MessageConstant.USER_FAILURE_STATUS;
 			message = ex.getMessage();
-			return MappingConstant.USER_SUBSCRIBE_PLAN_REDIRECT+"?status="+actionStatus+"&message="+message;
+			return MappingConstant.USER_SUBSCRIBE_PLAN_REDIRECT+"?status="+actionStatus+"&message="+message+"&gotoPoint=card2";
 		}catch(UserException ex) {
 			logger.error(ex.getMessage(), ex);
 			return "redirect:/login";
@@ -205,7 +211,7 @@ public class UserPlanSelectionController {
 			logger.error(ex.getMessage(), ex);
 			actionStatus = MessageConstant.USER_FAILURE_STATUS;
 			message = "System Error Occured while saving the Request. Call Customer Service.";
-			return MappingConstant.USER_SUBSCRIBE_PLAN_REDIRECT+"?status="+actionStatus+"&message="+message;
+			return MappingConstant.USER_SUBSCRIBE_PLAN_REDIRECT+"?status="+actionStatus+"&message="+message+"&gotoPoint=card2";
 		}
 		
 		

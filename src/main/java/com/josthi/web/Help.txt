@@ -224,6 +224,8 @@ In Calling JSP
 
 In Service Class
 --------------------
+
+@RequestParam (name="gotoPoint", required = false, defaultValue = "") String gotoPoint,
 if(gotoPoint!=null && gotoPoint.length()>0) {
 					model.addAttribute("gotoPoint",gotoPoint);
 				}
@@ -250,44 +252,36 @@ Utils.timestampToFormattedString(resultSet.getTimestamp("PURCHASE_DATE"), "MMMMM
 ##################### Setting Alert from Jquery ############################
 See Example in authentication-two-step.html
 
-				<div class="alert alert-dismissible fade" role="alert" id="divAlertForServiceRequest" style="display: none">
-					<span class="text-primary" id="spanAlertForServiceRequest"></span>
-					<button type="button" class="close"  onclick="$('#divAlertForServiceRequest').hide()" aria-label="Close">
-						<svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
-						   <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
-						</svg>
-					</button>
-				</div>
+				<div class="alert" style="display: none" id="ajaxAlertDiv">
+						  <a class="close" onclick="$('#ajaxAlertDiv').hide()">
+						  	<button type="button" class="close" aria-label="Close">
+						 	    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+								   <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+								</svg>
+							</button>
+						 </a>
+						  <span id="ajaxAlertMsg"></span>
+						</div>
 
 
 
-			function showErrorAlert(msg) {
-				$('#spanAlertForServiceRequest').text(msg); 
-				//$('#divAlertForServiceRequest').show();
-				$('#divAlertForServiceRequest').show();
-				//$('#divAlertForServiceRequest').addClass("show");
-				$('#divAlertForServiceRequest').addClass("alert-soft-danger");
-	
-		   }
-				
-			function showInfoAlert(msg) {
-				//alert(msg);
-				$('#spanAlertForServiceRequest').text(msg);					
-				//$('#divAlertForServiceRequest').addClass("show");
-				$('#divAlertForServiceRequest').show();
-				$('#divAlertForServiceRequest').addClass("alert-soft-primary");
-				//$('#divAlertForServiceRequest').show();
-	
-			}
-				
-			function showSuccessAlert(msg) {
-				//$('#divAlertForServiceRequest').show();
-				$('#spanAlertForServiceRequest').text(msg);				
-				$('#divAlertForServiceRequest').addClass("show");
-				$('#divAlertForServiceRequest').addClass("alert-soft-success");
-				
-	
-			}
+		function showErrorAlert(msg) {
+			$('#ajaxAlertMsg').text(msg);
+			$('#ajaxAlertDiv').addClass("alert-soft-danger");
+			$('#ajaxAlertDiv').show();
+		}
+		
+		function showInfoAlert(msg) {
+			$('#ajaxAlertMsg').text(msg);
+			$('#ajaxAlertDiv').addClass("alert-soft-primary");
+			$('#ajaxAlertDiv').show();
+		}
+		
+		function showSuccessAlert(msg) {
+			$('#ajaxAlertMsg').text(msg);
+			$('#ajaxAlertDiv').addClass("alert-soft-success");
+			$('#ajaxAlertDiv').show();
+		}
 			
 			
 ###################### Allow only numeric values in TextBox #########################

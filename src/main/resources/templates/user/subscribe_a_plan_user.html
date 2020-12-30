@@ -137,7 +137,7 @@
             </div>
 
             <!-- Body -->
-            <div class="card-body">
+            <div class="card-body" id="card2">
             
             
                 <input type="hidden" th:value="${session.USER_SESSION_OBJ_KEY.customerId}"  id="sessionCustomerId">
@@ -1149,6 +1149,20 @@
   
   </Script>
   
+    <script th:inline="javascript">   
+       $(document).ready(function() {
+	       var focus = /*[[${gotoPoint}]]*/'null';
+	       if(!(isEmpty(focus))){
+	    	   document.getElementById(focus).scrollIntoView();
+	       }
+       });
+  </script>
+  
+    <script>
+	  function isEmpty(value){
+			return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+		}
+  </script>
 
   
 

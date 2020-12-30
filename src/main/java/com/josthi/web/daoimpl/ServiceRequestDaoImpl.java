@@ -276,7 +276,7 @@ public class ServiceRequestDaoImpl implements ServiceRequestDao{
 	
 	public static final String INSERT_INTO_PURCHASE_HISTORY = "INSERT INTO purchase_history " + 
 			"(PURCHASE_ID_TKT, PURCHASE_ITEM, PURCHASE_DETAILS, PURCHASE_DATE, PAYMENT_STATUS, PAYMENT_INVOICE_ID, PRICE_IN_USD, PRICE_IN_INR, TX_BY) " + 
-			"VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	@Override
 	public boolean insertIntoPurchaseHistory(String ticketId, String purchaseItem, String purchaseDetails,
 			String paymentStatus, String paymentInvoiceId, String priceInUsd, String priceInInr, String txBy) throws Exception {

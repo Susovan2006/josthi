@@ -3,7 +3,7 @@ package com.josthi.web.constants;
 public interface MessageConstant {
 	
 	String LOGIN_ERROR_VALIDATION = "UserD/emailID or Password can't be blank";
-	String LOGIN_ERROR_ON_DATABASE_UPDATE_FAILURE = "LOGIN Valid, but Update error Occured, Please try again after some time.";
+	String LOGIN_ERROR_ON_DATABASE_UPDATE_FAILURE = "LOGIN Valid, but Update error Occurred, Please try again after some time.";
 	String LOGIN_ERROR_ON_ACCOUNT_DEACTIVATED = "Account is deactivated, Please contact the Customer Service Executive.";
 	String LOGIN_ERROR_ACCOUNT_TEMP_LOCKED = "Looks like the the account is temporarily deactivated due to multiple incorrect retries. Try after 1 Hours.";
 	String LOGIN_ERROR_INCORECT_USER_ID_PASSWORD = "Looks like the user ID and the password is incorrect, retry with valid user ID and password. or click Forget password.";
@@ -16,7 +16,7 @@ public interface MessageConstant {
 	
 	String ACCOUNT_RECOVERY_SUCCESS = "Please check your email. Password reset email will be sent in few min.";
 	String ACCOUNT_RECOVERY_ERROR = "Looks like the userID/email is not registered in this app, please try with a correct email ID that was used during the registration";
-	String ACCOUNT_RECOVERY_EXCEPTION = "Error occured while recovering the password, please try again later or open a Ticket.";
+	String ACCOUNT_RECOVERY_EXCEPTION = "Error occurred while recovering the password, please try again later or open a Ticket.";
 
 	String NEW_REGISTRATION_DUPLICATE_USER_ID = "Looks like you are already registered, you can directly login, if you forgot the password, click on the forget password link and reveive it over email.";
 	String NEW_REGISTRATION_FAILED = "User Registration failed, Please try after sometime or contact the Customer Service";
@@ -38,18 +38,18 @@ public interface MessageConstant {
 	String USER_STATUS_NULL_STATUS = null;
 	
 	String USER_PROFILE_UPDATE_SUCCESS_MESSAGE = "User Profile Updated Successfully!!";
-	String USER_PROFILE_UPDATE_ERROR_MESSAGE = "Exception Occured while updating the user Profile. Try again later or Contact the Customer Service.";
+	String USER_PROFILE_UPDATE_ERROR_MESSAGE = "Exception Occurred while updating the user Profile. Try again later or Contact the Customer Service.";
 	String USER_PROFILE_UPDATE_VALIDATION_ERROR_MESSAGE = "Looks like there is some issue with the Customer ID, please log out and relogin.";
 	
 	
-	String USER_GENERIC_ERROR = "Error Occured while performing backend operation, please try again later or call Customer Service.";
+	String USER_GENERIC_ERROR = "Error Occurred while performing backend operation, please try again later or call Customer Service.";
 	String USER_EMERGENCY_SAVE_SUCCESS_MESSAGE = "Emergency details saved Successfully!!";
 	String USER_EMERGENCY_UPDATE_SUCCESS_MESSAGE = "Emergency details Updated Successfully!!";
-	String USER_EMERGENCY_SAVE_ERROR_MESSAGE = "Exception Occured while saving emergency contact details. Try again later or Contact the Customer Service.";
+	String USER_EMERGENCY_SAVE_ERROR_MESSAGE = "Exception Occurred while saving emergency contact details. Try again later or Contact the Customer Service.";
 	String USER_EMERGENCY_SAVE_VALIDATION_ERROR_MESSAGE = "Looks like there is some issue with the Customer ID, please log out and relogin.";
 	String USER_SESSION_VALIDATION_ERROR_MESSAGE = "Looks like there is some issue with the Authorization, please log out and relogin.";
 	String USER_BENEFECIARY_SAVE_SUCCESS_MESSAGE = "Benefeciary details saved Successfully!!";
-	String USER_BENEFECIARY_SAVE_ERROR_MESSAGE = "Exception Occured while saving Benefeciary details. Try again later or Contact the Customer Service.";
+	String USER_BENEFECIARY_SAVE_ERROR_MESSAGE = "Exception Occurred while saving Benefeciary details. Try again later or Contact the Customer Service.";
 	
 	String USER_EMERGENCY_DELETE_SUCCESS_MESSAGE = "Contact Deleted";
 	String USER_BENEFECIARY_DELETE_SUCCESS_MESSAGE = "Beneficiary Deleted Successfully.";

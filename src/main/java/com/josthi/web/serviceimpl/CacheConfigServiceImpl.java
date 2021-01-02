@@ -9,10 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.josthi.web.service.CacheConfigService ;
+import com.josthi.web.utils.Utils;
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.PriceMonthlyAndYearly;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.CacheConfigDao ;
+import com.josthi.web.dao.PlanDetailsDao;
 import com.josthi.web.daoimpl.CacheConfigDaoImpl;
 import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.po.CacheConfigPO;
@@ -25,6 +28,9 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 	
 	@Autowired
 	private CacheConfigDao cacheConfigDao;
+	
+	@Autowired
+	private PlanDetailsDao planDetailsDao;
 
 	@Override
 	public Map<String, List<CacheConfigPO>> getConfigData() {
@@ -183,11 +189,50 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 		}
 	}
 
-	/*
-	 * public void setCacheConfigDao(CacheConfigDaoImpl cacheConfigDaoImpl) {
-	 * this.cacheConfigDao = cacheConfigDaoImpl; }
-	 */
+	@Override
+	public boolean addUserQuery(String name, String email, String userNotes) throws Exception {		
+		return cacheConfigDao.addUserQuery(name, email, userNotes);
+	}
 
+	@Override
+	public PriceMonthlyAndYearly getPlanPriceToDisplay() throws Exception {
+		PriceMonthlyAndYearly priceMonthlyAndYearly = new PriceMonthlyAndYearly();
+		
+		double unitPriceBasePlan = planDetailsDao.getBasePrice(Constant.PLAN_BASIC);
+		double unitPriceSilverPlan = planDetailsDao.getBasePrice(Constant.PLAN_SILVER);
+		double unitPriceGoldPlan = planDetailsDao.getBasePrice(Constant.PLAN_GOLD);
+		
+		int discountPercentage = planDetailsDao.getDiscountInPercentage(Constant.ONE_YEAR);
+		
+		float percentageFactor = ((float) discountPercentage )/100;
+		
+		double oneYearPriceForBasePlan = ((unitPriceBasePlan * 12) - (unitPriceBasePlan * 12 * percentageFactor))/12;
+		double oneYearPriceForSilverPlan = ((unitPriceSilverPlan * 12) - (unitPriceSilverPlan * 12 * percentageFactor))/12;
+		double oneYearPriceForGoldPlan = ((unitPriceGoldPlan * 12) - (unitPriceGoldPlan * 12 * percentageFactor))/ 12;
+		
+		priceMonthlyAndYearly.setBasePlanMonthlyPrice(Utils.roundUpCurrency(unitPriceBasePlan));
+		priceMonthlyAndYearly.setBasePlanDiscountedPrice(Utils.roundUpCurrency(oneYearPriceForBasePlan));
+		
+		priceMonthlyAndYearly.setSilverPlanMonthlyPrice(Utils.roundUpCurrency(unitPriceSilverPlan));
+		priceMonthlyAndYearly.setSilverPlanDiscountedPrice(Utils.roundUpCurrency(oneYearPriceForSilverPlan));
+		
+		priceMonthlyAndYearly.setGoldPlanMonthlyPrice(Utils.roundUpCurrency(unitPriceGoldPlan));
+		priceMonthlyAndYearly.setGoldPlanDiscountedPrice(Utils.roundUpCurrency(oneYearPriceForGoldPlan));
+		
+		priceMonthlyAndYearly.setYearlyDiscount(discountPercentage+"%");
+		
+		String baseAttr ="'{\"min\": "+Utils.roundUpCurrency(unitPriceBasePlan)+",\"max\": "+Utils.roundUpCurrency(oneYearPriceForBasePlan)+"}'";
+		String silverAttr ="'{\"min\": "+Utils.roundUpCurrency(unitPriceSilverPlan)+",\"max\": "+Utils.roundUpCurrency(oneYearPriceForSilverPlan)+"}'";
+		String goldAttr ="'{\"min\": "+Utils.roundUpCurrency(unitPriceGoldPlan)+",\"max\": "+Utils.roundUpCurrency(oneYearPriceForGoldPlan)+"}'";
+		
+		priceMonthlyAndYearly.setBaseAttributeForThymeleaf(baseAttr);
+		priceMonthlyAndYearly.setSilverAttributeForThymeleaf(silverAttr);
+		priceMonthlyAndYearly.setGoldAttributeForThymeleaf(goldAttr);
+		
+		return priceMonthlyAndYearly;
+	}
+
+	
 	
 
 

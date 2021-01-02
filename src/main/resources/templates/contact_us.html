@@ -29,20 +29,20 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="mb-3">
-                <span class="d-block h5 mb-1">Call us:</span>
-                <span class="d-block text-body font-size-1">+1 (062) 109-9222</span>
+                <span class="d-block h5 mb-1">Call us (US):</span>
+                <span class="d-block text-body font-size-1">+1 (240) 329-9406</span>
               </div>
 
               <div class="mb-3">
                 <span class="d-block h5 mb-1">Email us:</span>
-                <span class="d-block text-body font-size-1">hello@example.com</span>
+                <span class="d-block text-body font-size-1">MyJosthi@gmail.com</span>
               </div>
             </div>
 
             <div class="col-sm-6">
               <div class="mb-3">
-                <span class="d-block h5 mb-1">Address:</span>
-                <span class="d-block text-body font-size-1">153 Williamson Plaza, XXXXXXX</span>
+                <span class="d-block h5 mb-1">Call us (Germany):</span>
+                <span class="d-block text-body font-size-1">+49 1514 5378729</span>
               </div>
             </div>
           </div>
@@ -51,19 +51,34 @@
         <div class="col-lg-6">
           <div class="ml-lg-5">
             <!-- Form -->
-            <form class="js-validate card shadow-lg mb-4">
+            <form class="js-validate card shadow-lg mb-4" th:action="@{/saveCustomerQuery}" 
+			  											          th:object="${customerQueryBean}"  method="post">
               <div class="card-header border-0 bg-light text-center py-4 px-4 px-md-6">
                 <h2 class="h4 mb-0">General Enquiries</h2>
               </div>
-
+              
+              <!-- Alert -->
+			<!-- Alert Section Start-->
+            <div th:if="${status ne null}">
+	            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+				  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+				      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+				    </svg>
+				  </button>
+				</div>
+			</div>
+			<!-- Alert Section End-->            
+				<!-- Alert End -->
               <div class="card-body p-4 p-md-6">
                 <div class="row">
                   <div class="col-sm-6">
                     <!-- Form Group -->
                     <div class="js-form-message form-group">
                       <label for="firstName" class="input-label">First name</label>
-                      <input type="text" class="form-control" name="firstName" id="firstName" placeholder="XXXXX" aria-label="XXXXX" required
-                             data-msg="Please enter first your name">
+                      <input type="text" th:field="*{customerFirstName}" class="form-control" name="firstName" id="firstName" placeholder="XXXXX" aria-label="XXXXX" required
+                             data-msg="Please enter first your name" maxlength="90">
                     </div>
                     <!-- End Form Group -->
                   </div>
@@ -72,8 +87,8 @@
                     <!-- Form Group -->
                     <div class="js-form-message form-group">
                       <label for="lastName" class="input-label">Last name</label>
-                      <input type="text" class="form-control" name="lastName" id="lastName" placeholder="XXXXX" aria-label="XXXXX" required
-                             data-msg="Please enter last your name">
+                      <input type="text" th:field="*{customerLastName}" class="form-control" name="lastName" id="lastName" placeholder="XXXXX" aria-label="XXXXX" required
+                             data-msg="Please enter last your name" maxlength="90">
                     </div>
                     <!-- End Form Group -->
                   </div>
@@ -82,8 +97,8 @@
                     <!-- Form Group -->
                     <div class="js-form-message form-group">
                       <label for="emailAddress" class="input-label">Email address</label>
-                      <input type="email" class="form-control" name="emailAddress" id="emailAddress" placeholder="XXXXX@XXXXX.com" aria-label="alex@pixeel.com" required
-                             data-msg="Please enter a valid email address">
+                      <input type="email" th:field="*{customerEmail}" class="form-control" name="emailAddress" id="emailAddress" placeholder="XXXXX@XXXXX.com" aria-label="alex@pixeel.com" required
+                             data-msg="Please enter a valid email address" maxlength="150">
                     </div>
                     <!-- End Form Group -->
                   </div>
@@ -93,15 +108,16 @@
                     <div class="js-form-message form-group">
                       <label for="message" class="input-label">Message</label>
                       <div class="input-group">
-                        <textarea class="form-control" rows="4" name="message" id="message" placeholder="Hi there, I would like to ..." aria-label="Hi there, I would like to ..." required
-                                  data-msg="Please enter a reason."></textarea>
+                        <textarea th:field="*{customerNotes}" class="form-control" rows="4" name="message" id="message" placeholder="Hi there, I would like to ..." aria-label="Hi there, I would like to ..." required
+                                  data-msg="Please enter a reason." maxlength="400"></textarea>
                       </div>
                     </div>
                     <!-- End Form Group -->
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-block btn-primary transition-3d-hover">Submit</button>
+                <button  class="btn btn-block btn-primary transition-3d-hover" type="Submit">Submit</button>
+
               </div>
             </form>
             <!-- End Form -->
@@ -191,6 +207,8 @@
       });
     });
   </script>
+  
+
 
   <!-- IE Support -->
   <script>

@@ -778,10 +778,16 @@
 					</thead>
 					<tbody>
 					  <tr>
-						<td><br />Price</td>
-						<td><h3 class="panel-title price">$399</h3></td>
-						<td><h3 class="panel-title price">$699</h3></td>
-						<td><h3 class="panel-title price">$799</h3></td>
+						<td>Price/month/Person</td>
+						<td><h3 class="panel-title price" th:text="${planPrice.basePlanMonthlyPrice} + '&#8377'">0001</h3></td>
+						<td><h3 class="panel-title price" th:text="${planPrice.silverPlanMonthlyPrice} + '&#8377'">0002</h3></td>
+						<td><h3 class="panel-title price" th:text="${planPrice.GoldPlanMonthlyPrice} + '&#8377'">0003</h3></td>
+					  </tr>
+					  <tr>
+						<td>Price/month/Person (for Yearly Plan)</td>
+						<td><h3 class="panel-title price" th:text="${planPrice.basePlanDiscountedPrice} + '&#8377'">0001</h3></td>
+						<td><h3 class="panel-title price" th:text="${planPrice.silverPlanDiscountedPrice} + '&#8377'">0002</h3></td>
+						<td><h3 class="panel-title price" th:text="${planPrice.GoldPlanDiscountedPrice} + '&#8377'">0003</h3></td>
 					  </tr>
 					  <tr>
 						<td colspan="4" align="left" style="padding-left:20px;" class="active"><b>Service and Features</b></td>

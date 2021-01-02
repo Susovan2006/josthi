@@ -69,7 +69,7 @@ public class ProfilePictureController {
         	
         }catch(Exception ex) {
         	logger.error(ex.getMessage(), ex);
-        	return new ResponseEntity<String>("Exception Occured, Try again",HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<String>("Exception Occurred, Try again",HttpStatus.BAD_REQUEST);
         }
     
     }
@@ -87,7 +87,7 @@ public class ProfilePictureController {
         	return new ResponseEntity<String>(status , HttpStatus.OK);        	
         }catch(Exception ex) {
         	logger.error(ex.getMessage(), ex);
-        	return new ResponseEntity<String>("Exception Occured while deleting the image, Try again later",HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<String>("Exception Occurred while deleting the image, Try again later",HttpStatus.BAD_REQUEST);
         }
     
     }

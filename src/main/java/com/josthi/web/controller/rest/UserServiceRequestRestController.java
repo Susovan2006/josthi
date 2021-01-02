@@ -128,7 +128,7 @@ public class UserServiceRequestRestController {
     	        	String ticketStatus = "Success : Ticket updated successfully.";        	    	 
     	        	return new ResponseEntity<String>(ticketStatus , HttpStatus.OK);
     			}else{
-    				throw new UserExceptionInvalidData("Error : Error Occured while processing the service request, , Try again later.");
+    				throw new UserExceptionInvalidData("Error : Error Occurred while processing the service request, , Try again later.");
     			}
     			
     		}else {
@@ -144,7 +144,7 @@ public class UserServiceRequestRestController {
 			return new ResponseEntity<String>(ex.getMessage(), HttpStatus.OK);
 		}catch(Exception ex) {
         	logger.error(ex.getMessage(), ex);
-        	return new ResponseEntity<String>("Exception Occured while processing the service request, Try again later.",HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<String>("Exception Occurred while processing the service request, Try again later.",HttpStatus.BAD_REQUEST);
         }
     
     }
@@ -274,7 +274,7 @@ public class UserServiceRequestRestController {
 			return new AjaxRestResponse(Constant.AJAX_EXCEPTION,ex.getMessage(),null, null, null);			
 		}catch(Exception ex) {
         	logger.error(ex.getMessage(), ex);
-        	return new AjaxRestResponse(Constant.AJAX_EXCEPTION,"Error Occured, please logout and try again.",null, null, null);
+        	return new AjaxRestResponse(Constant.AJAX_EXCEPTION,"Error Occurred, please logout and try again.",null, null, null);
         }
 		
     	

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Coming Soon | Josthi.com</title>
+
+  <div th:replace="Common :: includes"></div>
+  
+</head>
+<body>
+	
+  <!-- ========== Navigation Menu ===== -->
+  <div th:insert="Common :: nav-menu"></div>	
+  <!-- ========== MAIN CONTENT ========== -->
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main">
+    <!-- Hero Section -->
+    <div class="d-lg-flex">
+      <div class="container d-lg-flex align-items-lg-center vh-lg-100 space-bottom-1 space-top-3 space-bottom-lg-3 space-lg-0">
+        <div class="row justify-content-lg-between align-items-lg-center w-100 mt-lg-9">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <img class="img-fluid" src="vendor/svg/illustrations/relaxing-man.svg" alt="SVG Illustration">
+          </div>
+
+          <div class="col-lg-5">
+            <!-- Title -->
+            <div class="mb-4">
+              <h1>Watch out this place, new features coming soon.</h1>
+              <p>We are enhancing our webpage to provide better services, Watch out this place for new features and offer, subscribe to be notified.</p>
+            </div>
+            <!-- End Title -->
+
+			<!-- Alert Section Start-->
+            <div th:if="${status ne null}">
+	            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+				  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+				      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+				    </svg>
+				  </button>
+				</div>
+			</div>
+			<!-- Alert Section End-->
+
+            <!-- Input -->
+            <form class="js-validate js-form-message" th:action="@{/saveEmail}" 
+			  											          th:object="${customerQueryBean}"  method="post">
+              <label class="sr-only" for="subscribeSrEmail">Your email</label>
+              <div class="input-group">
+                <input type="text" th:field="*{customerEmail}" class="form-control" name="name" id="subscribeSrEmail" placeholder="Your email" aria-label="Your email" aria-describedby="subscribeEmailButton" required
+                       data-msg="Please enter a valid email address.">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-primary" id="subscribeEmailButton">Subscribe</button>
+                </div>
+              </div>
+            </form>
+            <!-- End Input -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Hero Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="Common :: site-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- JS Global Compulsory -->
+  <div th:insert="Common :: js-includes"></div>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+    	
+    	var header = new HSHeader($('#header')).init();
+    	
+        // initialization of mega menu
+        var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+          desktop: {
+            position: 'left'
+          }
+        }).init();
+    	
+      // initialization of form validation
+      $('.js-validate').each(function () {
+        var validation = $.HSCore.components.HSValidation.init($(this));
+      });
+      
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+      
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

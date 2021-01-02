@@ -5,6 +5,7 @@ import com.josthi.web.bo.UserAuthBo;
 import com.josthi.web.bo.UserPreferencesBean;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public interface UserAuthDao {
 
@@ -51,6 +52,14 @@ public interface UserAuthDao {
 	String getAgentBasedOnBeneficiaryId(String beneficiaryId) throws Exception;
 
 	UserAuthBo getValidUserWithOtp(String userId, String userEmail, String otp) throws Exception;
+
+	String isEmailValidated(String customerId) throws Exception;
+
+	List<String> getAssignedAgents(String customerId) throws Exception;
+
+	String isBeneficiaryRegistered(String customerId) throws Exception;
+
+	String isPlanPurchased(String customerId) throws Exception;
 
 	
 

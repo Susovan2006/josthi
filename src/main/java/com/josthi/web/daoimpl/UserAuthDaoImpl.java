@@ -456,8 +456,66 @@ public class UserAuthDaoImpl implements UserAuthDao{
 			throw new UserExceptionInvalidData("Looks like as of now no Agent is setup to server the Beneficiary "+beneficiaryId+". Call the customer service, they can assign an Agent ASAP.");
 		}
 	}
-
-
+	
+	
+	public static final String SELECT_EMAIL_VALIDATION_DETAILS = "SELECT VALID_EMAIL from user_auth_table where CUSTOMER_ID = ?";
+	@Override
+	public String isEmailValidated(String customerId) throws Exception {
+		try {
+			String validationStatus = jdbcTemplate.queryForObject(SELECT_EMAIL_VALIDATION_DETAILS, new Object[]{customerId}, String.class);
+			
+			return (validationStatus.equalsIgnoreCase("YES")? "Y" : "N");
+			
+		}catch(Exception ex) {
+			logger.error("Couldn't get email Status for :"+customerId, ex);
+			throw new UserExceptionInvalidData("Looks like there is some issue fetching the email Validation details for  "+customerId+". Call the customer service, or try later.");
+		}
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getAssignedAgents(String customerId) throws Exception {
+		try {
+			
+		    List<String> agentIds = jdbcTemplate.query("SELECT distinct AGENT_ID FROM relation where CUSTOMER_ID  = ?", 
+		    																	new Object[] {customerId},
+		    																	new RowMapper() {
+		        public Object mapRow(ResultSet resultSet, int i) throws SQLException {
+		          return resultSet.getString(1);
+		        }
+		      });
+			
+		    return agentIds;
+		}catch(Exception ex) {
+			logger.error("Couldn't get Agent Lists for :"+customerId, ex);
+			throw new UserExceptionInvalidData("Looks like there is some issue fetching the Agent Validation details for  "+customerId+". Call the customer service, or try later.");
+		}
+	}
+	
+	
+	
+	public static final String SELECT_BENEFICIARY_COUNT = "select count(*)  from relation where CUSTOMER_ID  = ?";
+	@Override
+	public String isBeneficiaryRegistered(String customerId) throws Exception {
+		int beneficiaryCount = getJdbcTemplate().queryForObject(SELECT_BENEFICIARY_COUNT, new Object[] { customerId }, Integer.class);
+		if(beneficiaryCount  >0) {
+			return "Y";
+		}else {
+			return "N";
+		}
+	}
+	
+	public static final String SELECT_PLAN_COUNT = "select count(*) from relation where PLAN_PRICE_BREAKUP_ID  is not null and CUSTOMER_ID  = ?; ";
+	@Override
+	public String isPlanPurchased(String customerId) throws Exception {
+		int planCount = getJdbcTemplate().queryForObject(SELECT_PLAN_COUNT, new Object[] { customerId }, Integer.class);
+		if(planCount  >0) {
+			return "Y";
+		}else {
+			return "N";
+		}
+	}
 	
 
 }

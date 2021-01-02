@@ -3,30 +3,59 @@ package com.josthi.web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.josthi.web.bo.CustomerQueryBean;
+import com.josthi.web.bo.EmergencyContactBean;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.MappingConstant;
+import com.josthi.web.constants.MessageConstant;
 import com.josthi.web.controller.CacheConfigDataController;
+import com.josthi.web.exception.UserException;
+import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.po.CacheConfigPO;
+import com.josthi.web.po.EmailDbBean;
+import com.josthi.web.scheduler.EmailScheduler;
+import com.josthi.web.service.CacheConfigService;
+import com.josthi.web.service.EmailService;
+import com.josthi.web.utils.Utils;
 
 
 @Controller
 public class MainController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	
+	@Autowired
+	CacheConfigService cacheConfigService;
+	
+	@Autowired
+	EmailService emailService;
 	
 	@GetMapping("/")
 	public String hello(Model model) {
@@ -42,40 +71,156 @@ public class MainController {
 	}
 	
 	
-	/*@GetMapping("/forAgents")
+	@GetMapping("/knowUs")
 	public String forAgents(Model model) {
-		model.addAttribute("message","HelloWorld");
-		return "for_agents";
-	}*/
+		return "know_Us";
+	}
 	
-	//login_simple
-	/*@GetMapping("/login")
-	public String login(Model model) {
-		model.addAttribute("message","HelloWorld");
-		return "login_simple";
-	}*/
+
+	@GetMapping("/comingSoon")
+	public String login(Model model,
+			@RequestParam (name="status", required = false, defaultValue = "") String status,
+			@RequestParam (name="message", required = false, defaultValue = "") String message	) {
+		
+		
+		model.addAttribute("customerQueryBean", new CustomerQueryBean());
+		if(status!=null && status.length() > 0) {
+	    	 model.addAttribute("status", status);
+			 model.addAttribute("message", message);
+   	    }
+		return "coming-soon";
+	}
 	
 	
-	//josthi_signup.html
-	//@GetMapping("/userSignup")
-	//public String userSignup(Model model) {
-	//	model.addAttribute("message","HelloWorld");
-	//	return "josthi_signup";
-	//}
+	@RequestMapping(path ="/saveEmail", method = RequestMethod.POST)
+	public String saveEmail(Model model, CustomerQueryBean customerQueryBean,
+									HttpServletRequest request) {
+		
+    		//logger.debug("Customer ID from Session:"+custId);
+    		
+    		String actionStatus = "";
+    		String message = "";  		
+    		try { 
+    			
+    			if(StringUtils.isEmpty(customerQueryBean.getCustomerEmail().trim())) {
+        			throw new UserExceptionInvalidData("Email is a required field.");
+        		}
+        		
+        		if(!Utils.isValidEmailAddress(customerQueryBean.getCustomerEmail().trim())) {
+        			throw new UserExceptionInvalidData("Invalid Email address. Please re-validate the details.");
+        		}
+        		boolean updateStatus = false;
+    			updateStatus = cacheConfigService.addUserQuery("UNKNOWN",
+    															customerQueryBean.getCustomerEmail(),
+    														   "Email Subscribe.");
+    			
+    			return "redirect:/comingSoon?status="+MessageConstant.USER_SUCCESS_STATUS+"&message=Thanks for Your Interest!! We will let you know all the updates we have";
+    			
+    		}catch(UserExceptionInvalidData ex) {
+    			logger.error(ex.getMessage(), ex);
+    			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+    			message = ex.getMessage();
+    			return "redirect:/comingSoon?status="+actionStatus+"&message="+message;
+    		}catch(UserException ex) {
+    			logger.error(ex.getMessage(), ex);
+    			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+    			message = ex.getMessage();
+    			return "redirect:/comingSoon?status="+actionStatus+"&message="+message;
+    		}catch(Exception ex) {
+    			logger.error("Error :", ex);
+    		    return "redirect:/comingSoon?status="+MessageConstant.USER_FAILURE_STATUS+"&message=Error Occured, please try later";
+    		}
+    		
+	}
 	
-	//account_recovery
-	/*
-	 * @GetMapping("/accountRecovery") public String accountRecovery(Model model) {
-	 * model.addAttribute("message","HelloWorld"); return "account_recovery"; }
-	 */
+	
 	
 	
 	//account_recovery
 	@GetMapping("/contactUs")
-	public String contactUs(Model model) {
-			model.addAttribute("message","HelloWorld");
+	public String contactUs(Model model,
+			@RequestParam (name="status", required = false, defaultValue = "") String status,
+			@RequestParam (name="message", required = false, defaultValue = "") String message) {
+		
+			model.addAttribute("customerQueryBean", new CustomerQueryBean());
+			if(status!=null && status.length() > 0) {
+		    	 model.addAttribute("status", status);
+				 model.addAttribute("message", message);
+	   	    }
+			
 			return "contact_us";
 	}
+	
+	
+	@RequestMapping(path ="/saveCustomerQuery", method = RequestMethod.POST)
+	public String saveCustomerQuery(Model model, CustomerQueryBean customerQueryBean,
+									HttpServletRequest request) {
+		
+    		//logger.debug("Customer ID from Session:"+custId);
+    		
+    		String actionStatus = "";
+    		String message = "";  		
+    		try { 
+    			
+    			String name = customerQueryBean.getCustomerFirstName().trim() + " " + customerQueryBean.getCustomerLastName().trim();
+    			String email = customerQueryBean.getCustomerEmail().trim();
+    			String userNotes = customerQueryBean.getCustomerNotes().trim();
+    			
+    			if(StringUtils.isEmpty(name.trim()) || StringUtils.isEmpty(email.trim()) || StringUtils.isEmpty(userNotes.trim())) {
+        			throw new UserExceptionInvalidData("All the fields are required. Please fill all the details and try again");
+        		}
+        		
+        		if(!Utils.isValidEmailAddress(email.trim())) {
+        			throw new UserExceptionInvalidData("Invalid Email address. Please re-validate the details.");
+        		}
+        		boolean updateStatus = false;
+    			updateStatus = cacheConfigService.addUserQuery(name,
+    														   email,
+    														   userNotes);
+    			//Database Update
+    			logger.info("Database Updated Successfully.");
+    			
+    			
+                	//Service email 
+        	        Map<String, String> serviceEmailMap = new HashMap<String, String>();
+        	        serviceEmailMap.put("name", name);
+        	        serviceEmailMap.put("email", email);
+        	        serviceEmailMap.put("userNotes", userNotes);       	        
+
+        	        String emailId = "susovan2006@gmail.com";
+        	        EmailDbBean emailDbBeanForService = Utils.getEmailBeanForCustomerEnquery(emailId, Utils.mapToString(serviceEmailMap));
+        	        boolean otpQueueStatus = emailService.queueEmail(emailDbBeanForService);
+        	        if(otpQueueStatus) {
+        	        	EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
+        	        }
+
+    			
+    			if(updateStatus) {
+    	        	String enqueryStatus = "Success : Customer Query registered, we will reply Back soon.";        	    	 
+    	        	return "redirect:/contactUs?status="+MessageConstant.USER_SUCCESS_STATUS+"&message="+enqueryStatus;
+    			}else{
+    				throw new UserExceptionInvalidData("Error : Error Occured while processing the enquire request, Try again later.");
+    			}
+    			
+    			
+    			
+    		}catch(UserExceptionInvalidData ex) {
+    			logger.error(ex.getMessage(), ex);
+    			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+    			message = ex.getMessage();
+    			return "redirect:/contactUs?status="+actionStatus+"&message="+message;
+    		}catch(UserException ex) {
+    			logger.error(ex.getMessage(), ex);
+    			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+    			message = ex.getMessage();
+    			return "redirect:/contactUs?status="+actionStatus+"&message="+message;
+    		}catch(Exception ex) {
+    			logger.error("Error :", ex);
+    		    return "redirect:/contactUs?status="+MessageConstant.USER_FAILURE_STATUS+"&message=Error Occured, please try later";
+    		}
+    		
+	}
+	
 	
 	
 	//search_lawyers
@@ -99,6 +244,7 @@ public class MainController {
 			
 			
 			model.addAttribute("planAndBenefitBeanList",CacheConfigDataController.planAndBenefitBeanList);
+			model.addAttribute("planPrice",CacheConfigDataController.priceMonthlyAndYearly);
 			return "josthi_pricing";
 	}
 	
@@ -206,10 +352,10 @@ public class MainController {
 	 * ============================================================================================
 	 */
 	
-	@GetMapping("/user/home")
-	public String userHome(Model model) {
-			return "user/home_user";
-	}
+	/*
+	 * @GetMapping("/user/home") public String userHome(Model model) { return
+	 * "user/home_user"; }
+	 */
 	
 	/*
 	 * @GetMapping("/user/profile") public String userProfile(Model model) { return

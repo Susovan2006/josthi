@@ -21,6 +21,8 @@ public interface CacheConfigDao {
 
 	List<ServiceDetailsBean> getServiceListToDisplayInMainScreen() throws Exception;
 
+	boolean addUserQuery(String name, String email, String userNotes) throws Exception;
+
 
 
 }

@@ -1,10 +1,13 @@
 package com.josthi.web.serviceimpl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +17,16 @@ import org.springframework.stereotype.Service;
 
 import com.josthi.web.bo.PasswordResetBean;
 import com.josthi.web.bo.UserAuthBo;
+import com.josthi.web.bo.UserDetailsBean;
 import com.josthi.web.bo.UserPreferencesBean;
+import com.josthi.web.bo.UserProfileCompletionStepsBean;
 import com.josthi.web.dao.UserAuthDao;
 import com.josthi.web.exception.UserExceptionInvalidData;
 import com.josthi.web.po.EmailDbBean;
 import com.josthi.web.scheduler.EmailScheduler;
 import com.josthi.web.service.EmailService;
 import com.josthi.web.service.UserAuthService;
+import com.josthi.web.service.UserDetailService;
 import com.josthi.web.utils.Security;
 import com.josthi.web.utils.Utils;
 
@@ -34,6 +40,9 @@ public class UserAuthServiceImpl implements UserAuthService{
 	
 	@Autowired
 	public EmailService emailService;
+	
+	@Autowired
+	public UserDetailService userDetailService;
 	
 	@Override
 	public UserAuthBo getValidUser(String uid, String password) throws Exception{
@@ -240,6 +249,54 @@ public class UserAuthServiceImpl implements UserAuthService{
 	@Override
 	public void updateOtpValidationStatus(String userId) throws Exception {
 		userAuthDao.updateUserValidationStatus(userId);		
+	}
+
+	@Override
+	public UserProfileCompletionStepsBean getProfileStatus(String customerId) throws Exception {
+		UserProfileCompletionStepsBean userProfileCompletionStepsBean = new UserProfileCompletionStepsBean();
+		
+		//The User ID Should all ways be Created.
+		userProfileCompletionStepsBean.setIsUserIdCreated("Y");
+		
+		//Generally the Email Should be validated. still we are checking from the database.
+		userProfileCompletionStepsBean.setIsEmailValidated(userAuthDao.isEmailValidated(customerId));
+		
+		//Checking if there is any beneficiary at all registered.
+		userProfileCompletionStepsBean.setIsBeneficiaryRegistered(userAuthDao.isBeneficiaryRegistered(customerId));
+		
+		
+		//Check if Agent is assigned to atleast one Beneficiary.
+		List<String> agentIds = userAuthDao.getAssignedAgents(customerId);
+		List<String> filteredAgentList = new ArrayList<String>();
+		List<UserDetailsBean> agentDetailBeanList = new ArrayList<UserDetailsBean>();
+		
+		//Here we are filtering the agents.
+		if(agentIds !=null && agentIds.size() > 0 ) {			
+			for(String agentId :agentIds ) {				
+				if(!(StringUtils.isEmpty(agentId))) {
+					filteredAgentList.add(agentId);
+				}			
+			}
+			
+		}
+		
+		if(filteredAgentList.size() > 0) {
+			userProfileCompletionStepsBean.setIsAgentAssigned("Y");
+			for(String agentId :filteredAgentList ) {				
+				UserDetailsBean agentDetailsfromDb = userDetailService.getAgentAdminProfileDetails(agentId);
+				agentDetailBeanList.add(agentDetailsfromDb);
+			}
+		}else {
+			userProfileCompletionStepsBean.setIsAgentAssigned("N");
+		}
+		
+		userProfileCompletionStepsBean.setUserDetailsBean(agentDetailBeanList);
+		logger.info("Agent list Size :" + filteredAgentList.size());
+		
+		userProfileCompletionStepsBean.setIsPlanPurchased(userAuthDao.isPlanPurchased(customerId));
+		
+		
+		return userProfileCompletionStepsBean;
 	}
 
 

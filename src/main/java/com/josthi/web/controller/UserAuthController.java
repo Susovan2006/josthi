@@ -21,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.josthi.web.bo.OtpFourByteBean;
 import com.josthi.web.bo.UserAuthBo;
+import com.josthi.web.bo.UserProfileCompletionStepsBean;
 import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.bo.UserSessionBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.constants.EmailConstant;
+import com.josthi.web.constants.MappingConstant;
 import com.josthi.web.constants.MessageConstant;
 import com.josthi.web.exception.UserException;
 import com.josthi.web.exception.UserExceptionInvalidData;
@@ -83,6 +85,44 @@ public class UserAuthController {
 		return "login_simple";
 	}
 	
+	
+	//**************************** HOME PAGE CONTROLLER***************************
+	//****************************     FOR  USERS      ***************************
+	//****************************************************************************
+	@GetMapping("/user/home")
+	public String userHome(Model model, HttpServletRequest request) {
+			
+		
+		String actionStatus = "";
+		String displayMsg = "";	
+		try {
+			logger.info("@@@@@@@@@@");
+			ValidateSession.isValidSession(request);
+			String customerId = ValidateSession.getUserId(request);
+			UserProfileCompletionStepsBean userProfileCompletionStepsBean = userAuthService.getProfileStatus(customerId);
+			
+			logger.info("@@@@@@@@@@ userProfileCompletionStepsBean :"+userProfileCompletionStepsBean.toString());
+			model.addAttribute("profileCompletionBean", userProfileCompletionStepsBean);
+			
+			return "user/home_user";
+			
+		}catch(UserExceptionInvalidData ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			displayMsg =  ex.getMessage();
+			return "redirect:/login?status="+actionStatus+"&message="+displayMsg;
+		}catch(UserException ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			displayMsg =  ex.getMessage();
+			return "redirect:/login?status="+actionStatus+"&message="+displayMsg;
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			actionStatus = MessageConstant.USER_FAILURE_STATUS;
+			displayMsg =  "Error occurred while user Auth, so you can't login now, try after sometime. Else contact customer service.";
+			return "redirect:/login?status="+actionStatus+"&message="+displayMsg;
+		}
+	}
 	
 	
 	/**
@@ -168,7 +208,8 @@ public class UserAuthController {
 							
 							if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {		
 								logger.info("User LOGIN Successful");
-								return "user/home_user";
+								//return "user/home_user";
+								return "redirect:/user/home";
 							}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
 								logger.info("Agent LOGIN Successful");
 								return "admin/home_admin";
@@ -293,7 +334,8 @@ public class UserAuthController {
 				if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_REG_USER)) {		
 					logger.info("User LOGIN Successful");
 					userAuthService.updateOtpValidationStatus(userId);
-					return "user/home_user";
+					//return "user/home_user";
+					return "redirect:/user/home";
 				}else if(userDetails.getRole().equalsIgnoreCase(Constant.USER_TYPE_AGENT)) {
 					logger.info("Agent LOGIN Successful");
 					userAuthService.updateOtpValidationStatus(userId);

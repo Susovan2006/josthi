@@ -106,7 +106,7 @@ public class AssignAgentByAdminController {
     	        	logger.info("");
     	        	return new ResponseEntity<String>(agentAssignmentStatus , HttpStatus.OK);
     			}else{
-    				throw new UserExceptionInvalidData("Error : Error Occured while processing the service request, , Try again later.");
+    				throw new UserExceptionInvalidData("Error : Error Occurred while processing the service request, , Try again later.");
     			}
     			
     		}else {
@@ -122,7 +122,7 @@ public class AssignAgentByAdminController {
 			return new ResponseEntity<String>(ex.getMessage(), HttpStatus.OK);
 		}catch(Exception ex) {
         	logger.error(ex.getMessage(), ex);
-        	return new ResponseEntity<String>("Exception Occured while processing the service request, Try again later.",HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<String>("Exception Occurred while processing the service request, Try again later.",HttpStatus.BAD_REQUEST);
         }
     
     }

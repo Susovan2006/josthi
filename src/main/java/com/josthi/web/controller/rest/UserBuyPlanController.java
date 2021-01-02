@@ -116,7 +116,7 @@ public class UserBuyPlanController {
 				return new AjaxRestResponseForPriceCalculation(Constant.AJAX_EXCEPTION,ex.getMessage());			
 			}catch(Exception ex) {
 				logger.error(ex.getMessage(), ex);
-				return new AjaxRestResponseForPriceCalculation(Constant.AJAX_EXCEPTION,"Error Occured, please logout and try again.");
+				return new AjaxRestResponseForPriceCalculation(Constant.AJAX_EXCEPTION,"Error Occurred, please logout and try again.");
 			}
 		
 		

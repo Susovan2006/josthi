@@ -150,6 +150,23 @@ private static final Logger logger = LoggerFactory.getLogger(CacheConfigDaoImpl.
 	}
 	
 	
+	public static final String INSERT_USER_QUERY_TABLE = "INSERT INTO customer_enquire " + 
+			"(CUSTOMER_NAME, CUSTOMER_EMAIL, MESSAGE, ENQUERY_DATE) " + 
+			"VALUES(?, ?, ?, CURRENT_TIMESTAMP);";
+	@Override
+	public boolean addUserQuery(String name, String email, String userNotes) throws Exception {
+		try {
+			int result = jdbcTemplate.update(INSERT_USER_QUERY_TABLE, new Object[]{name,
+																				  email,
+																				  userNotes });	
+			return (result > 0 ? true : false);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw ex;
+		}
+	}
+	
+	
 	
 	
 	

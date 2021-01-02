@@ -65,43 +65,98 @@
             <!-- Body -->
             <div class="card-body">
 			<!-- Step -->
-				<ul class="step step-md">
+				<ul class="step step-md step-md step-border-last-0">
 				  <li class="step-item">
-					<div class="step-content-wrapper">
-					  <span class="step-icon step-icon-success">1</span>
+					<div class="step-content-wrapper" >
+					  <span class="step-icon" th:classappend="${profileCompletionBean.isUserIdCreated == 'Y'} ? step-icon-soft-success : step-icon-soft-primary">
+					  		<div th:if="${profileCompletionBean.isUserIdCreated == 'Y'} ">
+								<i class="fa fa-check" style="font-size:16px;color:Green"></i>
+							</div>
+							<div th:unless="${profileCompletionBean.isUserIdCreated == 'Y'} ">
+								<i class="fas fa-angle-right" style="font-size:16px;color:Blue"></i>
+							</div>
+					  </span>
 					  <div class="step-content">
 						<h4>First step</h4>
-						<p class="text-body">User Id Creation.</p>
+						<p class="text-body">User Id Creation. 
+						</p>
 					  </div>
 					</div>
 				  </li>
 
 				  <li class="step-item">
 					<div class="step-content-wrapper">
-					  <span class="step-icon step-icon-soft-primary">2</span>
+					  <span class="step-icon" th:classappend="${profileCompletionBean.isEmailValidated == 'Y'} ? step-icon-soft-success : step-icon-soft-primary">
+					  	<div th:if="${profileCompletionBean.isEmailValidated == 'Y'} ">
+							<i class="fa fa-check" style="font-size:16px;color:Green"></i>
+						</div>
+						<div th:unless="${profileCompletionBean.isEmailValidated == 'Y'} ">
+							<i class="fas fa-angle-right" style="font-size:16px;color:Blue"></i>
+						</div>
+					  </span>
 					  <div class="step-content">
 						<h4>Second step</h4>
-						<p class="text-body">Email Validation.</p>
-					  </div>
-					</div>
-				  </li>
-
-				  <li class="step-item">
-					<div class="step-content-wrapper">
-					  <span class="step-icon step-icon-soft-primary">3</span>
-					  <div class="step-content">
-						<h4>Third step</h4>
-						<p class="text-body">Fillout the User and Beneficiary Details.</p>
+						<p class="text-body">Email Validation.
+							
+						</p>
 					  </div>
 					</div>
 				  </li>
 				  
 				  <li class="step-item">
 					<div class="step-content-wrapper">
-					  <span class="step-icon step-icon-soft-primary">3</span>
+					  <span class="step-icon" th:classappend="${profileCompletionBean.isBeneficiaryRegistered == 'Y'} ? step-icon-soft-success : step-icon-soft-primary">
+					  	<div th:if="${profileCompletionBean.isBeneficiaryRegistered == 'Y'} ">
+								<i class="fa fa-check" style="font-size:16px;color:Green"></i>
+						</div>
+						<div th:unless="${profileCompletionBean.isBeneficiaryRegistered == 'Y'} ">
+							<i class="fas fa-angle-right" style="font-size:16px;color:Blue"></i>
+						</div>
+					  </span>
 					  <div class="step-content">
-						<h4>Forth step</h4>
-						<p class="text-body">Buy a Suitable Plan.</p>
+						<h4>Third step</h4>
+						<p class="text-body">Add Beneficiary.
+							
+						</p>
+					  </div>
+					</div>
+				  </li>
+
+				  <li class="step-item">
+					<div class="step-content-wrapper">
+					  <span class="step-icon" th:classappend="${profileCompletionBean.isAgentAssigned == 'Y'} ? step-icon-soft-success : step-icon-soft-primary">
+					  	    <div th:if="${profileCompletionBean.isAgentAssigned == 'Y'} ">
+								<i class="fa fa-check" style="font-size:16px;color:Green"></i>
+							</div>
+							<div th:unless="${profileCompletionBean.isAgentAssigned == 'Y'} ">
+								<i class="fas fa-angle-right" style="font-size:16px;color:Blue"></i>
+							</div>
+					  </span>
+					  <div class="step-content">
+						<h4>Fourth step</h4>
+						<p class="text-body">Agent Assignment.
+							<!-- <div th:if="${profileCompletionBean.isAgentAssigned == 'Y'} ">
+								<i class="fa fa-check" style="font-size:16px;color:Green"></i>
+							</div> -->						
+						</p>
+					  </div>
+					</div>
+				  </li>
+				  
+				  <li class="step-item">
+					<div class="step-content-wrapper">
+					  <span class="step-icon" th:classappend="${profileCompletionBean.isPlanPurchased == 'Y'} ? step-icon-soft-success : step-icon-soft-primary">
+					  		<div th:if="${profileCompletionBean.isPlanPurchased == 'Y'} ">
+								<i class="fa fa-check" style="font-size:16px;color:Green"></i>
+							</div>
+							<div th:unless="${profileCompletionBean.isPlanPurchased == 'Y'} ">
+								<i class="fas fa-angle-right" style="font-size:16px;color:Blue"></i>
+							</div>
+					  </span>
+					  <div class="step-content">
+						<h4>Final step</h4>
+						<p class="text-body">Buy a Suitable Plan.
+						</p>
 					  </div>
 					</div>
 				  </li>

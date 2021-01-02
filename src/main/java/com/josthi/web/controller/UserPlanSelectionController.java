@@ -107,6 +107,10 @@ public class UserPlanSelectionController {
 			model.addAttribute("planDurationList",planDurationList);
 			
 			
+			//This is for the Plan Price. This is being pulled from cache.
+			model.addAttribute("planPrice",CacheConfigDataController.priceMonthlyAndYearly);
+			
+			
 			//Beneficiary Selection
 			List<DropDownBean> beneficiaryList = planAndBenefitService.getBeneficiaryListForPlan(hostCustomerId);
 			logger.info(beneficiaryList.toString());

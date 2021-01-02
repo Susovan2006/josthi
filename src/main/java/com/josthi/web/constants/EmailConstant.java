@@ -32,6 +32,9 @@ public interface EmailConstant {
 	String EMAIL_FROM_FOR_PLAN = "invoice@josthi.com";
 	String SUBJECT_FROM_FOR_PLAN_INVOIVE = "Josthi.com | purchase invoice";
 	
+	//CUSTOMER ENQUERY
+	String EMAIL_FROM_FOR_CUSTOMER_QUERY = "confirmation@josthi.com";
+	String SUBJECT_FROM_FOR_CUSTOMER_QUERY = "Josthi.com | General Enquery";
 	
 	//Generic Status
 	String LOAD_STATUS = "LOADED";
@@ -50,6 +53,8 @@ public interface EmailConstant {
 	String TEMPLATE_FORM_FOR_SERVICE_REQUEST_UPDATE = "email_ticket_update";
 	String TEMPLATE_FORM_FOR_AGENT_ASSIGNMENT_UPDATE = "email_Agent_Assignment";
 	String TEMPLATE_FORM_FOR_PURCHASE_INVOICE = "email_invoice";
+	
+	String TEMPLATE_FORM_FOR_CUSTOMER_ENQUERY = "email_enquery";
 	
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.josthi.web.bo.DropDownBean;
 import com.josthi.web.bo.PlanAndBenefitBean;
+import com.josthi.web.bo.PriceMonthlyAndYearly;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.po.CacheConfigPO;
@@ -29,6 +30,8 @@ public class CacheConfigDataController {
 	
 	public static List<ServiceDetailsBean> planListtoDisplay = new ArrayList<ServiceDetailsBean>();
 	public static List<PlanAndBenefitBean> planAndBenefitBeanList = new ArrayList<PlanAndBenefitBean>();
+	
+	public static PriceMonthlyAndYearly priceMonthlyAndYearly = new PriceMonthlyAndYearly();
 	
 	private static final Logger logger = LoggerFactory.getLogger(CacheConfigDataController.class);
 	
@@ -48,6 +51,8 @@ public class CacheConfigDataController {
 			configMap = cacheConfigService.getConfigData();
 			bloodGroupList = cacheConfigService.getBloodGroup(Constant.BLOOD_GROUP);
 			planListtoDisplay = cacheConfigService.getServiceListToDisplayInMainScreen();
+			priceMonthlyAndYearly = cacheConfigService.getPlanPriceToDisplay();
+			logger.info("--> Plan Price Loaded :"+priceMonthlyAndYearly.toString());
 			
 			//Logic to fetch the Plan details from Database.
 			planAndBenefitBeanList = planAndBenefitService.getServiceAndPlanToDisplay();

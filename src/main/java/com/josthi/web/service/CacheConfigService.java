@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.PriceMonthlyAndYearly;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.po.CacheConfigPO;
 
@@ -34,6 +35,10 @@ public interface CacheConfigService {
 	List<DropDownBean> getAgentList(String customerId) throws Exception;
 
 	List<ServiceDetailsBean> getServiceListToDisplayInMainScreen() throws Exception;
+
+	boolean addUserQuery(String name, String email, String userNotes) throws Exception;
+
+	PriceMonthlyAndYearly getPlanPriceToDisplay() throws Exception;
 	
 	
 }

@@ -301,4 +301,14 @@ function isNumber(evt) {
 }
 
 
+@@@@@@@@@@@@@@@@@@@@@ THYMELEAF Set JS OPTIONS @@@@@@@@@@@@@@@@@@@@@@@@
+
+                    <span id="pricingCount1" 
+                    	data-hs-toggle-switch-item-options='{
+                             "min": 1,
+                             "max": 5
+                           }'
+                        th:attr="data-hs-toggle-switch-item-options='{&quot;min&quot:'  +${planPrice.basePlanMonthlyPrice}+ ',&quot;max&quot:' + ${planPrice.basePlanDiscountedPrice}+ '}'"
+                            th:text="${planPrice.basePlanMonthlyPrice}">700</span>
+
 

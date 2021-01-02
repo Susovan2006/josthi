@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -202,6 +205,20 @@ public static String getNextPlanInvoiceID(String type, String plan,int nextCount
 		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_PLAN_INVOIVE + " : "+invoiveNo);
 		emailDbBean.setJsonString(jsonValue);
 		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_PURCHASE_INVOICE);
+		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
+		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
+		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
+		return emailDbBean;
+	}
+    
+  public static EmailDbBean getEmailBeanForCustomerEnquery(String emailTo, String jsonValue) {
+		
+		EmailDbBean emailDbBean =  new EmailDbBean();
+		emailDbBean.setSentTo(emailTo);
+		emailDbBean.setSentFrom(EmailConstant.EMAIL_FROM_FOR_CUSTOMER_QUERY);
+		emailDbBean.setSubject(EmailConstant.SUBJECT_FROM_FOR_CUSTOMER_QUERY);
+		emailDbBean.setJsonString(jsonValue);
+		emailDbBean.setEmailTemplate(EmailConstant.TEMPLATE_FORM_FOR_CUSTOMER_ENQUERY);
 		emailDbBean.setEmailStatus(EmailConstant.LOAD_STATUS);
 		emailDbBean.setEmailQueuedAt(new Timestamp(System.currentTimeMillis()));
 		emailDbBean.setEmailDelivaryStatus(EmailConstant.LOADED_EMAIL_DELIVARY_STATUS);		
@@ -501,6 +518,14 @@ public static String getNextPlanInvoiceID(String type, String plan,int nextCount
 		return df.format(returnValue);
 		
 	}
+	
+	public static String roundUpCurrency(Double val) {
+		int a = (int) Math.round(val); 
+		
+		return a+"";
+
+		
+	}
 
 
 	//1BEN, 2BEN, 3BEN --> 1, 2, 3
@@ -538,6 +563,18 @@ public static String getNextPlanInvoiceID(String type, String plan,int nextCount
 		}
 		return ticketId;
 	}
+	
+	
+	public static boolean isValidEmailAddress(String email) {
+		   boolean result = true;
+		   try {
+		      InternetAddress emailAddr = new InternetAddress(email);
+		      emailAddr.validate();
+		   } catch (AddressException ex) {
+		      result = false;
+		   }
+		   return result;
+		}
 
 	
 

@@ -90,7 +90,7 @@ public class ReSendOtpEmail {
     	        	String status = "Success : OTP mailed to "+emailId+ ". Please check your email and enter the OTP here. You should get the email in 1-2 min.";        	    	 
     	        	return new ResponseEntity<String>(status , HttpStatus.OK);
     			}else{
-    				throw new UserExceptionInvalidData("Error : Error Occured while triggering the email, please re-login and try");
+    				throw new UserExceptionInvalidData("Error : Error Occurred while triggering the email, please re-login and try");
     			}
     			
     		}else {
@@ -106,7 +106,7 @@ public class ReSendOtpEmail {
 			return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
 		}catch(Exception ex) {
         	logger.error(ex.getMessage(), ex);
-        	return new ResponseEntity<String>("Exception Occured while sending OTP, Try again later",HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<String>("Exception Occurred while sending OTP, Try again later",HttpStatus.BAD_REQUEST);
         }
     
     }

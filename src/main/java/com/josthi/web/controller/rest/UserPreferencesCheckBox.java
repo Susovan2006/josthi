@@ -54,7 +54,7 @@ public class UserPreferencesCheckBox {
     	        	String status = "Success : Saved";        	    	 
     	        	return new ResponseEntity<String>(status , HttpStatus.OK);
     			}else{
-    				throw new UserExceptionInvalidData("Error : Error Occured while updateing the database, please re-login and try");
+    				throw new UserExceptionInvalidData("Error : Error Occurred while updateing the database, please re-login and try");
     			}
     			
     		}else {
@@ -70,7 +70,7 @@ public class UserPreferencesCheckBox {
 			return new ResponseEntity<String>(ex.getMessage(),HttpStatus.BAD_REQUEST);
 		}catch(Exception ex) {
         	logger.error(ex.getMessage(), ex);
-        	return new ResponseEntity<String>("Exception Occured while saving the preferences",HttpStatus.BAD_REQUEST);
+        	return new ResponseEntity<String>("Exception Occurred while saving the preferences",HttpStatus.BAD_REQUEST);
         }
     
     }

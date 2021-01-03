@@ -168,12 +168,55 @@
             <!-- End Body -->
           </div>
           <!-- End Card -->
+          
+          <!-- ===================================================================================================-->
+			<!-- ======================= C A R D  1.0 ================================================================-->
+          <!-- Card -->
+          <div id="editAddressCard" class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <h5 class="card-title" th:text="'Welcome '+${session.USER_SESSION_OBJ_KEY.userName}">Welcome</h5>
+              
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+				<h5 class="text-muted">News and Updates</h5>
+				
+				<div th:if="${not #lists.isEmpty(profileCompletionBean.userAlert)}">
+					
+					        <ul class="list-checked ">
+					        <div th:each="alert : ${profileCompletionBean.userAlert}">
+					          <li class="list-checked-item text-warning font-size-1"  th:text="${alert}"></li>
+								 <!-- <span class="badge badge-soft-warning badge-pill nav-link-badge">Alert</span> -->
+							  </div>
+					        </ul>
+					        
+					 <a class="" href="/user/profile">Click Here and update the details.</a>
+				
+				</div>
+				<div th:unless="${not #lists.isEmpty(profileCompletionBean.userAlert)}">
+				    <h5 class="text-navy">You are all set to go !!</h5>
+				</div>
+				
+				
+            </div>
+            <!-- End Body -->
+
+            <!-- Footer -->
+			<!--<div class="card-footer d-flex justify-content-end">
+              <a class="btn btn-white" href="javascript:;">Cancel</a>
+              <span class="mx-2"></span>
+              <a class="btn btn-primary" href="javascript:;">Save Changes</a>
+            </div> -->
+            <!-- End Footer -->
+          </div>
+          <!-- End Card -->
 		
 		
 		<!-- ===================================================================================================-->
 		<!-- ======================= C A R D  1 ================================================================-->
           <!-- Card -->
-          <div class="card mb-3 mb-lg-5">
+          <div class="card mb-3 mb-lg-5" style="display: none">
             <div class="card-header">
               <h5 class="card-title">Recent Updated</h5>
             </div>
@@ -324,6 +367,9 @@
           <!-- End Card -->
 		
 		
+
+		
+		
 			<!-- ===================================================================================================-->
 			<!-- ======================= C A R D  2 ================================================================-->
           <!-- Card -->
@@ -332,17 +378,61 @@
               <h5 class="card-title">Agent Details</h5>
             </div>
 
-            <!-- Body -->
+            <!-- Body -->			
             <div class="card-body">
+            
+            	<div th:if="${not #lists.isEmpty(profileCompletionBean.agentDetailsBeanList)}" class="table_wrapper table-responsive">
+				  <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle">
+				  <thead class="thead-light">
+					<tr>
+					  <th scope="col">Agent ID/Name</th>
+					  <th scope="col">email</th>
+					  <th scope="col">WhatsApp</th>
+					  <th scope="col">Mobile No</th>
+					  <th scope="col">Land Line</th>
+					</tr>
+				  </thead>
+				  
+					<tbody>
+						    <tr th:each="agentDetailBean : ${profileCompletionBean.agentDetailsBeanList}">
+						      <!-- Col 1 -->
+						      <td th:id="${agentDetailBean.uid}">
+						      	<div class="ml-3">
+					                <span class="d-block h5 text-hover-primary mb-0" th:text="${agentDetailBean.firstName}+' '+${agentDetailBean.lastName}">YYYY</span>				                   
+					                <span class="d-block font-size-sm text-body" th:text="${agentDetailBean.uid}">20000</span>
+					            </div>
+					          </td>
+						      <!-- Col 2 -->
+						      <td th:text="${agentDetailBean.secondaryEmail}">
+						      </td>
+						      <!-- Col 3 -->
+						      <td th:text="${agentDetailBean.whatsappNo}">
+				              </td>
+						      <!-- Col 4 -->
+						      <td th:text="${agentDetailBean.mobileNo1}">
+				              </td>
+				              <!-- Col 5 -->
+						      <td th:text="${agentDetailBean.landLineNo}">
+						      </td>
+				           </tr>
+				   </tbody>
+				   
+				 </table>
+			</div>
+			
+			<!-- Else Portion in case agent is not assigned -->
+				<div th:unless="${not #lists.isEmpty(profileCompletionBean.agentDetailsBeanList)}">
+					<p class="card-text">As of now there is no agent assigned.</p>
+				</div>			  			  
 
             </div>
             <!-- End Body -->
 
             <!-- Footer -->
             <div class="card-footer d-flex justify-content-end">
-              <a class="btn btn-white" href="javascript:;">Cancel</a>
+              <!-- <a class="btn btn-white" href="javascript:;">Cancel</a>
               <span class="mx-2"></span>
-              <a class="btn btn-primary" href="javascript:;">Save Changes</a>
+              <a class="btn btn-primary" href="javascript:;">Save Changes</a> -->
             </div>
             <!-- End Footer -->
           </div>
@@ -351,30 +441,30 @@
 
 		<!-- ===================================================================================================-->
 		<!-- ======================= C A R D  3 ================================================================-->
-          <!-- Card -->
+         <!--  
           <div class="card mb-3 mb-lg-5">
             <div class="card-header">
               <h5 class="card-title">Privacy</h5>
             </div>
 
-            <!-- Body -->
+            Body
             <div class="card-body">
               
             </div>
-            <!-- End Body -->
+            End Body
           </div>
-          <!-- End Card -->
+          End Card -->
 
 
 			<!-- ===================================================================================================-->
 			<!-- ======================= C A R D  4 ================================================================-->
           <!-- Card -->
-          <div class="card">
+<!--           <div class="card">
             <div class="card-header">
               <h5 class="card-title">Delete your account</h5>
             </div>
 
-            <!-- Body -->
+            Body
             <div class="card-body">
 
 
@@ -382,8 +472,8 @@
                 <button type="submit" class="btn btn-danger transition-3d-hover">Delete</button>
               </div>
             </div>
-            <!-- End Body -->
-          </div>
+            End Body
+          </div> -->
           <!-- End Card -->
 		  
 		  

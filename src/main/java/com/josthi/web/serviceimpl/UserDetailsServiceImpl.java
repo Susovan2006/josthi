@@ -1,7 +1,9 @@
 package com.josthi.web.serviceimpl ;
  import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.josthi.web.service.UserDetailService ;
@@ -168,6 +170,30 @@ public class UserDetailsServiceImpl implements UserDetailService{
 	@Override
 	public List<DropDownBean> getAgentListForDropDown() throws Exception {		
 		return userDetailsDao.getAgentListForDropDown();
+	}
+
+	@Override
+	public List<String> setAlert(UserDetailsBean userDetailsfromDb) throws Exception {
+		List<String> userAlert = new ArrayList<String>();
+		if(StringUtils.isEmpty(userDetailsfromDb.getMobileNo1())) {
+			userAlert.add("Please set your primary Mob/Cell no, it's needed during Emergency. We recommend to provide all the contact details.");
+		}
+		
+		if(StringUtils.isEmpty(userDetailsfromDb.getMobileNo2())) {
+			userAlert.add("Please set your Secondary Mob/Cell no, In case you don't have a secondary mob no, you can put the primary no once again.");
+		}
+		
+		if(StringUtils.isEmpty(userDetailsfromDb.getWhatsappNo())) {
+			userAlert.add("We always recommend to provide a whatapp number, so that the Agent can call you incase of emergency.");
+		}
+		
+		if(StringUtils.isEmpty(userDetailsfromDb.getCityTown()) || 
+					StringUtils.isEmpty(userDetailsfromDb.getState()) || 
+					StringUtils.isEmpty(userDetailsfromDb.getCountry()) ||
+				    StringUtils.isEmpty(userDetailsfromDb.getZipPin()) ) {
+			userAlert.add("Please provide your Country,City,State and zip.");
+		}
+		return userAlert;
 	}
 
 	

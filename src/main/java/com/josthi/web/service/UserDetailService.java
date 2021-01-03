@@ -43,5 +43,7 @@ public interface UserDetailService {
 	AgentAssignmentBean getBeneficiaryAgentDetail(String relationId) throws Exception;
 
 	List<DropDownBean> getAgentListForDropDown() throws Exception;
+
+	List<String> setAlert(UserDetailsBean userDetailsfromDb) throws Exception;
 	
 }

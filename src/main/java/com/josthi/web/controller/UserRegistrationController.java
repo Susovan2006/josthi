@@ -87,7 +87,7 @@ public class UserRegistrationController {
 				userRegistrationBean.setCustomerID(customerID);
 				
 				//Here we are encrypting the Password and storing in the Database also the OTP.
-				String otp = OTPGen.generateRandomNumber(6);
+				String otp = OTPGen.generateRandomNumber(4);
 				userRegistrationBean.setOtp(otp);
 				
 				boolean status = userRegistrationService.registerNewUser(userRegistrationBean, getNextID);

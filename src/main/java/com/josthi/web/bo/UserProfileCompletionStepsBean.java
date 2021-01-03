@@ -11,16 +11,24 @@ public class UserProfileCompletionStepsBean {
 	
 	private String isPlanPurchased;
 	
-	private List<UserDetailsBean> userDetailsBean;
+	private List<UserDetailsBean> agentDetailsBeanList; //Actually this is the AgentBean.
+	private List<String> userAlert;
 	
 
 	
 	
-	public List<UserDetailsBean> getUserDetailsBean() {
-		return userDetailsBean;
+
+	public List<String> getUserAlert() {
+		return userAlert;
 	}
-	public void setUserDetailsBean(List<UserDetailsBean> userDetailsBean) {
-		this.userDetailsBean = userDetailsBean;
+	public void setUserAlert(List<String> userAlert) {
+		this.userAlert = userAlert;
+	}
+	public List<UserDetailsBean> getAgentDetailsBeanList() {
+		return agentDetailsBeanList;
+	}
+	public void setAgentDetailsBeanList(List<UserDetailsBean> agentDetailsBeanList) {
+		this.agentDetailsBeanList = agentDetailsBeanList;
 	}
 	public String getIsUserIdCreated() {
 		return isUserIdCreated;
@@ -55,10 +63,13 @@ public class UserProfileCompletionStepsBean {
 	@Override
 	public String toString() {
 		return "UserProfileCompletionStepsBean [isUserIdCreated=" + isUserIdCreated + ", isEmailValidated="
-				+ isEmailValidated + ", isAgentAssigned=" + isAgentAssigned + ", isBeneficiaryRegistered="
-				+ isBeneficiaryRegistered + ", isPlanPurchased=" + isPlanPurchased + ", userDetailsBean="
-				+ userDetailsBean + "]";
+				+ isEmailValidated + ", isBeneficiaryRegistered=" + isBeneficiaryRegistered + ", isAgentAssigned="
+				+ isAgentAssigned + ", isPlanPurchased=" + isPlanPurchased + ", agentDetailsBeanList="
+				+ agentDetailsBeanList + "]";
 	}
+
+	
+	
 	
 
 	

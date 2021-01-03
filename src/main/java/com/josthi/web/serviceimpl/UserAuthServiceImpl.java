@@ -290,7 +290,7 @@ public class UserAuthServiceImpl implements UserAuthService{
 			userProfileCompletionStepsBean.setIsAgentAssigned("N");
 		}
 		
-		userProfileCompletionStepsBean.setUserDetailsBean(agentDetailBeanList);
+		userProfileCompletionStepsBean.setAgentDetailsBeanList(agentDetailBeanList);
 		logger.info("Agent list Size :" + filteredAgentList.size());
 		
 		userProfileCompletionStepsBean.setIsPlanPurchased(userAuthDao.isPlanPurchased(customerId));

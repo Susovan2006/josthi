@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.josthi.web.bo.OtpFourByteBean;
 import com.josthi.web.bo.UserAuthBo;
+import com.josthi.web.bo.UserDetailsBean;
 import com.josthi.web.bo.UserProfileCompletionStepsBean;
 import com.josthi.web.bo.UserRegistrationBean;
 import com.josthi.web.bo.UserSessionBean;
@@ -37,6 +38,7 @@ import com.josthi.web.service.EmailService;
 //import com.josthi.web.mail.SendMailApplication;
 //import com.josthi.web.mail.SendEmailTrigger;
 import com.josthi.web.service.UserAuthService;
+import com.josthi.web.service.UserDetailService;
 import com.josthi.web.springconfig.SpringConfig;
 import com.josthi.web.utils.OTPGen;
 import com.josthi.web.utils.Security;
@@ -57,6 +59,9 @@ public class UserAuthController {
 	
 	@Autowired 
 	EmailDbBean emailDbBean;
+	
+	@Autowired
+	UserDetailService userDetailService;
 
 	
 	/**
@@ -100,6 +105,10 @@ public class UserAuthController {
 			ValidateSession.isValidSession(request);
 			String customerId = ValidateSession.getUserId(request);
 			UserProfileCompletionStepsBean userProfileCompletionStepsBean = userAuthService.getProfileStatus(customerId);
+			
+			UserDetailsBean userDetailsfromDb = userDetailService.getUserDetails(customerId);
+			
+			userProfileCompletionStepsBean.setUserAlert(userDetailService.setAlert(userDetailsfromDb));
 			
 			logger.info("@@@@@@@@@@ userProfileCompletionStepsBean :"+userProfileCompletionStepsBean.toString());
 			model.addAttribute("profileCompletionBean", userProfileCompletionStepsBean);

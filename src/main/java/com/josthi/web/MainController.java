@@ -279,11 +279,11 @@ public class MainController {
 			
 		//Here we are getting the section to be displayed on html Screen.
 	    //The Value is coming from the Static Variable that we fetch from the database.
-		List<CacheConfigPO> planDetailList = CacheConfigDataController.configMap.get(MappingConstant.VERBIAGE_HTML_PLAN_DETAILS);
+		//List<CacheConfigPO> planDetailList = CacheConfigDataController.configMap.get(MappingConstant.VERBIAGE_HTML_PLAN_DETAILS);
 		//System.out.println("@@@@@@@@@@@@"+planDetailList.toString());	
 		
 		
-		List<CacheConfigPO> basicServiceList = new ArrayList<CacheConfigPO>();
+		/*List<CacheConfigPO> basicServiceList = new ArrayList<CacheConfigPO>();
 		List<CacheConfigPO> emergencyServiceList = new ArrayList<CacheConfigPO>();
 		List<CacheConfigPO> generalServiceList = new ArrayList<CacheConfigPO>();
 		
@@ -298,7 +298,7 @@ public class MainController {
 		}
 		model.addAttribute("basicServiceList", basicServiceList);
 		model.addAttribute("emergencyServiceList", emergencyServiceList);
-		model.addAttribute("generalServiceList", generalServiceList);
+		model.addAttribute("generalServiceList", generalServiceList);*/
 			return "service_details";
 	}
 	

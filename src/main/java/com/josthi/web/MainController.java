@@ -64,10 +64,9 @@ public class MainController {
 	}
 	
 	
-	@GetMapping("/otp")
+	@GetMapping("/howItWork")
 	public String testHtml(Model model) {
-		//model.addAttribute("message","HelloWorld");
-		return "authentication-two-step-verification-basic";
+		return "how_it_works";
 	}
 	
 	

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.OnDemandServiceBean;
 import com.josthi.web.bo.PlanAndBenefitBean;
 import com.josthi.web.bo.PriceMonthlyAndYearly;
 import com.josthi.web.bo.ServiceDetailsBean;
@@ -33,6 +34,8 @@ public class CacheConfigDataController {
 	
 	public static PriceMonthlyAndYearly priceMonthlyAndYearly = new PriceMonthlyAndYearly();
 	
+	public static List<OnDemandServiceBean> onDemandServiceBeanList = new ArrayList<OnDemandServiceBean>();
+	
 	private static final Logger logger = LoggerFactory.getLogger(CacheConfigDataController.class);
 	
 	@Autowired
@@ -53,7 +56,8 @@ public class CacheConfigDataController {
 			planListtoDisplay = cacheConfigService.getServiceListToDisplayInMainScreen();
 			priceMonthlyAndYearly = cacheConfigService.getPlanPriceToDisplay();
 			logger.info("--> Plan Price Loaded :"+priceMonthlyAndYearly.toString());
-			
+			onDemandServiceBeanList = cacheConfigService.getOnDemandServicaBeanList();
+			logger.info("--> ONDemand Service Details :"+onDemandServiceBeanList.toString());
 			//Logic to fetch the Plan details from Database.
 			planAndBenefitBeanList = planAndBenefitService.getServiceAndPlanToDisplay();
 			//serviceRequestTypeForAdminList = cacheConfigService.getBloodGroup(Constant.BLOOD_GROUP);

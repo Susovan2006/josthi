@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.josthi.web.service.CacheConfigService ;
 import com.josthi.web.utils.Utils;
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.OnDemandServiceBean;
 import com.josthi.web.bo.PriceMonthlyAndYearly;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.constants.Constant;
@@ -221,6 +222,8 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 		
 		priceMonthlyAndYearly.setYearlyDiscount(discountPercentage+"%");
 		
+		
+		//Not in Use
 		String baseAttr ="'{\"min\": "+Utils.roundUpCurrency(unitPriceBasePlan)+",\"max\": "+Utils.roundUpCurrency(oneYearPriceForBasePlan)+"}'";
 		String silverAttr ="'{\"min\": "+Utils.roundUpCurrency(unitPriceSilverPlan)+",\"max\": "+Utils.roundUpCurrency(oneYearPriceForSilverPlan)+"}'";
 		String goldAttr ="'{\"min\": "+Utils.roundUpCurrency(unitPriceGoldPlan)+",\"max\": "+Utils.roundUpCurrency(oneYearPriceForGoldPlan)+"}'";
@@ -230,6 +233,16 @@ public class CacheConfigServiceImpl implements CacheConfigService{
 		priceMonthlyAndYearly.setGoldAttributeForThymeleaf(goldAttr);
 		
 		return priceMonthlyAndYearly;
+	}
+
+	@Override
+	public List<OnDemandServiceBean> getOnDemandServicaBeanList() throws Exception {
+		try {
+			return cacheConfigDao.getOnDemandServicaListToDisplay();
+		}catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			throw new UserExceptionInvalidData("Error Occured while fetching the OnDemand Service details from the Server. Please try later");
+		}
 	}
 
 	

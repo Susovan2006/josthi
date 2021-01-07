@@ -58,7 +58,9 @@ List<String> primaryBeneficiaryIdLst  = getJdbcTemplate().query(SELECT_BENEFICIA
 								</div>
 								
 								
-								
+####################  THYMELEAF EMPTY CHECK ##############################
+${#strings.isEmpty(name)}
+							
 ############################# SETTING VALUE IN HIDDEN GIELD ###############
 <!-- These Values are populated from session -->
 <input type="hidden" th:field="*{requestedBy}"  id="requesterNameServReq">

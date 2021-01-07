@@ -247,6 +247,12 @@ public class MainController {
 			return "josthi_pricing";
 	}
 	
+	//OnDemand Service
+	@GetMapping("/onDemandService")
+	public String onDemandService(Model model) {
+		model.addAttribute("onDemandServiceList",CacheConfigDataController.onDemandServiceBeanList);
+		return "onDemand_Service";
+	}
 	
 	
 	

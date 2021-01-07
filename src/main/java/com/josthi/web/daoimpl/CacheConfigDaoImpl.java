@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.josthi.web.bo.DropDownBean;
+import com.josthi.web.bo.OnDemandServiceBean;
 import com.josthi.web.bo.ServiceDetailsBean;
 import com.josthi.web.constants.Constant;
 import com.josthi.web.dao.CacheConfigDao;
@@ -17,6 +18,7 @@ import com.josthi.web.dao.rowmapper.AgentDropDownRowmapper;
 import com.josthi.web.dao.rowmapper.BeneficiaryDropDownRowmapper;
 import com.josthi.web.dao.rowmapper.CacheConfigRowMapper;
 import com.josthi.web.dao.rowmapper.DropDownRowmapper;
+import com.josthi.web.dao.rowmapper.OnDemandServiceDetailRowMapper;
 import com.josthi.web.dao.rowmapper.ServiceDetailRowMapper;
 import com.josthi.web.po.CacheConfigPO;
 import com.josthi.web.utils.Utils;
@@ -164,6 +166,25 @@ private static final Logger logger = LoggerFactory.getLogger(CacheConfigDaoImpl.
 			logger.error(ex.getMessage(), ex);
 			throw ex;
 		}
+	}
+	
+	
+	
+	public static final String SELECT_ONDEMAND_SERVICE_DETAILS_TO_DISPLAY ="SELECT ID, SERVICE_NAME, DESCRIPTION, SERVICE_TYPE, "
+			+ " SERVICE_CODE, ON_DEMANT_PRICE_INR, DISCLAIMER, ONDEMAND_IMAGE, ONDEMAND_RATING, ONDEMAND_INFO " 
+			+ " FROM service WHERE ON_DEMAND_FLAG='Y' AND ACTIVE='Y' ;";
+	@Override
+	public List<OnDemandServiceBean> getOnDemandServicaListToDisplay() throws Exception {
+           try{	
+			
+			List<OnDemandServiceBean> onDemandServiceDetailsBeanList = getJdbcTemplate().query(
+														 SELECT_ONDEMAND_SERVICE_DETAILS_TO_DISPLAY,														 
+														 new OnDemandServiceDetailRowMapper());			
+				return onDemandServiceDetailsBeanList;
+			}catch(Exception ex){
+				logger.error(ex.getMessage(), ex);
+				throw ex;
+			}
 	}
 	
 	

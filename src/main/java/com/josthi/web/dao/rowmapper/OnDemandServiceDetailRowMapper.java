@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.josthi.web.bo.OnDemandServiceBean;
 import com.josthi.web.bo.ServiceDetailsBean;
+import com.josthi.web.constants.Constant;
 import com.josthi.web.utils.Utils;
 
 public class OnDemandServiceDetailRowMapper implements RowMapper<OnDemandServiceBean> {
@@ -30,7 +31,16 @@ public OnDemandServiceBean mapRow(ResultSet resultSet,int arg1)throws SQLExcepti
 		onDemandServiceBean.setOnDemandPriceActualStr(Utils.formattedCurrency(actualPriceDouble+""));
 		onDemandServiceBean.setDisclaimer(resultSet.getString("DISCLAIMER"));
 		onDemandServiceBean.setOnDemandImage(resultSet.getString("ONDEMAND_IMAGE"));
-		onDemandServiceBean.setOnDemandReview(resultSet.getFloat("ONDEMAND_RATING"));
+		
+		float rating = resultSet.getFloat("ONDEMAND_RATING");
+		if(rating == 0 || rating > 5) {
+			onDemandServiceBean.setOnDemandReview(Constant.DEFAULT_USER_RATING);
+		}else {
+			onDemandServiceBean.setOnDemandReview(resultSet.getFloat("ONDEMAND_RATING"));
+		}
+		
+		
+		onDemandServiceBean.setStarRating(Utils.CalculateStarRating(rating));
 		onDemandServiceBean.setOnDemandInfo(resultSet.getString("ONDEMAND_INFO"));
 		return onDemandServiceBean;
 		}

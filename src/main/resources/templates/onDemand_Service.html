@@ -79,15 +79,14 @@
                       Info.
                 </div>
                 <div class="d-flex align-items-center flex-wrap">
-                  <ul class="list-inline mt-n1 mb-0 mr-2">
-                    <li class="list-inline-item mx-0"><img src="../images/josthi/onDemandService/star.svg" alt="Review rating" width="16"></li>
-                    <li class="list-inline-item mx-0"><img src="../images/josthi/onDemandService/star.svg" alt="Review rating" width="16"></li>
-                    <li class="list-inline-item mx-0"><img src="../images/josthi/onDemandService/star.svg" alt="Review rating" width="16"></li>
-                    <li class="list-inline-item mx-0"><img src="../images/josthi/onDemandService/star.svg" alt="Review rating" width="16"></li>
-                    <li class="list-inline-item mx-0"><img src="../images/josthi/onDemandService/star-muted.svg" alt="Review rating" width="16"></li>
+                  <ul class="list-inline mt-n1 mb-0 mr-2">                    
+                    <li class="list-inline-item mx-0" th:each="rating : ${onDemandService.starRating}">
+                    		<img th:src="${rating}" alt="Review rating" width="16">
+                    </li>
+                    
                   </ul>
                   <span class="d-inline-block">
-                    <span class="text-dark font-size-1 mr-1">4.95</span>
+                    <span class="text-dark font-size-1 mr-1" th:text="${onDemandService.onDemandReview}">3.5</span>
                   </span>
                 </div>
               </div>

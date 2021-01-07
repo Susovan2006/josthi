@@ -8,8 +8,10 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -575,6 +577,75 @@ public static String getNextPlanInvoiceID(String type, String plan,int nextCount
 		   }
 		   return result;
 		}
+
+
+	/**
+	 * Here we are passing the rating like 4.6 or 4.9, based on that we will get a arrayList of StarImages to Display.
+	 * @param rating
+	 * @return
+	 */
+	public static List<String> CalculateStarRating(float rating) {
+		double userRating = rating;
+		int maxRating = 5;
+		
+		List<String> starRating = new ArrayList<String>();
+		
+		if(userRating == 0.0 || userRating > maxRating) {
+			starRating = setDefaultRating();
+		}else {
+			//That means there is decimal value. need to add Half Star.
+			if((userRating - (int)userRating)!=0) {
+				int i=0;
+				int starCounter = 0;
+				for(i=0; i< maxRating; i++) {
+					for(int y = starCounter; y < (int)userRating ; y ++) {
+						starRating.add(Constant.FULL_STAR);
+						starCounter++;
+						i++;
+					}
+					
+					if(i==starCounter) {
+						starRating.add(Constant.HALF_STAR);
+						i++;
+					}
+					
+					if(i!=maxRating) {
+						starRating.add(Constant.MUTED_STAR);
+					}
+					
+				}//end of i loop
+			}
+			//This is whole value, no need of half Star.
+			else {
+				int i=0;
+				int starCounter = 0;
+				for(i=0; i< maxRating; i++) {
+					for(int y = starCounter; y < (int)userRating ; y ++) {
+						starRating.add(Constant.FULL_STAR);
+						starCounter++;
+						i++;
+					}
+					if(i!=maxRating) {
+						starRating.add(Constant.MUTED_STAR);
+					}					
+				}//end of i loop
+				
+			}
+		}
+		return starRating;
+	}
+
+
+	//Defult is 3.5
+	private static List<String> setDefaultRating() {
+		List<String> dafaultStarRating = new ArrayList<String>();
+		dafaultStarRating.add(Constant.FULL_STAR);
+		dafaultStarRating.add(Constant.FULL_STAR);
+		dafaultStarRating.add(Constant.FULL_STAR);
+		dafaultStarRating.add(Constant.HALF_STAR);
+		dafaultStarRating.add(Constant.MUTED_STAR);
+		return dafaultStarRating;
+	}
 
 	
 

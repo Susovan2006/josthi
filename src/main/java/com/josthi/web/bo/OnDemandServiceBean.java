@@ -1,6 +1,7 @@
 package com.josthi.web.bo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class OnDemandServiceBean {
 	private Integer id ;
@@ -15,8 +16,15 @@ public class OnDemandServiceBean {
 	private String onDemandImage;
 	private float onDemandReview;
 	private String onDemandInfo;
+	private List<String> starRating;
 	
 
+	public List<String> getStarRating() {
+		return starRating;
+	}
+	public void setStarRating(List<String> starRating) {
+		this.starRating = starRating;
+	}
 	public String getCutOutPriceStr() {
 		return cutOutPriceStr;
 	}

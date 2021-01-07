@@ -124,5 +124,12 @@ public interface Constant {
 	String PURCHASE_TYPE_SERVICE = "SERVICE";
 	
 	
+	//STAR IMAGE PATH for Rating in Main Screen.
+	String FULL_STAR =  "../images/josthi/onDemandService/star.svg";
+	String HALF_STAR =  "../images/josthi/onDemandService/star-half.svg";
+	String MUTED_STAR = "../images/josthi/onDemandService/star-muted.svg";
+	float DEFAULT_USER_RATING = 3.5f;
+	
+	
 
 }

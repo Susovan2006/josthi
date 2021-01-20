@@ -911,6 +911,18 @@ CREATE TABLE customer_enquire (
 )
 
 
+CREATE TABLE `file_wiki` (
+  `FILE_ID` int NOT NULL AUTO_INCREMENT,
+  `FILE_NAME` varchar(445) DEFAULT NULL,
+  `FILE_PATH` varchar(500) DEFAULT NULL,
+  `DOWNLOAD_PATH` varchar(500) DEFAULT NULL,
+  `LINKED_ID` varchar(45) DEFAULT NULL,
+  `FILE_SIZE` varchar(45) DEFAULT NULL,
+  `UPLOAD_TIMESTAMP` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`FILE_ID`)
+)
+
+
 INSERT INTO ui_verbiage (SCREEN_NAME,SCREEN_SECTION,SCREEN_KEY,VERBIAGE_SHORT_DESC,VERBIAGE_DETAIL_DESC,LAST_UPDATE_TIME_STAMP,LAST_UPDATE_USER,COMMENTS,STATUS) VALUES 
 ('service_details.html','BasicService','BasicPlan1','Doctor Appointments','It''s a pain to schedule a Dr appointment, we will arrange it for you and send reminder.',NULL,'Susovan',NULL,'ACTIVE')
 

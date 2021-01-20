@@ -826,6 +826,17 @@ CREATE TABLE customer_enquire (
   PRIMARY KEY (ENQID)
 )
 
+CREATE TABLE `file_wiki` (
+  `FILE_ID` int NOT NULL AUTO_INCREMENT,
+  `FILE_NAME` varchar(445) DEFAULT NULL,
+  `FILE_PATH` varchar(500) DEFAULT NULL,
+  `DOWNLOAD_PATH` varchar(500) DEFAULT NULL,
+  `LINKED_ID` varchar(45) DEFAULT NULL,
+  `FILE_SIZE` varchar(45) DEFAULT NULL,
+  `UPLOAD_TIMESTAMP` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`FILE_ID`)
+)
+
 
 --***************************************** AFTER 1st Jan 2021 *************************************
 ALTER TABLE `josthi_db`.`service` 

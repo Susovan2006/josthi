@@ -6,7 +6,7 @@ public interface SchedulerConstant {
 	
 	String SCHEDULER_SUCCESS_STATUS = "COMPLETED";
 	String SCHEDULER_FAILURE_STATUS = "FAILED";
-	String SCHEDULER_EXCEPTION_STATUS = "Exception Occured while running the timer";
+	String SCHEDULER_EXCEPTION_STATUS = "Exception Occurred while running the timer";
 	String SCHEDULER_NO_DATA_UPDATE_STATUS ="No records to Update";
 	
 	//ID ROLLOVER TIMER

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Login &amp; Security | Front - Responsive Website Template</title>
+
+  <!-- Required Meta Tags Always Come First -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="images/icon/icon.ico">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+
+  <!-- CSS Implementing Plugins 
+  <link rel="stylesheet" href="../vendor/font-awesome/css/all.min.css">-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../vendor/hs-mega-menu/dist/hs-mega-menu.min.css">
+
+  <!-- CSS Front Template -->
+  <link rel="stylesheet" href="../css/theme.css">
+  
+  <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="../vendor/icon-set/style.css">
+  
+  <style>
+  .profile-cover {
+    position: relative;
+    height: 10.5rem;
+    padding: 1.75rem 2rem;
+    border-radius: .75rem;
+}
+
+.profile-cover-img {
+    width: 100%;
+    height: 9.5rem;
+    -o-object-fit: cover;
+    object-fit: cover;
+    vertical-align: top;
+    border-radius: .75rem;
+}
+  .profile-cover-img-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 9.5rem;
+    background-color: #e7eaf3;
+    border-radius: .75rem;
+}
+
+.profile-cover-avatar {
+    display: -ms-flexbox;
+    display: flex;
+    margin: -6.3rem auto .5rem auto;
+}
+
+.avatar-xxl {
+    width: 7.875rem;
+    height: 7.875rem;
+}
+
+.avatar-status {
+    position: absolute;
+    bottom: -8.4px;
+    right: -8.4px;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: baseline;
+    border: .125rem solid #fff;
+    width: 21px;
+    height: 21px;
+    line-height: 1;
+    font-size: .71094rem;
+    border-radius: 50%;
+}
+
+	.avatar-status-success {
+		color: #fff;
+		background-color: #00c9a7;
+	}
+
+	.avatar-status-warning {
+    color: #1e2022;
+    background-color: #f5ca99;
+	}
+
+	.avatar-status-danger {
+    color: #fff;
+    background-color: #ed4c78;
+	}
+
+
+	.card-body {
+		-ms-flex: 1 1 auto;
+		flex: 1 1 auto;
+		min-height: 1px;
+		padding: 1.3125rem;
+		box-sizing: border-box;
+	}
+
+	.card {
+		position: relative;
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		min-width: 0;
+		word-wrap: break-word;
+		background-color: #fff;
+		background-clip: border-box;
+		border: .0625rem solid rgba(231,234,243,.7);
+		border-radius: .75rem;
+	}
+
+
+	.custom-checkbox-switch-input:checked~.custom-checkbox-switch-label {
+		color: #fff;
+		border-style: solid;
+		background-color: #377dff;
+	}
+	
+	.custom-checkbox-switch-label {
+    cursor: pointer;
+    color: #377dff;
+    background-color: #fff;
+    border: .0625rem solid #377dff;
+    margin-bottom: 0;
+	}
+	
+	.custom-checkbox-switch-input~.custom-checkbox-switch-label .custom-checkbox-switch-active {
+    display: none;
+	}
+  </style>
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+
+    <!-- Content Section -->
+    <main id="content" role="main" class="main">
+      <!-- Content -->
+      <div class="content container-fluid">
+        <div class="row justify-content-lg-center">
+          <div class="col-lg-10">
+            <!-- Profile Cover -->
+            <div class="profile-cover">
+              <div class="profile-cover-img-wrapper">
+                <img class="profile-cover-img" src="img/background_1.png" alt="Image Description">
+              </div>
+            </div>
+            <!-- End Profile Cover -->
+
+            <!-- Profile Header -->
+            <div class="text-center mb-5">
+              <!-- Avatar -->
+              <div class="avatar avatar-xxl avatar-circle avatar-border-lg profile-cover-avatar">
+                <img class="avatar-img" src="img/160x160/img22.jpg" alt="Image Description">
+                <span class="avatar-status avatar-status-success"></span>
+              </div>
+              <!-- End Avatar -->
+
+              <h1 class="page-title">Susovan Gumtya <i class="fa fa-certificate " style="font-size:24px;color:blue" data-toggle="tooltip" data-placement="top" title="Certified User"></i></h1>
+
+              <!-- List -->
+              <ul class="list-inline list-inline-m-1">
+                <li class="list-inline-item">
+                  <i class="fa fa-user mr-1"></i>
+                  <span>Josthi user</span>
+                </li>
+
+                <li class="list-inline-item">
+                  <i class="fa fa-map-pin mr-1"></i>
+                  <a href="#">San Francisco,</a>
+                  <a href="#">US</a>
+                </li>
+
+                <li class="list-inline-item">
+                  <i class="fa fa-calendar mr-1"></i>
+                  <span>Joined March 2017</span>
+                </li>
+              </ul>
+              <!-- End List -->
+            </div>
+            <!-- End Profile Header -->
+
+            <!-- Nav -->
+            <div class="js-nav-scroller hs-nav-scroller-horizontal mb-5">
+              <span class="hs-nav-scroller-arrow-prev" style="display: none;">
+                <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                  <i class="fa fa-angle-double-left"></i>
+                </a>
+              </span>
+
+              <span class="hs-nav-scroller-arrow-next" style="display: none;">
+                <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                  <i class="fa fa-angle-double-right"></i>
+                </a>
+              </span>
+
+              <ul class="nav nav-tabs align-items-center">
+                <li class="nav-item">
+                  <a class="nav-link" href="user-profile.html">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="user-profile-teams.html">Beneficiary<span class="badge badge-soft-dark rounded-circle ml-1">2</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link " href="user-profile-projects.html">Plan Details</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link " href="user-profile-connections.html">Emergency Contact</a>
+                </li>
+
+                <li class="nav-item ml-auto">
+                  <a class="btn btn-sm btn-white mr-2" href="#">
+                    <i class="tio-user-add mr-1"></i> Connect
+                  </a>
+
+                  <a class="btn btn-icon btn-sm btn-white mr-2" href="#">
+                    <i class="tio-format-points mr-1"></i>
+                  </a>
+
+                  <!-- Unfold -->
+                  <div class="hs-unfold hs-nav-scroller-unfold">
+                    <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-white" href="javascript:;"
+                       data-hs-unfold-options='{
+                         "target": "#profileDropdown",
+                         "type": "css-animation"
+                       }'>
+                      <i class="tio-more-vertical"></i>
+                    </a>
+
+                    <div id="profileDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right mt-1">
+                      <span class="dropdown-header">Settings</span>
+
+                      <a class="dropdown-item" href="#">
+                        <i class="tio-share dropdown-item-icon"></i>
+                        Share profile
+                      </a>
+                      <a class="dropdown-item" href="#">
+                        <i class="tio-blocked dropdown-item-icon"></i>
+                        Block page and profile
+                      </a>
+                      <a class="dropdown-item" href="#">
+                        <i class="tio-info-outined dropdown-item-icon"></i>
+                        Suggest edits
+                      </a>
+
+                      <div class="dropdown-divider"></div>
+
+                      <span class="dropdown-header">Feedback</span>
+
+                      <a class="dropdown-item" href="#">
+                        <i class="tio-report-outlined dropdown-item-icon"></i>
+                        Report
+                      </a>
+                    </div>
+                  </div>
+                  <!-- End Unfold -->
+                </li>
+              </ul>
+            </div>
+            <!-- End Nav -->
+			<!-- Filter -->
+            <div class="row align-items-center mb-5">
+              <div class="col">
+                <h3 class="mb-0">7 connections</h3>
+              </div>
+
+
+            </div>
+            <!-- End Filter -->
+			<div class="tab-content" id="connectionsTabContent">
+              <div class="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="grid-tab">
+                <!-- Connections -->
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-3">
+                  <div class="col mb-3 mb-lg-5">
+                    <!-- Card -->
+                    <div class="card h-100">
+                      <!-- Unfold -->
+                      <div class="card-pinned">
+                        <div class="hs-unfold">
+                          <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-ghost-secondary rounded-circle" href="javascript:;"
+                             data-hs-unfold-options='{
+                               "target": "#connectionsDropdown5",
+                               "type": "css-animation"
+                             }'>
+                            <i class="tio-more-vertical"></i>
+                          </a>
+
+                          <div id="connectionsDropdown5" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                            <a class="dropdown-item" href="#">View Details</a>
+                            <a class="dropdown-item" href="#">Edit Details</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Unfold -->
+
+                      <!-- Body -->
+                      <div class="card-body text-center">
+                        <!-- Avatar -->
+                        <div class="avatar avatar-xl avatar-soft-primary avatar-circle avatar-border-lg avatar-centered mb-3">
+                          <span class="avatar-initials">R</span>
+                          <span class="avatar-status avatar-sm-status avatar-status-warning"></span>
+                        </div>
+                        <!-- End Avatar -->
+
+                        <h3 class="mb-1">
+                          <a class="text-dark" href="#">Rachel Doe</a>
+                        </h3>
+
+                        <div class="mb-3">
+                          <i class="tio-city mr-1"></i>
+                          <span>Design</span>
+                        </div>
+
+
+                        <!-- Badges -->
+                        <ul class="list-inline list-inline-m-1 mb-0">
+                          <li class="list-inline-item"><a class="badge badge-soft-secondary p-2" href="#">UI/UX</a></li>
+                          <li class="list-inline-item"><a class="badge badge-soft-secondary p-2" href="#">Sketch</a></li>
+                          <li class="list-inline-item"><a class="badge badge-soft-secondary p-2" href="#">Figma</a></li>
+                        </ul>
+                        <!-- End Badges -->
+                      </div>
+                      <!-- End Body -->
+
+                      <!-- Footer -->
+                      <div class="card-footer">
+                        <div class="row justify-content-between align-items-center">
+                          <div class="col-auto py-1">
+                            <a class="font-size-sm text-body" href="#">25 connections</a>
+                          </div>
+						  <div class="col-auto py-1">
+                            <a class="font-size-sm text-body" href="#">25 connections</a>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Footer -->
+                    </div>
+                    <!-- End Card -->
+                  </div>
+
+                  <div class="col mb-3 mb-lg-5">
+                    <!-- Card -->
+                    <div class="card h-100">
+                      <!-- Unfold -->
+                      <div class="card-pinned">
+                        <div class="hs-unfold">
+                          <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-ghost-secondary rounded-circle" href="javascript:;"
+                             data-hs-unfold-options='{
+                               "target": "#connectionsDropdown4",
+                               "type": "css-animation"
+                             }'>
+                            <i class="tio-more-vertical"></i>
+                          </a>
+
+                          <div id="connectionsDropdown4" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                            <a class="dropdown-item" href="#">Share connection</a>
+                            <a class="dropdown-item" href="#">Block connection</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Unfold -->
+
+                      <!-- Body -->
+                      <div class="card-body text-center">
+                        <!-- Avatar -->
+                        <div class="avatar avatar-xl avatar-circle avatar-border-lg avatar-centered mb-3">
+                          <img class="avatar-img" src="img/160x160/img22.jpg" alt="Image Description">
+                          <span class="avatar-status avatar-sm-status avatar-status-success"></span>
+                        </div>
+                        <!-- End Avatar -->
+
+                        <h3 class="mb-1">
+                          <a class="text-dark" href="#">Isabella Finley</a>
+                        </h3>
+
+                        <div class="mb-3">
+                          <i class="tio-city mr-1"></i>
+                          <span>FrontApp</span>
+                        </div>
+
+                        <!-- Badges -->
+                        <ul class="list-inline list-inline-m-1 mb-0">
+                          <li class="list-inline-item"><a class="badge badge-soft-secondary p-2" href="#">Human resources</a></li>
+                          <li class="list-inline-item"><a class="badge badge-soft-secondary p-2" href="#">Support</a></li>
+                        </ul>
+                        <!-- End Badges -->
+                      </div>
+                      <!-- End Body -->
+
+                      <!-- Footer -->
+                      <div class="card-footer">
+                        <div class="row justify-content-between align-items-center">
+                          <div class="col-auto py-1">
+                            <a class="font-size-sm text-body" href="#">79 connections</a>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Footer -->
+                    </div>
+                    <!-- End Card -->
+                  </div>
+
+
+				<!-- END OF 2 CARDS -->
+                </div>
+                <!-- End Row -->
+              </div>
+            </div>
+			
+			
+					
+			
+			
+			
+			
+            <!-- End Row -->
+          </div>
+        </div>
+        <!-- End Row -->
+      </div>
+      <!-- End Content -->
+
+      
+      <!-- End Footer -->
+    </main>
+    <!-- End Content Section -->
+  <!-- ========== END MAIN ========== -->
+
+
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- JS Global Compulsory -->
+  <script src="../vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+  <script src="../vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JS Implementing Plugins -->
+  <script src="../vendor/hs-header/dist/hs-header.min.js"></script>
+  <script src="../vendor/hs-go-to/dist/hs-go-to.min.js"></script>
+  <script src="../vendor/hs-unfold/dist/hs-unfold.min.js"></script>
+  <script src="../vendor/hs-mega-menu/dist/hs-mega-menu.min.js"></script>
+  <script src="../vendor/hs-show-animation/dist/hs-show-animation.min.js"></script>
+  <script src="../vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+
+  <!-- JS Front -->
+  <script src="../js/hs.core.js"></script>
+  <script src="../js/hs.validation.js"></script>
+
+  <!-- JS Plugins Init. -->
+  
+  <script>
+    $.sessionTimeout({
+        keepAliveUrl: 'keep-alive.html',
+        logoutUrl: '/destroy',
+        redirUrl: '/destroy',
+        warnAfter: 900000, //After 900000 ms i.e. 15 min, the Popup will come.
+        redirAfter: 20000,
+        countdownBar: true
+    });
+    </script>
+  
+  <script>
+    $(document).on('ready', function () {
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

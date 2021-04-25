@@ -3,3 +3,314 @@ schedulerTimerBean.setLastRunTime(new Timestamp(System.currentTimeMillis()));
 
 
 https://www.javainuse.com/spring/springboot_session
+
+Numeric field in HTML : pattern="^[0-9]*$"
+
+for a line in HTML --> <hr class="my-3">
+
+################### WEB PAGE LINKS ######################
+
+INVOICE Template : https://www.sparksuite.com/open-source/invoice.html
+
+################### INR ASCHII ##########################
+&#8377
+
+
+################### SLOW ECLIPSE ######################
+
+C:\Users\susov\workspace\.metadata\.plugins\org.eclipse.ui.workbench rename workbench.xml.bak
+
+################## Ajax Call from Out side ####################
+If you want to call the Ajax from outside, on the top of the controller you need to put 
+@CrossOrigin("*");
+
+
+######################### add New Line Using JavaScript ################
+htmlstring = stringContainingNewLines.replace(/(\r\n|\n|\r)/gm, "<br>");
+
+
+##################### Return Single String ##########################
+List<String> primaryBeneficiaryIdLst  = getJdbcTemplate().query(SELECT_BENEFICIARY_ID_FROM_RELATION,
+																	new Object[] { customerId , Constant.BENEFICIARY_TYPE_PRIMARY },
+																	new RowMapper<String>() {
+																			@Override
+																			public String mapRow(ResultSet rs,
+																					int rowNum) throws SQLException {
+																				return rs.getString(1);
+																			}
+																		});
+
+					if ( primaryBeneficiaryIdLst.isEmpty() ){
+						return null;
+					}else if ( primaryBeneficiaryIdLst.size() == 1 ) { // list contains exactly 1 element
+						return primaryBeneficiaryIdLst.get(0);
+					}else{  // list contains more than 1 elements
+						//your wish, you can either throw the exception or return 1st element.   
+						throw new Exception("Invalid Data in the Database...");
+					}
+					
+					
+########################### if else in Tyhmeleaf ######################
+<!-- Based on Save or Update this field will be AutoFocused -->
+							  	<div th:if="${action == 'Update'} ">
+								</div>
+								<div th:unless="${action == 'Save'}">
+								</div>
+								
+								
+####################  THYMELEAF EMPTY CHECK ##############################
+${#strings.isEmpty(name)}
+							
+############################# SETTING VALUE IN HIDDEN GIELD ###############
+<!-- These Values are populated from session -->
+<input type="hidden" th:field="*{requestedBy}"  id="requesterNameServReq">
+<input type="hidden" th:field="*{requesterId}"  id="userIdServReq">
+
+
+
+<script th:inline="javascript">   
+       $(document).ready(function() {
+	       
+	       var name = /*[[${session.USER_SESSION_OBJ_KEY.userName}]]*/'null';
+	       var id = /*[[${session.USER_SESSION_OBJ_KEY.customerId}]]*/'null';
+
+	       $("#requesterNameServReq").val(name);
+	       $("#userIdServReq").val(id);
+	         
+       });
+</script>
+
+############################### PASSING THYMELEAF VALUE TO JAVA SCRIPT ##################
+
+
+th:onclick="submitTicketNotes(this,[[${serviceRequestBean.ticketNo}]],
+													    	 [[${session.USER_SESSION_OBJ_KEY.customerId}]],
+													    	 [[${session.USER_SESSION_OBJ_KEY.userEmailId}]])"
+													    	 
+													    	 or
+<button class="btn btn-primary" th:data-id="${serviceRequestBean.ticketNo}" 
+	onclick="submitTicketNotes(this,this.getAttribute('data-id'))" type="button">Save changes
+</button>
+
+			OR
+			
+<button class="btn btn-primary" th:data-id="${serviceRequestBean.ticketNo}" 
+	th:onclick="submitTicketNotes(this,[[${serviceRequestBean.ticketNo}]])" type="button">Save changes
+</button>
+
+
+<script>
+function submitTicketNotes(val, ticketNo) {
+    var x = document.getElementById("editNotes"+ticketNo).value;
+    alert("Ticket No:"+ticketNo+"MSG :"+x);
+}
+</script>
+
+
+
+
+########################### JAVA SCRIPT NULL CHECK ########################
+function isEmpty(value){
+	return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+}
+function isStringContains (StringVal, SubStringVal){
+			var res = StringVal.match(SubStringVal);
+			
+			if( res == null){
+				return false;
+			}else{
+				return true;
+			}
+		}
+
+################################# SCROLL to a Specific DIV #######################
+
+<script th:inline="javascript">   
+       $(document).ready(function() {
+	       	       
+	       var focus = /*[[${gotoPoint}]]*/'null';
+	       if(!(isEmpty(focus))){
+	    	   document.getElementById('ticketTable').scrollIntoView();
+	       }else{
+	    	   document.getElementById('card1').scrollIntoView();
+	       }
+	       alert(focus);
+	         
+       });
+</script>
+
+  <script>
+  function isEmpty(value){
+		return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+	}
+  </script>
+
+################## ITARATOR in Thymeleaf ################
+https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#keeping-iteration-status
+
+
+############## THYMELEAF String Operation ##############
+
+<p class="card-text" th:text="${#strings.capitalize(#strings.toLowerCase(session.USER_SESSION_OBJ_KEY.userRole))} +' Contact Details'">Contact Details</p>
+
+
+################### CARD BODY #####################
+
+<div class="card-body">
+        <ul class="list-checked list-checked-primary list-unstyled-py-2">
+          <li class="list-checked-item">100 GB storage</li>
+          <li class="list-checked-item">2 sources</li>
+          <li class="list-checked-item">100 integrations</li>
+        </ul>
+      </div>
+      
+      
+      
+###################### JQUERY - GET VALUE of the DropDown #################
+$('#Crd').val() --> Value
+$('#Crd option:selected').text(); --> Text
+
+################## ACTIVITY LOGS #################
+boolean logstatus = historyDao.logActivityHistory(activityFor, activityBy, activityNotes);
+
+
+#################### THYMELEAF setting CSS/js attributes ########################
+<i style="color:limegreen" class="fa fa-check fa-lg" 
+									data-toggle="tooltip" data-placement="left" th:attr="title=${planAndBenefitBean.serviceDisclaimer}" 
+									title="Service Disclaimer"></i>
+									
+									
+									
+#################### Spring JDBC - Get AutoGenerated ID ######################
+KeyHolder keyHolder = new GeneratedKeyHolder();
+			
+			
+			jdbcTemplate.update(connection -> {
+
+				PreparedStatement ps = connection.prepareStatement(INSERT_OFFER_PRICE_ON_AJAX_CALL, new String[] { "OFFER_ID" });
+				ps.setDate(1, Date.valueOf(planStartDate.toLocalDateTime().toLocalDate()));
+				ps.setDate(2, Date.valueOf(planEndDate.toLocalDateTime().toLocalDate()));
+				ps.setString(3, planName);
+				ps.setString(4, planDurationCode);
+
+				return ps;
+
+			}, keyHolder);
+
+			return keyHolder.getKey().intValue();
+			
+##################### RADIO BUTTON THYMELEAF EXAMPLE ###########################
+-- USER SCBSCRIBE A PLAN.
+<input type="radio"  th:field="*{planID}" th:value="${planSelectionForUserBean.planId}" th:id="'pricingRadio'+${planSelectionForUserBean.planId}"
+							name="pricingRadio1" class="custom-control-input checkbox-outline-input checkbox-icon-input"
+							required data-msg="This is a required field">
+							
+							
+################### JQUERY , Set value in hidden fields #################
+
+<!-- These fields will be populated by JavaScript / Ajax -->
+<input type="hidden" th:field="*{calculatedPrice}"  id="hiddenPrice">
+<input type="hidden" th:field="*{offerId}"  id="hiddenOfferId">
+
+//Setting the Servlet Fields...
+$("#hiddenPrice").val(data.planFinalPrice);
+$("#hiddenOfferId").val(data.offerId);
+
+
+
+#################### THYMELEAF GOTO a specific Div ###################
+In Calling JSP
+-------------------
+<button class="btn btn-primary" th:onclick="window.open('/user/purchaseHistory?gotoPoint=[[${planInvoiceBean.invoiceId}]]','_self')">
+<i class="fas fa-history mr-2"></i>Back</button>
+
+In Service Class
+--------------------
+
+@RequestParam (name="gotoPoint", required = false, defaultValue = "") String gotoPoint,
+if(gotoPoint!=null && gotoPoint.length()>0) {
+					model.addAttribute("gotoPoint",gotoPoint);
+				}
+
+Target JSP
+-------------------
+  <script th:inline="javascript">   
+       $(document).ready(function() {
+	       var focus = /*[[${gotoPoint}]]*/'null';
+	       if(!(isEmpty(focus))){
+	    	   document.getElementById(focus).scrollIntoView();
+	       }else{
+	    	   document.getElementById('card1').scrollIntoView();
+	       }
+       });
+</script>
+
+
+################## FORMATTING DATE in ROWMAPPER ################
+Utils.timestampToFormattedString(resultSet.getTimestamp("PURCHASE_DATE"), "MMMMM d, yyyy")
+
+
+
+##################### Setting Alert from Jquery ############################
+See Example in authentication-two-step.html
+
+				<div class="alert" style="display: none" id="ajaxAlertDiv">
+						  <a class="close" onclick="$('#ajaxAlertDiv').hide()">
+						  	<button type="button" class="close" aria-label="Close">
+						 	    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+								   <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+								</svg>
+							</button>
+						 </a>
+						  <span id="ajaxAlertMsg"></span>
+						</div>
+
+
+
+		function showErrorAlert(msg) {
+			$('#ajaxAlertMsg').text(msg);
+			$('#ajaxAlertDiv').addClass("alert-soft-danger");
+			$('#ajaxAlertDiv').show();
+		}
+		
+		function showInfoAlert(msg) {
+			$('#ajaxAlertMsg').text(msg);
+			$('#ajaxAlertDiv').addClass("alert-soft-primary");
+			$('#ajaxAlertDiv').show();
+		}
+		
+		function showSuccessAlert(msg) {
+			$('#ajaxAlertMsg').text(msg);
+			$('#ajaxAlertDiv').addClass("alert-soft-success");
+			$('#ajaxAlertDiv').show();
+		}
+			
+			
+###################### Allow only numeric values in TextBox #########################
+
+You could subscribe for the onkeypress event:
+
+<input type="text" class="textfield" value="" id="extra7" name="extra7" onkeypress="return isNumber(event)" />
+
+
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
+
+@@@@@@@@@@@@@@@@@@@@@ THYMELEAF Set JS OPTIONS @@@@@@@@@@@@@@@@@@@@@@@@
+
+                    <span id="pricingCount1" 
+                    	data-hs-toggle-switch-item-options='{
+                             "min": 1,
+                             "max": 5
+                           }'
+                        th:attr="data-hs-toggle-switch-item-options='{&quot;min&quot:'  +${planPrice.basePlanMonthlyPrice}+ ',&quot;max&quot:' + ${planPrice.basePlanDiscountedPrice}+ '}'"
+                            th:text="${planPrice.basePlanMonthlyPrice}">700</span>
+
+

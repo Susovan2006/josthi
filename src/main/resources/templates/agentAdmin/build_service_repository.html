@@ -1,0 +1,570 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Build Service Repository | Josthi.com</title>
+    <!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    
+    <!-- JQuery DataTable Css -->
+    <link th:href="@{/agent_admin/vendor/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css}" rel="stylesheet">
+
+    <!-- Bootstrap Select Css -->
+    <link th:href="@{/agent_admin/vendor/bootstrap-select/css/bootstrap-select.css}" rel="stylesheet" />
+
+    <!-- Bootstrap DatePicker Css -->
+    <link th:href="@{/agent_admin/vendor/bootstrap-datepicker/css/bootstrap-datepicker.css}" rel="stylesheet" />
+
+    <!-- Bootstrap Core Css -->
+    <link th:href="@{/agent_admin/vendor/bootstrap/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Waves Effect Css-->
+    <link th:href="@{/agent_admin/vendor/node-waves/waves.css}" rel="stylesheet" />
+
+    <!-- Animation Css-->
+    <link th:href="@{/agent_admin/vendor/animate-css/animate.css}" rel="stylesheet" />
+
+    <!-- Morris Chart Css-->
+    <link th:href="@{/agent_admin/vendor/morrisjs/morris.css}" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link th:href="@{/agent_admin/css/style.css}" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link th:href="@{/agent_admin/css/all-themes.css}" rel="stylesheet" />
+</head>
+
+<body class="theme-indigo">
+    <!-- Page Loader -->
+    <!--  ======================== PAGE LOAD ICON ===================== -->	
+ 	 <div th:replace="Common_Agent_Admin :: page-load"></div>
+  	<!--  ======================== PAGE LOAD ICON ===================== -->
+	
+	
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+
+    <!-- Top Bar -->
+    <!--  ======================== TOP NAVIGATION BAR ===================== -->	
+ 	 <div th:replace="Common_Agent_Admin :: top-navigation-bar"></div>
+  	<!--  ======================== TOP NAVIGATION BAR ===================== -->   
+    <!-- #Top Bar -->
+
+	<!-- Side Bar -->
+    <!--  ======================== SIDE NAVIGATION BAR ===================== -->	
+ 	 <div th:replace="Common_Agent_Admin :: side-navigation-bar"></div>
+  	<!--  ======================== SIDE NAVIGATION BAR ===================== -->   
+    <!-- Side Bar -->
+
+
+
+	<!--  ***************** BODY ************************ -->
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <!-- Exportable Table -->
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>
+                                    Build Service Repository
+                                </h2>
+                            </div>
+
+                            <!-- END HEADING -->
+                            <div class="body">
+
+                              <BR>
+                              <form id="insert_service_details" method="POST">
+                                <div class="row clearfix" >
+                                  <div class="col-md-4">
+                                    <p>
+                                        <b>Service Type</b>
+                                    </p>
+                                    <div class="form-group">
+                                        <select class="form-control show-tick">
+                                            <option>Hospital</option>
+                                            <option>Ambulance Service</option>
+                                            <option>Medecine shop</option>
+                                            <option>Police Station</option>
+                                            <option>Electrician</option>
+                                            <option>Plumbler</option>
+                                            <option>Legal Service</option>
+                                            <option>Travel</option>
+                                            <option>Visa</option>
+                                            <option>Passport</option>
+                                        </select>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-md-4">
+                                      <p>
+                                          <b>Service Agency Name*</b>
+                                      </p>
+                                      <div class="form-group">
+                                          <div class="form-line">
+                                              <input type="text" class="form-control" name="serviceAgentName" placeholder="" required/>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md-4">
+                                    <p>
+                                        <b>Pin Code*</b>
+                                    </p>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="pincode" placeholder="" required/>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <!--============== CONTACT AND ADDRESS SECTION START===============-->
+                                <!-- ROW 1      CONTACT DETAILS  -->
+                                <p><b>Company/Corporate Contact Info</b></p>
+                                <BR>
+                                <div class="row clearfix">
+                                  <div class="col-md-3">
+                                      <b>Service Desk Primary</b>
+                                      <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                          <span class="input-group-addon">
+                                              <i class="material-icons">phone_iphone</i>
+                                          </span>
+                                          <div class="form-line">
+                                              <input type="text" class="form-control mobile-phone-number" name="serviceDeskPrimary"
+                                                        placeholder="Ex: +91 (000) 000-00-00" id="serviceDeskPrimary">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <b>Service Desk Secondary</b>
+                                      <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                          <span class="input-group-addon">
+                                              <i class="material-icons">phone_iphone</i>
+                                          </span>
+                                          <div class="form-line">
+                                              <input type="text" class="form-control mobile-phone-number" name="serviceDeskSecondary"
+                                                        placeholder="Ex: +91 (000) 000-00-00" id="serviceDeskSecondary">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <b>Whatapp Number</b>
+                                      <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                          <span class="input-group-addon">
+                                              <i class="material-icons">phone_iphone</i>
+                                          </span>
+                                          <div class="form-line">
+                                              <input type="text" class="form-control mobile-phone-number" name="whatsappNo"
+                                                        placeholder="Ex: +91 (000) 000-00-00" id="whatsappNo">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <b>Landline Number</b>
+                                      <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                          <span class="input-group-addon">
+                                              <i class="material-icons">phone</i>
+                                          </span>
+                                          <div class="form-line">
+                                              <input type="text" class="form-control phone-number" name="landLineNo"
+                                                        placeholder="Ex: +91 (000) 000-00-00" id="landLineNo">
+                                          </div>
+                                      </div>
+                                  </div>
+                                </div>
+                            <!-- ROW 1  END -->
+
+
+                            <!-- ROW 2      email and webpages DETAILS  -->
+                                            <div class="row clearfix">
+                                              <div class="col-md-3">
+                                                  <b>email ID (Primary)</b>
+                                                  <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                                      <span class="input-group-addon">
+                                                          <i class="material-icons">email</i>
+                                                      </span>
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control email" name="emailPrimary"
+                                                                    placeholder="Ex: example@example.com" id="emailPrimary" maxlength="100">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3">
+                                                  <b>email ID (Secondary)</b>
+                                                  <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                                      <span class="input-group-addon">
+                                                          <i class="material-icons">email</i>
+                                                      </span>
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control email" name="emailSecondary"
+                                                                    placeholder="Ex: example@example.com" id="emailSecondary" maxlength="100">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3">
+                                                  <b>Facebook link</b>
+                                                  <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                                      <span class="input-group-addon">
+                                                          <i class="material-icons">message</i>
+                                                      </span>
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control" name="facebookLink"
+                                                                    placeholder="Ex: https://www.facebook.com/xxxxxxx/" id="facebookLink" maxlength="100">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3">
+                                                  <b>Web Page</b>
+                                                  <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                                      <span class="input-group-addon">
+                                                          <i class="material-icons">web</i>
+                                                      </span>
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control" name="webPage"
+                                                                    placeholder="Ex: www.xxx.com" id="webPage" maxlength="400">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        <!-- ROW 2  END -->
+                                        <!-- ROW 3 -->
+                                              <p><b>Point of Contact Details</b></p>
+                                              <div class="row clearfix">
+                                                <div class="col-md-3">
+                                                  <div class="form-group form-float">
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control" name="poc1" maxlength="100" >
+                                                          <label class="form-label">POC 1 name</label>
+                                                      </div>
+                                                  </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                  <div class="form-group form-float">
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control" name="poc2" maxlength="100" >
+                                                          <label class="form-label">POC 2 Name</label>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="poc3" maxlength="100">
+                                                        <label class="form-label">POC 3 Name</label>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                              <div class="col-md-3">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" name="poc4" maxlength="100">
+                                                        <label class="form-label">POC 4 Name</label>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                            <div class="row clearfix">
+                                              <div class="col-md-3">
+
+                                                  <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                                      <span class="input-group-addon">
+                                                          <i class="material-icons">phone</i>
+                                                      </span>
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control mobile-phone-number" name="pocMobNo1"
+                                                                    placeholder="mobile no" id="pocMobNo1">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3">
+
+                                                  <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                                      <span class="input-group-addon">
+                                                          <i class="material-icons">phone</i>
+                                                      </span>
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control mobile-phone-number" name="pocMobNo2"
+                                                                    placeholder="mobile no" id="pocMobNo2">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3">
+                                                  <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                                      <span class="input-group-addon">
+                                                          <i class="material-icons">phone</i>
+                                                      </span>
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control mobile-phone-number" name="pocMobNo3"
+                                                                    placeholder="mobile no" id="pocMobNo3">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3">
+                                                  <div class="form-group input-group"> <!-- Susovan Form-group is required for the error message-->
+                                                      <span class="input-group-addon">
+                                                          <i class="material-icons">phone</i>
+                                                      </span>
+                                                      <div class="form-line">
+                                                          <input type="text" class="form-control phone-number" name="pocMobNo4"
+                                                                    placeholder="mobile no" id="pocMobNo4">
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                            </div>
+                                          <!-- ROW 3   END -->
+                                        <BR>
+                                        <BR>
+                                        <!-- ROW 4 ADDRESS Details -->
+                                        <p><b>Address Details</b></p>
+                                        <div class="row clearfix">
+                                          <div class="col-md-4">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input type="text" class="form-control" name="addressLine1" maxlength="100" id="addressLine1" required>
+                                                    <label class="form-label">House/Bld no/Name</label>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input type="text" class="form-control" name="addressLine2" maxlength="100" id="addressLine2" required>
+                                                    <label class="form-label">Road/Street no</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                          <div class="form-group form-float">
+                                              <div class="form-line">
+                                                  <input type="text" class="form-control" name="addressLine3" maxlength="100" id="addressLine3">
+                                                  <label class="form-label">Additional info</label>
+                                              </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- ROW 4   END -->
+                                      <!-- ROW 5 ADDRESS Details -->
+                                      <div class="row clearfix">
+                                        <div class="col-md-3">
+                                          <div class="form-group form-float">
+                                              <div class="form-line">
+                                                  <input type="text" class="form-control" name="poPs" maxlength="100" id="poPs" required>
+                                                  <label class="form-label">Post office/Police Station</label>
+                                              </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                          <div class="form-group form-float">
+                                              <div class="form-line">
+                                                  <input type="text" class="form-control" name="landmark" maxlength="100" id="landmark" required>
+                                                  <label class="form-label">Nearest landmark</label>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="area" maxlength="50" id="area" required>
+                                                <label class="form-label">Area</label>
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="city" maxlength="50" id="city" required>
+                                                <label class="form-label">City / Town</label>
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- ROW 5  END -->
+
+                                    <!-- ROW 6 ADDRESS Details -->
+                                    <div class="row clearfix">
+                                      <div class="col-md-3">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="pinCode" maxlength="100" id="pinCode" required>
+                                                <label class="form-label">Pin Code</label>
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="text" class="form-control" name="district" maxlength="100" id="district" required>
+                                                <label class="form-label">District</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                      <div class="form-group form-float">
+                                          <div class="form-line">
+                                              <input type="text" class="form-control" name="state" maxlength="50" id="state" value="West Bengal" required>
+                                              <label class="form-label">State</label>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                      <div class="form-group form-float">
+                                          <div class="form-line">
+                                              <input type="text" class="form-control" name="country" maxlength="50" id="country" required value="India">
+                                              <label class="form-label">Country</label>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- ROW 5  END -->
+
+                                <!--============== CONTACT AND ADDRESS SECTION END===============-->
+
+                                <p><b>Service Details</b></p>
+                                <div class="form-group form-float">
+                                      <div class="form-line">
+                                          <textarea name="description" cols="30" rows="5" class="form-control no-resize" required></textarea>
+                                              <label class="form-label">Description</label>
+                                          </div>
+                                  </div>
+
+                                <!--============== SUBMIT BUTTON START===============-->
+                                <div class="row clearfix justify-content-center">
+                                  <div class="col-xs-6 col-sm-6 col-md-6">
+                                      <button class="btn btn-primary waves-effect" type="submit">SUBMIT</button>
+                                  </div>
+                                  <div class="col-xs-6 col-sm-6 col-md-6">
+                                      <button class="btn btn-primary waves-effect" type="submit">CLEAR</button>
+                                  </div>
+                                </div>
+                                <!--============== SUBMIT BUTTON END===============-->
+                              </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Exportable Table -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script th:src="@{/agent_admin/vendor/jquery/jquery.min.js}"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script th:src="@{/agent_admin/vendor/bootstrap/js/bootstrap.js}"></script>
+
+    <!-- Select Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/bootstrap-select/js/bootstrap-select.js}"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/jquery-slimscroll/jquery.slimscroll.js}"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/node-waves/waves.js}"></script>
+
+    <!-- Custom Js -->
+    <script th:src="@{/agent_admin/js/admin.js}"></script>
+
+    <!-- Demo Js -->
+    <script th:src="@{/agent_admin/js/demo.js}"></script>
+
+    <!-- Jquery DataTable Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/jquery-datatable/jquery.dataTables.js}"></script>
+    <script th:src="@{/agent_admin/vendor/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js}"></script>
+    <script th:src="@{/agent_admin/vendor/jquery-datatable/extensions/export/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/agent_admin/vendor/jquery-datatable/extensions/export/buttons.flash.min.js}"></script>
+    <script th:src="@{/agent_admin/vendor/jquery-datatable/extensions/export/jszip.min.js}"></script>
+    <script th:src="@{/agent_admin/vendor/jquery-datatable/extensions/export/pdfmake.min.js}"></script>
+    <script th:src="@{/agent_admin/vendor/jquery-datatable/extensions/export/vfs_fonts.js}"></script>
+    <script th:src="@{/agent_admin/vendor/jquery-datatable/extensions/export/buttons.html5.min.js}"></script>
+    <script th:src="@{/agent_admin/vendor/jquery-datatable/extensions/export/buttons.print.min.js}"></script>
+
+    <!-- Bootstrap Datepicker Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
+
+    <!-- Validation Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/jquery-validation/jquery.validate.js}"></script>
+
+    <!-- Input Mask Plugin Js -->
+    <script th:src="@{/agent_admin/vendor/jquery-inputmask/jquery.inputmask.bundle.js}"></script>
+
+  <!--  https://datatables.net/examples/basic_init/data_rendering.html  -->
+   <script>
+   $(function () {
+         $('#bs_datepicker_range_container').datepicker({
+             autoclose: true,
+             container: '#bs_datepicker_range_container'
+         });
+
+        //Exportable table
+        $('.js-exportable').DataTable({
+
+            scrollY:        "400px",
+            dom:           'Bfrtip',
+            responsive:     true,
+            paging:         true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+      });
+   </script>
+
+
+   <script>
+   $(function () {
+           $('#insert_service_details').validate({
+               highlight: function (input) {
+                   console.log(input);
+                   $(input).parents('.form-line').addClass('error');
+               },
+               unhighlight: function (input) {
+                   $(input).parents('.form-line').removeClass('error');
+               },
+               errorPlacement: function (error, element) {
+                   $(element).parents('.input-group').append(error);
+                   $(element).parents('.form-group').append(error);
+               }
+           });
+       });
+
+   </script>
+
+   <script>
+   $(document).ready(function(){
+        $(serviceDeskPrimary).inputmask('+99 (999) 999-9999');
+				$(serviceDeskSecondary).inputmask('+99 (999) 999-9999');
+				$(whatsappNo).inputmask('+99 (999) 999-9999');
+				$(landLineNo).inputmask('+99 (999) 999-9999');
+				$(emailPrimary).inputmask({ alias: "email" });
+				$(emailSecondary).inputmask({ alias: "email" });
+				$(pocMobNo1).inputmask('+99 (999) 999-9999');
+				$(pocMobNo2).inputmask('+99 (999) 999-9999');
+				$(pocMobNo3).inputmask('+99 (999) 999-9999');
+				$(pocMobNo4).inputmask('+99 (999) 999-9999');
+   });
+   </SCRIPT >
+   
+   
+    <script>
+	    $(document).on('ready', function () {
+	    	  var element = document.getElementById("createRepoLink");
+	    	  element.classList.add("active");
+	    });
+    </script>
+
+</body>
+
+</html>

@@ -23,13 +23,21 @@ import com.josthi.web.controller.CacheConfigDataController;
 import com.josthi.web.daoimpl.BaseDaoImpl;
 import com.josthi.web.daoimpl.CacheConfigDaoImpl;
 import com.josthi.web.daoimpl.EmailDaoImpl;
+import com.josthi.web.daoimpl.FeedbackDaoImpl;
 import com.josthi.web.daoimpl.FileWikiDaoImpl;
+import com.josthi.web.daoimpl.HistoryDaoImpl;
+import com.josthi.web.daoimpl.PlanDetailsDaoImpl;
 import com.josthi.web.daoimpl.SchedulerDaoImpl;
+import com.josthi.web.daoimpl.ServiceRequestDaoImpl;
 import com.josthi.web.daoimpl.UserAuthDaoImpl;
+import com.josthi.web.daoimpl.UserDetailsDaoImpl;
 import com.josthi.web.daoimpl.UserRegistrationDaoImpl;
 import com.josthi.web.mail.EmailSenderService;
 import com.josthi.web.security.SecurityConfig;
+import com.josthi.web.serviceimpl.BeneficiaryServiceImpl;
 import com.josthi.web.serviceimpl.CacheConfigServiceImpl;
+import com.josthi.web.serviceimpl.PlanAndBenefitServiceImpl;
+import com.josthi.web.serviceimpl.ServiceRequestServiceImpl;
 import com.josthi.web.serviceimpl.UserRegistrationServiceImpl;
 import com.josthi.web.utils.HostNamePropertyPlaceHolderConfig;
 
@@ -199,6 +207,49 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
 	 return fileWikiDaoImpl;
  }
  
+ @Bean("serviceRequestDao")
+ public ServiceRequestDaoImpl serviceRequestDaoImpl(DataSource josthiDataSource) {
+	 ServiceRequestDaoImpl serviceRequestDaoImpl = new ServiceRequestDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 serviceRequestDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return serviceRequestDaoImpl;
+ }
+ 
+ 
+ @Bean("userDetailsDao")
+ public UserDetailsDaoImpl userDetailsDaoImpl(DataSource josthiDataSource) {
+	 UserDetailsDaoImpl userDetailsDaoImpl = new UserDetailsDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 userDetailsDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return userDetailsDaoImpl;
+ }
+ 
+ @Bean("historyDao")
+ public HistoryDaoImpl historyDaoImpl(DataSource josthiDataSource) {
+	 HistoryDaoImpl historyDaoImpl = new HistoryDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 historyDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return historyDaoImpl;
+ }
+ 
+ 
+ @Bean("planDetailsDao")
+ public PlanDetailsDaoImpl planDetailsDaoImpl(DataSource josthiDataSource) {
+	 PlanDetailsDaoImpl planDetailsDaoImpl = new PlanDetailsDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 planDetailsDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return planDetailsDaoImpl;
+ }
+ 
+ 
+ @Bean("feedbackDao")
+ public FeedbackDaoImpl feedbackDaoImpl(DataSource josthiDataSource) {
+	 FeedbackDaoImpl feedbackDaoImpl = new FeedbackDaoImpl();
+	 JdbcTemplate jdbcTemplate = new JdbcTemplate(josthiDataSource);
+	 feedbackDaoImpl.setJdbcTemplate(jdbcTemplate);
+	 return feedbackDaoImpl;
+ }
+ 
  /* ==========================================================================
   * ==================== S E R V I C E   T R I G G E R   =====================
   * ========================================================================== 
@@ -229,11 +280,35 @@ private static final Logger logger = LoggerFactory.getLogger(SpringConfig.class)
   * ==========================================================================
   */
  
+ @Bean("beneficiaryService")
+ public BeneficiaryServiceImpl beneficiaryServiceImpl(PlatformTransactionManager txnManager) {
+	 BeneficiaryServiceImpl beneficiaryServiceImpl = new BeneficiaryServiceImpl();
+	 beneficiaryServiceImpl.setPlatformTransactionManager(txnManager);
+	 return beneficiaryServiceImpl;
+ }
+ 
+ 
  @Bean("userRegistrationService")
  public UserRegistrationServiceImpl userRegistrationServiceImpl(PlatformTransactionManager txnManager) {
 	 UserRegistrationServiceImpl userRegistrationServiceImpl = new UserRegistrationServiceImpl();
 	 userRegistrationServiceImpl.setPlatformTransactionManager(txnManager);
 	 return userRegistrationServiceImpl;
+ }
+ 
+ 
+ @Bean("serviceRequestService")
+ public ServiceRequestServiceImpl serviceRequestServiceImpl(PlatformTransactionManager txnManager) {
+	 ServiceRequestServiceImpl serviceRequestServiceImpl = new ServiceRequestServiceImpl();
+	 serviceRequestServiceImpl.setPlatformTransactionManager(txnManager);
+	 return serviceRequestServiceImpl;
+ }
+ 
+
+ @Bean("planAndBenefitService")
+ public PlanAndBenefitServiceImpl planAndBenefitServiceImpl(PlatformTransactionManager txnManager) {
+	 PlanAndBenefitServiceImpl planAndBenefitServiceImpl = new PlanAndBenefitServiceImpl();
+	 planAndBenefitServiceImpl.setPlatformTransactionManager(txnManager);
+	 return planAndBenefitServiceImpl;
  }
  
  @Bean("txnManager")

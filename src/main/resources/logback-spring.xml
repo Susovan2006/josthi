@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<property name="HOME_LOG" value="/home/mockellc/josthi/logs/josthi.log"/>
-	<property name="ERROR_LOG" value="/home/mockellc/josthi/logs/josthi_error.log"/>
+	<property name="HOME_LOG" value="/home/josthico/josthi/logs"/>
+	
 	
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <springProfile name="default">
@@ -13,14 +13,14 @@
         </root>
     </springProfile>
 
-    <springProfile name="prod | dev | qa">
+    <springProfile name="prod | dev | qa | local">
     
     	<!-- GENERAL LOG -->
         <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${HOME_LOG}</file>
+            <file>${HOME_LOG}/josthi.log</file>
 
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-                <fileNamePattern>/home/mockellc/josthi/logs/josthi.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <fileNamePattern>/home/josthico/josthi/logs/josthi.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
                 <!-- each archived file, size max 10MB -->
                 <maxFileSize>10MB</maxFileSize>
                 <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
@@ -37,10 +37,13 @@
         
         <!-- ERROR LOG -->
         <appender name="ERROR-FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>${ERROR_LOG}</file>
+            <file>${HOME_LOG}/josthi_error.log</file>
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            	<level>ERROR</level>
+            </filter>
 
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-                <fileNamePattern>/home/mockellc/josthi/logs/josthi_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <fileNamePattern>/home/josthico/josthi/logs/josthi_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
                 <!-- each archived file, size max 10MB -->
                 <maxFileSize>10MB</maxFileSize>
                 <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->

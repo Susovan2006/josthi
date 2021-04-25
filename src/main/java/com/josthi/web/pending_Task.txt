@@ -1,0 +1,29 @@
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX U S E R   M O D U L E XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+1. User Profile Picture Upload
+	Completed 
+		1. Ajax Call to save the image in the server and update in the database.
+		2. Success and Error message to be displayed on the UI.
+		
+	Pending Task
+		1. Need to do all the Validations like check the extension of the file JPG/PNG/GIF
+		2. Validate the size of the Image to be with in 1 MB.
+		3. Other Exceptions.
+		4. Even if there is some exception the Image is getting displayed on the UI screen.
+		5. call ResizeImage.java and resize the image to 50%
+		
+2. Profile Picture Deletion
+		1. Here we will allow the user to delete the profile Picture and set a default picture.
+		2. The default picture should be in some location.
+		3. 
+		
+3. Displaying the Profile image from the session. --> Done
+		1. The image will be saved in some loaction on the server, we need to fetch the image and display it on the UI screen.
+		
+		
+4. Beneficiary details addition.
+	Pending task.
+		> Setting the Focus on save.
+		> Date of Birth = implement date picker.
+		> exception handling.
+		> Upload beneficiary Pictures.

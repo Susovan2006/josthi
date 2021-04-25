@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	
+	<!-- ************************ CSS INCLUDES ******************************* -->
+	
+	<div th:fragment="includes">
+		<!-- Required Meta Tags Always Come First -->
+		<meta charset="UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	    <meta name="keywords"  content="Kolkata, Parents, Emergency Services in Kolkata, West Bengal, India, Josthi, Kolkata Hospital"/>
+	
+	  	<!-- Favicon -->
+	  	<link rel="shortcut" th:href="@{/images/josthi/icon/favicon.ico}">
+	  	<link rel="icon" th:href="@{/images/josthi/icon/favicon.ico}">	  		
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">			
+		<meta name="apple-mobile-web-app-title" content="Josthi.com">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		
+	    <!-- Google Fonts -->
+	    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+	
+	    <!-- Bootstrap Core Css -->
+	    <link th:href="@{/agent_admin/vendor/bootstrap/css/bootstrap.css}" rel="stylesheet">
+	
+	    <!-- Waves Effect Css-->
+	    <link th:href="@{/agent_admin/vendor/node-waves/waves.css}" rel="stylesheet" />
+	
+	    <!-- Animation Css-->
+	    <link th:href="@{/agent_admin/vendor/animate-css/animate.css}" rel="stylesheet" />
+	
+	    <!-- Morris Chart Css-->
+	    <link th:href="@{/agent_admin/vendor/morrisjs/morris.css}" rel="stylesheet" />
+	
+	    <!-- Custom Css -->
+	    <link th:href="@{/agent_admin/css/style.css}" rel="stylesheet">
+	    
+	    <!-- Edited by Susovan Css 
+	    <link th:href="@{/agent_admin/css/susovan.css}" rel="stylesheet">-->
+	
+	    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+	    <link th:href="@{/agent_admin/css/all-themes.css}" rel="stylesheet" />
+	</div>
+	
+	
+	
+	<!-- ********************** PAGE LOAD WAIT ******************************* -->
+	
+	<div th:fragment="page-load">
+		<div class="page-loader-wrapper">
+	        <div class="loader">
+	            <div class="preloader">
+	                <div class="spinner-layer pl-red">
+	                    <div class="circle-clipper left">
+	                        <div class="circle"></div>
+	                    </div>
+	                    <div class="circle-clipper right">
+	                        <div class="circle"></div>
+	                    </div>
+	                </div>
+	            </div>
+	            <p>Please wait...</p>
+	        </div>
+    	</div>
+	</div>
+	
+	
+	<!-- ************************** TOP NAV BAR ******************************* -->	
+	<div  th:fragment="top-navigation-bar">
+		<nav class="navbar">
+	        <div class="container-fluid">
+	            <!--<div class="navbar-header">
+	                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+	                <a href="javascript:void(0);" class="bars"></a>
+	                <a  href="#"><img style = "padding-left: 30px;" src="images/logo_250x80.svg" width="155" height="40" alt="User"></a>
+	            </div>-->
+	            <div class="navbar-header">
+	                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+	                <a href="javascript:void(0);" class="bars"></a>
+	                <a class="navbar-brand-susovan" href="#"><img th:src="@{/josthiLogoFooter}" width="155" height="40" alt="Josthi.com"></a>
+	            </div>
+	
+	
+				<div class="collapse navbar-collapse" id="navbar-collapse">
+	                <ul class="nav navbar-nav navbar-right">
+	                    <!-- Call Search -->
+	
+	                    <!-- #END# Call Search -->
+	                    <!-- Notifications -->
+	                    <li class="dropdown">
+	                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+	                            <i class="material-icons">notifications</i>
+	                            <span class="label-count">7</span>
+	                        </a>
+	                        <ul class="dropdown-menu">
+	                            <li class="header">NOTIFICATIONS</li>
+	                            <li class="body">
+	                                <ul class="menu">
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <div class="icon-circle bg-light-green">
+	                                                <i class="material-icons">person_add</i>
+	                                            </div>
+	                                            <div class="menu-info">
+	                                                <h4>12 new members joined</h4>
+	                                                <p>
+	                                                    <i class="material-icons">access_time</i> 14 mins ago
+	                                                </p>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <div class="icon-circle bg-cyan">
+	                                                <i class="material-icons">add_shopping_cart</i>
+	                                            </div>
+	                                            <div class="menu-info">
+	                                                <h4>4 sales made</h4>
+	                                                <p>
+	                                                    <i class="material-icons">access_time</i> 22 mins ago
+	                                                </p>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <div class="icon-circle bg-red">
+	                                                <i class="material-icons">delete_forever</i>
+	                                            </div>
+	                                            <div class="menu-info">
+	                                                <h4><b>Nancy Doe</b> deleted account</h4>
+	                                                <p>
+	                                                    <i class="material-icons">access_time</i> 3 hours ago
+	                                                </p>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <div class="icon-circle bg-orange">
+	                                                <i class="material-icons">mode_edit</i>
+	                                            </div>
+	                                            <div class="menu-info">
+	                                                <h4><b>Nancy</b> changed name</h4>
+	                                                <p>
+	                                                    <i class="material-icons">access_time</i> 2 hours ago
+	                                                </p>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <div class="icon-circle bg-blue-grey">
+	                                                <i class="material-icons">comment</i>
+	                                            </div>
+	                                            <div class="menu-info">
+	                                                <h4><b>John</b> commented your post</h4>
+	                                                <p>
+	                                                    <i class="material-icons">access_time</i> 4 hours ago
+	                                                </p>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <div class="icon-circle bg-light-green">
+	                                                <i class="material-icons">cached</i>
+	                                            </div>
+	                                            <div class="menu-info">
+	                                                <h4><b>John</b> updated status</h4>
+	                                                <p>
+	                                                    <i class="material-icons">access_time</i> 3 hours ago
+	                                                </p>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <div class="icon-circle bg-purple">
+	                                                <i class="material-icons">settings</i>
+	                                            </div>
+	                                            <div class="menu-info">
+	                                                <h4>Settings updated</h4>
+	                                                <p>
+	                                                    <i class="material-icons">access_time</i> Yesterday
+	                                                </p>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                </ul>
+	                            </li>
+	                            <li class="footer">
+	                                <a href="javascript:void(0);">View All Notifications</a>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                    <!-- #END# Notifications -->
+	                    <!-- Tasks -->
+	                    <li class="dropdown">
+	                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+	                            <i class="material-icons">flag</i>
+	                            <span class="label-count">9</span>
+	                        </a>
+	                        <ul class="dropdown-menu">
+	                            <li class="header">TASKS</li>
+	                            <li class="body">
+	                                <ul class="menu tasks">
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <h4>
+	                                                Footer display issue
+	                                                <small>32%</small>
+	                                            </h4>
+	                                            <div class="progress">
+	                                                <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 32%">
+	                                                </div>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <h4>
+	                                                Make new buttons
+	                                                <small>45%</small>
+	                                            </h4>
+	                                            <div class="progress">
+	                                                <div class="progress-bar bg-cyan" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+	                                                </div>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <h4>
+	                                                Create new dashboard
+	                                                <small>54%</small>
+	                                            </h4>
+	                                            <div class="progress">
+	                                                <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 54%">
+	                                                </div>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <h4>
+	                                                Solve transition issue
+	                                                <small>65%</small>
+	                                            </h4>
+	                                            <div class="progress">
+	                                                <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
+	                                                </div>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                    <li>
+	                                        <a href="javascript:void(0);">
+	                                            <h4>
+	                                                Answer GitHub questions
+	                                                <small>92%</small>
+	                                            </h4>
+	                                            <div class="progress">
+	                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 92%">
+	                                                </div>
+	                                            </div>
+	                                        </a>
+	                                    </li>
+	                                </ul>
+	                            </li>
+	                            <li class="footer">
+	                                <a href="javascript:void(0);">View All Tasks</a>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                    <!-- #END# Tasks -->
+	
+	                </ul>
+	            </div>
+	        </div>
+    	</nav>
+	</div>
+	
+	
+	<!-- *************************************** SIDE NAVIGATION BAR ************************************** -->
+	<div th:fragment="side-navigation-bar">
+		 <section>
+	        <!-- Left Sidebar -->
+	        <aside id="leftsidebar" class="sidebar">
+	            <!-- User Info https://material.io/resources/icons/?icon=supervisor_account&style=baseline -->
+	            <div class="user-info">
+	                <div class="image">
+	                    <img th:src="@{/getProfileImage/}+ ${session.USER_SESSION_OBJ_KEY.customerId}" src="images/Single.jpg" width="48" height="48" alt="User" />
+	                </div>
+	                <div class="info-container">
+	                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${session.USER_SESSION_OBJ_KEY.userName}">Agent </div>
+	                    <div class="email" th:text="${session.USER_SESSION_OBJ_KEY.userEmailId}">Agent1@josthi.com</div>
+	                    <div class="btn-group user-helper-dropdown">
+	                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+	                        <ul class="dropdown-menu pull-right">
+	                            <li id="agentProfileLink"><a href="/admin/profile"><i class="material-icons">person</i>Profile</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li id="agentAccountLink"><a href="javascript:void(0);"><i class="material-icons">account_balance_wallet</i>Account</a></li>
+	                            <li id="agentSettingsLink"><a href="/agentAdmin/settings"><i class="material-icons">build</i>Settings</a></li>
+	                            <li id="agentAddRepsLink"><a href="javascript:void(0);"><i class="material-icons">supervisor_account</i>Add Reps</a></li>
+	                            <li role="separator" class="divider"></li>
+	                            <li><a href="/destroy"><i class="material-icons">input</i>Sign Out</a></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	            </div>
+	            <!-- #User Info -->
+	            <!-- Menu -->
+	            <div class="menu">
+	                <ul class="list">
+	                    <li class="header">MAIN NAVIGATION</li>
+	                    <li id ="homeLink">
+	                        <a href="/agentAdmin/home">
+	                            <i class="material-icons">home</i>
+	                            <span>Home</span>
+	                        </a>
+	                    </li>
+	                    
+	                    <li>
+	                        <a href="javascript:void(0);" class="menu-toggle">
+	                            <i class="material-icons">record_voice_over</i>
+	                            <span>Admin Action</span>
+	                        </a>
+	                        <ul class="ml-menu">
+	                            <li>
+	                                <a href="javascript:void(0);"> <!-- class="menu-toggle" for + -->
+	                                    <span>Assign Agent</span>
+	                                </a>
+	                            </li>
+	                            <li>
+	                                <a href="javascript:void(0);"> <!-- class="menu-toggle" for + -->
+	                                    <span>Edit Plan</span>
+	                                </a>
+	                            </li>
+	                            <li>
+	                                <a href="javascript:void(0);">
+	                                    <span>Edit Price</span>
+	                                </a>
+	
+	                            </li>
+	                            <li>
+	                                <a href="javascript:void(0);">
+	                                    <span>Timer Manager</span>
+	                                </a>
+	
+	                            </li>
+	                        </ul>
+	                    </li>
+	                    
+	                    
+	                    
+	                    <li id ="viewRequestLink">
+	                        <a href="/agentAdmin/viewRequest">
+	                            <i class="material-icons">fact_check</i>
+	                            <span>View Request</span>
+	                        </a>
+	                    </li>
+	                    <li id ="searchCustomerLink">
+	                        <a href="/agentAdmin/searchUser">
+	                            <i class="material-icons">search</i>
+	                            <span>Search Customer</span>
+	                        </a>
+	                    </li>
+	                    <li id ="createRepoLink">
+	                        <a href="/agentAdmin/contactRepo">
+	                            <i class="material-icons">done_outline</i>
+	                            <span>Built Contact</span>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="javascript:void(0);" class="menu-toggle">
+	                            <i class="material-icons">perm_identity</i>
+	                            <span>Customer Details</span>
+	                        </a>
+	                        <ul class="ml-menu">
+	                            <li>
+	                                <a href="javascript:void(0);"> <!-- class="menu-toggle" for + -->
+	                                    <span>Primary</span>
+	                                </a>
+	                            </li>
+	                            <li>
+	                                <a href="javascript:void(0);">
+	                                    <span>Beneficiary</span>
+	                                </a>
+	
+	                            </li>
+	                        </ul>
+	                    </li>
+	                    <li>
+	                        <a href="javascript:void(0);" class="menu-toggle">
+	                            <i class="material-icons">bar_chart</i>
+	                            <span>Reporting</span>
+	                        </a>
+	                        <ul class="ml-menu">
+	                            <li>
+	                                <a href="#">New Request</a>
+	                            </li>
+	                            <li>
+	                                <a href="#">New Customer</a>
+	                            </li>
+	                            <li>
+	                                <a href="#">New Transfers</a>
+	                            </li>
+	
+	                            <li>
+	                                <a href="#">Birthday Alert</a>
+	                            </li>
+	                            <li>
+	                                <a href="#">Customer Growth</a>
+	                            </li>
+	                            <li>
+	                                <a href="#">Plan Expiring</a>
+	                            </li>
+	                            <li>
+	                                <a href="#">Alert Notifications</a>
+	                            </li>
+	
+	                        </ul>
+	                    </li>
+	                </ul>
+	            </div>
+	        </aside>
+	    </section>
+	
+	
+	</div>
+	
+	
+	<div th:fragment="js-includes">
+		<!-- Jquery Core Js -->
+	    <script th:src="@{/agent_admin/vendor/jquery/jquery.min.js}"></script>
+	
+	    <!-- Bootstrap Core Js -->
+	    <script th:src="@{/agent_admin/vendor/bootstrap/js/bootstrap.js}"></script>
+	
+	    <!-- Select Plugin Js -->
+	    <script th:src="@{/agent_admin/vendor/bootstrap-select/js/bootstrap-select.js}"></script>
+	
+	    <!-- Slimscroll Plugin Js -->
+	    <script th:src="@{/agent_admin/vendor/jquery-slimscroll/jquery.slimscroll.js}"></script>
+	
+	    <!-- Waves Effect Plugin Js-->
+	    <script th:src="@{/agent_admin/vendor/node-waves/waves.js}"></script>
+	
+	    <!-- Jquery CountTo Plugin Js -->
+	    <script th:src="@{/agent_admin/vendor/jquery-countto/jquery.countTo.js}"></script>
+	
+	    <!-- Morris Plugin Js -->
+	    <script th:src="@{/agent_admin/vendor/raphael/raphael.min.js}"></script>
+	    <script th:src="@{/agent_admin/vendor/morrisjs/morris.js}"></script>
+	
+	    <!-- ChartJs -->
+	    <script th:src="@{/agent_admin/vendor/chartjs/Chart.bundle.js}"></script>
+	
+	    <!-- Flot Charts Plugin Js-->
+	    <script th:src="@{/agent_admin/vendor/flot-charts/jquery.flot.js}"></script>
+	    <script th:src="@{/agent_admin/vendor/flot-charts/jquery.flot.resize.js}"></script>
+	    <script th:src="@{/agent_admin/vendor/flot-charts/jquery.flot.pie.js}"></script>
+	    <script th:src="@{/agent_admin/vendor/flot-charts/jquery.flot.categories.js}"></script>
+	    <script th:src="@{/agent_admin/vendor/flot-charts/jquery.flot.time.js}"></script>
+	
+	    <!-- Sparkline Chart Plugin Js
+	    <script src="vendor/jquery-sparkline/jquery.sparkline.js"></script>-->
+	
+	    <!-- Custom Js -->
+	    <script th:src="@{/agent_admin/js/admin.js}"></script>
+	    <script th:src="@{/agent_admin/js/pages/index.js}"></script>
+	
+	    <!-- Demo Js
+	    <script src="js/demo.js"></script>-->
+	  	
+	</div>
+	
+</body>
+</html>

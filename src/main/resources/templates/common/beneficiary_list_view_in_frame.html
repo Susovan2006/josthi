@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>View Beneficiary list | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->
+  
+    <style>
+	  .profile-cover {
+	    position: relative;
+	    height: 10.5rem;
+	    padding: 1.75rem 2rem;
+	    border-radius: .75rem;
+	}
+
+	.profile-cover-img {
+	    width: 100%;
+	    height: 9.5rem;
+	    -o-object-fit: cover;
+	    object-fit: cover;
+	    vertical-align: top;
+	    border-radius: .75rem;
+	}
+	  .profile-cover-img-wrapper {
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	    left: 0;
+	    height: 9.5rem;
+	    background-color: #e7eaf3;
+	    border-radius: .75rem;
+	}
+
+	.profile-cover-avatar {
+	    display: -ms-flexbox;
+	    display: flex;
+	    margin: -6.3rem auto .5rem auto;
+	}
+
+	.avatar-xxl {
+	    width: 7.875rem;
+	    height: 7.875rem;
+	}
+
+	.avatar-status {
+	    position: absolute;
+	    bottom: -8.4px;
+	    right: -8.4px;
+	    display: -ms-inline-flexbox;
+	    display: inline-flex;
+	    -ms-flex-negative: 0;
+	    flex-shrink: 0;
+	    -ms-flex-pack: center;
+	    justify-content: center;
+	    -ms-flex-align: center;
+	    align-items: center;
+	    white-space: nowrap;
+	    text-align: center;
+	    vertical-align: baseline;
+	    border: .125rem solid #fff;
+	    width: 21px;
+	    height: 21px;
+	    line-height: 1;
+	    font-size: .71094rem;
+	    border-radius: 50%;
+	}
+	
+	.avatar-status-success {
+	    color: #fff;
+	    background-color: #00c9a7;
+	}
+	
+	.avatar-status-warning {
+    color: #1e2022;
+    background-color: #f5ca99;
+	}
+
+	.avatar-status-danger {
+    color: #fff;
+    background-color: #ed4c78;
+	}
+
+
+	.card-body {
+		-ms-flex: 1 1 auto;
+		flex: 1 1 auto;
+		min-height: 1px;
+		padding: 1.3125rem;
+		box-sizing: border-box;
+	}
+
+	.card {
+		position: relative;
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-direction: column;
+		flex-direction: column;
+		min-width: 0;
+		word-wrap: break-word;
+		background-color: #fff;
+		background-clip: border-box;
+		border: .0625rem solid rgba(231,234,243,.7);
+		border-radius: .75rem;
+	}
+
+
+	.custom-checkbox-switch-input:checked~.custom-checkbox-switch-label {
+		color: #fff;
+		border-style: solid;
+		background-color: #377dff;
+	}
+	
+	.custom-checkbox-switch-label {
+    cursor: pointer;
+    color: #377dff;
+    background-color: #fff;
+    border: .0625rem solid #377dff;
+    margin-bottom: 0;
+	}
+	
+	.custom-checkbox-switch-input~.custom-checkbox-switch-label .custom-checkbox-switch-active {
+    display: none;
+	}
+	
+	
+  </style>
+  
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(/josthiHeaderBanner);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">User Details</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+			  <li class="breadcrumb-item" th:text="${#strings.capitalize(#strings.toLowerCase(session.USER_SESSION_OBJ_KEY.userRole))}">User</li>
+              <li class="breadcrumb-item">View Details</li>
+              <li class="breadcrumb-item active" aria-current="page">User</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+
+	      <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container-fluid space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+        </div>
+
+        <div class="col-lg-9">
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header" style="border-bottom: 0.0625rem solid #fff;">
+              <!--<div class="d-flex align-items-center">
+                <h5 class="card-title">Card Name.</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div> --> 
+            </div>
+
+            <!-- Body -->
+			<div class="container-fluid">
+				<div class="row justify-content-lg-center">
+				  <div class="col-lg-12">
+					<!-- Profile Cover -->
+					<div class="profile-cover">
+					  <div class="profile-cover-img-wrapper">
+						<img class="profile-cover-img" src="/profileBackground" alt="Image Description">
+					  </div>
+					</div>
+					<!-- End Profile Cover -->
+
+					<!-- Profile Header -->
+					<div class="text-center mb-5">
+					  <!-- Avatar -->
+					  <div class="avatar avatar-xxl avatar-circle avatar-border-lg profile-cover-avatar">
+						<img class="avatar-img" th:src="@{/getProfileImage/}+ ${userDetailsBeanForProfile.customerId}" alt="Image Description">
+						<span class="avatar-status avatar-status-success"></span>
+					  </div>
+					  <!-- End Avatar -->
+
+					  <h1 class="page-title" th:text="${userDetailsBeanForProfile.firstName}+' '+${userDetailsBeanForProfile.lastName}">name<i class="fa fa-certificate " style="font-size:24px;color:blue" data-toggle="tooltip" data-placement="top" title="Certified User"></i></h1>
+
+					  <!-- List -->
+					  <ul class="list-inline list-inline-m-1">
+						<li class="list-inline-item">
+						  <i class="fa fa-user mr-1"></i>
+						  <span th:text="${userDetailsBeanForProfile.role}">Josthi user</span>
+						</li>
+
+						<li class="list-inline-item">
+						  <i class="fa fa-map-pin mr-1"></i>
+						  <a href="#" th:text="${userDetailsBeanForProfile.cityTown}+','">city,</a>
+						  <a href="#" th:text="${userDetailsBeanForProfile.country}">Country</a>
+						</li>
+
+						<li class="list-inline-item">
+						  <i class="fa fa-calendar mr-1"></i>
+						  <span th:text="'Joined ' + ${userDetailsBeanForProfile.registrationDateTimeStr}"> March 2017</span>
+						</li>
+					  </ul>
+					  <!-- End List -->
+					</div>
+					<!-- End Profile Header -->
+
+					<!-- Nav -->
+					<div class="js-nav-scroller hs-nav-scroller-horizontal mb-5">
+					  <span class="hs-nav-scroller-arrow-prev" style="display: none;">
+						<a class="hs-nav-scroller-arrow-link" href="javascript:;">
+						  <i class="fa fa-angle-double-left"></i>
+						</a>
+					  </span>
+
+					  <span class="hs-nav-scroller-arrow-next" style="display: none;">
+						<a class="hs-nav-scroller-arrow-link" href="javascript:;">
+						  <i class="fa fa-angle-double-right"></i>
+						</a>
+					  </span>
+
+					  <ul class="nav nav-tabs align-items-center">
+						<li class="nav-item">
+						  <a class="nav-link " th:href="@{'/common/viewProfileUser/' + ${userDetailsBeanForProfile.customerId}}">Profile</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link active" th:href="@{'/common/viewBeneficiaryList/' + ${userDetailsBeanForProfile.customerId}}">Beneficiary<span class="badge badge-soft-dark rounded-circle ml-1" th:text="${#lists.size(beneficiaryDetailBeanList)}">0</span></a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link " th:href="@{'/common/viewPlanDetails/' + ${userDetailsBeanForProfile.customerId}}">Plan Details</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link " th:href="@{'/common/viewEmergencyContact/' + ${userDetailsBeanForProfile.customerId}}">Emergency Contact</a>
+						</li>
+
+					  </ul>
+					</div>
+					<!-- End Nav -->
+					
+					<!-- Filter -->
+		            <div class="row align-items-center mb-5">
+		              <div class="col">
+		                <h3 class="mb-0" th:text="${#lists.size(beneficiaryDetailBeanList)} + ' Connected'">0 connections</h3>
+		              </div>
+		            </div>
+		            <!-- End Filter -->
+					
+					<!-- Beneficiary Cards Start -->
+					
+					<div class="tab-content" id="connectionsTabContent">
+		              <div class="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="grid-tab">
+		                <!-- Connections -->
+		                
+		                <!-- FOR LOOP START -->
+		                <div th:if="${not #lists.isEmpty(beneficiaryDetailBeanList)}" class="row row-cols-1 row-cols-sm-2 row-cols-xl-3">
+		                
+		                
+		                  <div class="col mb-3 mb-lg-5" th:each="beneficiaryDetailBean : ${beneficiaryDetailBeanList}">
+		                    <!-- Card -->
+		                    <div class="card h-100">		
+		                      <!-- Body -->
+		                      <div class="card-body text-center">
+		                        <!-- Avatar -->
+		                        <div class="avatar avatar-xl avatar-circle avatar-border-lg avatar-centered mb-3">
+		                          <img class="avatar-img" th:src="@{/getProfileImage/}+ ${beneficiaryDetailBean.uid}" alt="Image Description">
+		                          <span class="avatar-status avatar-sm-status avatar-status-success"></span>
+		                        </div>
+		                        <!-- End Avatar -->
+		
+		                        <h3 class="mb-1">
+		                          <a class="text-dark" th:href="@{'/common/viewProfileBeneficiary/' + ${beneficiaryDetailBean.uid}}" th:text="${beneficiaryDetailBean.firstName}+' '+${beneficiaryDetailBean.lastName}">Rachel Doe</a>
+		                        </h3>
+		
+		                        <div class="mb-3">
+		                          <i class="fa fa-tag nav-icon mr-1"></i>
+		                          <span th:text="${beneficiaryDetailBean.uid}">uid</span>
+		                        </div>
+		
+		
+		                        <!-- Badges -->
+		                        <ul class="list-inline list-inline-m-1 mb-0">
+		                          <li class="list-inline-item"><a class="badge badge-soft-secondary" 
+		                          	th:text="'Gender :' +${beneficiaryDetailBean.gender}" data-toggle="tooltip" data-placement="top" title="Gender.">Gender</a></li>
+		                          <li class="list-inline-item"><a class="badge badge-soft-secondary" 
+		                          	th:text="'DOB :' +${beneficiaryDetailBean.dateOfBirth}" data-toggle="tooltip" data-placement="top" title="Date of Birth">DOB</a></li>
+		                          <li class="list-inline-item"><a class="badge badge-soft-secondary" 
+		                          	th:text="'Blood Group :' +${beneficiaryDetailBean.bloodGroup}" data-toggle="tooltip" data-placement="top" title="Blood Group">Blood Group</a></li> 
+		                          <li class="list-inline-item"><a class="badge badge-soft-secondary" 
+		                          	th:text="${beneficiaryDetailBean.relationWithCustomer}" data-toggle="tooltip" data-placement="top" title="Relation with Customer">Relation</a></li> 
+		                          <li class="list-inline-item"><a class="badge badge-soft-secondary" 
+		                          	th:text="${beneficiaryDetailBean.zipPin}" data-toggle="tooltip" data-placement="top" title="Beneficiary's Address PinCode">Zip</a></li>		                        
+		                        </ul>
+		                        
+						
+								
+		                        
+		                      </div>
+		                      <!-- End Body -->
+		
+		                      <!-- Footer -->
+		                      <div class="card-footer">
+		                        <div class="row justify-content-between align-items-center">
+		                          <div class="col-auto py-1">
+		                            <i class="fas fa-phone nav-icon" data-toggle="tooltip" data-placement="top" title="Primary Contact No."></i>
+									<span th:text="${beneficiaryDetailBean.mobileNo1}"></span>
+		                          </div>
+		                        </div>
+		                      </div>
+		                      <!-- End Footer -->
+		                    </div>
+		                    <!-- End Card -->
+		                  </div>
+		                  <!-- loop end -->
+							<div th:unless="${not #lists.isEmpty(beneficiaryDetailBeanList)}">
+								<p class="card-text">There is no Beneficiary Added.</p>
+							</div>
+						<!-- end of if END  -->
+		
+						<!-- END OF 2 CARDS -->
+		                </div>
+		                <!-- End Row -->
+		              </div>
+		            </div>
+
+					<!-- Beneficiary Cards End -->
+					<!-- End Row -->
+				  </div>
+				</div>
+				<!-- End Row -->
+			  </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+
+        </div>
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+    <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  	<div th:insert="user_common :: js-includes"></div>
+  	<!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+  
+  
+  <script>
+    $(document).on('ready', function () {
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

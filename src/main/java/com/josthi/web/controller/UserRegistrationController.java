@@ -25,6 +25,7 @@ import com.josthi.web.scheduler.EmailScheduler;
 import com.josthi.web.service.EmailService;
 import com.josthi.web.service.UserAuthService;
 import com.josthi.web.service.UserRegistrationService;
+import com.josthi.web.utils.OTPGen;
 import com.josthi.web.utils.Security;
 import com.josthi.web.utils.Utils;
 
@@ -85,7 +86,9 @@ public class UserRegistrationController {
 				
 				userRegistrationBean.setCustomerID(customerID);
 				
-				//Here we are encrypting the Password and storing in the Database.
+				//Here we are encrypting the Password and storing in the Database also the OTP.
+				String otp = OTPGen.generateRandomNumber(4);
+				userRegistrationBean.setOtp(otp);
 				
 				boolean status = userRegistrationService.registerNewUser(userRegistrationBean, getNextID);
 				if(status) {
@@ -95,12 +98,22 @@ public class UserRegistrationController {
 					// F & L Name.
 					Map<String, String> map = new HashMap<String, String>();
 			        map.put("name", userRegistrationBean.getFirstName()+" "+userRegistrationBean.getLastName());
-			        map.put("custID", customerID);
+			        map.put("custID", customerID);			       
 			        
+			        //Welcome Email
 			        EmailDbBean emailDbBean = Utils.getEmailBeanForWelcome(userRegistrationBean.getValidEmailId().trim(), Utils.mapToString(map));
+			        
+			        //OTP email 
+			        Map<String, String> otpMap = new HashMap<String, String>();
+			        otpMap.put("name", userRegistrationBean.getFirstName()+" "+userRegistrationBean.getLastName());
+			        otpMap.put("otp",otp);
+			        EmailDbBean emailDbBeanForOtp = Utils.getEmailBeanForOTP(userRegistrationBean.getValidEmailId().trim(), Utils.mapToString(otpMap));
+			        
 			        System.out.println(emailDbBean);
 					boolean emailQueueStatus = emailService.queueEmail(emailDbBean);
-					if(emailQueueStatus) {				
+					boolean otpQueueStatus = emailService.queueEmail(emailDbBeanForOtp);
+					
+					if(emailQueueStatus && otpQueueStatus) {				
 						model.addAttribute("successMessage", MessageConstant.NEW_REGISTRATION_SUCCESSFUL);
 						EmailScheduler.ENAMBLE_TIMER = true;  //enable timer for all
 						return MappingConstant.LOGIN_PAGE;

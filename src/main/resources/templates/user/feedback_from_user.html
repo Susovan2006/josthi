@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>User Feedback | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  
+      <style>       
+        .rate2
+        {
+            font-size: 35px;
+        }
+        .rate2 .rate-hover-layer
+        {
+            color: pink;
+        }
+        .rate2 .rate-select-layer
+        {
+            color: orange;
+        }
+
+    </style>
+  
+  
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Feedback</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Others</li>
+              <li class="breadcrumb-item active" aria-current="page">Feedback</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9" id="card1">
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Tell about your Agents</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+            
+            <!-- Alert Section Start-->
+            <div th:if="${status ne null}">
+	            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+				  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+				      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+				    </svg>
+				  </button>
+				</div>
+			</div>
+			<!-- Alert Section End-->
+
+            <!-- Body -->
+            <div class="card-body">
+            <form id="insert_agent_feedback_details" class="js-validate" th:action="@{/user/saveFeedbackForAgent/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
+			  											              th:object="${agentFeedbackBean}"  method="post">
+			
+			<!-- ROW 0 -->
+			<div class="row form-group">
+				<div class="col-md-6">
+					<h5 class="card-title">Select an Agent</h5>
+					<p class="card-text">Here are the list of Agents providing services.</p>
+				</div>
+				<div class="col-md-6 input-group-sm js-form-message">
+					<div class="input-group ">
+						<select th:field="*{feedbackFor}" id="selectedAgentName" class="form-control show-tick" required data-msg="This is a required field. In case this is blank, that means, as of now there is no agent assigned to you." >                            
+							<option th:each="agent : ${agentList}"
+                             					th:value="${agent.keyId}"
+                             					th:text="${agent.value}" />
+										
+						</select>
+					</div>					
+				</div>
+			</div>
+			
+			<!-- ROW 1 -->
+			<div class="row form-group">
+				<div class="col-md-8">
+					<h5 class="card-title">1. Proactiveness</h5>
+					<p class="card-text">When you give a request, how proactive is your agent?</p>
+				</div>
+				<div class="col-md-4">
+					<div id="proactivenessDiv" class="rate2"></div><input id="proactivenessTxt" type="hidden" th:field="*{proactiveness}">
+				</div>
+			</div>
+			
+			<!-- ROW 2 -->
+			<div class="row form-group">
+				<div class="col-md-8">
+					<h5 class="card-title">2. Responsibility</h5>
+					<p class="card-text">How responsible is your agent in handling your beneficiary?</p>
+				</div>
+				<div class="col-md-4">
+					<div id="responsibleDiv" class="rate2"></div><input id="responsibleTxt" type="hidden" th:field="*{responsibility}">
+				</div>
+			</div>
+			
+			<!-- ROW 3 -->
+			<div class="row form-group">
+				<div class="col-md-8">
+					<h5 class="card-title">3. Availability</h5>
+					<p class="card-text">How much would you rate the Agent on the resources availability?</p>
+				</div>
+				<div class="col-md-4">
+					<div id= "availabilityDiv" class="rate2"></div><input id="availabilityTxt" type="hidden" th:field="*{availability}">
+				</div>
+			</div>
+			
+			<!-- ROW 4 -->
+			<div class="row form-group">
+				<div class="col-md-8">
+					<h5 class="card-title">4. Behavior</h5>
+					<p class="card-text">What is your view on the Agent's behavior and attitude. How much would you rate?</p>
+				</div>
+				<div class="col-md-4">
+					<div id="behaviourDiv" class="rate2"></div><input id="behaviourTxt" type="hidden" th:field="*{behavior}">
+				</div>
+			</div>
+			
+			<!-- ROW 5 -->
+			<div class="row form-group">
+				<div class="col-md-8">
+					<h5 class="card-title">5. Care and Handling</h5>
+					<p class="card-text">How is the Agent taking care your beneficiary?</p>
+				</div>
+				<div class="col-md-4">
+					<div id="careAndHandlingDiv" class="rate2"></div><input id="careAndHandlingTxt" type="hidden" th:field="*{careAndHandling}">
+				</div>
+			</div>
+			
+
+					<!-- Ratings & Reviews -->
+					<div class="container space-2">
+					  <!-- Overall Ratings -->
+					  <div class="mb-7">
+						<h3 class="mb-4">Agent feedback</h3>
+
+						<div class="row align-items-center">
+						  <div class="col-lg-4 mb-4 mb-lg-0">
+							<!-- Overall Review Rating -->
+							<div class="card bg-primary text-white text-center py-4 px-3">
+							  <span id="finalRating" class="display-4">2.5</span>
+								<span id=stars></span></b>
+								<input type=hidden id="val" value="2.5"/>
+							  <span>Agent rating</span>
+							</div>
+							<!-- End Overall Review Rating -->
+						  </div>
+
+						  <div class="col-lg-8">
+							<div class="form-group">
+								<label class="input-label">Provide your suggestion how the Agent can improve.</label>
+					  
+								<textarea th:field="*{areaOfImprovement}" cols="30" rows="5" class="form-control no-resize" id="agentFeedbackText" name="agentFeedbackText" placeholder="Your suggestion will help us to provide better service." 
+								maxlength="900"></textarea>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+					<!-- End Ratings & Reviews -->
+				<div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                </div>
+				</form>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+		  
+		  
+		  
+		  
+		  <!-- CARD 2 -- JOSTHI.COM -->
+		  <div class="card mb-3 mb-lg-5">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Tell about Josthi.com</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+            
+           <!-- Alert Section Start-->
+            <div th:if="${statusJosthi ne null}">
+	            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${statusJosthi == 'Success'} ? alert-success : alert-warning">
+				  <strong><span th:text="${statusJosthi}"></span>:</strong> <span th:text="${messageJosthi}"></span>
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+				      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+				    </svg>
+				  </button>
+				</div>
+			</div>
+			<!-- Alert Section End-->
+
+            <!-- Body -->
+            <div class="card-body" id="card2">
+               <form id="insert_josthi_feedback_details" class="js-validate" th:action="@{/user/saveFeedbackForJosthi/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
+			  											              th:object="${josthiFeedbackBean}"  method="post">
+				<!-- Ratings & Reviews -->
+				<div class="container">
+						<div class="row align-items-center">
+						  <div class="col-lg-12">
+							<div class="form-group">
+								<label class="input-label mb-4">Provide your suggestion or any issue you are facing with Josthi.com.</label>					  
+								<textarea th:field="*{feedbackNotes}" cols="30" rows="5" class="form-control no-resize" id="josthiFeedbackText" name="josthiFeedbackText" placeholder="Your suggestion will help us to provide better service." 
+								maxlength="450"></textarea>
+							</div>
+						  </div>
+						</div>
+					</div>
+					<!-- End Ratings & Reviews -->
+				<div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                </div>
+			</form>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+
+        </div>
+        <!--end Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:insert="user_common :: js-includes"></div>
+  <!-- ========== END FOOTER ==
+
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  <div th:replace="user_common :: user-footer"></div>
+  <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+  
+  <script th:src="@{/js/rater.js}" charset="utf-8"></script>
+  <!-- JS Plugins Init. -->
+  
+    
+  <script>
+    $(document).on('ready', function () {
+    	
+    	
+      var element = document.getElementById("userFeedbackLink");
+      element.classList.add("active");
+      
+      
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+  
+
+
+
+
+<!-- Number to Star -->
+<Script>
+	var value = document.getElementById("finalRating").innerText;
+	//var value = document.getElementById("val").value;
+	//alert(value);
+	document.getElementById("stars").innerHTML = getStars(value);
+
+	function getStars(rating) {
+
+	  // Round to nearest half
+	  rating = Math.round(rating * 2) / 2;
+	  let output = [];
+
+	  // Append all the filled whole stars
+	  for (var i = rating; i >= 1; i--)
+		output.push('<i class="fa fa-star" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+	  // If there is a half a star, append it
+	  if (i == .5) output.push('<i class="fa fa-star-half" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+	  // Fill the empty stars
+	  for (let i = (5 - rating); i >= 1; i--)
+		output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+	  return output.join('');
+
+	}
+	
+	
+
+</Script>
+
+
+    <script>
+		//http://auxiliary.github.io/rater/
+        $(document).ready(function(){
+            var optionsProactiveness = {
+                max_value: 5,
+                step_size: 0.5,
+                selected_symbol_type: 'utf8_star',
+                initial_value: 2.5,
+                update_input_field_name: $("#proactivenessTxt"),
+            }
+			
+			var optionsResponsible = {
+                max_value: 5,
+                step_size: 0.5,
+                selected_symbol_type: 'utf8_star',
+                initial_value: 2.5,
+                update_input_field_name: $("#responsibleTxt"),
+            }
+			
+			var optionsAvailability = {
+                max_value: 5,
+                step_size: 0.5,
+                selected_symbol_type: 'utf8_star',
+                initial_value: 2.5,
+                update_input_field_name: $("#availabilityTxt"),
+            }
+			
+			var optionsBehaviour = {
+                max_value: 5,
+                step_size: 0.5,
+                selected_symbol_type: 'utf8_star',
+                initial_value: 2.5,
+                update_input_field_name: $("#behaviourTxt"),
+            }
+			
+			var optionsCareAndHandling = {
+                max_value: 5,
+                step_size: 0.5,
+                selected_symbol_type: 'utf8_star',
+                initial_value: 2.5,
+                update_input_field_name: $("#careAndHandlingTxt"),
+            }
+
+            $("#proactivenessDiv").rate(optionsProactiveness);
+			$("#responsibleDiv").rate(optionsResponsible);
+			$("#availabilityDiv").rate(optionsAvailability);
+			$("#behaviourDiv").rate(optionsBehaviour);
+			$("#careAndHandlingDiv").rate(optionsCareAndHandling);
+			
+			var rating = 0;
+			var finalRating = 0;
+			
+			$("#proactivenessDiv").on("change", function(ev, data){
+				rating = Number($("#proactivenessTxt").val())+ 
+							Number($("#responsibleTxt").val()) + 
+							Number($("#availabilityTxt").val()) + 
+							Number($("#behaviourTxt").val()) + 
+							Number($("#careAndHandlingTxt").val());	
+							
+				finalRating = rating/5;
+				document.getElementById("finalRating").innerHTML=finalRating;
+				console.log("Data To :"+data.to+"---rating:"+rating+"--- Final Rating:"+finalRating);
+				document.getElementById("stars").innerHTML = getStars(finalRating); 
+
+            });
+			
+			$("#responsibleDiv").on("change", function(ev, data){
+				rating = Number($("#proactivenessTxt").val())+ 
+							Number($("#responsibleTxt").val()) + 
+							Number($("#availabilityTxt").val()) + 
+							Number($("#behaviourTxt").val()) + 
+							Number($("#careAndHandlingTxt").val());	
+							
+				finalRating = rating/5;
+				document.getElementById("finalRating").innerHTML=finalRating;
+				console.log("Data To :"+data.to+"---rating:"+rating+"--- Final Rating:"+finalRating);
+				document.getElementById("stars").innerHTML = getStars(finalRating); 
+				
+            });
+			
+			$("#availabilityDiv").on("change", function(ev, data){
+				rating = Number($("#proactivenessTxt").val())+ 
+							Number($("#responsibleTxt").val()) + 
+							Number($("#availabilityTxt").val()) + 
+							Number($("#behaviourTxt").val()) + 
+							Number($("#careAndHandlingTxt").val());	
+							
+				finalRating = rating/5;
+				document.getElementById("finalRating").innerHTML=finalRating;
+				console.log("Data To :"+data.to+"---rating:"+rating+"--- Final Rating:"+finalRating);
+				document.getElementById("stars").innerHTML = getStars(finalRating); 
+				
+            });
+			
+			$("#behaviourDiv").on("change", function(ev, data){
+				rating = Number($("#proactivenessTxt").val())+ 
+							Number($("#responsibleTxt").val()) + 
+							Number($("#availabilityTxt").val()) + 
+							Number($("#behaviourTxt").val()) + 
+							Number($("#careAndHandlingTxt").val());	
+							
+				finalRating = rating/5;
+				document.getElementById("finalRating").innerHTML=finalRating;
+				console.log("Data To :"+data.to+"---rating:"+rating+"--- Final Rating:"+finalRating);
+				document.getElementById("stars").innerHTML = getStars(finalRating);
+				
+            });
+			
+			$("#careAndHandlingDiv").on("change", function(ev, data){
+				rating = Number($("#proactivenessTxt").val())+ 
+							Number($("#responsibleTxt").val()) + 
+							Number($("#availabilityTxt").val()) + 
+							Number($("#behaviourTxt").val()) + 
+							Number($("#careAndHandlingTxt").val());	
+							
+				finalRating = rating/5;
+				document.getElementById("finalRating").innerHTML=finalRating;
+				console.log("Data To :"+data.to+"---rating:"+rating+"--- Final Rating:"+finalRating);
+				document.getElementById("stars").innerHTML = getStars(finalRating); 
+				
+            });
+			
+			
+            
+        });
+    </script>
+    
+      <script th:inline="javascript">   
+       $(document).ready(function() {
+    	   var focus;
+	       focus = /*[[${gotoPoint}]]*/'null';
+	       if(!(isEmpty(focus))){
+	    	   document.getElementById(focus).scrollIntoView();
+	       }else{
+	    	   document.getElementById('card1').scrollIntoView();
+	       }         
+       });
+	</script>
+  
+    <script>
+ 	 function isEmpty(value){
+		return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+	}
+  </script>
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

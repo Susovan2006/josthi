@@ -9,6 +9,7 @@ public class UserAuthBo {
 	private String useridEmail ;
 	private String wordapp ;
 	private Timestamp registrationDateTime ;
+	private String registrationDateTimeStr ;
 	private String status ;
 	private Timestamp loginTime ;
 	private String loginStatus ;
@@ -20,7 +21,9 @@ public class UserAuthBo {
 	private String comments ;
 	private int loginRetryCount;
 	private String temporaryLockEnabled;
-	
+	private String verifiedUser;
+	private String otp;
+	private String validEmail;
 	
 
 	
@@ -47,6 +50,14 @@ public class UserAuthBo {
 	}
 	public void setRegistrationDateTime(Timestamp registrationDateTime){
 		this.registrationDateTime = registrationDateTime ;
+	}
+	
+	
+	public String getRegistrationDateTimeStr() {
+		return registrationDateTimeStr;
+	}
+	public void setRegistrationDateTimeStr(String registrationDateTimeStr) {
+		this.registrationDateTimeStr = registrationDateTimeStr;
 	}
 	public String getStatus(){
 		return status ;
@@ -115,15 +126,40 @@ public class UserAuthBo {
 	public void setTemporaryLockEnabled(String temporaryLockEnabled) {
 		this.temporaryLockEnabled = temporaryLockEnabled;
 	}
+	
+	public String getVerifiedUser() {
+		return verifiedUser;
+	}
+	public void setVerifiedUser(String verifiedUser) {
+		this.verifiedUser = verifiedUser;
+	}
+	
+	
+	public String getOtp() {
+		return otp;
+	}
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+	
+	
+	public String getValidEmail() {
+		return validEmail;
+	}
+	public void setValidEmail(String validEmail) {
+		this.validEmail = validEmail;
+	}
 	@Override
 	public String toString() {
 		return "UserAuthBo [customerId=" + customerId + ", useridEmail=" + useridEmail + ", wordapp=" + wordapp
-				+ ", registrationDateTime=" + registrationDateTime + ", status=" + status + ", loginTime=" + loginTime
-				+ ", loginStatus=" + loginStatus + ", securityQuestion1=" + securityQuestion1 + ", securityQuestion2="
-				+ securityQuestion2 + ", securityAnswer1=" + securityAnswer1 + ", securityAnswer2=" + securityAnswer2
-				+ ", role=" + role + ", comments=" + comments + ", loginRetryCount=" + loginRetryCount
-				+ ", temporaryLockEnabled=" + temporaryLockEnabled + "]";
+				+ ", registrationDateTime=" + registrationDateTime + ", registrationDateTimeStr="
+				+ registrationDateTimeStr + ", status=" + status + ", loginTime=" + loginTime + ", loginStatus="
+				+ loginStatus + ", securityQuestion1=" + securityQuestion1 + ", securityQuestion2=" + securityQuestion2
+				+ ", securityAnswer1=" + securityAnswer1 + ", securityAnswer2=" + securityAnswer2 + ", role=" + role
+				+ ", comments=" + comments + ", loginRetryCount=" + loginRetryCount + ", temporaryLockEnabled="
+				+ temporaryLockEnabled + ", verifiedUser=" + verifiedUser + ", otp=" + otp + "]";
 	}
+	
 	
 	
 	

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>josthi.com | Select a Plan</title>
+
+  <div th:replace="Common :: includes"></div> 
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <div th:insert="Common :: nav-menu"></div>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main">
+        <!-- Hero Section -->
+    <div class="position-relative bg-img-hero" style="background-image: url(images/josthi/pricing/pricing4.jpg);">
+      <div class="container space-2 space-md-3 space-bottom-lg-4 min-h-300rem">
+        <div class="d-none d-md-block w-lg-50">
+          <h1 class="text-navy">Get a Plan Wisely.</h1>
+          <h2 class="h1 text-dark">Select a plan according to your need.</h2>
+        </div>
+      </div>
+
+      <!-- SVG Background -->
+      <figure class="position-absolute right-0 bottom-0 left-0">
+        <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+          <path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"/>
+        </svg>
+      </figure>
+      <!-- End SVG Background -->
+    </div>
+    <!-- End Hero Section -->
+
+    <!-- Clients Section -->
+    
+    <!-- End Clients Section -->
+
+    <!-- Features Section -->
+    
+    <!-- End Features Section -->
+
+    <!-- Pricing Section -->
+    <div class="overflow-hidden">
+      <div class="container pb-4">
+        <!-- Title -->
+        <div class="w-md-80 w-lg-60 text-center mx-md-auto mb-9">
+          <h2 class="h1">Flexible and transparent pricing</h2>
+          <p>Whatever your status, our offers evolve according to your needs.</p>
+        </div>
+        <!-- End Title -->
+
+        <!-- Toggle Switch -->
+        <div class="d-flex justify-content-center align-items-center mb-11">
+          <span class="font-size-1 text-muted">Monthly</span>
+          <label class="toggle-switch mx-2" for="customSwitch">
+            <input type="checkbox" class="js-toggle-switch toggle-switch-input" id="customSwitch"
+                   data-hs-toggle-switch-options='{
+                     "targetSelector": "#pricingCount1, #pricingCount2, #pricingCount3"
+                   }'>
+            <span class="toggle-switch-label">
+              <span class="toggle-switch-indicator"></span>
+            </span>
+          </label>
+          <div class="position-relative">
+            <span class="font-size-1 text-muted">Annual</span>
+
+            <!-- Arrow -->
+            <figure class="position-absolute top-0 text-nowrap mt-n5 ml-3 ml-md-7">
+              <svg class="d-block position-absolute mt-n2 ml-n4" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 99.3 57" width="48">
+                <path fill="none" stroke="#bdc5d1" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" d="M2,39.5l7.7,14.8c0.4,0.7,1.3,0.9,2,0.4L27.9,42"/>
+                <path fill="none" stroke="#bdc5d1" stroke-width="4" stroke-linecap="round" stroke-miterlimit="10" d="M11,54.3c0,0,10.3-65.2,86.3-50"/>
+              </svg>
+              <span class="badge badge-primary badge-pill py-sm-2 px-sm-3">Save up to 10%</span>
+            </figure>
+            <!-- End Arrow -->
+          </div>
+        </div>
+        <!-- End Toggle Switch -->
+
+        <div class="row mx-lg-5">
+          <div class="col-sm-6 col-lg-4 px-lg-5 mb-5">
+            <!-- Pricing -->
+            <div class="card shadow-none h-100">
+              <!-- Header -->
+              <div class="card-header border-0 text-center">
+                <span class="d-block h3 mb-0">Basic</span>
+                <span class="d-block">
+                  <span class="font-size-3 text-primary font-weight-bold">
+                    <span class="mr-n2">&#8377</span>
+                    <span id="pricingCount1"
+                           data-hs-toggle-switch-item-options='{
+                             "min": 700,
+                             "max": 600
+                           }'>700</span>
+                  </span>
+                  <span class="font-size-1">/ mon</span>
+                </span>
+              </div>
+              <!-- End Header -->
+
+              <!-- Body -->
+              <div class="card-body">
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    1 User
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Doctor Appointments
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    24X7 Contact Centre
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Physiotherapy
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Ambulance Assistance
+                  </div>
+                </div>
+				
+				<div class="card-footer border-0">
+					<button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
+				</div>
+				
+              </div>
+              <!-- End Body -->
+
+              <!--<div class="card-footer border-0">
+                <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
+              </div>-->
+            </div>
+            <!-- End Pricing -->
+          </div>
+
+          <div class="col-sm-6 col-lg-4 px-lg-5 mb-5">
+            <!-- Pricing -->
+            <div class="position-relative">
+              <div class="card shadow-lg h-100">
+                <!-- Header -->
+                <div class="card-header border-0 text-center">
+                  <span class="d-block h3 mb-0">Silver</span>
+                  <span class="d-block">
+                    <span class="font-size-3 text-primary font-weight-bold">
+                      <span class="mr-n2">&#8377</span>
+                      <span id="pricingCount2"
+                             data-hs-toggle-switch-item-options='{
+                               "min": 1000,
+                               "max": 800
+                             }'>1000</span>
+                    </span>
+                    <span class="font-size-1">/ mon</span>
+                  </span>
+                </div>
+                <!-- End Header -->
+
+                <!-- Body -->
+                <div class="card-body">
+                  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      2 User
+                    </div>
+                  </div>
+                  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Doctor Appointments
+                    </div>
+                  </div>
+                  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      24X7 Contact Centre
+                    </div>
+                  </div>
+                  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Arranging Physiotherapy
+                    </div>
+                  </div>
+                  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Ambulance Assistance
+                    </div>
+                  </div>
+				  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Non Medical Emergency
+                    </div>
+                  </div>
+				  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Hospitilization 24X7
+                    </div>
+                  </div>
+				  <div class="media font-size-1 mb-3">
+                    <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                    <div class="media-body">
+                      Regular Status update
+                    </div>
+                  </div>
+                </div>
+                <!-- End Body -->
+
+                <div class="card-footer border-0">
+                  <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
+                </div>
+              </div>
+
+              <!-- SVG Elements -->
+              <figure class="max-w-19rem w-100 position-absolute bottom-0 left-0 z-index-n1">
+                <div class="mb-n7 ml-n7">
+                  <img class="img-fluid" src="vendor/svg/components/dots-2.svg" alt="Image Description">
+                </div>
+              </figure>
+              <figure class="max-w-15rem w-100 position-absolute top-0 right-0 z-index-n1">
+                <div class="mt-n7 mr-n7">
+                  <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 260 260" xml:space="preserve">
+                    <circle fill="#ffc107" cx="130" cy="130" r="130"/>
+                  </svg>
+                </div>
+              </figure>
+              <!-- End SVG Elements -->
+            </div>
+            <!-- End Pricing -->
+          </div>
+
+          <div class="col-sm-6 col-lg-4 px-lg-5 mb-5">
+            <!-- Pricing -->
+            <div class="card shadow-none h-100">
+              <!-- Header -->
+              <div class="card-header border-0 text-center">
+                <span class="d-block h3 mb-0">Gold</span>
+                <span class="d-block">
+                  <span class="font-size-3 text-primary font-weight-bold">
+                    <span class="mr-n2">&#8377</span>
+                    <span id="pricingCount3"
+                           data-hs-toggle-switch-item-options='{
+                             "min": 2000,
+                             "max": 1500
+                           }'>2000</span>
+                  </span>
+                  <span class="font-size-1">/ mon</span>
+                </span>
+              </div>
+              <!-- End Header -->
+
+              <!-- Body -->
+              <div class="card-body">
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    2 User
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Doctor Appointments
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    24X7 Contact Centre
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                   Arranging Physiotherapy
+                  </div>
+                </div>
+                <div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Ambulance Assistance
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Non Medical Emergency
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Hospitilization 24X7
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Regular Status update
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Home repair/Cleaning
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Plumbing services
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Electrician
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging transportation
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranding Home Cook Service
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging Internet/Wifi Service
+                  </div>
+                </div>
+				<div class="media font-size-1 text-body mb-3">
+                  <i class="fas fa-check-circle text-success mt-1 mr-2"></i>
+                  <div class="media-body">
+                    Arranging carpenter Service
+                  </div>
+                </div>
+              </div>
+              <!-- End Body -->
+
+              <div class="card-footer border-0">
+                <button type="button" class="btn btn-soft-primary btn-block transition-3d-hover">Get Started</button>
+              </div>
+            </div>
+            <!-- End Pricing -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Pricing Section -->
+
+    <!-- Icon Blocks Section -->
+    
+    <!-- End Icon Blocks Section -->
+
+    <!-- Articles Section -->
+    
+    <!-- End Articles Section -->
+
+    <!-- Subscription Section -->
+    
+    <!-- End Subscription Section -->
+
+    <!-- Clients Section -->
+    
+    <!-- End Clients Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+    <div th:insert="Common :: site-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 700,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- JS Global Compulsory -->
+  <div th:insert="Common :: js-includes"></div>
+
+  <!-- JS Plugins Init. -->
+  <script>
+    $(document).on('ready', function () {
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of toggle switch
+      $('.js-toggle-switch').each(function () {
+        var toggleSwitch = new HSToggleSwitch($(this)).init();
+      });
+
+      // initialization of aos
+      AOS.init({
+        duration: 650,
+        once: true
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+    });
+  </script>
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

@@ -5,15 +5,41 @@
 	<!-- Required Meta Tags Always Come First -->
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+	  <meta name="keywords"  content="Kolkata, Parents, Emergency Services in Kolkata, West Bengal, India, Josthi, Kolkata Hospital"/>
 	  <!-- Favicon -->
-	  <link rel="shortcut icon" href="/images/josthi/icon/IE_icon.png">
-	
+	  <link rel="shortcut" th:href="@{/images/josthi/icon/favicon.ico}">
+	  <link rel="icon" th:href="@{/images/josthi/icon/favicon.ico}">
+	  
+	 <!--  <link rel="icon" href="/favicon.ico" type="image/x-icon"> -->
+	  
+	  
+	  <!-- IPHONE CONGIG 
+		
+		<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/ios_apple/apple-touch-icon-57x57.png}">
+		<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/ios_apple/apple-touch-icon-114x114.png}">
+		<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/ios_apple/apple-touch-icon-72x72.png}">   
+		<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/ios_apple/apple-touch-icon-144x144.png}">
+		<link rel="apple-touch-icon" sizes="120x120" th:href="@{/images/ios_apple/apple-touch-icon-120x120.png}">
+		<link rel="apple-touch-icon" sizes="76x76" th:href="@{/images/ios_apple/apple-touch-icon-76x76.png}">
+		<link rel="apple-touch-icon" sizes="152x152" th:href="@{/images/ios_apple/apple-touch-icon-152x152.png}">
+		<link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/ios_apple/apple-touch-icon-180x180.png}">
+		
+		<link rel="apple-touch-icon" th:href="@{/images/ios_apple/apple-touch-icon.png}">-->
+		
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		
+		<meta name="apple-mobile-web-app-title" content="Josthi.com">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		
+		
+		<!-- <link rel="icon" sizes="180x180" th:href="@{/images/ios_apple/apple-touch-icon-180x180.png}">-->
+		
 	  <!-- Font -->
 	  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
 	
 	  <!-- CSS Implementing Plugins -->
-	  <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/all.min.css}">
+	  <!--  <link rel="stylesheet" th:href="@{/vendor/font-awesome/css/all.min.css}">-->
+	  <link rel="stylesheet" href="/webjars/font-awesome/5.0.10/web-fonts-with-css/css/fontawesome-all.min.css"/>
 	  <link rel="stylesheet" th:href="@{/vendor/hs-mega-menu/dist/hs-mega-menu.min.css}">
 	  <link rel="stylesheet" th:href="@{/vendor/jquery-ui/themes/base/jquery-ui.min.css}">
 	  <link rel="stylesheet" th:href="@{/vendor/prism/prism.css}">
@@ -292,7 +318,7 @@
 		      </div>
 		    </div>
 		    <!-- End Copyright -->
-		  </div>
+		  </div>		  
 		</footer>
 		<!-- ========== END FOOTER ========== -->
 	
@@ -301,7 +327,6 @@
 		  $('.js-validate').each(function () {
 		    var validation = $.HSCore.components.HSValidation.init($(this));
 		  });
-		  
 		</script>
 	</div>
 	
@@ -377,7 +402,7 @@
 	        <nav class="js-mega-menu navbar navbar-expand-lg">
 	          <!-- Logo -->
 	          <a class="navbar-brand" href="/" aria-label="Front">
-	            <img src="images/josthi/logo/logo_250x80.svg" alt="Logo">
+	            <img src="../images/josthi/logo/logo_250x80.svg" alt="Logo">
 	          </a>
 	          <!-- End Logo -->
 	
@@ -409,20 +434,13 @@
 					<li class="navbar-nav-item">
 						<a class="nav-link" href="/">Home</a>
 					</li>
-					<li class="navbar-nav-item">
-					  <a class="nav-link" href="/searchLawyers">Find a Service<span class="badge badge-primary badge-pill ml-2">New</span></a>
-					</li>
-					<li class="navbar-nav-item">
-					  <a class="nav-link" href="/forAgents">For Agents</a>
-					</li>
-
+					
+					<!-- Login -->
 					<li class="navbar-nav-item">
 					  <a class="nav-link" href="/login">login</a>
-					</li>
+					</li>					
 					
-					<!--  <li class="navbar-nav-item">
-					  <a class="nav-link" href="/pricing">Plan & Price</a>
-					</li> -->
+					<!-- Plan and Services -->
 					<!-- ================== Pricing and Plan START ==================== -->
 			            <li class="hs-has-sub-menu navbar-nav-item"
 			                data-hs-mega-menu-item-options='{
@@ -430,62 +448,109 @@
 			                    "position": "left"
 			                  }
 			                }'>
-			              <a id="pagesMegaMenu" class="hs-mega-menu-invoker nav-link nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Plan & Pricing</a>
+			              <a id="pagesMegaMenu" class="hs-mega-menu-invoker nav-link nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Plan & Services</a>
 			
-			              <div id="pagesSubMenu" class="hs-sub-menu dropdown-menu" aria-labelledby="pagesMegaMenu" style="min-width: 230px;">
-			                <a class="dropdown-item" href="/pricing">Price</a>
-			                <a class="dropdown-item" href="/planDetails">Plan Details</a>
-			                <!-- <a class="dropdown-item" href="#contacts-section"></a> -->
+			              <div id="pagesSubMenu" class="hs-sub-menu dropdown-menu" aria-labelledby="pagesMegaMenu" style="min-width: 230px;">	
+			                	                
+			                <a class="dropdown-item" href="/planDetails">Josthi Services</a>
+			                <a class="dropdown-item" href="/onDemandService">On Demand Services</a>
+			                <a class="dropdown-item" href="/pricing">Plan & Price</a>
 			              </div>
 			            </li>
 					
 					<!-- ================== Pricing and Plan END ==================== -->
+					
+					<!-- For Agents -->
+					<li class="navbar-nav-item">
+					  <a class="nav-link" href="/forAgents">For Agents</a>
+					</li>
+					
+					<!-- Contact Us -->
+					<li class="navbar-nav-item">
+					  <a class="nav-link" href="/contactUs">Contact Us</a>
+					</li>
+					
+
+
 	                <!-- Pages -->
 	                <li class="hs-has-sub-menu navbar-nav-item">
-	                  <a id="pagesMegaMenu" class="hs-mega-menu-invoker nav-link nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">About Us</a>
-	
+	                  <a id="pagesMegaMenu" class="hs-mega-menu-invoker nav-link nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Others</a>
+									
 	                  <!-- Pages - Submenu -->
 	                  <div id="pagesSubMenu" class="hs-sub-menu dropdown-menu" aria-labelledby="pagesMegaMenu" style="min-width: 230px;">
+	                   
+	                    <a class="dropdown-item" href="/knowUs">Know Us</a>
+	                    <a class="dropdown-item" href="/howItWork">How it Works</a>
 	                    
-	                    <!-- Development -->
+	                     <!-- Privacy &amp; Policy -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkPagesLogin" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesLogin">Privacy &amp; Policy</a>
+	
+	                      <div id="navSubmenuPagesLogin" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesLogin" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="/terms">Terms &amp; Conditions</a>
+	                        <a class="dropdown-item" href="/faq" target="_blank">FAQ</a>
+	                      </div>
+	                    </div>
+
+	                    
+	                    <!-- New and Media -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkPagesLogin" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesLogin">News</a>
+	
+	                      <div id="navSubmenuPagesLogin" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesLogin" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="/comingSoon">Coming Soon</a>
+	                      </div>
+	                    </div>
+	                    
+	                    <!-- Help & Documents -->
+	                    <div class="hs-has-sub-menu">
+	                      <a id="navLinkPagesLogin" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesLogin">Help</a>
+	
+	                      <div id="navSubmenuPagesLogin" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesLogin" style="min-width: 230px;">
+	                        <a class="dropdown-item" href="/admin/wiki">Documents</a>
+	                        <a class="dropdown-item" href="/contactUs">Post Queries</a>
+	                        <a class="dropdown-item" href="#">User Guide</a>
+	                      </div>
+	                    </div>
+	                    
+	                    
+	                    <!-- Development 
 	                    <div class="hs-has-sub-menu">
 	                      <a id="navLinkPagesCompany" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesCompany">Code Dev</a>
 	
 	                      <div id="navSubmenuPagesCompany" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesCompany" style="min-width: 230px;">
 	                        <a class="dropdown-item" href="/admin/wiki">Wiki</a>
 	                      </div>
-	                    </div>
-	                    <!-- Development -->
+	                    </div>-->
+	                    
 	                    
 	                    
 	                    <!-- Company -->
-	                    <div class="hs-has-sub-menu">
+	                    <!-- <div class="hs-has-sub-menu">
 	                      <a id="navLinkPagesCompany" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesCompany">Company</a>
 	
 	                      <div id="navSubmenuPagesCompany" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesCompany" style="min-width: 230px;">
 	                        <a class="dropdown-item" href="#">History</a>
 	                      </div>
-	                    </div>
+	                    </div> -->
 	                    <!-- Company -->
 	
 	                    <!-- Portfolio -->
-	                    <div class="hs-has-sub-menu">
+	                    <!-- <div class="hs-has-sub-menu">
 	                      <a id="navLinkPagesPortfolio" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesPortfolio">Register</a>
 	
 	                      <div id="navSubmenuPagesPortfolio" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesPortfolio" style="min-width: 230px;">
 	                        <a class="dropdown-item" href="#">Register as user</a>
-	                        <!--<a class="dropdown-item" href="#">Masonry</a>
-	                        <a class="dropdown-item" href="#">Modern</a> -->
 	                        <div class="dropdown-divider"></div>
 	                        <a class="dropdown-item" href="#">Register as Lawyer</a>
 	                        <div class="dropdown-divider"></div>
 	                        <a class="dropdown-item" href="#">How to Register</a>
 	                      </div>
-	                    </div>
+	                    </div> -->
 	                    <!-- End Portfolio -->
 	
 	                    <!-- Login -->
-	                    <div class="hs-has-sub-menu">
+	                    <!-- <div class="hs-has-sub-menu">
 	                      <a id="navLinkPagesLogin" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesLogin">Login &amp; Signup</a>
 	
 	                      <div id="navSubmenuPagesLogin" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesLogin" style="min-width: 230px;">
@@ -493,21 +558,21 @@
 	                        <a class="dropdown-item" href="/userSignup">Signup</a>
 	                        <a class="dropdown-item" href="/accountRecovery">Recover Account</a>
 	                      </div>
-	                    </div>
+	                    </div> -->
 	                    <!-- Signup -->
 	
 	                    <!-- Contacts -->
-	                    <div class="hs-has-sub-menu">
+	                    <!-- <div class="hs-has-sub-menu">
 	                      <a id="navLinkContactsServices" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuContactsServices">Contacts</a>
 	
 	                      <div id="navSubmenuContactsServices" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkContactsServices" style="min-width: 230px;">
 	                        <a class="dropdown-item" href="/contactUs">Contacts us</a>
 	                      </div>
-	                    </div>
+	                    </div> -->
 	                    <!-- Contacts -->
 	
 	                    <!-- Utilities -->
-	                    <div class="hs-has-sub-menu">
+	                    <!-- <div class="hs-has-sub-menu">
 	                      <a id="navLinkPagesUtilities" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesUtilities">Know Us</a>
 	
 	                      <div id="navSubmenuPagesUtilities" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesUtilities" style="min-width: 230px;">
@@ -517,18 +582,18 @@
 	                        <a class="dropdown-item" href="/privacy">Privacy &amp; Policy</a>
 	                        <a class="dropdown-item" href="/test">Test</a>
 	                      </div>
-	                    </div>
+	                    </div> -->
 	                    <!-- Utilities -->
 	
 	                    <!-- Specialty -->
-	                    <div class="hs-has-sub-menu">
+	                    <!-- <div class="hs-has-sub-menu">
 	                      <a id="navLinkPagesSpecialty" class="hs-mega-menu-invoker dropdown-item dropdown-item-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-controls="navSubmenuPagesSpecialty">News</a>
 	
 	                      <div id="navSubmenuPagesSpecialty" class="hs-sub-menu dropdown-menu" aria-labelledby="navLinkPagesSpecialty" style="min-width: 230px;">
 	                        <a class="dropdown-item" href="#">Coming Soon</a>
 	                        <a class="dropdown-item" href="#">Maintenance Mode</a>
 	                      </div>
-	                    </div>
+	                    </div> -->
 	                    <!-- Specialty -->
 	                  </div>
 	                  <!-- End Pages - Submenu -->

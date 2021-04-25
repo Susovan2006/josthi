@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Title -->
+  <title>Service Request | Josthi.com</title>
+
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  <div th:replace="user_common :: includes"></div>
+  <!--  ======================== CSS INCLUDES ===================== -->	
+  
+    <!-- Susovan -->
+  <Style>
+	  .customBorder {
+			border: 0.0625rem solid #5c5e63 !important;
+	  }
+	  
+	  .table_wrapper{
+		    display: block;
+		    overflow-x: auto;
+		    white-space: nowrap;
+		}
+		
+	  .wrap-text {
+		    word-wrap: break-word;
+		    white-space:pre-wrap;
+		}
+		
+		
+	 /* this CSS is to display the message from Ajax call*/
+	  .ticketStatus {
+		  display: none;
+		  color: #555;
+		  border-radius: 5px;
+		  font-family: Tahoma, Geneva, Arial, sans-serif;
+		  font-size: .8em;
+		  padding: 5px 5px 5px 30px;
+		  margin: 5px 5px 5px 5px;
+		  width:100%;
+		  background: #ffecec;
+		  border: 2px solid #f5aca6;
+		}
+  
+  </Style>
+  
+  
+</head>
+<body>
+  
+
+  <!-- ========== MAIN ========== -->
+  <main id="content" role="main" class="bg-light">
+    <!-- Breadcrumb Section -->
+    <div class="bg-navy" style="background-image: url(../vendor/svg/components/abstract-shapes-17.svg);">
+      <div class="container space-1 space-top-lg-2 space-bottom-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Request a Service</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb breadcrumb-light breadcrumb-no-gutter mb-0">
+              <li class="breadcrumb-item">Plan and Service</li>
+              <li class="breadcrumb-item active" aria-current="page">Request a Service</li>
+            </ol>
+            <!-- End Breadcrumb -->
+          </div>
+
+          <!-- ===================== Log out ==================== -->
+		  <div th:replace="user_common :: user-logout"></div>
+		  <!-- ===================== Log out ==================== -->
+        </div>
+      </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Content Section -->
+    <div class="container space-1 space-top-lg-0 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <!--  ======================== USER NAVIGATION STARTS HERE =============================== -->
+		    <div th:insert="user_common :: user-navigation-menu"></div>
+          <!--  ======================== USER NAVIGATION END HERE ================================== -->
+          <!-- End Navbar -->
+        </div>
+
+        <div class="col-lg-9">
+        
+        <!-- ********************** CARD 1 ************************************-->
+		
+			<div class="card mb-3 mb-lg-5" id="card1">
+	            <div class="card-header">
+	              <div class="d-flex align-items-center">
+	                <h5 class="card-title">Open a Service Request Ticket</h5>
+	                <span class="badge badge-soft-danger ml-2"></span>
+	              </div>
+	            </div>
+	
+	            <!-- Alert Section Start-->
+	            <div th:if="${status ne null}">
+		            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${status == 'Success'} ? alert-success : alert-warning">
+					  <strong><span th:text="${status}"></span>:</strong> <span th:text="${message}"></span>
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+					      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+					    </svg>
+					  </button>
+					</div>
+				</div>
+				<!-- Alert Section End-->
+	
+	
+	
+	            <!-- Body -->
+	            <div class="card-body">
+	              <p class="card-text"></p>
+	
+	
+					<!-- Step Form -->
+					<form id="serviceRequestForm" class="js-step-form js-validate"
+						  data-hs-step-form-options='{
+							"progressSelector": "#advancedFormStepFormProgress",
+							"stepsSelector": "#advancedFormStepFormContent",
+							"isValidate": true
+						  }'  th:action="@{/user/createServiceTicket/{custId}(custId=${session.USER_SESSION_OBJ_KEY.customerId})}" 
+			  											              				th:object="${serviceRequestBean}"  method="post">
+			  											              				
+			  											              				
+			  		 <!-- These Values are populated from session -->
+				     <input type="hidden" th:field="*{requestedBy}"  id="requesterNameServReq">
+				     <input type="hidden" th:field="*{requesterId}"  id="userIdServReq">
+				     
+				     
+					  <!-- Step -->
+					  <ul id="advancedFormStepFormProgress" class="js-step-progress step step-md step-inline mb-5">
+						<li class="step-item">
+						  <div class="step-content-wrapper">
+							<span class="step-icon step-icon-soft-primary">1</span>
+							<div class="step-content">
+							  <span class="step-inline-title">Beneficiary</span>
+							</div>
+						  </div>
+						</li>
+	
+						<li class="step-item">
+						  <div class="step-content-wrapper">
+							<span class="step-icon step-icon-soft-primary">2</span>
+							<div class="step-content">
+							  <span class="step-inline-title">Service</span>
+							</div>
+						  </div>
+						</li>
+	
+						<li class="step-item">
+						  <div class="step-content-wrapper">
+							<span class="step-icon step-icon-soft-primary">3</span>
+							<div class="step-content">
+							  <span class="step-inline-title">Review</span>
+							</div>
+						  </div>
+						</li>
+	
+						<li class="step-item">
+						  <div class="step-content-wrapper">
+							<span class="step-icon step-icon-soft-primary">4</span>
+							<div class="step-content">
+							  <span class="step-inline-title">Confirmation</span>
+							</div>
+						  </div>
+						</li>
+					  </ul>
+					  <!-- End Step -->
+						</BR>
+						</BR>
+					  <!-- Content Step Form -->
+					  <div id="advancedFormStepFormContent" class="customBorder rounded p-4">
+					  <!-- TAB 1 -->
+						<div id="advancedFormSelectStepOne" class="active">
+						  <!-- Input Group -->
+						  <div class="mb-4">
+							<label class="input-label" for="advancedFormUsername">Select Beneficiary</label>
+							
+							<div class="input-group-sm js-form-message">
+								<div class="input-group ">
+								  <select th:field="*{requestedFor}" id="selectedBeneficiaryName" class="form-control show-tick" required data-msg="This is a required field, looks like the beneficiary is not added. Go to Beneficiary Details link and add them." >                            
+											
+											<option th:each="beneficiary : ${beneficiaryList}"
+                             					th:value="${beneficiary.keyId}"
+                             					th:text="${beneficiary.value}" />
+											
+									</select>
+								</div>
+							</div>
+							
+						  </div>
+						  <!-- End Input Group -->
+	
+						  <div class="d-flex justify-content-end">
+							<button onclick="deafultDate();" type="button" class="btn btn-sm btn-primary transition-3d-hover mr-1"
+									data-hs-step-form-next-options='{
+									  "targetSelector": "#advancedFormSelectStepTwo"
+									}'>Next</button>
+						  </div>
+						</div>
+	
+						<!-- ****************** TAB 2 *****************************************-->
+						<div id="advancedFormSelectStepTwo" style="display: none;">
+						  <!-- Input Group -->	
+							<!-- ROW 1 -->
+							<div class="row"> 
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label id="serviceTypeLbl" class="input-label">Service Type.</label>
+									  <select th:field="*{serviceType}" id="selectedServiceType" class="form-control show-tick " required data-msg="This is a required field.">                            
+												
+												<!-- Pre-Paid Servise /Adhoc Service -->
+												<option th:each="serviceType : ${serviceTypeList}"
+                             					th:value="${serviceType.keyId}"
+                             					th:text="${serviceType.value}" />
+												
+										</select>
+									</div>
+								</div>
+								
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label id="FulfillDateLbl" class="input-label">Fulfill Date<i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="Should be with in a month."></i><span class="text-danger">*</span></label>
+									  
+									  <input type="date" th:field="*{toBeCompletedByStr}"  class="js-masked-input form-control"  
+											id="requestFulfillDate" name="requestFulfillDate" placeholder="dd-mm-yyyy" min="1985-01-01" max="2000-12-31" 
+											data-msg="Fulfill Date is mandatory." required>
+									</div>
+								</div>
+							 
+							</div>
+							
+							<!-- ROW 2 --> 
+							
+							<div class="row"> 
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label id="serviceCategoryLbl" class="input-label">Service Category.</label>
+										<select th:field="*{serviceCategory}" class="form-control" id="selectedCategory" name="Category"  
+														required data-msg="Category can't be blank, looks like no plan is purchased.">
+												
+												<option th:each="servicaCategory : ${servicaCategoryList}"
+                             					th:value="${servicaCategory.keyId}"
+                             					th:text="${servicaCategory.value}" />
+											</select>
+									</div>
+								</div>
+								
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label id="UrgencyLbl" class="input-label">Urgency/Priority</label>
+										<select th:field="*{serviceUrgency}" id="selectedUrgency" class="form-control" name="Urgency"  
+											required data-msg="Select the urgency of the request.">
+												
+												<option th:each="urgencyType : ${urgencyTypeList}"
+                             					th:value="${urgencyType.keyId}"
+                             					th:text="${urgencyType.value}" />
+											
+											</select>
+									</div>
+								</div>
+							 
+							</div>
+							
+							<!-- Row 3 -->
+							<div class="row">                				  
+							  <div class="col-sm-12">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Request Details (2000 char Max)</label>
+								  
+								  <textarea th:field="*{serviceReqDescription}" cols="30" rows="3" class="form-control no-resize" id="requestNotes" name="requestNotes" placeholder="Put the request description in details." 
+											maxlength="2000" required data-msg="Please describe in details."></textarea>
+								</div>
+							  </div>
+							 </div>
+	
+						  <div class="d-flex justify-content-end">
+							<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+							   data-hs-step-form-prev-options='{
+								 "targetSelector": "#advancedFormSelectStepOne"
+							   }'>Back</a>
+							<button onclick="reviewData();" type="button" class="btn btn-sm btn-primary transition-3d-hover"
+									data-hs-step-form-next-options='{
+									  "targetSelector": "#advancedFormSelectStepThree"
+									}'>Next</button>
+						  </div>
+						</div>
+						<!-- TAB 3 -->
+						<div id="advancedFormSelectStepThree" style="display: none;">
+						  <!-- Input Group -->
+						  <!-- ROW 1 --> 
+							
+							<div class="row"> 
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label id="serviceCategoryLbl" class="input-label">Service For:</label>
+									  <p id="benefetiaryId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Request Type</label>
+									  <p id="requestTypeId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Service Date</label>
+									  <p id="serviceDateId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Urgency</label>
+									  <p id="urgencyId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+							 
+							</div>
+							<!-- ROW 2 -->
+							<div class="row"> 
+								<div class="col-sm-6">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Service Title:</label>
+									  <p id="serviceTitleId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Additional Charges</label>
+									  <p id="chargeId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group js-form-message">
+									  <label class="input-label">Status</label>
+									  <p id="statusId" class="font-size-1 text-primary">-</p>
+									</div>
+								</div>
+							</div>
+							
+							<!-- ROW 3 -->
+							<div class="row">                				  
+							  <div class="col-sm-12">
+								<div class="form-group js-form-message">
+								  <label class="input-label">Request Description</label>
+								  <p id="descriptionId" class="font-size-1 text-primary"></p>
+								  
+								</div>
+							  </div>
+							 </div>						 
+							 </BR>
+						  <!-- End Input Group -->
+	
+	
+						  <div class="d-flex justify-content-end">
+							<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+							   data-hs-step-form-prev-options='{
+								 "targetSelector": "#advancedFormSelectStepTwo"
+							   }'>Back</a>
+							<button type="button" onclick="submitRequestForm()" class="btn btn-sm btn-primary transition-3d-hover"
+									data-hs-step-form-next-options='{
+									  "targetSelector": "#advancedFormSelectStepFour"
+									}'>Confirm</button>
+						  </div>
+						</div>
+						<!-- TAB 4 -->
+						<div id="advancedFormSelectStepFour" style="display: none;">
+						  Please click on the Submit button to Confirm.
+	
+						  <div class="d-flex justify-content-end">
+							<a class="btn btn-sm btn-soft-secondary transition-3d-hover mr-1" href="javascript:;"
+							   data-hs-step-form-prev-options='{
+								 "targetSelector": "#advancedFormSelectStepThree"
+							   }'>Back</a>
+							<button type="button" class="btn btn-sm btn-primary transition-3d-hover">Done</button>
+						  </div>
+						</div>
+					  </div>
+					  <!-- End Content Step Form -->
+					</form>
+					<!-- End Step Form -->
+	              
+	            </div>
+	            <!-- End Body -->
+	          </div>
+        
+        
+        
+        
+        
+        
+        
+        <!-- ********************** CARD 2 ************************************-->
+          <!-- Card -->
+          <div class="card mb-3 mb-lg-5" id="ticketDetailsList">
+            <div class="card-header">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title">Posted Service Request</h5>
+                <span class="badge badge-soft-danger ml-2"></span>
+              </div>
+            </div>
+
+
+	            <!-- Alert Section Start-->
+	            <div th:if="${statusForTable ne null}">
+		            <div class="alert alert-dismissible fade show" role="alert" th:classappend="${statusForTable == 'Success'} ? alert-success : alert-warning">
+					  <strong><span th:text="${statusForTable}"></span>:</strong> <span th:text="${messageForTable}"></span>
+					  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    <svg aria-hidden="true" class="mb-0" width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+					      <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+					    </svg>
+					  </button>
+					</div>
+				</div>
+				<!-- Alert Section End-->
+
+            <!-- Body -->
+            <div class="card-body">
+              <p class="card-text"></p>
+
+              <form class="js-validate">
+                <!-- Form Group -->
+							
+					<div th:if="${not #lists.isEmpty(serviceRequestBeanList)}" class="table_wrapper">	
+						
+						<table class="table table-thead-bordered" id="ticketTable">
+						  <thead class="thead-light">
+							<tr>
+							  <th scope="col">Request No</th>
+							  <th scope="col">Beneficiary Name</th>
+							  <th scope="col">Request On</th>
+							  <th scope="col">Latest Status</th>
+							  <th scope="col">Action</th>
+							</tr>
+						  </thead>
+						  	<tbody>
+								<tr th:each="serviceRequestBean : ${serviceRequestBeanList}" >
+							      <td th:id="${serviceRequestBean.ticketNo}" th:text="${serviceRequestBean.ticketNo}">1</td>
+							      <td th:text="${serviceRequestBean.requestedFor}">Name</td>
+							      <td th:text="${serviceRequestBean.requestedDate}">Date</td>
+							      <td th:text="${serviceRequestBean.serviceStatus}">Status</td>
+							      <td>
+							      	  <!-- <a href="#"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;
+									  <a href="#"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;
+									  <a href="#"><i class="fa fa-edit"></i></a> --> 
+									  
+								  <!-- View Ticket -->
+								  <a data-toggle="modal" data-target="#modal-toView"
+                                           th:attr="data-target='#modal-toView'+${serviceRequestBean.ticketNo}">
+                                            <span class="fa fa-eye" data-toggle="tooltip"
+                                                  data-placement="top" title="View Open Request"></span></a>&nbsp;&nbsp;
+								  
+								  
+								  <!-- Edit Ticket -->
+								  <a data-toggle="modal" data-target="#modal-toEdit"
+                                           th:attr="data-target='#modal-toEdit'+${serviceRequestBean.ticketNo}">
+                                            <span class="fa fa-edit" data-toggle="tooltip"
+                                                  data-placement="top" title="Want to Edit the Service Request?"></span></a>&nbsp;&nbsp;
+                                                  
+                                  <!-- Ticket History-->
+								  <!-- <a data-toggle="modal" data-target="#modal-toHistory"
+                                           th:attr="data-target='#modal-toHistory'+${serviceRequestBean.ticketNo}">
+                                            <span class="fa fa-history" data-toggle="tooltip"
+                                                  data-placement="top" title="View the history of the Ticket"></span></a>&nbsp;&nbsp; -->
+                                  <a th:href="@{/user/ticketHistory/{ticket}(ticket=${serviceRequestBean.ticketNo})}">
+                                            <span class="fa fa-history" data-toggle="tooltip"
+                                                  data-placement="top" title="View the history of the Ticket"></span></a>&nbsp;&nbsp;
+								  
+								  <!-- Pay for Ticket -->
+								  <a data-toggle="modal" data-target="#modal-toPay"
+                                           th:attr="data-target='#modal-toPay'+${serviceRequestBean.ticketNo}">
+                                            <span class="fa fa-credit-card" data-toggle="tooltip"
+                                                  data-placement="top" title="Please Pay for this ticket, else wit will be discarded in 24 hours."></span></a>
+                                   
+                                   	 <!-- ************************************************************************************* -->            
+                                     <!--                                  VIEW SUBMITTED REQUEST	                            -->
+									 <!-- ************************************************************************************* -->
+									<div class="modal fade" th:id="modal-toView+${serviceRequestBean.ticketNo}" tabindex="-1" role="dialog" aria-hidden="true">
+									  <div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+										  <!-- Header -->
+										  <div class="modal-top-cover bg-secondary text-center">
+											<figure class="position-absolute right-0 bottom-0 left-0">
+											  <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+												<path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"/>
+											  </svg>
+											</figure>
+					
+											<div class="modal-close">
+											  <button type="button" class="btn btn-icon btn-sm btn-ghost-light" data-dismiss="modal" aria-label="Close">
+												<svg width="16" height="16" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+												  <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+												</svg>
+											  </button>
+											</div>
+										  </div>
+										  <!-- End Header -->
+					
+										  <div class="modal-top-cover-avatar">
+											<img class="avatar avatar-lg avatar-circle avatar-border-lg avatar-centered shadow-soft" th:src="@{/images/josthi/icon/IE_icon.png}" alt="Logo">
+										  </div>
+					
+										  <!-- Body -->
+										  <div class="modal-body pt-3 pb-sm-5 px-sm-5">
+											<div class="text-center mb-5">
+											  <h3 class="mb-1">Service Request : #<span th:text="${serviceRequestBean.ticketNo}"></span></h3>
+											  <span class="d-block" th:text="${serviceRequestBean.requestedFor}"></span>
+											</div>
+					
+											<div class="row mb-6">
+											  <div class="col-md-4 mb-3 mb-md-0">
+												<small class="text-cap">Service Charge:</small>
+												<span class="text-dark">316.8&#8377</span>
+											  </div>
+					
+											  <div class="col-md-4 mb-3 mb-md-0">
+												<small class="text-cap">Requested On:</small>
+												<span class="text-dark" th:text="${serviceRequestBean.requestedDate}"></span>
+											  </div>
+					
+											  <div class="col-md-4">
+												<small class="text-cap">Payment Status:</small>
+												<div class="d-flex align-items-center">
+												  <span class="text-dark">Covered by Plan</span>
+												</div>
+											  </div>
+											</div>
+					
+											<small class="text-cap mb-2">Request Summary</small>
+					
+											<ul class="list-group mb-4">
+											  <li class="list-group-item text-dark">
+												<div class="d-flex justify-content-between align-items-center">
+												  <span>Request Details:</span>
+												  <span class="text-primary" th:text="${serviceRequestBean.requestedDate}"></span>
+												</div>
+											  </li>
+											  <li class="list-group-item text-dark">
+												<div class="d-flex justify-content-between align-items-center">
+												  <span>Request Priority/Urgency :</span>
+												  <span class="text-primary" th:text="${serviceRequestBean.serviceUrgency}"></span>
+												</div>
+											  </li>
+											  <li class="list-group-item text-dark">
+												<div class="d-flex justify-content-between align-items-center">
+												  <span>Request assigned to :</span>
+												  <span class="text-primary" th:text="${serviceRequestBean.assignedTo}"></span>
+												</div>
+											  </li>
+											  <li class="list-group-item text-dark">
+												<div class="d-flex justify-content-between align-items-center">
+												  <span>Last Status:</span>
+												  <span class="text-primary" th:text="${serviceRequestBean.serviceStatus}"></span>
+												</div>
+											  </li>
+											  <li class="list-group-item text-dark">
+												<div class="d-flex justify-content-between align-items-center">
+												  <span>Last Updated on:</span>
+												  <span class="text-primary" th:text="${serviceRequestBean.formattedLastUpdate}"></span>
+												</div>
+											  </li>
+											  <li class="list-group-item text-dark">
+												<div class="d-flex justify-content-between align-items-center">
+												  <span></span>
+												  <span class="wrap-text text-primary" th:text="${serviceRequestBean.serviceReqDescription}"></span>
+												</div>
+											  </li>
+											</ul>
+					
+											<!--<div class="d-flex justify-content-end">
+											    <a class="btn btn-xs btn-white" href="#"><i class="fas fa-file-download mr-1"></i> PDF</a>
+											  <span class="mx-1"></span>
+											  <a class="btn btn-xs btn-white" href="#"><i class="fas fa-print mr-1"></i> Print Details</a>
+											</div>-->
+											
+											<div class="d-flex justify-content-end">
+									              <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Close</button>
+									              
+									        </div>
+					
+											<hr class="my-5">
+					
+											<p class="modal-footer-text wrap-text">If you have any questions, please contact us at <a href="mailto:support@josthi.com">support@josthi.com</a> or call at <a class="text-nowrap" href="#">+1 898 34-5492</a></p>
+										  </div>
+										  <!-- End Body -->
+										</div>
+									  </div>
+									</div>
+									<!-- End Invoice Modal -->             
+                                      
+                                     <!-- ************************************************************************************* -->            
+                                     <!--                                  EDIT SUBMITTED REQUEST	                            -->
+									 <!-- ************************************************************************************* -->
+                                    <div class="modal fade" th:id="modal-toEdit+${serviceRequestBean.ticketNo}" tabindex="-1" role="dialog" aria-hidden="true">
+									  <div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+										  <!-- Header -->
+										  <!-- <div class="modal-top-cover bg-secondary text-center">
+											<figure class="position-absolute right-0 bottom-0 left-0">
+											  <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+												<path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"/>
+											  </svg>
+											</figure>
+					
+											<div class="modal-close">
+											  <button type="button" class="btn btn-icon btn-sm btn-ghost-light" data-dismiss="modal" aria-label="Close">
+												<svg width="16" height="16" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+												  <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+												</svg>
+											  </button>
+											</div>
+										  </div> 
+										  
+										  <div class="modal-top-cover-avatar">
+											<img class="avatar avatar-lg avatar-circle avatar-border-lg avatar-centered shadow-soft" th:src="@{/images/josthi/icon/IE_icon.png}" alt="Logo">
+										  </div>
+										  -->
+										  <div class="modal-header">
+									          <h5 id="addNewCardModalTitle" class="modal-title">Update Ticket :<span th:text="${serviceRequestBean.ticketNo}"></span>
+									          /<span th:text="${serviceRequestBean.requestedFor}"></span></h5>
+									          <div class="modal-close">
+									            <button type="button" class="btn btn-icon btn-xs btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+									              <svg width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+									                <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+									              </svg>
+									            </button>
+									          </div>
+									        </div>
+										  <!-- End Header -->
+					
+										  <!-- Body -->
+										  <form>
+										  <div class="modal-body pt-3 pb-sm-5 px-sm-5">
+											<div class="mb-5">
+											  <!-- <h3 class="mb-1">Service Request : #<span th:text="${serviceRequestBean.ticketNo}"></span></h3> -->
+											  Request:<span th:text="${serviceRequestBean.serviceCategory}"></span>
+											  <span class="d-block text-primary" th:text="${serviceRequestBean.serviceReqDescription}"></span>
+											</div>
+					
+											<small class="text-cap mb-2">Add Notes to Ticket.</small>
+					
+											<ul class="list-group mb-4">
+											  <li class="list-group-item text-dark">
+												<div class="d-flex justify-content-between align-items-center">
+												  <span>Request Priority/Urgency :</span>
+												  <span>
+												  			<select th:id="editUrgency+${serviceRequestBean.ticketNo}" class="form-control" name="Urgency"  
+															required data-msg="Select the urgency of the request.">												
+															<option th:each="urgencyType : ${urgencyTypeList}"
+			                             					th:value="${urgencyType.keyId}"
+			                             					th:text="${urgencyType.value}" />
+											
+															</select>
+												  
+												  </span>
+												</div>
+											  </li>
+
+											  <li class="list-group-item text-dark">
+												<div class="d-flex justify-content-between align-items-center">
+												  <span>Update Status:</span>
+												  <span>
+												  		<select th:id="editStatus+${serviceRequestBean.ticketNo}" class="form-control" name="status"  
+															required data-msg="Select a status.">												
+															<option th:value="ADD_NOTES" th:text="ADD_NOTES"></option>
+															<option th:value="CANCEL" th:text="CANCEL"></option>
+															<option th:value="CLOSED" th:text="CLOSED"></option>
+											
+														</select>
+												  
+												  </span>
+												</div>
+											  </li>
+
+											  <li class="list-group-item text-dark">
+												<div class="d-flex justify-content-between align-items-center">
+												   <span>
+												  
+												  <textarea cols="100" rows="3" class="form-control no-resize" 
+												  th:id="editNotes+${serviceRequestBean.ticketNo}" name="requestNotes" placeholder="Put the request description in details." 
+												  maxlength="1000" required data-msg="Please describe in details."></textarea>
+												  
+												  </span>
+												</div>
+											  </li>
+											</ul>
+					
+											<hr class="my-5">
+											<div class="row">
+												<label  class="wrap-text ticketStatus" th:id="ticketStatus+${serviceRequestBean.ticketNo}"></label>
+											</div>
+											<div class="d-flex justify-content-end">
+									              <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Close</button>
+									              <!-- <button type="button" class="btn btn-primary" 
+									              th:onclick="'submitTicketNotes(' + ${serviceRequestBean.ticketNo} + ')'" >
+									              Save changes</button> 
+									        
+									        		<button class="btn btn-primary" th:data-id="${serviceRequestBean.ticketNo}" 
+													    onclick="submitTicketNotes(this,this.getAttribute('data-id'))" type="button">Save changes
+													</button>-->
+													
+													
+													<button class="btn btn-primary" th:data-id="${serviceRequestBean.ticketNo}" 
+													    th:onclick="submitTicketNotes(this,[[${serviceRequestBean.ticketNo}]],
+													    	 [[${session.USER_SESSION_OBJ_KEY.customerId}]],
+													    	 [[${session.USER_SESSION_OBJ_KEY.userEmailId}]])" type="button">Save changes
+													</button>
+									        
+									        
+									        </div>
+										  </div>
+										  </form>
+										  <!-- End Body -->
+										</div>
+									  </div>
+									</div>
+									<!--  END of MODAL --> 
+                                     
+                                     <!-- ************************************************************************************* -->            
+                                     <!--                                  VIEW SERVICE HISTORY		                            -->
+									 <!-- ************************************************************************************* -->
+                                     <div class="modal fade" th:id="modal-toHistory+${serviceRequestBean.ticketNo}" tabindex="-1" role="dialog" aria-hidden="true">
+									  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 70%;">
+										<div class="modal-content">
+										  <!-- Header -->
+										  <div class="modal-top-cover bg-secondary text-center">
+											<figure class="position-absolute right-0 bottom-0 left-0">
+											  <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+												<path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"/>
+											  </svg>
+											</figure>
+					
+											<div class="modal-close">
+											  <button type="button" class="btn btn-icon btn-sm btn-ghost-light" data-dismiss="modal" aria-label="Close">
+												<svg width="16" height="16" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+												  <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+												</svg>
+											  </button>
+											</div>
+										  </div>
+										  <!-- End Header -->
+					
+										  <div class="modal-top-cover-avatar">
+											<img class="avatar avatar-lg avatar-circle avatar-border-lg avatar-centered shadow-soft" th:src="@{/images/josthi/icon/IE_icon.png}" alt="Logo">
+										  </div>
+					
+										  <!-- Body -->
+										  <div class="modal-body pt-3 pb-sm-5 px-sm-5">
+											<div class="text-center mb-5">
+											  <h3 class="mb-1">Request Details from josthi.com</h3>
+											  <span class="d-block">Req #3682303</span>
+											</div>
+					
+											<!-- HISTORY Susovan -->
+											<!-- Step -->
+											<ul class="step step-timeline-md">
+											  <li class="step-item">
+											    <div class="step-content-wrapper">
+											      <span class="step-icon step-icon-soft-primary">1</span>
+											      <div class="step-content">
+											        <h4>First step</h4>
+											        <p class="text-body wrap-text">Achieve virtually any design and layout from within the one template.</p>
+											      </div>
+											    </div>
+											  </li>
+											
+											  <li class="step-item">
+											    <div class="step-content-wrapper">
+											      <span class="step-icon step-icon-soft-primary">2</span>
+											      <div class="step-content">
+											        <h4>Second step</h4>
+											        <p class="text-body wrap-text">We strive to figure out ways to help your business grow through all platforms.</p>
+											      </div>
+											    </div>
+											  </li>
+											
+											  <li class="step-item">
+											    <div class="step-content-wrapper">
+											      <span class="step-icon step-icon-soft-primary">3</span>
+											      <div class="step-content">
+											        <h4>Third step</h4>
+											        <p class="text-body wrap-text">Find what you need in one template and combine features at will.</p>
+											      </div>
+											    </div>
+											  </li>
+											
+											  <li class="step-item">
+											    <div class="step-content-wrapper">
+											      <span class="step-icon step-icon-soft-primary">4</span>
+											      <div class="step-content">
+											        <h4>Fourth step</h4>
+											        <p class="text-body wrap-text">Find what you need in one template and combine features at will.</p>
+											      </div>
+											    </div>
+											  </li>
+											
+											  <li class="step-item">
+											    <div class="step-content-wrapper">
+											      <span class="step-icon step-icon-soft-primary">5</span>
+											      <div class="step-content">
+											        <h4>Fifth step</h4>
+											        <p class="text-body wrap-text">Find what you need in one template and combine features at will.</p>
+											      </div>
+											    </div>
+											  </li>
+											</ul>
+											<!-- End Step -->
+											
+											
+											
+					
+											<hr class="my-5">
+					
+											<p class="modal-footer-text wrap-text">If you have any questions, please contact us at <a href="mailto:example@gmail.com">example@gmail.com</a> or call at <a class="text-nowrap" href="#">+1 898 34-5492</a></p>
+										  </div>
+										  <!-- End Body -->
+										</div>
+									  </div>
+									</div>
+									<!-- End Invoice Modal --> 
+                                                  
+                                                  
+                                     <!-- ************************************************************************************* -->            
+                                     <!--                                  PAY FOR ON-DEMAND SERVICE                            -->
+									 <!-- ************************************************************************************* -->
+									  <div class="modal fade" th:id="modal-toPay+${serviceRequestBean.ticketNo}" tabindex="-1" role="dialog" aria-hidden="true" 
+									  aria-labelledby="addNewCardModalTitle">
+									    <div class="modal-dialog modal-dialog-centered" role="document">
+									      <div class="modal-content">
+									        <!-- Header -->
+									        <div class="modal-header">
+									          <h4 id="addNewCardModalTitle" class="modal-title">Add card</h4>
+									          <div class="modal-close">
+									            <button type="button" class="btn btn-icon btn-xs btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+									              <svg width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+									                <path fill="currentColor" d="M11.5,9.5l5-5c0.2-0.2,0.2-0.6-0.1-0.9l-1-1c-0.3-0.3-0.7-0.3-0.9-0.1l-5,5l-5-5C4.3,2.3,3.9,2.4,3.6,2.6l-1,1 C2.4,3.9,2.3,4.3,2.5,4.5l5,5l-5,5c-0.2,0.2-0.2,0.6,0.1,0.9l1,1c0.3,0.3,0.7,0.3,0.9,0.1l5-5l5,5c0.2,0.2,0.6,0.2,0.9-0.1l1-1 c0.3-0.3,0.3-0.7,0.1-0.9L11.5,9.5z"/>
+									              </svg>
+									            </button>
+									          </div>
+									        </div>
+									        <!-- End Header -->
+									
+									        <!-- Body -->
+									        <div class="modal-body">
+									          <form>
+									            <!-- Button Group -->
+									            <div class="btn-group btn-group-toggle btn-group-segment d-flex form-group" data-toggle="buttons">
+									              <label class="btn btn-sm flex-fill focus active">
+									                <input type="radio" name="options" id="option1" checked> Credit or Debit card
+									              </label>
+									              <label class="btn btn-sm flex-fill disabled">
+									                <input type="radio" name="options" id="option2"> PayPal <span class="badge badge-soft-primary">Coming soon</span>
+									              </label>
+									            </div>
+									            <!-- End Button Group -->
+									
+									            <!-- Form Group -->
+									            <div class="form-group">
+									              <label for="cardNameLabel" class="input-label">Name on card</label>
+									              <input type="text" class="form-control" id="cardNameLabel" placeholder="Payoneer" aria-label="Payoneer">
+									            </div>
+									            <!-- End Form Group -->
+									
+									            <!-- Form Group -->
+									            <div class="form-group">
+									              <label for="cardNumberLabel" class="input-label">Card number</label>
+									              <input type="text" class="js-masked-input form-control" name="cardNumber" id="cardNumberLabel" placeholder="xxxx xxxx xxxx xxxx" aria-label="xxxx xxxx xxxx xxxx"
+									                     data-hs-mask-options='{
+									                      "template": "0000 0000 0000 0000"
+									                    }'>
+									            </div>
+									            <!-- End Form Group -->
+									
+									            <div class="row">
+									              <div class="col-sm-6">
+									                <!-- Form Group -->
+									                <div class="form-group">
+									                  <label for="expirationDateLabel" class="input-label">Expiration date</label>
+									                  <input type="text" class="js-masked-input form-control" name="expirationDate" id="expirationDateLabel" placeholder="xx/xxxx" aria-label="xx/xxxx"
+									                         data-hs-mask-options='{
+									                          "template": "00/0000"
+									                        }'>
+									                </div>
+									                <!-- End Form Group -->
+									              </div>
+									
+									              <div class="col-sm-6">
+									                <!-- Form Group -->
+									                <div class="form-group">
+									                  <label for="securityCodeLabel" class="input-label">CVV Code <i class="far fa-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="A 3 - digit number, typically printed on the back of a card."></i></label>
+									                  <input type="text" class="js-masked-input form-control" name="securityCode" id="securityCodeLabel" placeholder="xxx" aria-label="xxx"
+									                         data-hs-mask-options='{
+									                          "template": "000"
+									                        }'>
+									                </div>
+									                <!-- End Form Group -->
+									              </div>
+									            </div>
+									            <!-- End Row -->
+									
+									            <!-- Custom Checkbox -->
+									            <div class="custom-control custom-checkbox form-group">
+									              <input type="checkbox" class="custom-control-input" id="makePrimaryCheckbox1">
+									              <label class="custom-control-label" for="makePrimaryCheckbox1">Make this primary card</label>
+									            </div>
+									            <!-- End Custom Checkbox -->
+									
+									            <div class="d-flex justify-content-end">
+									              <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Close</button>
+									              <button type="button" class="btn btn-primary">Save changes</button>
+									            </div>
+									          </form>
+									        </div>
+									        <!-- End Body -->
+									      </div>
+									    </div>
+									  </div>
+									  <!-- End Add New Card Modal -->
+									  
+								
+								  </td>					
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					
+					<!-- ELSE BLOCK IN CASE NO BENEFECIARY SELECTED -->
+					<div th:unless="${not #lists.isEmpty(serviceRequestBeanList)}">
+						<p class="card-text">As of now you don't have any open Service Request.</p>
+					</div>	
+				
+              </form>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+
+
+        </div>
+        <!--end Of class="col-lg-9" -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+  <!-- ========== END MAIN ========== -->
+
+  <!-- ========== FOOTER ========== -->
+  <div th:replace="user_common :: user-footer"></div>
+  <!-- ========== END FOOTER ========== -->
+
+  <!-- Go to Top -->
+  <a class="js-go-to go-to position-fixed" href="javascript:;" style="visibility: hidden;"
+     data-hs-go-to-options='{
+       "offsetTop": 400,
+       "position": {
+         "init": {
+           "right": 15
+         },
+         "show": {
+           "bottom": 15
+         },
+         "hide": {
+           "bottom": -15
+         }
+       }
+     }'>
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- End Go to Top -->
+
+  <!-- ========== JAVA SCRIPT INCLUDE START ========== -->
+  <div th:insert="user_common :: js-includes"></div>
+  <script th:src="@{/vendor/hs-step-form/dist/hs-step-form.min.js}"></script>
+  <!-- ========== END JAVA SCRIPT INCLUDE ========== -->
+  
+  <script>
+    $(document).on('ready', function () {
+    	
+    	  var element = document.getElementById("userRequestServiceLink");
+    	  element.classList.add("active");
+    	
+      //Step form - Susovan
+       $('.js-step-form').each(function () {
+    		  var stepForm = new HSStepForm($(this)).init();
+    	});
+    	
+      // initialization of header
+      var header = new HSHeader($('#header')).init();
+
+      // initialization of mega menu
+      var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+        desktop: {
+          position: 'left'
+        }
+      }).init();
+
+      // initialization of unfold
+      var unfold = new HSUnfold('.js-hs-unfold-invoker').init();
+
+      // initialization of form validation
+      $('.js-validate').each(function() {
+        $.HSCore.components.HSValidation.init($(this), {
+          rules: {
+            confirmNewPassword: {
+              equalTo: '#newPassword'
+            }
+          }
+        });
+      });
+
+      // initialization of show animations
+      $('.js-animation-link').each(function () {
+        var showAnimation = new HSShowAnimation($(this)).init();
+      });
+
+      // initialization of go to
+      $('.js-go-to').each(function () {
+        var goTo = new HSGoTo($(this)).init();
+      });
+	  
+	  
+	  
+	  // Setting the Request FulFill Date.
+		var dtToday = new Date();
+		var maxMonth = dtToday.getMonth() + 2;
+		var month = dtToday.getMonth()+1;
+		var day = dtToday.getDate();
+		var year = dtToday.getFullYear();
+
+		if(maxMonth < 10)
+			maxMonth = '0' + maxMonth.toString();
+		
+		if(month < 10)
+			month = '0' + month.toString();
+			
+		if(day < 10)
+			day = '0' + day.toString();
+
+		var maxDate = year + '-' + maxMonth + '-' + day; 
+		var minDate = year + '-' + month + '-' + day; 
+		//alert(maxDate +'---'+minDate);			
+		$('#requestFulfillDate').attr('max', maxDate);
+		$('#requestFulfillDate').attr('min', minDate);
+		
+		
+		$( "#requestFulfillDate" ).change(function() {
+			var inPutDate = $( "#requestFulfillDate" ).val();
+			//alert(inPutDate);
+			
+			var monthNames = [ "January", "February", "March", "April", "May", "June",
+					"July", "August", "September", "October", "November", "December" ];
+
+			var newDate = new Date(inPutDate);
+			var formattedDate = newDate.getDate() + '-'+monthNames[newDate.getMonth()] + '-' + newDate.getFullYear();
+			//$('#requestFulfillDate').val(formattedDate);
+			
+		});
+	  
+    });
+  </script>
+  
+  
+  <script>
+	function deafultDate(){
+		var defaultDate = new Date();
+		defaultDate.setDate(defaultDate.getDate()+7);
+		formattedDate = defaultDate.getMonth()+1 +'/'+defaultDate.getDate()+'/'+defaultDate.getFullYear();
+		//alert(formattedDate);
+		document.getElementById("requestFulfillDate").value = formattedDate;
+		//$('#requestFulfillDate').val(formattedDate)
+	};  
+	
+	
+	function submitRequestForm() {
+		  document.getElementById("serviceRequestForm").submit();
+		}
+
+	function reviewData(){
+		
+		var a = document.getElementById("selectedBeneficiaryName");
+		document.getElementById("benefetiaryId").innerHTML = a.options[a.selectedIndex].text;
+		
+		var b = document.getElementById("selectedServiceType");
+		document.getElementById("requestTypeId").innerHTML = b.options[b.selectedIndex].text;
+		
+		var c = document.getElementById("requestFulfillDate");
+		document.getElementById("serviceDateId").innerHTML = c.value;
+		
+		var d = document.getElementById("selectedUrgency");
+		document.getElementById("urgencyId").innerHTML = d.options[d.selectedIndex].text;
+		
+		var e = document.getElementById("selectedCategory");
+		document.getElementById("serviceTitleId").innerHTML = e.options[e.selectedIndex].text;
+		
+		document.getElementById("chargeId").innerHTML = '0$';
+		
+		document.getElementById("statusId").innerHTML = 'Initiated';
+		
+		var f = document.getElementById("requestNotes");
+		document.getElementById("descriptionId").innerHTML = f.value;
+		
+		}	
+  </script>
+  
+  
+<!-- https://www.concretepage.com/thymeleaf/thymeleaf-javascript-inline-example-with-variable -->
+<script th:inline="javascript">   
+       $(document).ready(function() {
+	       
+	       var name = /*[[${session.USER_SESSION_OBJ_KEY.userName}]]*/'null';
+	       var id = /*[[${session.USER_SESSION_OBJ_KEY.customerId}]]*/'null';
+
+	       $("#requesterNameServReq").val(name);
+	       $("#userIdServReq").val(id);
+	       
+	       var focus = /*[[${gotoPoint}]]*/'null';
+	       if(!(isEmpty(focus))){
+	    	   document.getElementById('ticketTable').scrollIntoView();
+	       }else{
+	    	   document.getElementById('card1').scrollIntoView();
+	       }
+	       //alert(focus);
+	         
+       });
+</script>
+
+
+<!-- Ajax Call -->
+<script>
+function isEmpty(value){
+	return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
+}
+
+
+function submitTicketNotes(val, ticketNo, customerId, emailId) {
+    var notes = document.getElementById("editNotes"+ticketNo).value;   
+    var urgency = document.getElementById("editUrgency"+ticketNo).value;
+    var status = document.getElementById("editStatus"+ticketNo).value;
+    
+    
+    var formData = new FormData();
+	formData.append('notes',notes);
+	formData.append('urgency',urgency);
+	formData.append('status',status);
+	formData.append('customerId',customerId);
+	formData.append('ticketNo',ticketNo);
+	formData.append('emailId',emailId);
+    
+    //alert("Ticket No:"+ticketNo+"MSG :"+notes+"customerId :"+customerId+"/urgency:"+urgency);
+    
+	$.ajax({
+		type: "POST",
+		enctype: 'multipart/form-data',
+		url: "/addNotesToTicket",
+		data: formData,
+		dataType: 'html', //Important , it has to be HTML to get HTML String Back
+		cache: false,
+		timeout: 600000,
+		contentType: false,
+		processData: false, //it prevent jQuery form transforming the data into a query string
+		success: function (data, status) {
+			console.log("SUCCESS : ", data);
+			
+			if(isStringContains(data, 'Success :')){
+				showSuccessMsg(data, ticketNo );
+			}else{
+				showError(data, ticketNo);
+			}
+				
+			//alert("Success :"+data);
+
+		},
+		error: function (xhr, status, error) {
+			console.log("ERROR : ", xhr.status);
+			console.log("ERROR status: ", status);
+			console.log("ERROR error: ", error);
+			showError("Error : Exception occured while updating the Ticket, if you still see the error, contact the customer service.");
+			//alert("Error :"+error);
+
+		}
+	});
+	
+	
+	
+	
+	
+		function showError(msg, ticketNo) {
+		  var e1 = document.getElementById("ticketStatus"+ticketNo);
+		  e1.setAttribute("style", "display:block;background:#ffecec;border: 2px solid #f5aca6");
+		  e1.innerHTML = "&nbsp;"+msg;
+
+		}
+		
+		function showSuccessMsg(msg, ticketNo) {
+		  var e1 = document.getElementById("ticketStatus"+ticketNo);
+		  e1.setAttribute("style", "display:block;background:#c3f3cd;border: 2px solid #50ef72");
+		  e1.innerHTML = "&nbsp;"+msg;
+
+		}
+		
+		function isStringContains (StringVal, SubStringVal){
+			var res = StringVal.match(SubStringVal);
+			
+			if( res == null){
+				return false;
+			}else{
+				return true;
+			}
+		}
+}
+</script>  
+  
+
+  <!-- IE Support -->
+  <script>
+    if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="../../assets/vendor/polifills.js"><\/script>');
+  </script>
+</body>
+</html>

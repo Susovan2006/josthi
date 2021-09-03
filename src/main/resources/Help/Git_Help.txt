@@ -1,2 +1,2 @@
 GIT Token : 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
-help on GIT : https://stackoverflow.com/questions/30421875/cant-connect-to-any-uri-error-while-commiting-code-from-eclipse-to-git-reposito
+help on GIT commit : https://stackoverflow.com/questions/30421875/cant-connect-to-any-uri-error-while-commiting-code-from-eclipse-to-git-reposito

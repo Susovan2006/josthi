@@ -46,22 +46,35 @@ public class FileWikiController {
 	private static final Logger logger = LoggerFactory.getLogger(FileWikiController.class);
 	
 	@GetMapping("/admin/wiki")
-	public String wiki(FileWikiPO fileWikiPO,  Model model) {
-
+	public String wiki(FileWikiPO fileWikiPO,  Model model) {		
 		model.addAttribute("fileWikiList",fileWikiService.getWikiFileDetails());
 		return "wiki";
 	}
 	
 	
+	@GetMapping("/admin/adminWiki")
+	public String adminWiki(FileWikiPO fileWikiPO,  Model model) {
+		model.addAttribute("fileWikiList",fileWikiService.getWikiFileDetails());		
+		return "/admin/admin_wiki";
+	}
+	
+	
+	//***************** FILE UPLOAD *************************
 	@PostMapping("/uploadFileInWiki")
     public String uploadFileInWiki(@RequestParam("file") MultipartFile file,
     											FileWikiPO fileWikiPO, Model model) {
 		
 		List<FileWikiPO> fileWikiPOList = fileWikiService.saveFileInServer(file, fileWikiPO);
-
 		model.addAttribute("fileWikiList",fileWikiPOList);
-
         return "wiki";
+    }
+	
+	@PostMapping("/admin/uploadFileInWiki")
+    public String adminUploadFileInWiki(@RequestParam("file") MultipartFile file,
+    											FileWikiPO fileWikiPO, Model model) {		
+		List<FileWikiPO> fileWikiPOList = fileWikiService.saveFileInServer(file, fileWikiPO);
+		model.addAttribute("fileWikiList",fileWikiPOList);
+		return "/admin/admin_wiki";
     }
 	
 	

@@ -7,7 +7,13 @@ import javax.xml.transform.TransformerFactory;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
-
+/**
+ * 
+ * @author Susovan Gumtya
+ * 
+ * This class is mainly used to resolve security issues in Josthi.com
+ *
+ */
 public class Sanitize {
 	
 	private static final String ACCESS_EXTERNAL_DID = "http://javax.xml.XMLConstants/property/accessExternalDTD";

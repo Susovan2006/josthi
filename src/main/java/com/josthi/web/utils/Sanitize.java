@@ -137,7 +137,7 @@ public class Sanitize {
 		String modifiedReqString = null;
 		
 		if(requestParam!=null && !StringUtils.isBlank(requestParam)) {
-			modifiedReqString = modifiedReqString.replaceAll("(?i)ALERT", "")
+			modifiedReqString = requestParam.replaceAll("(?i)ALERT", "")
 												 .replaceAll("(?i)JAVASCRIPT", "")
 												 .replaceAll("(?i)<IMG", "")
 												 .replaceAll("(?i)IMG", "")
